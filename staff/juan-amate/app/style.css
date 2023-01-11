@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: whitesmoke;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  border: 3px solid deepskyblue;
+  height: 60%;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 80px;
+}
+
+p {
+  color: whitesmoke;
+  background-color: deepskyblue;
+  width: 50%;
+  text-align: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 0px;
+  padding-right: 16px;
+  margin-right: 47%;
+}
+
+h1 {
+  margin: 80px auto 60px auto;
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  background-color: whitesmoke;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  padding-top: 12px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-fields {
+    padding-bottom: 16px;
+}
+
+
+
+.condition-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  gap: 8px;
+  max-height: 20px;
+  width: 50%;
+}
+
+buttom {
+    color: whitesmoke;
+    background-color: black;
+}
