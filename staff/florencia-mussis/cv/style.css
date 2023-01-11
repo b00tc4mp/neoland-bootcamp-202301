@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+header{
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1{
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+img{
+    width: 50%;
+    align-items: center;
+}
+
+
+
+h2{
+    text-transform: uppercase;
+}
+
+.contact{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.datos{
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+li{
+display: flex;
+gap: 5px;
+}
+
+.experience{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.formacion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.info{
+    background-color: white;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
