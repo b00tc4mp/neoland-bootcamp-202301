@@ -1,3 +1,7 @@
+* {
+    margin: 0;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: whitesmoke;
@@ -6,30 +10,70 @@ body {
 
 header {
     margin-top: 20px;
+    margin-bottom: 4px;
 }
 
-h1 {
+h1 { 
     color: whitesmoke;
     background-color: darkslategray;
+    padding: 0 16px;
     display: flex;
     justify-content: center;
-    margin: auto;
+    margin-bottom: 16px;
 }
 
-img {
-    height: 150px;
-    margin-left: 660px;
-    margin-right: auto;
+.contact {
+    margin: 24 16 0 16;
+    display: flex;
+    justify-content: center;
 }
 
-h2 {
-    color: darkslategrey;
-}
-
-p {
-    font-style: oblique;
+div {
+    display: flex;
+    flex-direction: column;
 }
 
 ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    margin: 16px;
+    color: darkslategrey;
+    text-decoration: underline;
+}
+
+p, ul {
     font-style: oblique;
+}
+
+p {
+    margin-left: 40px;
+}
+
+hr {
+    margin: 16px;
+}
+
+footer {
+    background-color: darkslategrey;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+a:link {
+    color: whitesmoke;
+}
+
+a:hover {
+    color: red;
 }
