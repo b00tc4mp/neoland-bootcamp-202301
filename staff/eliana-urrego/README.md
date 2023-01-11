@@ -4,6 +4,8 @@ My Gidhub [account](https://github.com/EliUrrego)
 
 ![Wednesday]()
 
-My favority  teachs
+My favorite  techs
 - HTML
+- CSS
+
 
