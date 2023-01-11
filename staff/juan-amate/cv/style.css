@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: whitesmoke;
+    margin: 16;
+}
+
+header {
+    margin-top: 20px;
+}
+
+h1 {
+    color: whitesmoke;
+    background-color: darkslategray;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+img {
+    height: 150px;
+    margin-left: 660px;
+    margin-right: auto;
+}
+
+h2 {
+    color: darkslategrey;
+}
+
+p {
+    font-style: oblique;
+}
+
+ul {
+    font-style: oblique;
+}
