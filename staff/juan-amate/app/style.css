@@ -6,37 +6,40 @@
 html,
 body {
   height: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 body {
   background-color: whitesmoke;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 form {
   border: 3px solid deepskyblue;
-  height: 60%;
-  width: 30%;
+  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding-bottom: 80px;
+  padding-bottom: 70px;
 }
 
 p {
   color: whitesmoke;
   background-color: deepskyblue;
-  width: 50%;
+  width: 200px;
   text-align: center;
+  font-size: 0.9em;
   padding-top: 4px;
   padding-bottom: 4px;
-  padding-left: 0px;
-  padding-right: 16px;
-  margin-right: 47%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: auto;
+  
 }
 
 h1 {
@@ -60,7 +63,9 @@ input {
     padding-bottom: 16px;
 }
 
-
+input::placeholder {
+  width: 200px;
+}
 
 .condition-div {
   display: flex;
@@ -71,7 +76,13 @@ input {
   width: 50%;
 }
 
-buttom {
+.buttom  {
     color: whitesmoke;
     background-color: black;
+    margin-top: 24px;
+    width: 80px;
+    padding: 8px;
+    margin-top: 80px;
+    font-weight: bold;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
