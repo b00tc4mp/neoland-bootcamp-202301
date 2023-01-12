@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Press+Start+2P&display=swap');
+
+:root {
+    --primary-color: greenyellow;
+    --primary-bg-color: black;
+    --primary-font: 'Press Start 2P';
+    --primary-padding: .5rem;
+    --secondary-color: green;
+    --secondary-font: 'Odibee Sans';
+    --secondary-font-size: 1.5rem;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--primary-bg-color);
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+input {
+    border-width: 0 0 thin 0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+    padding: var(--primary-padding);
+    outline-color: var(--primary-color);
+}
+
+input::placeholder {
+    color: var(--secondary-color);
+}
+
+button {
+    color: var(--primary-color);
+    border-width: thin;
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    border-style: solid;
+    font-family: var(--primary-font);
+    padding: var(--primary-padding);
+}
