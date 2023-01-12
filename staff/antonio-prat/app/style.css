@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: blue;
+  gap: 6px;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+.conditios-div {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.submit-button {
+    background-color: black;
+    color: white;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-top: 3px;
+    padding-right: 3px;
+}
