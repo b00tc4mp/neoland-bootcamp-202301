@@ -1,4 +1,12 @@
 
+:root{
+    --main-color: red  ; 
+    --main-bg-color : blue ;
+    --primari-pading: 5rem;
+}
+
+
+
 *{
     margin: 0;
     padding: 0;
@@ -13,6 +21,7 @@ body{
        display: flex;
        align-items: center;
        justify-content: center;
+       font-family: monospace;
 }
 
 form {
@@ -39,16 +48,22 @@ input {
     box-shadow: 10px 5px 5px red;
     border-block-end-width: thick; 
     writing-mode: horizontal-tb;
-    
+    /*  border-top: 0;
+    border-right: 0;
+    border-left: 0; 
+    es lo mismo que ..  */
 
+    border-width: 0 0 thin 0 ;
+    background-color: rgb(245, 201, 91);
 }
+
 
 .conditions{
 
     display: flex;
     justify-content: center;
-
     gap: 6px   ;
+    
 
 }
 
@@ -57,9 +72,12 @@ button {
     padding: 5px;
     background-color: rgb(200, 212, 28);
     width: 150px;
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     font-weight: bolder;
+    color:var(--main-color);
+    background-color: var(--main-bg-color);
+    padding: --primari-pading: 5rem;
 
 }
 
