@@ -76,8 +76,6 @@ button {
     border-radius: 5px;
     font-weight: bolder;
     color:var(--main-color);
-    background-color: var(--main-bg-color);
-    padding: --primari-pading: 5rem;
-
+    background-color: var(--main-bg-color); 
 }
 
