@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+}
+html,body{
+    height: 100%;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+label{
+    width: 100%;
+    font-size: 12px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:5px;
+    background-color: gainsboro;
+    padding: 30px;
+
+}
+legend{
+    font-size: 25px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    gap: 5px;
+    padding: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.button{
+    padding: 3px 15px;
+    background-color: darkgrey;
+    color: white;
+}
+
+img{
+    width: 200px;
+    height: 150px;
+}
+
+
