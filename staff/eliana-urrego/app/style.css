@@ -2,6 +2,9 @@
 padding:0;
 }
 
+
+
+
 html,body { height: 100%;
 
 }
@@ -36,4 +39,8 @@ label {
     width: 60px;
     height:auto;
     
+}
+
+input {Border-width: 0 0 thin 0
+
 }
