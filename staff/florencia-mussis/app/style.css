@@ -1,14 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-:root{
-  --main-color:red;
+* {
+  font-family: 'Montserrat', sans-serif;
 }
 
-*{
-  font-family:'Montserrat', sans-serif;
-}
-
-*{
+* {
   margin: 0;
   padding: 0;
 }
@@ -18,57 +14,200 @@ body {
   height: 100%;
 }
 
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-}
-
-
-.registro{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;  
-  gap: 5px;
-  font-size: 1.2rem;
-}
-
-.input-text{
-  height: 30px;
-  border-width: 0 0 thin 0;
-  box-shadow: 0 0 5px 0 grey;
-  width: 200px;
-  color: var(--main-color);
-}
-
-form {
-  border-radius: 4px;
-  padding: 60px;
+/*************************************** SING UP ***************************************/ 
+.sign-up{
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  background-color: rgb(242, 237, 237);
-  border: 1.5px solid black;
-  }
-  
-  .acepto {
-    box-shadow: 2px 2px 2px gray;
-  }
-  
-  .button {
-    background-color: rgb(43, 132, 234);
-    color: white;
-    text-transform: uppercase;
-    border-radius: 6px;
-    padding: 4px 8px;
-    border-style: solid;
-  }
+  gap: 30px;
+  background: rgb(211,141,236);
+  background: radial-gradient(circle, rgba(211,141,236,1) 0%, rgba(146,145,241,1) 100%);
+}
 
-  label{
-    width: 100%;
-  }
-  
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  color: black;
+}
+
+form {
+  border-radius: 8px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  border: 1.5px solid white;
+  background-color: white;
+  box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.179);
+}
+
+.registro {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+  font-size: 0.9rem;
+}
+
+.input-text{
+  height: 25px;
+  width: 100%;
+  border-width: 0 0 0 0;
+  box-shadow: 0 0 3px gray;
+  color: var(--main-color);
+}
+
+.input-text:focus, input:focus{
+  outline-color: rgb(149, 148, 236);
+}
+.agree {
+  font-size: 0.8rem;
+}
+
+.button {
+  background-color: rgba(146,145,241,1);
+  color: white;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border-color: white;
+  padding: 4px 8px;
+  font-weight: bold;
+}
+
+/*************************************** HOME ***************************************/ 
+
+ .navbar {
+  display: flex;
+  background-color: rgb(206, 127, 235); 
+ }
+
+ .logo{
+  display: flex;
+  width: 60%;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  padding-left: 50px;
+ }
  
+ .menu {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+ } 
+
+ .logo-img{
+  background-color: white;
+  max-width:12%;
+ }
+
+ .list-menu{
+  list-style-type: none;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+ }
+
+ .subtitle{
+    padding: 2rem;
+    font-size: 1.5rem; 
+    font-style: italic;
+    text-align: center;
+    color: rgb(21, 185, 21);
+ }
+
+ .portada{
+  display: flex;
+  width: 90%;
+  margin: auto;
+ }
+
+ .portada1{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
+ .portada2{
+  width: 50%;
+  text-align: center;
+ }
+
+ .portada-img{
+  max-width: 70%;
+ }
+
+ .subtitle-portada{
+  text-transform: uppercase;
+  font-size: 2.5rem;
+ }
+
+.info{
+  font-size: 1.3rem;
+}
+
+.comunidad{
+  padding: 30px 0px;
+  background-color:  rgb(222, 182, 237);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.title-comunidad{
+  text-transform: uppercase;
+  font-size: 2.5rem;
+}
+
+.mail{
+  font-size: 1.5rem;
+}
+
+footer{
+  background-color: rgb(234, 217, 239);
+  padding: 10px 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+ /*************************************** RECETAS ***************************************/ 
+ .receta{
+  text-align:center;
+ }
+
+.receta-title{
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  font-size: 1.5rem;
+  text-decoration: underline;
+ }
+
+.receta-text{
+  font-size: 1.5rem;
+  margin-top: 4rem;
+ }
