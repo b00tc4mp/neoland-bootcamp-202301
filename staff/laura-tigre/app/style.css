@@ -1,6 +1,7 @@
  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
- :root{
-    --primary: green;
+:root{
+    --primary:rgb(82, 123, 82);
+    --secundary:rgb(140, 175, 87);
  }
 *{
     margin: 0;
@@ -9,7 +10,7 @@
 html,body{
     height: 100%;
 }
-body{
+.center{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,15 +46,146 @@ legend{
     color: white;
     border-style: solid;
 
+
 }
 
-img{
-    width: 200px;
-    height: 150px;
-}
 input{
     border-width: 0 0 thin 0;
-    color: var(--primary);
-    outline-color: var(--primary);
+    color: var(--secundary);
+    outline-color: var(--secundary);
 }
 
+::placeholder{
+    color: var(--secundary);
+}
+.colorreg{
+    background-color:var(--secundary);
+    border-radius: 50%; 
+    padding: 20px 10px;
+    width:60px;
+    height: 35px; 
+}
+/** styles del home**/
+    
+img{
+    width:60px;
+    height: 35px;  
+}
+
+header{
+    background-color: var(--secundary);
+}
+ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.primera{
+    
+    background-image: url("https://verdecora.es/blog/wp-content/uploads/2019/03/arbustos-frutales-plantar-ahora.jpg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    background-position:center;
+    font-weight: 700;
+
+}
+.positionprimera{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding:100px 0 0 100px;
+}
+.tamaño{
+    font-size: 2.5rem;
+    color: white;
+}
+.colorprimera{
+    background-color: white;
+    color: black;
+    padding: 5px;
+    margin-top: 15px;
+}
+.buttonprimera{
+ width: 110px;
+ background-color: transparent;
+ color: white;
+ padding: 10px 25px 10px 15px;
+ margin-left: 90px;
+ border-color: white;
+ border-style: solid; 
+ font-weight: 600;
+}
+/** section 2**/
+.tamañosegunda{
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.inmuno1{
+    display: flex;
+    flex-direction:row;
+    gap: 1rem;
+    color: var(--primary);
+    padding: 150px 50px; 
+    
+}
+.logos{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    gap: 20px;
+   
+}
+.tamaño1{
+    width: 100px;
+    height: 100px;
+    
+}
+.buttonsegunda{
+    width: 110px;
+    background-color: transparent;
+    color:var(--primary);
+    padding: 10px 25px 10px 15px;
+    margin-left: 90px;
+    border-color: var(--primary);
+    border-style: solid; 
+    border-radius: 7px;
+    font-weight: 700;
+}
+.fotoinmuno img{
+    margin-left: 90px;
+    width: 450px;
+    height: 300px;
+    
+}
+/** sección 3**/
+.section3{
+    display: flex;
+    gap: 50px;
+    justify-items: center;
+    background-color: var(--secundary);
+    color: white;
+    
+
+}
+.section3-1{
+    padding: 3rem;
+    width: 50%;
+}
+.section3-1 img{
+    float: left;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+.section3-1 p{
+    margin: 20px 100px;
+}
