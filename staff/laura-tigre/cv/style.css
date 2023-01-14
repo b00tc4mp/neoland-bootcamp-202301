@@ -28,6 +28,9 @@ ul{
 .cuerpo{
     border-left: 2px solid black;
 }
+html,body{
+    height:100%;
+}
 
 header{
     
