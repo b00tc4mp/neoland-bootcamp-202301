@@ -34,7 +34,7 @@ var products = [ // array de objetos y quieres incrementar el "price"
 
 
        function sumarDosAños ( años ) {
-        var resultado = ( años ) + 2 
+        var resultado = ( años ) 
         return resultado 
        }
 
@@ -53,54 +53,82 @@ var products = [ // array de objetos y quieres incrementar el "price"
         }
         console.log  ( personas )
 
-
-
-        function AumentarKm ( kilometros ){
-            var resultado2 = ( kilometros) * 2 
-            return resultado2 ; 
-        }
-
-        var coches  = [ 
-            { marca : " volvo " , km : " 30.000"} ,
-            { marca : " seat " , km : " 35.000"} ,
-            { marca : " BMW " , km : " 34.000"} ,
-            { marca : " toyota " , km : " 37.000"}
-        ]
-
-        for ( i = 0 ; i < coches.length ; i++){
-
-            var coche = coches[i];
-            var nuevosKm = AumentarKm  ( coche.km )
-
-            coche.km = nuevosKm ;
-        }
-        console.log (coches )
-        
-
+    
      // funcitions 
      // esto puede ser reutilizado tantas veces como necesites 
 
-     function doTheMath ( num1,num2 ){
-        var result = ( num1 + num2 )* 1000; // creas una variable resultado para hacer la operacion que necesites  
-        return result  
-     }
-
-     var a = 3 ;
-     var b = 4 ; 
-
-     var c = doTheMath ( a , b );
-     console.log (c);
+   
 
 
-     var d = 10 ;
-     var e = 50 ; 
-
-     var f = doTheMath ( d , e );
-     console.log (f)
+     // sumar kilometros a los coches usando una funcion para cambiarlos todos a la vez 
 
 
+        function sumaDeKilometros ( km ){
+            var result2 = km * 2 ;
+            return result2;
+        }
+
+        var coches = [
+         
+            { marca : "volvo " , km : 300000 },
+            { marca : "bmw " , km : 300000 },
+            { marca : "audi " , km : 300000 },
+            { marca : "mercedees " , km : 300000 }
+
+        ]
+                    //condicion de continuidad // incremento
+        for ( i = 0 ; i < coches.length ; i++ ) {
+            var coche = coches [i];
+            var nuevosKilometros = sumaDeKilometros ( coche.km )
+
+            coche.km = nuevosKilometros
+
+        }
+        console.log ( coches )
+
+
+        
+
+    var hello = function(name){
+        return "hello, " + name + "!"}
 
 
 
+        var average = function ( a , b , c ){
+            var sum = a + b + c 
+            var avg = sum / 3 
+            return avg}
+           
+               average ( 10 , 20 , 30 )
+    
+               
+               average.of5= function ( a , b , c , d , e ){
+                var sum = ( a + b + c + d + e ) ;
+                var avg = sum / 3 
+                return avg }
 
-     
+
+                // como imprimir las dos array de golpe 
+
+
+                var stuff = [ "html ", "css " , "JS"];
+                var staff = [ "lau " , "flow " , " xa " , " eli ", "juan" ];
+        
+        
+                function print ( array ) {
+                    for ( var i = 0 ; i < array.length ; i++){
+                    var value = array[i]
+                    console.log ( value ) }   
+                }
+           
+        
+          
+                console.log ( "print staff ")
+                print(staff)
+                console.log ( "print stuff ")
+                print(stuff)
+        
+        
+        
+       
+
