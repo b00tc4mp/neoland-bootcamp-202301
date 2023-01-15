@@ -6,11 +6,22 @@
  * @return {array} array of numbers multiplicados
  */
 function multiplicar(numbers, multiplicador) {
-    // TODO implement this
-  }
+  var resultMult=[];
+   for(var i =0; i<numbers.length; i++){
+    /**resultMult[i]= numbers[i]*multiplicador;**/
+    var nums= numbers[i];
+    var number= multiplicador;
+    resultMult[i]= nums* number;
+    
+   }
   
+   return resultMult
+  }
+
   var result = multiplicar([10, 60, 5], 2);
   // output expectd = [20, 120, 10]
+  console.log(result)
   
   var result = multiplicar([7, 3, 1], 10);
   // output expectd = [70, 30, 10]
+  console.log(result)
