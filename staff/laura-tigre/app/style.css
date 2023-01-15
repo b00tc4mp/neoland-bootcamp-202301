@@ -207,6 +207,7 @@ article{
    flex-direction: column;
    justify-content: space-around;
    gap: 50px;
+   padding-bottom: 100px;
 }
 .aprendemas{
     display: flex;
