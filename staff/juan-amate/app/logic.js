@@ -72,15 +72,18 @@ function registerUser(name, email, password) {
 
     if (user.email === email) {
       return;
-    } else {
-      users.push({
+    } 
+  }
+    
+   var userToCreate = {
         name,
         email,
         password,
-      });
-    }
-  }
-}
+      };  
+
+  users.push(userToCreate);
+};
+
 // tests
 
 registerUser("John Doe", "john@doe.com", "123123123");
@@ -103,8 +106,8 @@ function createSticky(user, text, visibility) {
         text,
         visibility
       };
-      stickies.push();
-    }
+    stickies.push(newSticky);
+  }
 
 // tests
 
