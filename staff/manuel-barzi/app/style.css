@@ -68,3 +68,48 @@ button {
     font-family: var(--primary-font);
     padding: var(--primary-padding);
 }
+
+a {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1em;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--primary-bg-color);
+}
+
+ul {
+    list-style-type: none;
+    padding: 10px;
+}
+
+li {
+    background-color: var(--primary-color);
+    width: 40ch;
+    margin: 1em 0;
+}
+
+.home-main {
+    margin-top: 100px;
+}
+
+.logo {
+    width: 3em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-bg-color);
+    padding: .25em 0;
+}
