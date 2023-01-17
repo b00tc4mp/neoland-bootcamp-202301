@@ -3,10 +3,11 @@
 var users = []
 var stickies = []
 
-// filling database
+// populate the database
 
 var user = {
     name: 'Pepito Grillo',
+    age: 50,
     email: 'pepito@gillo.com',
     password: '123123123'
 }
@@ -15,6 +16,7 @@ users.push(user)
 
 var user = {
     name: 'Wendy Darling',
+    age: 18,
     email: 'wendy@darling.com',
     password: '123123123'
 }
@@ -23,13 +25,14 @@ users.push(user)
 
 var user = {
     name: 'Peter Pan',
+    age: 21,
     email: 'peter@pan.com',
     password: '123123123'
 }
 
 users.push(user)
 
-console.log(users)
+// console.log(users)
 
 var sticky = {
     text: 'hola mundo',
@@ -63,19 +66,64 @@ stickies.push(sticky)
  * Registers a user in the database
  * 
  * @param {string} name The user full name
+ * @param {number} age The user age
  * @param {string} email The user email
  * @param {string} password The user password
  */
-function registerUser(name, email, password) {
+function registerUser(name, age, email, password) {
     // TODO implement me
+
+    if (age < 18) throw new Error('User is under 18 years old')
+
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i];
+
+        if (user.email === email) throw new Error('User already registered')
+    }
+
+    // var user = new Object()
+    // user.name = name
+    // user.age = age
+    // user.email = email
+    // user.password = password
+
+    // var user = {
+    //     name: name,
+    //     age: age
+    //     email: email,
+    //     password: password
+    // }
+
+    var user = {
+        name,
+        age,
+        email,
+        password
+    }
+
+    users.push(user)
 }
 
 // tests
 
-registerUser('John Doe', 'john@doe.com', '123123123')
-console.log(users)
+registerUser('John Doe', 35, 'john@doe.com', '123123123')
+// console.log(users)
 
-registerUser('Jane Doe', 'jane@doe.com', '123123123')
+registerUser('Jane Doe', 29, 'jane@doe.com', '123123123')
+// console.log(users)
+
+try {
+    registerUser('John Doe', 35, 'john@doe.com', '123123123')
+} catch(error) {
+    console.error(error.message)
+}
+
+try {
+    registerUser('Andy Garcia', 15, 'andy@garcia.com', '123123123')
+} catch(error) {
+    console.error(error.message)
+}
+
 console.log(users)
 
 /**
