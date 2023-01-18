@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+:root {
+  --primary-font-color: black;
+  --secondary-font-color: rgb(19, 160, 19);
+
+  --primary-bg-color:  rgb(206, 127, 235); 
+  --secondary-bg-color: rgb(222, 182, 237);
+  --third-bg-color:rgb(234, 217, 239);
+
+  --primary-form-color:rgba(211,141,236,1);
+  --secondary-form-color:rgba(146,145,241,1);
+}
+
+
 * {
   font-family: 'Montserrat', sans-serif;
 }
@@ -14,26 +27,32 @@ body {
   height: 100%;
 }
 
-/*************************************** SING UP ***************************************/ 
-.sign-up{
+body{
+  margin: 0;
+}
+
+/*************************************** REGISTER ***************************************/ 
+main {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 30px;
-  background: rgb(211,141,236);
-  background: radial-gradient(circle, rgba(211,141,236,1) 0%, rgba(146,145,241,1) 100%);
+  align-items: center;
 }
 
-h2 {
+.register{
+  height: 100%;
+  background: radial-gradient(circle, var(--primary-form-color) 0%,var(--secondary-form-color) 100%);
+}
+  
+h1{
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.8rem;
-  color: black;
+  font-size: 1.3rem;
+  color: var(--primary-font-color);
 }
-
-form {
+  
+form{
   border-radius: 8px;
   padding: 25px;
   display: flex;
@@ -45,9 +64,9 @@ form {
   background-color: white;
   box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.179);
 }
-
-.registro {
-  width: 200px;
+  
+.form-inner{
+  width: 230px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -55,148 +74,113 @@ form {
   gap: 15px;
   font-size: 0.9rem;
 }
-
+  
 .input-text{
   height: 25px;
   width: 100%;
   border-width: 0 0 0 0;
   box-shadow: 0 0 3px gray;
-  color: var(--main-color);
+}
+  
+.input-text:focus, input:focus{
+  outline-color: var(--secondary-form-color);
 }
 
-.input-text:focus, input:focus{
-  outline-color: rgb(149, 148, 236);
-}
 .agree {
   font-size: 0.8rem;
 }
-
+  
 .button {
-  background-color: rgba(146,145,241,1);
+  background-color: var(--secondary-form-color);
   color: white;
   text-transform: uppercase;
   border-radius: 6px;
   border-color: white;
   padding: 4px 8px;
   font-weight: bold;
+  align-items: center;
+}
+
+.checkbox {
+  display: flex;
+  gap: 10px;
+}
+
+/*************************************** LOGIN ***************************************/ 
+.login{
+  height: 100%;
+  gap: 30px;
+  background: radial-gradient(circle, var(--primary-form-color) 0%,var(--secondary-form-color) 100%);
 }
 
 /*************************************** HOME ***************************************/ 
 
- .navbar {
+header{
   display: flex;
-  background-color: rgb(206, 127, 235); 
- }
+}
 
- .logo{
-  display: flex;
-  width: 60%;
-  align-items: center;
-  gap: 2rem;
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  padding-left: 50px;
- }
- 
- .menu {
-  width: 40%;
+.logo{
+  width: 3em;
+}
+
+.menu {
+  width: 80%;
   display: flex;
   align-items: center;
   gap: 2rem;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   text-transform: uppercase;
- } 
-
- .logo-img{
-  background-color: white;
-  max-width:12%;
- }
-
- .list-menu{
+} 
+  
+a{
   list-style-type: none;
   display: flex;
   width: 100%;
   justify-content: space-around;
  }
 
- .subtitle{
-    padding: 2rem;
-    font-size: 1.5rem; 
-    font-style: italic;
-    text-align: center;
-    color: rgb(21, 185, 21);
- }
-
- .portada{
+header{
   display: flex;
-  width: 90%;
-  margin: auto;
- }
-
- .portada1{
-  width: 50%;
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 20px;
+  padding-right: 1em;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: var(--primary-bg-color);
 }
 
- .portada2{
-  width: 50%;
-  text-align: center;
- }
-
- .portada-img{
-  max-width: 70%;
- }
-
- .subtitle-portada{
-  text-transform: uppercase;
-  font-size: 2.5rem;
- }
-
-.info{
-  font-size: 1.3rem;
+ul {
+  list-style-type: none;
+  padding: 10px;
 }
 
-.comunidad{
-  padding: 30px 0px;
-  background-color:  rgb(222, 182, 237);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+li {
+  width: 40ch;
+  margin: 1em 0;
 }
 
-.title-comunidad{
-  text-transform: uppercase;
-  font-size: 2.5rem;
-}
-
-.mail{
-  font-size: 1.5rem;
+.home-main {
+  margin-top: 100px;
 }
 
 footer{
-  background-color: rgb(234, 217, 239);
-  padding: 10px 0;
-  font-size: 1rem;
-  text-align: center;
+background-color: var(--third-bg-color);
+padding: 10px 0;
+font-size: 1rem;
+text-align: center;
+position: fixed;
+width: 100%;
+display: flex;
+justify-content: center;
+bottom: 0;
 }
 
-
-
-
-
-
-
-
-
-
-
+.off{
+  display: none;
+}
  /*************************************** RECETAS ***************************************/ 
- .receta{
+ /* .receta{
   text-align:center;
  }
 
@@ -210,4 +194,4 @@ footer{
 .receta-text{
   font-size: 1.5rem;
   margin-top: 4rem;
- }
+  } */
