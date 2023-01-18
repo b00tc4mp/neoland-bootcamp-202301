@@ -1,13 +1,14 @@
 var register = {}
 
-register.main = document.querySelector('.register')
-register.form = register.main.querySelector('form')
+register.view = document.querySelector('.register')
+register.view.classList.add('off')
+register.form = register.view.querySelector('form')
 register.nameInput = register.form.querySelector('input#name')
 register.ageInput = register.form.querySelector('input#age') 
 register.emailInput = register.form.querySelector('input#email')
 register.passwordInput = register.form.querySelector('input#password')
 
-register.feedback = register.main.querySelector('.feedback')
+register.feedback = register.view.querySelector('.feedback')
 register.feedback.classList.add('off')
 
 register.form.onsubmit = function(event) {
@@ -23,10 +24,9 @@ register.form.onsubmit = function(event) {
 
         register.form.reset()
 
-        register.main.classList.add('off')
-        login.main.classList.remove('off')
+        register.view.classList.add('off')
+        login.view.classList.remove('off')
     } catch(error) {
-        //alert(error.message)
         register.feedback.innerText = error.message
         register.feedback.classList.remove('off')
     }

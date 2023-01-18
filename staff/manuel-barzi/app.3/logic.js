@@ -81,19 +81,6 @@ function registerUser(name, age, email, password) {
         if (user.email === email) throw new Error('User already registered')
     }
 
-    // var user = new Object()
-    // user.name = name
-    // user.age = age
-    // user.email = email
-    // user.password = password
-
-    // var user = {
-    //     name: name,
-    //     age: age
-    //     email: email,
-    //     password: password
-    // }
-
     var user = {
         name,
         age,
@@ -115,16 +102,56 @@ registerUser('Jane Doe', 29, 'jane@doe.com', '123123123')
 try {
     registerUser('John Doe', 35, 'john@doe.com', '123123123')
 } catch(error) {
-    console.error(error.message)
+    // console.error(error.message)
 }
 
 try {
     registerUser('Andy Garcia', 15, 'andy@garcia.com', '123123123')
 } catch(error) {
-    console.error(error.message)
+    // console.error(error.message)
 }
 
-console.log(users)
+// console.log(users)
+
+/**
+ * Authenticates a user against database
+ * 
+ * @param {string} email The user's email address
+ * @param {string} password The user's password
+ */
+function authenticateUser(email, password) {
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i]
+
+        // if (user.email === email && user.password === password) {
+        //     return
+        // }
+
+        // if (user.email === email && user.password === password) 
+        //     return
+
+        if (user.email === email && user.password === password) return
+    }
+
+    throw new Error('Wrong credentials')
+}
+
+// tests
+
+authenticateUser('pepito@grillo.com', '123123123')
+
+try {
+    authenticateUser('pepito@grillo.com', '_123123123')
+} catch(error) {
+    // console.error(error.message)
+}
+
+try {
+    authenticateUser('pepito@grill.com', '123123123')
+} catch(error) {
+    // console.error(error.message)
+}
+
 
 /**
  * Creates a new sticky in the database
