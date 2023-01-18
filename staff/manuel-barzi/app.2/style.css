@@ -123,7 +123,3 @@ p {
 .feedback {
     color: var(--error-color)
 }
-
-.off {
-    display: none;
-}
