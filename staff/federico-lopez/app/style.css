@@ -8,6 +8,7 @@
     --secondary-color: green;
     --secondary-font: 'Odibee Sans';
     --secondary-font-size: 1.5rem;
+    --error-color: red;
 }
 
 html, body {
@@ -112,4 +113,18 @@ footer {
     justify-content: center;
     background-color: var(--primary-bg-color);
     padding: .25em 0;
+}
+
+p {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+}
+
+.feedback {
+    color: var(--error-color)
+}
+
+.off {
+    display: none;
 }
