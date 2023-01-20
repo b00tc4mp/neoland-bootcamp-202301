@@ -9,7 +9,11 @@
 function transform(array, callback) {
     var newArray = []
 
-    // TODO
+    for (var i = 0; i < array.length; i++) {
+        var element = array[i]
+
+        newArray[i] = callback(element)
+    }
 
     return newArray
 }
