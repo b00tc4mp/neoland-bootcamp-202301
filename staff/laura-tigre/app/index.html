@@ -32,17 +32,20 @@
               <input type="checkbox" id="conditions" />
               <label for="conditions">Accept conditions.</label>
             </div>
-            <button class="button" type="submit">login</button>
+            <button class="button" type="submit">Sign in</button>
           </div>
         </form>
         <p class="feedback">error...</p>
+        <p>
+          or
+          <a href="">Login</a>
       </main>
     </div>
     <div class="center login">
       <main>
         <form>
           <img class="colorreg" src="img/Post-It.jpeg" alt="logo empresa" />
-          <legend>Create your Account</legend>
+          <legend>My account</legend>
 
           <div class="container">
             <label for="email">Email</label>
@@ -95,10 +98,30 @@
       <button class="buttonfooter">+</button>
   </footer>
   </div>
-   <script src="script/logic.js"></script>
-    <script src="script/register.js"></script>
-    <script src="script/login.js"></script>
-    <script src="script/home.js"></script>
-   
+  <!-- Data-->
+   <script src="data/users.js"></script>
+   <script src="data/stickies.js"></script>
+  <!-- opcional-->
+<script src="data/users.populate.js"></script>
+<script src="data/stickies.populate.js"></script>
+
+<!-- Logic (business Layer)-->
+
+<script src="logic/register-user.js"></script>
+<script src="logic/authenticate-user.js"></script>
+<script src="logic/retrive-public-stickies.js"></script>
+<script src="logic/create-sticky.js"></script>
+
+<!-- opcional-->
+<script src="logic/register-user.test.js"></script>
+<script src="logic/authenticate-user.test.js"></script>
+<script src="logic/retrieve-public-stickies.tes.js"></script>
+<script src="logic/create-sticky.test.js"></script>
+
+<!--Components (presentation layer)-->
+<script src="components/register.js"></script>
+<script src="components/login.js"></script>
+<script src="components/home.js"></script>
+    
   </body>
 </html>
