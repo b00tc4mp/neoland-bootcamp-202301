@@ -11,6 +11,8 @@ register.passwordInput = register.form.querySelector('input#password')
 register.feedback = register.view.querySelector('.feedback')
 register.feedback.classList.add('off')
 
+register.loginLink = register.view.querySelector('a')
+
 register.form.onsubmit = function(event) {
     event.preventDefault()
 
@@ -39,3 +41,10 @@ register.nameInput.onclick = function(event) {
 register.ageInput.onclick = register.nameInput.onclick
 register.emailInput.onclick = register.nameInput.onclick
 register.passwordInput.onclick = register.nameInput.onclick
+
+register.loginLink.onclick = function(event) {
+    event.preventDefault()
+
+    register.view.classList.add('off')
+    login.view.classList.remove('off')
+}
