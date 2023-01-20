@@ -5,7 +5,16 @@
  * @returns {boolean} returns true is at least one element of the array provided matches the condition of the callback. Otherwise, returns false
  */
 function atLeastOneMatches(array, callback) {
-  // TODO implement this
+  for (var i = 0; i < array.length; i++) {
+    var element = array[i];
+
+    var matchesTheCondition = callback(element);
+
+    if (matchesTheCondition) {
+      return true;
+    }
+  }
+  return false;
 }
 
 var names = ["Laura", "Xavi", "Florencia", "Eli", "Juan"];
