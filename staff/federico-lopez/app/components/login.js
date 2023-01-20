@@ -24,6 +24,7 @@ login.form.onsubmit = function(event) {
 
         login.view.classList.add('off')
         home.view.classList.remove('off')
+        home.listPublicStickies()
     } catch(error) {
         login.feedback.innerText = error.message
         login.feedback.classList.remove('off')
