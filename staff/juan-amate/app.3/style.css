@@ -15,7 +15,7 @@ body {
 
 body {
   margin: 0;
-  background-image: url("images/pizarra.jpg");
+  background-image: url("img/pizarra.jpg");
 }
 
 main {
@@ -97,8 +97,18 @@ a:visited {
   color: var(--secondary-color);
 }
 
+a:focus {
+  border-bottom: 1px solid;
+  background: var(--secondary-color);
+}
+
 a:hover {
   border-bottom: 1px solid;
+  background: var(--secondary-color);
+}
+
+a:active {
+  background: var(--secondary-color);
 }
 
 header {
@@ -122,12 +132,11 @@ li {
   width: 40ch;
   margin: 10px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .home-main {
-  margin-top: 60px;
-  margin-bottom: 60px;
+  margin-top: 100px;
 }
 
 .logo {

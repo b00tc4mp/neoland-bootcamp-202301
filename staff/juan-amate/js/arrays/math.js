@@ -5,15 +5,17 @@
  * @param {number} multiplicador
  * @return {array} array of numbers multiplicados
  */
-
-var value = [];
-
 function multiplicar(numbers, multiplicador) {
+  var value = [];
+
   for (var i = 0; i < numbers.length; i++) {
     value[i] = numbers[i] * multiplicador;
   }
+          
   return value;
 }
+
+//TEST
 
 var result = multiplicar([10, 60, 5], 2);
 console.log(result);
