@@ -1,6 +1,7 @@
 var home = {}
 
 home.view = document.querySelector('.home')
+home.addStickyButton = home.view.querySelector('button')
 home.view.classList.add('off')
 
 home.listPublicStickies = function() {
@@ -19,3 +20,12 @@ home.listPublicStickies = function() {
     }
 }
 
+home.addStickyButton.onclick = function(event) {
+    try {
+        createSticky(window.email, '', 'public')
+
+        home.listPublicStickies()        
+    } catch(error) {
+        console.error(error.message)
+    }
+}

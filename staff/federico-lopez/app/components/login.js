@@ -19,6 +19,7 @@ login.form.onsubmit = function(event) {
 
     try {
         authenticateUser(email, password)
+        window.email = email
 
         login.form.reset()
 
