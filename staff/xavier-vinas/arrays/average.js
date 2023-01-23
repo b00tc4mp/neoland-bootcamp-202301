@@ -6,10 +6,10 @@
  */
 function average( nums ) {  
     var sum = 0 
+
     for ( var i = 0 ; i < nums.length ; i++){
-        var num = nums [i]
-        sum += num
-    // sum += nums[i] es lo mismo que lo de arriba
+     
+    sum += nums[i] 
     }
     var averageCalculed = sum / nums.length
     return averageCalculed
@@ -27,3 +27,7 @@ console.log(result)
 
 var result = average([1.2, 3.4, 5.6, 7.8, 9.10])
 console.log(result)
+// fijate que buscando tranquilamente function average calculator javascript has visto que has encontrado lo mismo que te pedian 
+
+// busca el average 
+
