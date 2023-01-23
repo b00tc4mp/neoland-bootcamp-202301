@@ -5,5 +5,13 @@ createSticky('peter@pan.com', 'hello wendy', 'public')
 
 // case 1
 
-createSticky('wendy@pdarling.com', 'hello peter ,)', 'public')
+createSticky('wendy@darling.com', 'hello peter ,)', 'public')
 // console.log(stickies)
+
+// case 2
+
+try {
+    createSticky('peter@pan2.com', 'hello wendy', 'public')
+} catch(error) {
+    // console.error(error.message)
+}

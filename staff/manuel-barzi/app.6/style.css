@@ -72,10 +72,6 @@ button {
     padding: var(--primary-padding);
 }
 
-button:hover {
-    cursor: pointer;
-}
-
 a {
     color: var(--primary-color);
     font-family: var(--secondary-font);
