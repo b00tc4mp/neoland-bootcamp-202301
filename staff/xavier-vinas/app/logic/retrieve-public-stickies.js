@@ -15,7 +15,7 @@ function retrievePublicStickies() {
             publicStickies.push(sticky)
     }
 
-    return publicStickies
+    return publicStickies.reverse()
 }
 
 
