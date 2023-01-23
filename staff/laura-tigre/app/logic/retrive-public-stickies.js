@@ -12,5 +12,5 @@
 
 
     }
-    return publicStickies
+    return publicStickies.reverse()
 }

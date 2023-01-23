@@ -1,27 +1,27 @@
 /**
  * Creates a new sticky in the database
  * 
- * @param {string} user The user the sticky belongs to
+ * @param {string} email The user the sticky belongs to
  * @param {string} text The text of the sticky
  * @param {string} visibility The visibility of the sticky
  */
-function createSticky(user, text, visibility) {
+function createSticky(email, text, visibility) {
     // TODO: implement me
     for (var i = 0; i < users.length; i++) {
         var userInDb = users[i]
         if (userInDb.email === email) {
             var newSticky = {
-                user,
+                user:email,
                 text,
                 visibility,
             }
             stickies.push(newSticky)
-
+            return
 
         }
-        return
+
     }
 
-throw new Error ('User not found')
-    
+    throw new Error('User not found')
+
 }

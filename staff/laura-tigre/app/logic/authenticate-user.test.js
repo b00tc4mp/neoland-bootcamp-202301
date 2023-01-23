@@ -1,6 +1,6 @@
 // case 0
 
-authenticateUser('pepito@grillo', '123123123')
+authenticateUser('pepito@grillo.com', '123123123')
 
 //case 1
 

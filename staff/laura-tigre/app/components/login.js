@@ -19,7 +19,9 @@ login.form.onsubmit = function (event) {
     var password = login.passwordInput.value
     try {
         authenticateUser(email, password)
+        window.email=email
         login.form.reset()
+        
         //navegación
         login.view.classList.add('off')
         home.view.classList.remove('off')

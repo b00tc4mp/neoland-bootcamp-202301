@@ -1,6 +1,7 @@
 var home = {}
 
 home.view = document.querySelector('.home')
+home.addStickyButton= home.view.querySelector('button')
 home.view.classList.add('off')
 
 home.listPublicStickies = function () {
@@ -10,7 +11,7 @@ home.listPublicStickies = function () {
   ul.innerHTML = ''
   //nombramos la funcion de logic para publicar los stickies publicos
   var stickies = retrievePublicStickies()
-   //recorremos los stickies para buscar 
+  //recorremos los stickies para buscar 
   for (var i = 0; i < stickies.length; i++) {
     var sticky = stickies[i]
 
@@ -20,4 +21,12 @@ home.listPublicStickies = function () {
 
   }
 
+}
+home.addStickyButton.onclick= function(event){
+ try {
+  createSticky(window.email, '','public')
+  home.listPublicStickies()
+ } catch (error) {
+  console.error(error.message)
+ }
 }
