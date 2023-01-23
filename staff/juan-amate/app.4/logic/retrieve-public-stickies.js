@@ -6,12 +6,12 @@
 function retrievePublicStickies() {
     var publicStickies = []
     
-    for (var i = 0; i < stickies.length; i++){
+    for (var i= 0; i< stickies.length;i++){
       var sticky = stickies[i]
   
-      if (sticky.visibility === 'public') {
+      if(sticky.visibility === 'public') {
         publicStickies.push(sticky)
       }
     }
-    return publicStickies.reverse()
+    return publicStickies
   }

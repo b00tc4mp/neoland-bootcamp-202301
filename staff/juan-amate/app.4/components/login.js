@@ -31,7 +31,7 @@ login.form.onsubmit = function (event) {
   }
 };
 
-login.emailInput.onclick = function(event) {
+login.emailInput.onclick = function (event) {
   login.feedback.classList.add("off");
 };
 login.passwordInput.onclick = login.emailInput.onclick;

@@ -35,7 +35,7 @@ register.form.onsubmit = function (event) {
 };
 
 register.nameInput.oninclick = function (event) {
-  register.feedback.classList.add("off");
+  register.feedback.classList.remove("off");
 };
 
 register.ageInput.onclick = register.nameInput.onclick;
