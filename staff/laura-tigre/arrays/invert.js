@@ -6,21 +6,23 @@
  * @return {Array} The new array with the elements inverted
  */
 function invert(array) {
- var result=[]
- for (var i=0; Math.floor(i<array.length/2); i++){
-    var inicial= array[i]
-    var final= array[array.length -1 -i]
+    var results = []
 
-    result [i]= final
-    result[array.length -1 -i]= inicial
-    if(array.length %2 ===1){
-        result [Math.floor(array.length/2)] = array[Math.floor(array.length/2)]
+    for (var i = 0; i < Math.floor(array.length / 2); i++) {
+        //for (var i = 0; i < array.length / 2; i++) {
+        var currentElement = array[i]
+        var changeElement = array[array.length - 1 - i]
+        results[i] = changeElement
+        results[array.length - 1 - i] = currentElement
+        if (array.length % 2 === 1) {
+            results[Math.floor(array.length / 2)] = array[Math.floor(array.length / 2)]
+
+        }
     }
-
- }
- return result
+ 
+    return results
 }
-  
+
 
 
 // tests

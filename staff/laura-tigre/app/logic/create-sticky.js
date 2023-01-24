@@ -11,6 +11,7 @@ function createSticky(email, text, visibility) {
         var userInDb = users[i]
         if (userInDb.email === email) {
             var newSticky = {
+                id: createStickyId(),
                 user:email,
                 text,
                 visibility,

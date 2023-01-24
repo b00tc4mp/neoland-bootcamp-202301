@@ -6,7 +6,7 @@
  * @return {array} array of numbers multiplicados
  */
 function multiplicar(numbers, multiplicador) {
-   newResult=[]
+   var newResult=[]
 
    for (var i=0 ; i<numbers.length; i++){
      var num= numbers[i]

@@ -7,10 +7,10 @@
 function max(nums) {
     var num= nums[0]
    for(var i=0; i<nums.length; i++){
-    if (num>nums[i]){
+    if (num<nums[i]){
      num=nums[i]
-    }
    }
+  }
    return num
 }
 

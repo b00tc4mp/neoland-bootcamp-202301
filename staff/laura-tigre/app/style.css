@@ -123,7 +123,7 @@ header {
 nav {
   display: flex;
 }
-nav a {
+nav > a {
   margin: 0.7em;
   color: whitesmoke;
   font-size: 1.8em;
@@ -146,9 +146,17 @@ li {
   border: 0.3em solid rgb(160, 157, 157);
   background-color: whitesmoke;
   border-radius: 1em;
-  text-align: center;
+  
 }
+li> p {
+ text-align: left;
 
+}
+strong{
+  display: block;
+  text-align: right;
+  font-size: 0.8em;
+}
 footer {
   display: flex;
   justify-content: center;
