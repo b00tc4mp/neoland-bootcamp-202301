@@ -4,25 +4,23 @@
  * @param {array} nums The array of numbers to get the max value from
  * @return {number} The max value
  */
-
 function max(nums) {
-    var num= nums[0];
-    for (var i = 1; i < nums.length; i++) {
+    var num = nums[0];
 
-        if (num < nums [i]) {
-            num = nums [i]
-        }
+    for(var i=1; i<nums.length; i++) {
+
+    if (nums[i]>num){
+        num = nums [i]
     }
-    return num;
-
+}  
+    return num
 }
 
-// TIP learn if-else control flow
-
 // tests
-
-var result = max([10, 20, 100, 80, 70])
-console.log(result) // 100
+var input =[10, 20, 100, 80, 70]
+ 
+var result = max(input)// 100
+console.log(result)
 
 
 var result = max([1.2, 2.3, 1, 8.9, 7.8])

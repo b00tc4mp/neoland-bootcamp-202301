@@ -1,61 +1,32 @@
-//HECHO CON CONSOLE.LOG
-// var results = ['pepito', 'juanito', 'felipito', 'mafalda', 'anna', 'etc']
-
-// function convertToUpperCase(strings){
-//     for (var i=0; i<strings.length; i++){
-
-//     console.log(results[i].toUpperCase());
-// }
-// }
-
-// convertToUpperCase (results)
-
 /**
  * Returns an new array with the elements of the given input array converted to upper case.
  *
  * @param {array} strings The input array to convert to upper case
  * @return {array} The new array with the elements of the given input array converted
  */
-
 function convertToUpperCase(strings) {
-  var array = [];
+  
+  var nuevoArray= []
+ 
+  for (var i=0; i< strings.length; i++){
+    nuevoArray[i]= strings[i].toUpperCase()
 
-  for (var i = 0; i < strings.length; i++) {
-    var stringInUpperCase = strings[i].toUpperCase();
-    array[i] = stringInUpperCase;
   }
-
-  return array;
+ 
+  return nuevoArray
 }
 
-// THIS FUNCTION MODIFY THE ORIGINAL ARRAY
-// function convertToUpperCase(strings) {
-//   for (var i = 0; i < strings.length; i++) {
-//     var stringInUpperCase = strings[i].toUpperCase();
-    
-//     strings[i] = stringInUpperCase;
-//   }
-
-//   return strings;
-// }
-
-// tests
-
-var results = convertToUpperCase([
+var results =[
   "pepito",
   "juanito",
   "felipito",
   "mafalda",
   "anna",
   "etc",
-]);
-console.log(results); // ['PEPITO', 'JUANITO', ... ]
+];
 
-//HECHO CON RETURN
+console.log(convertToUpperCase(results))
 
-// function convertToUpperCase(strings){
-//     for (var i = 0; i < strings.length; i++){
-//     var results = (strings[i].toUpperCase());
-//     return results;
-// }
-// }
+// tests
+
+convertToUpperCase(results)
