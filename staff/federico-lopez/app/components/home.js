@@ -1,31 +1,47 @@
-var home = {}
+var home = {};
 
-home.view = document.querySelector('.home')
-home.addStickyButton = home.view.querySelector('button')
-home.view.classList.add('off')
+home.view = document.querySelector(".home");
+home.addStickyButton = home.view.querySelector("button");
+home.view.classList.add("off");
 
-home.listPublicStickies = function() {
-    var ul = home.view.querySelector('ul')
-    ul.innerHTML = ''
+home.listPublicStickies = function () {
+  var ul = home.view.querySelector("ul");
+  ul.innerHTML = "";
 
-    var stickies = retrievePublicStickies()
+  var stickies = retrievePublicStickies();
 
-    for (var i = 0; i < stickies.length; i++) {
-        var sticky = stickies[i]
+  for (var i = 0; i < stickies.length; i++) {
+    var sticky = stickies[i];
 
-        var li = document.createElement('li')
-        li.innerText = sticky.text + ' (' + sticky.user + ')'
+    var li = document.createElement("li");
 
-        ul.appendChild(li)
-    }
-}
+    var p = document.createElement("p");
+    p.innerText = sticky.text;
+    p.contentEditable = window.email === sticky.user;
+    p.onkeyup = function (event) {
+      try {
+        updateStickyText(window.email, sticky.id, event.target.innerText);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
 
-home.addStickyButton.onclick = function(event) {
-    try {
-        createSticky(window.email, '', 'public')
+    var strong = document.createElement("strong");
+    strong.innerText = sticky.user;
 
-        home.listPublicStickies()        
-    } catch(error) {
-        console.error(error.message)
-    }
-}
+    li.appendChild(p);
+    li.appendChild(strong);
+
+    ul.appendChild(li);
+  }
+};
+
+home.addStickyButton.onclick = function (event) {
+  try {
+    createSticky(window.email, "", "public");
+
+    home.listPublicStickies();
+  } catch (error) {
+    console.error(error.message);
+  }
+};

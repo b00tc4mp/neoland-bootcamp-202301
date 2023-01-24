@@ -1,24 +1,20 @@
 /**
- * Inverts the elements of an array into a new array
+ * Inverts the elements of an array
  * It is based on Array.prototype.reverse
  * 
  * @param {Array} array The array to invert the elements of
- * @return {Array} The new array with the elements inverted
+ * @return {Array} The array with the elements inverted
  */
 function invert(array) {
-    var newArray = []
     var limit = Math.floor(array.length / 2)
-
-    if (array.length % 2 !== 0)
-        newArray[limit] = array[limit]
-
-
+    
     for (var i = 0; i < limit; i++) {
-        newArray[i] = array[array.length - 1 - i]
-        newArray[array.length - 1 - i] = array[i]
+        var temp = array[i]
+        array[i] = array[array.length - 1 - i]
+        array[array.length - 1 - i] = temp
     }
 
-    return newArray
+    return array
 }
 
 // tests
