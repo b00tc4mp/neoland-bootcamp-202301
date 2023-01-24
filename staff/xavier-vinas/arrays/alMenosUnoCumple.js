@@ -1,4 +1,4 @@
-/**
+ /**
  *
  * @param {*} array
  * @param {*} callback

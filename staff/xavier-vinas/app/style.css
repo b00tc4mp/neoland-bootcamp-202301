@@ -173,6 +173,13 @@ li {
   border-radius: 5px;
 }
 
+strong {
+  display: block;
+  text-align: right;
+  color : lightslategray
+  
+}
+
 footer  {
   position: fixed;
   bottom: 0;
@@ -180,7 +187,7 @@ footer  {
   display: flex;
   justify-content: center;
   background-color: lightgray;
-  padding: .25em 0;
+
   
 }
 
@@ -188,6 +195,10 @@ footer button {
   background-color: whitesmoke;
   color :black;
   font-size: 30px;
+  border-radius: 100px;
+  padding: 0.1em;
+  padding-left: 0%;
+padding-right: 0%;
  
 }
 

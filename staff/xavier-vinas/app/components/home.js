@@ -19,8 +19,18 @@ home.listPublicStickies = function () {
     var li = document.createElement("li");
     // dentro del li que hemos creado le añades el "text" del objeto stiky
     // y le concateno el "user"(para mostrar el correo en este caso)
-    li.innerText = sticky.text + " (" + sticky.user + ")";
-    // cuando haces el append le metes el li que has creado dentro del "ul"
+    var p = document.createElement("p")
+    p.innerText = sticky.text
+    p.contentEditable = true 
+    p.onkeyup = function(event){
+      console.log (event.target.innerText)
+    }
+    var strong = document.createElement("strong")
+    strong.innerText = sticky.user
+
+    li.appendChild(p)
+    li.appendChild(strong)
+
     ul.appendChild(li);
   }
 };
