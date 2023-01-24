@@ -14,19 +14,7 @@ home.listPublicStickies = function() {
         var sticky = stickies[i]
 
         var li = document.createElement('li')
-        
-        var p = document.createElement('p')
-        p.innerText = sticky.text
-        p.contentEditable = true
-        p.onkeyup = function(event) {
-            console.log(event.target.innerText)
-        }
-
-        var strong = document.createElement('strong')
-        strong.innerText = sticky.user
-
-        li.appendChild(p)
-        li.appendChild(strong)
+        li.innerText = sticky.text + ' (' + sticky.user + ')'
 
         ul.appendChild(li)
     }

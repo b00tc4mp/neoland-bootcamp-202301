@@ -2,12 +2,12 @@
 
 :root {
     /* --primary-color: greenyellow; */
-    --primary-color: gold;
+    --primary-color: magenta;
     --primary-bg-color: black;
     --primary-font: 'Press Start 2P';
     --primary-padding: .5rem;
     /* --secondary-color: green; */
-    --secondary-color: khaki;
+    --secondary-color: deeppink;
     --secondary-font: 'Odibee Sans';
     --secondary-font-size: 1.5rem;
     --error-color: red;
@@ -101,17 +101,6 @@ li {
     background-color: var(--primary-color);
     width: 40ch;
     margin: 1em 0;
-    padding: 1rem;
-}
-
-li > p {
-    color: var(--primary-bg-color);
-}
-
-strong {
-    font-family: var(--secondary-font);
-    display: block;
-    text-align: right;
 }
 
 .home-main {

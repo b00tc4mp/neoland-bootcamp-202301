@@ -17,7 +17,6 @@ function createSticky(email, text, visibility) {
             // }
 
             var sticky = {
-                id: createStickyId(),
                 user: email,
                 text,
                 visibility
