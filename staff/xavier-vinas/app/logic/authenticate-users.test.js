@@ -7,7 +7,7 @@ authenticateUser("pepito@grillo.com", "123123123");
 try {
   authenticateUser("pepito@grillo.com", "_123123123");
 } catch (error) {
-  // console.error(error.message)
+  verify( error.message === "wrong credentials")
 }
 
 // case 2
@@ -15,5 +15,5 @@ try {
 try {
   authenticateUser("pepito@grill.com", "123123123");
 } catch (error) {
-  // console.error(error.message)
+ verify( error.message === "wrong credentials")
 }

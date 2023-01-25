@@ -21,9 +21,12 @@ home.listPublicStickies = function () {
     // y le concateno el "user"(para mostrar el correo en este caso)
     var p = document.createElement("p")
     p.innerText = sticky.text
-    p.contentEditable = true 
+    p.contentEditable = window.email === sticky.user;
     p.onkeyup = function(event){
-      console.log (event.target.innerText)
+      try{
+        updateStickyText(window.email , sticky.id , event.target.innerText)
+      }catch(error){
+      console.error(error.message)}
     }
     var strong = document.createElement("strong")
     strong.innerText = sticky.user
