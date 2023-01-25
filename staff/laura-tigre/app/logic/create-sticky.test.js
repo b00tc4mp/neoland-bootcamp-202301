@@ -10,5 +10,5 @@ try {
     createSticky('ltc@carrasco.com', 'ok', 'public')
 } catch (error) {
     //console.error(error.message)
-
+    verify(error.message === 'user not found')
 }

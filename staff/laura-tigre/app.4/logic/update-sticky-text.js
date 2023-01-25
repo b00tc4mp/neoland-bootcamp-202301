@@ -19,6 +19,7 @@ function updateStickyText(email, stickyId, text) {
     }
     // si no encontró usuario en todo el array lanzó error
     if (!userFound) throw new Error('user with email' + email + 'not found')
+    // no esta = false por que es un objeto
     var foundSticky
 
     for (var i = 0; i < stickies.length && !foundSticky; i++) {
