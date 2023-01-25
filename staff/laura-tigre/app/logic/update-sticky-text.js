@@ -22,7 +22,7 @@ function updateStickyText(email, stickyId, text) {
     var foundSticky
 
     for (var i = 0; i < stickies.length && !foundSticky; i++) {
-        var sticky = sickies[i]
+        var sticky = stickies[i]
 
         if (sticky.id === stickyId) foundSticky = sticky
 
