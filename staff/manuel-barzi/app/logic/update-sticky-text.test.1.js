@@ -2,8 +2,7 @@
 
 var stickyId = stickies[0].id // 'sticky-0'
 updateStickyText('pepito@grillo.com', stickyId, 'hello world')
-//console.log(stickies[0])
-verify(stickies[0].text === 'hello world')
+console.log(stickies[0])
 
 // case 1
 
@@ -12,19 +11,17 @@ try {
     updateStickyText('pepito@grill.com', stickyId, 'hello world')
     console.log(stickies[0])
 } catch(error) {
-    //console.error(error.message)
-    verify(error.message === 'user with email pepito@grill.com not found')
+    console.error(error.message)
 }
 
 // case 2
 
-var stickyId = stickies[1].id // 'sticky-1'
+var stickyId = stickies[1].id // 'sticky-0'
 try {
     updateStickyText('pepito@grillo.com', stickyId, 'hola mundo')
     console.log(stickies[1])
 } catch(error) {
-    // console.error(error.message)
-    verify(error.message === 'sticky with id sticky-1 does not belong to user with email pepito@grillo.com')
+    console.error(error.message)
 }
 
 // case 3
@@ -34,6 +31,5 @@ try {
     updateStickyText('pepito@grillo.com', stickyId, 'hola mundo')
     console.log(stickies[100])
 } catch(error) {
-    // console.error(error.message)
-    verify(error.message === 'sticky with id sticky-100 not found')
+    console.error(error.message)
 }

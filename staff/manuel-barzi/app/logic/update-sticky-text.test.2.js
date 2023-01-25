@@ -3,7 +3,7 @@
 var stickyId = stickies[0].id // 'sticky-0'
 updateStickyText('pepito@grillo.com', stickyId, 'hello world')
 //console.log(stickies[0])
-verify(stickies[0].text === 'hello world')
+console.assert(stickies[0].text === 'hello world', 'sticky 0 text must hello world')
 
 // case 1
 
@@ -13,7 +13,7 @@ try {
     console.log(stickies[0])
 } catch(error) {
     //console.error(error.message)
-    verify(error.message === 'user with email pepito@grill.com not found')
+    console.assert(error.message === 'user with email pepito@grill.com not found', 'expect error because user does not exist')
 }
 
 // case 2
@@ -24,7 +24,7 @@ try {
     console.log(stickies[1])
 } catch(error) {
     // console.error(error.message)
-    verify(error.message === 'sticky with id sticky-1 does not belong to user with email pepito@grillo.com')
+    console.assert(error.message === 'sticky with id sticky-1 does not belong to user with email pepito@grillo.com', 'expect error because sticky does not belong to user')
 }
 
 // case 3
@@ -35,5 +35,5 @@ try {
     console.log(stickies[100])
 } catch(error) {
     // console.error(error.message)
-    verify(error.message === 'sticky with id sticky-100 not found')
+    console.assert(error.message === 'sticky with id sticky-100 not found', 'expect error because there is no sticky with the provided sticky id')
 }
