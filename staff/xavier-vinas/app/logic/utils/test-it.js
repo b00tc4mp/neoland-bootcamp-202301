@@ -22,7 +22,7 @@ console.log('%cTest it! v0.0', 'color: white; background: radial-gradient(circle
 
 function verify(condition) {
     if (condition)
-        console.log('%cOK 😁✅', 'color: green; font-weight: bold;') 
+        console.log('%cTA-GUENO 😁✅', 'color: green; font-weight: bolder;') 
     else
-        console.error('%cKO 🤬🛑', 'color: tomato; font-weight: bold;')
+        console.error('%cTA-MALO 🤬🛑', 'color: tomato; font-weight: bolder;')
 }
