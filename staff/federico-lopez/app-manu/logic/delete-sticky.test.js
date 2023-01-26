@@ -28,7 +28,6 @@ try {
 try {
   deleteSticky("pepito@grillo.com", "sticky-1");
 } catch (error) {
-  debugger;
   verify(
     error.message ===
       "sticky with id 'sticky-1' does not belong to user with email 'pepito@grillo.com'"
