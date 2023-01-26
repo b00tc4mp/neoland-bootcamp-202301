@@ -26,7 +26,6 @@ users.push(user)
 try {
     authenticateUser('pepito@grillo.com', '_123123123')
 } catch (error) {
-    //console.error(error.message)
     verify(error.message === 'wrong credentials')
 }
 
@@ -44,6 +43,5 @@ users.push(user)
 try {
     authenticateUser('pepito@grill.com', '123123123')
 } catch (error) {
-    // console.error(error.message)
     verify(error.message === 'wrong credentials')
 }

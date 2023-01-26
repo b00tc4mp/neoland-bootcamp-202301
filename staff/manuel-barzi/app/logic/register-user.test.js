@@ -3,7 +3,6 @@
 users.length = 0
 
 registerUser('John Doe', 35, 'john@doe.com', '123123123')
-// console.log(users)
 verify(users.length === 1)
 
 // case 1
@@ -11,7 +10,6 @@ verify(users.length === 1)
 users.length = 0
 
 registerUser('Jane Doe', 29, 'jane@doe.com', '123123123')
-// console.log(users)
 verify(users.length === 1)
 
 // case 2
@@ -28,7 +26,6 @@ users.push(user)
 try {
     registerUser('John Doe', 35, 'john@doe.com', '123123123')
 } catch (error) {
-    // console.error(error.message)
     verify(error.message === 'user with email john@doe.com already exists')
     verify(users.length === 1)
 }
@@ -40,7 +37,6 @@ users.length = 0
 try {
     registerUser('Andy Garcia', 15, 'andy@garcia.com', '123123123')
 } catch (error) {
-    // console.error(error.message)
     verify(error.message === 'user is under 18 years old')
     verify(users.length === 0)
 }
