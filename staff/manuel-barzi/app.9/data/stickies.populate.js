@@ -1,7 +1,3 @@
-// case 0
-
-stickies.length = 0
-
 var sticky = {
     id: createStickyId(),
     user: 'pepito@grillo.com',
@@ -24,7 +20,7 @@ var sticky = {
     id: createStickyId(),
     user: 'peter@pan.com',
     text: 'hello world',
-    visibility: 'private'
+    visibility: 'public'
 }
 
 stickies.push(sticky)
@@ -37,7 +33,3 @@ var sticky = {
 }
 
 stickies.push(sticky)
-
-var results = retrievePublicStickies()
-// console.log(results)
-verify(results.length === 2)
