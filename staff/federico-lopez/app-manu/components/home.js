@@ -31,7 +31,13 @@ home.listPublicStickies = function () {
       deleteButton.id = sticky.id;
 
       deleteButton.onclick = function (event) {
-        console.log(event.target.id);
+        try {
+          deleteSticky(window.email, event.target.id);
+
+          home.listPublicStickies();
+        } catch (error) {
+          console.error(error.message);
+        }
       };
 
       li.appendChild(deleteButton);
