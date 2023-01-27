@@ -9,7 +9,5 @@
 function updateUserPassword(email, currentPassword, newPassword, newPasswordConfirm) {
     var user = users.find(user => user.email === email)
 
-    if (!user) throw new Error('user with email ' + email + ' not found')
-
     user.password = newPassword
 }
