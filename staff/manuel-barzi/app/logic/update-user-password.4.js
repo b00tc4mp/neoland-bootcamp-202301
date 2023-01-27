@@ -15,11 +15,5 @@ function updateUserPassword(email, currentPassword, newPassword, newPasswordConf
 
     if (newPassword !== newPasswordConfirm) throw new Error('new password does not match the confirmation password')
 
-    if (currentPassword === newPassword) throw new Error('new password is equal to current password')
-
-    if (newPassword.length < 8) throw new Error('new password length is lower than 8 characters')
-
-    if (newPassword.includes(' ')) throw new Error('new password contains space characters')
-
     user.password = newPassword
 }
