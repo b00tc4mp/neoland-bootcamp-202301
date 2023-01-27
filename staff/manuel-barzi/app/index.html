@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/logo.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -47,15 +47,13 @@
         <p>or <a href="">Register</a></p>
     </main>
 
-    <div class="home">
+    <div class="home-view">
         <header>
             <a href=""><img class="logo" src="images/logo.png" alt="Chachi Games"></a>
 
             <nav>
-                <a href="">News</a>
-                <a href="">Top Ten</a>
-                <a href="">Featured</a>
-                <a href="">Blog</a>
+                <a href="">Profile</a>
+                <button class="logout-button">Logout</button>
             </nav>
         </header>
         <main class="home-main">
@@ -99,7 +97,7 @@
             </ul>
         </main>
         <footer>
-            <button>+</button>
+            <button class="add-sticky-button">+</button>
         </footer>
     </div>
 
@@ -121,6 +119,7 @@
     <script src="logic/retrieve-public-stickies.js"></script>
     <script src="logic/create-sticky.js"></script>
     <script src="logic/update-sticky-text.js"></script>
+    <script src="logic/delete-sticky.js"></script>
 
     <!-- Presentation Layer -->
 
