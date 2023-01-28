@@ -1,6 +1,3 @@
-// database
-
-
 // case 0
 
 stickies.length=0
@@ -30,6 +27,7 @@ var sticky = {
 }
 
 stickies.push(sticky)
-var results = retrievePublicStickies()
 
-verify(results.length === 2)
+var results = updateStickyVisibility()
+
+verify( results.length === 1)

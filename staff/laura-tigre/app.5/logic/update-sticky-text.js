@@ -33,7 +33,5 @@ function updateStickyText(email, stickyId, text) {
     if (foundSticky.user !== email) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + email)
 
     foundSticky.text = text
-    
-
 
 }

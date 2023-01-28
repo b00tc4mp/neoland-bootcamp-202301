@@ -1,9 +1,3 @@
-// database
-
-
-// case 0
-
-stickies.length=0
 var sticky = {
     id : createStickyId(),
     text: 'hola mundo',
@@ -30,6 +24,5 @@ var sticky = {
 }
 
 stickies.push(sticky)
-var results = retrievePublicStickies()
 
-verify(results.length === 2)
+// console.log(stickies)

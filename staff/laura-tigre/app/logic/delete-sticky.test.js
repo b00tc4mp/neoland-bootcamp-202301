@@ -1,36 +1,123 @@
 //case-0 -> happy path
-var stickyId= stickies[0].id;
-var email= stickies[0].user;
-var previousLength = stickies.length;
 
-deleteSticky(email, stickyId);
+users.length=0
+var user = {
+    name: 'Pepito Grillo',
+    age: 50,
+    email: 'pepito@grillo.com',
+    password: '123123123'
+}
 
-verify(stickies[0].id !== stickyId);
-verify(stickies.length === previousLength -1);
+users.push(user)
+stickies.length=0
+var sticky = {
+    id : createStickyId(),
+    text: 'hola mundo',
+    visibility: 'private',
+    user: 'pepito@grillo.com'
+}
 
-//case-1 unhappy path sticky does not exist
+stickies.push(sticky)
+
+ var stickyId= stickies[0].id;
+// var email= stickies[0].user;
+// var previousLength = stickies.length;
+
+deleteSticky('pepito@grillo.com', stickyId);
+
+verify(stickies.length === 0);
+
+// //case-1 unhappy path sticky does not exist
+users.length=0
+var user = {
+    name: 'Pepito Grillo',
+    age: 50,
+    email: 'pepito@grillo.com',
+    password: '123123123'
+}
+
+users.push(user)
+stickies.length=0
+var sticky = {
+    id : createStickyId(),
+    text: 'hola mundo',
+    visibility: 'private',
+    user: 'pepito@grillo.com'
+}
+
+stickies.push(sticky)
+
+ var stickyId= 'sticky-2000';
+
 
 try {
-    deleteSticky( email, 'wrong-id')
+  deleteSticky( 'pepito@grillo.com', stickyId)
 } catch (error) {
-    verify(error.message === "sticky with id 'wrong-id' not found")
-}
+     verify(error.message === "sticky with id '" + stickyId +"' not found")
+     verify(stickies.length === 1)
+    }
 
 // case-2 unhappy path user does not exist
 
+users.length=0
+var user = {
+    name: 'Pepito Grillo',
+    age: 50,
+    email: 'pepito@grillo.com',
+    password: '123123123'
+}
+
+users.push(user)
+stickies.length=0
+var sticky = {
+    id : createStickyId(),
+    text: 'hola mundo',
+    visibility: 'private',
+    user: 'pepito@grillo.com'
+}
+
+stickies.push(sticky)
+
+ var stickyId= stickies[0].id;
+
+
 var stickyId= stickies[0].id
-try {
+ try {
     deleteSticky('pepit@grillo.com',stickyId)
-} catch (error) {
+ } catch (error) {
     verify(error.message === "user with email 'pepit@grillo.com' not found")
+   
 }
 
 
 // case-3 unhappy path sticky does not belong to the user
-
-try {
-    deleteSticky('pepito@grillo.com', 'sticky-1')
-} catch (error) {
-    verify(error.message === "sticky with id 'sticky-1' does not belong to user with email 'pepito@grillo.com'")
-
+users.length=0
+var user = {
+    name: 'Pepito Grillo',
+    age: 50,
+    email: 'pepito@grillo.com',
+    password: '123123123'
 }
+
+users.push(user)
+
+
+stickies.length=0
+var sticky = {
+    id : createStickyId(),
+    text: 'hola mundo',
+    visibility: 'private',
+    user: 'wendy@darling.com'
+}
+
+stickies.push(sticky)
+
+
+ var stickyId= stickies[0].id;
+
+ try {
+   deleteSticky('pepito@grillo.com',stickyId)
+ } catch (error) {
+    verify(error.message === "sticky with id '" + stickyId+ "' does not belong to user with email 'pepito@grillo.com'")
+    verify(stickies.length === 1)
+ }

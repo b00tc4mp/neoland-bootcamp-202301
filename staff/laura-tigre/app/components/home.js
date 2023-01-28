@@ -1,14 +1,27 @@
 var home = {}
 
-home.view = document.querySelector('.home')
-home.addStickyButton = home.view.querySelector('button')
+home.view = document.querySelector('.home-view')
+home.logoutButton = document.querySelector('.logout-button')
+home.addButton = home.view.querySelector('.add-button')
 home.view.classList.add('off')
+home.listPanel = home.view.querySelector('.list-panel')
+//home.listPanel.classList.add('off')
+home.profilePanel = home.view.querySelector('.profile-panel')
+home.profilePanel.classList.add('off')
+home.updatePasswordPanel = home.profilePanel.querySelector('.update-password-panel')
+home.profileLink = home.view.querySelector('.profile-link')
+home.logoLink = home.view.querySelector('.logo-link')
+
+home.feedbackChanged= home.view.querySelector('.feedback-changed')
+home.feedbackChanged.classList.add('off')
+
+home.feedbackWrongCredentials= home.view.querySelector('.feedback')
+home.feedbackWrongCredentials.classList.add('off')
+
 
 home.listPublicStickies = function () {
-  //nombrar la variable del selector ul
-  var ul = home.view.querySelector('ul')
-  //vaciamos el ul
-  ul.innerHTML = ''
+
+  home.listPanel.innerHTML = ''
   //nombramos la funcion de logic para publicar los stickies publicos
   var stickies = retrievePublicStickies()
   //recorremos los stickies para buscar 
@@ -16,34 +29,105 @@ home.listPublicStickies = function () {
     var sticky = stickies[i]
 
     var li = document.createElement('li')
+
+
     var p = document.createElement('p')
     p.innerText = sticky.text
-    p.contentEditable = window.email===sticky.user;
+    p.contentEditable = window.email === sticky.user;
     p.oonkeyup = function (event) {
       try {
-        updateStickyText(window.email, sticky.id, event.target.innerText) 
+        updateStickyText(window.email, sticky.id, event.target.innerText)
       } catch (error) {
         console.error(error.message)
       }
 
-      
+
     }
+
+
+
+    if (sticky.user === window.email) {
+      var deleteButton = document.createElement('button')
+
+      //deleteButton.classList.add('deleteButton')
+      deleteButton.innerText = 'x'
+      deleteButton.id = sticky.id
+
+
+      deleteButton.onclick = function (event) {
+        //console.log(event.target.id)
+        try {
+          deleteSticky(window.email, event.target.id)
+
+          home.listPublicStickies()
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
+
+      li.appendChild(deleteButton)
+
+    }
+
     var strong = document.createElement('strong')
     strong.innerText = sticky.user
+
 
     li.appendChild(p)
     li.appendChild(strong)
 
-    ul.appendChild(li)
+    home.listPanel.appendChild(li)
 
   }
 
 }
-home.addStickyButton.onclick = function (event) {
+home.addButton.onclick = function (event) {
   try {
     createSticky(window.email, '', 'public')
+
     home.listPublicStickies()
   } catch (error) {
     console.error(error.message)
   }
+}
+home.logoutButton.onclick = function (event) {
+  delete window.email
+
+  home.view.classList.add('off')
+  login.view.classList.remove('off')
+}
+
+home.profileLink.onclick = function (event) {
+  event.preventDefault()
+
+  home.listPanel.classList.add('off')
+  home.addButton.classList.add('off')
+  home.profilePanel.classList.remove('off')
+}
+home.logoLink.onclick = function(event){
+   event.preventDefault()
+   home.profilePanel.classList.add('off')
+   home.listPanel.classList.remove('off')
+   home.addButton.classList.remove('off')
+
+
+
+}
+
+home.updatePasswordPanel.onsubmit = function (event) {
+  event.preventDefault()
+
+  var currentPassword = event.target.currentPassword.value
+  var newPassword = event.target.newPassword.value
+  var newPasswordConfirm = event.target.newPasswordConfirm.value
+
+  try {
+    updateUserPassword(window.email, currentPassword, newPassword, newPasswordConfirm)
+    home.feedbackChanged.classList.remove('off')
+  } catch (error) {
+    //console.error(error)
+    home.feedbackWrongCredentials.classList.remove('off')
+  }
+
 }

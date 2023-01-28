@@ -39,6 +39,7 @@
         <p>
           or
           <a href="">Login</a>
+        </p>
       </main>
     </div>
     <div class="center login">
@@ -46,8 +47,6 @@
         <form>
           <img class="colorreg" src="img/hello!.png" alt="logo empresa" />
           <legend>My account</legend>
-        
-          
 
           <div class="container">
             <label for="email">Email</label>
@@ -59,7 +58,7 @@
               placeholder="Your password"
               required
             />
-          
+
             <button class="button" type="submit">login</button>
           </div>
         </form>
@@ -70,67 +69,112 @@
         </p>
       </main>
     </div>
-    <div class="home">
+    <div class="home-view">
       <header>
-          <a href=""><img class="logo" src="img/hello!.png" alt="logo"></a>
-          <nav>
-              <a href="">NEWS</a>
-              <a href="">TOP TEN</a>
-              <a href="">FEATURE</a>
-              <a href="">BLOG</a>
-          </nav>
+        <a class="logo-link" href="">
+          <img class="logo" src="img/hello!.png" alt="logo" />
+        </a>
+        <nav>
+          <a class="profile-link" href="">PROFILE</a>
+          <button class="logout-button">LOGOUT</button>
+        </nav>
       </header>
-      
-  <main class="home-main">
-      <ul>
-          <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non, numquam cumque! Nisi inventore ipsam expedita distinctio temporibus fuga velit modi suscipit ad eum. At quo itaque harum quis odio omnis?</li>
-          <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo consequuntur dolorum, natus mollitia facilis hic voluptatum repudiandae aliquam voluptate dolorem magni temporibus veritatis, atque ipsum non laborum consequatur iste esse.</li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ullam magni libero nemo accusamus voluptate hic assumenda incidunt numquam perspiciatis corporis rerum provident aperiam dolore, nobis ea eaque debitis optio!</li>
-          <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima temporibus quos facere veritatis voluptate officiis nostrum incidunt, provident, aperiam amet illo quibusdam laboriosam vitae facilis repellat eaque ipsum dignissimos quae!</li>
-          <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus dicta nostrum beatae sed facilis omnis repellat est iusto ex quia ducimus, rerum natus at maxime. Alias neque eligendi facilis suscipit?</li>
-          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis in tenetur, vitae magnam quibusdam odio quod minus perspiciatis iste sapiente ex eos nam quos officiis explicabo consectetur corrupti voluptatibus consequatur.</li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fuga corrupti itaque repellat dolorum illum est aliquam. Provident, illum. Enim blanditiis natus est dolore vitae amet qui, doloribus esse quam!</li>
-      </ul>
 
-  </main>
-  <footer>
-      <button class="buttonfooter">+</button>
-  </footer>
-  </div>
+      <main class="home-main">
+        <ul class="list-panel">
+          <li>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non,
+            numquam cumque! Nisi inventore ipsam expedita distinctio temporibus
+            fuga velit modi suscipit ad eum. At quo itaque harum quis odio
+            omnis?
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
+            consequuntur dolorum, natus mollitia facilis hic voluptatum
+            repudiandae aliquam voluptate dolorem magni temporibus veritatis,
+            atque ipsum non laborum consequatur iste esse.
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+            ullam magni libero nemo accusamus voluptate hic assumenda incidunt
+            numquam perspiciatis corporis rerum provident aperiam dolore, nobis
+            ea eaque debitis optio!
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima
+            temporibus quos facere veritatis voluptate officiis nostrum
+            incidunt, provident, aperiam amet illo quibusdam laboriosam vitae
+            facilis repellat eaque ipsum dignissimos quae!
+          </li>
+          <li>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus
+            dicta nostrum beatae sed facilis omnis repellat est iusto ex quia
+            ducimus, rerum natus at maxime. Alias neque eligendi facilis
+            suscipit?
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+            in tenetur, vitae magnam quibusdam odio quod minus perspiciatis iste
+            sapiente ex eos nam quos officiis explicabo consectetur corrupti
+            voluptatibus consequatur.
+          </li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+            fuga corrupti itaque repellat dolorum illum est aliquam. Provident,
+            illum. Enim blanditiis natus est dolore vitae amet qui, doloribus
+            esse quam!
+          </li>
+        </ul>
+        <div class="profile-panel">
+          <form class="update-password-panel">
+            <input
+              type="password"
+              name="currentPassword"
+              placeholder="current password"
+            />
+            <input
+              type="password"
+              name="newPassword"
+              placeholder="new password"
+            />
+            <input
+              type="password"
+              name="newPasswordConfirm"
+              placeholder="confirm new password"
+            />
+            <button type="submit">Update password</button>
+          </form>
+          <p class="feedback-changed">password changed</p>
+          <p class="feedback">wrong credentials</p>
+        </div>
+      </main>
+      <footer>
+        <button class="add-button">+</button>
+      </footer>
+    </div>
 
-  <script src="utils/test-it.js"></script>
-  <!-- Data-->
-   <script src="data/users.js"></script>
-   <script src="data/stickies.js"></script>
+    <!-- Data-->
+    <script src="data/users.js"></script>
+    <script src="data/stickies.js"></script>
 
-   <script src="data/helpers/create-sticky-id.js"></script>
-  <!-- opcional-->
-<script src="data/users.populate.js"></script>
-<script src="data/stickies.populate.js"></script>
+    <script src="data/helpers/create-sticky-id.js"></script>
+    <!-- opcional-->
+    <script src="data/users.populate.js"></script>
+    <script src="data/stickies.populate.js"></script>
 
+    <!-- Logic (business Layer)-->
 
-<!-- Logic (business Layer)-->
+    <script src="logic/register-user.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/retrive-public-stickies.js"></script>
+    <script src="logic/create-sticky.js"></script>
+    <script src="logic/update-sticky-text.js"></script>
+    <script src="logic/delete-sticky.js"></script>
+    <script src="logic/update-user-password.js"></script>
 
-<script src="logic/register-user.js"></script>
-<script src="logic/authenticate-user.js"></script>
-<script src="logic/retrive-public-stickies.js"></script>
-<script src="logic/create-sticky.js"></script>
-<script src="logic/update-sticky-text.js"></script>
-<script src="logic/delete-sticky.js"></script>
-
-
-<!-- opcional-->
-<script src="logic/register-user.test.js"></script>
-<script src="logic/authenticate-user.test.js"></script>
-<script src="logic/retrieve-public-stickies.test.js"></script>
-<script src="logic/create-sticky.test.js"></script>
-<script src="logic/update-sticky-text.test.js"></script>
-<script src="logic/delete-sticky.test.js"></script>
-
-<!--Components (presentation layer)-->
-<script src="components/register.js"></script>
-<script src="components/login.js"></script>
-<script src="components/home.js"></script>
-    
+    <!--Components (presentation layer)-->
+    <script src="components/register.js"></script>
+    <script src="components/login.js"></script>
+    <script src="components/home.js"></script>
   </body>
 </html>
