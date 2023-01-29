@@ -4,10 +4,10 @@
  *@return {array} the private stickies
  */
 function updateStickyVisibility(){
-    privateStickies=[]
-  var privateSticky= stickies.find(sticky => sticky.visibility === 'private')
-  if(privateSticky) privateStickies.push(privateSticky)
-  return privateStickies.reverse()
+    //privateStickies=[]
+  var privateSticky= stickies.filter(sticky => sticky.visibility === 'private')
+  if(privateSticky) //privateStickies.push(privateSticky)
+  return privateSticky //privateStickies.reverse(privateSticky)
 // var privateStickies = []
 //     for (var i = 0; i < stickies.length; i++) {
 //         var sticky = stickies[i]
