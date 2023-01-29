@@ -1,0 +1,31 @@
+// case 0 -> Happy path
+
+updateStickyText('wendy@darling.com', 'sticky-1', 'this is the new text')
+
+console.log(stickies)
+// [{...}, {id: 'sticky-1', user: 'wendy@darling.com', 'this is the new text'}, {...}, ...]
+
+// case 1 - User not found
+try {
+    updateStickyText('wrong@user.com', 'sitcky-1', 'this is the new text')
+} catch (error) {
+    console.log(error)
+    // expected output: 'user with email wrong@user.com not found'
+}
+
+// case 2 - Sticky not found
+try {
+    updateStickyText('wendy@darling.com', 'wrong-id', 'this is the new text')
+} catch (error) {
+    console.log(error)
+    // expected output: 'sticky with id wrong-id not found'
+}
+
+// case 3 - Sticky does not belong to the user
+try {
+    updateStickyText('pepito@grillo.com', 'sitcky-1', 'this is the new text')
+} catch (error) {
+    console.log(error)
+    // expected output: 'sticky with id sticky-1 does not belong to the user with the email pepito@grillo.com'
+
+

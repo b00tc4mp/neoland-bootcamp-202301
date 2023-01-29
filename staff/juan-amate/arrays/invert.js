@@ -7,16 +7,18 @@
  */
 
 function invert(array) {
-    var results = []
+    var newArray = []
+    var limit = Math.floor(array.length / 2)
 
-    for (var i = 0; i < array.length / 2; i++) {
-        var currentElement = array[i]
-        var changeElement = array[array.length - 1 - i]
+    if (array.length % 2 !== 0)
+        newArray[limit] = array[limit]
 
-        results[i] = changeElement
-        results[array.length - 1 - i] = currentElement
+    for (var i = 0; i < limit; i++) {
+        newArray[i] = array[array.length - 1 - i]
+        newArray[array.length - 1 - i] = array[i]
     }
-    return results
+
+    return newArray
 }
 
 // tests

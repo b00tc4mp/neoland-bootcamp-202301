@@ -76,10 +76,15 @@ button:hover {
   cursor: pointer;
 }
 
+.remember {
+  display: flex;
+  justify-content: center;
+}
+
 .footer-button {
   font-family: var(--primary-font);
-  font-size: 1.3rem;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  margin-bottom: 8px;
 }
 
 a {
@@ -106,6 +111,7 @@ header {
   align-items: center;
   padding-right: 1em;
   position: fixed;
+  box-sizing: border-box;
   width: 100%;
   top: 0;
   background-color: white;
@@ -123,13 +129,35 @@ li {
   background-color: white;
   width: 40ch;
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+li > button {
+  padding: 4px 12px;
+  margin: -8px;
+}
+
+li > p {
+  font-family: var(--primary-font);
+  text-align: justify;
+  font-size: medium;
+}
+
+strong {
+  font-family: var(--primary-font);
+  font-size: small;
+  display: block;
+  text-align: right;
 }
 
 .home-main {
   margin-top: 60px;
   margin-bottom: 60px;
+  padding-bottom: 10px;
 }
 
 .logo {
@@ -156,6 +184,7 @@ footer {
 p {
   color: var(--text-color);
   font-family: var(--primary-font);
+  width: 100%;
 }
 
 .feedback {

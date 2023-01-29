@@ -32,11 +32,11 @@ register.form.onsubmit = function (event) {
     register.feedback.innerText = error.message;
     register.feedback.classList.remove("off");
   }
-};
+}
 
 register.nameInput.oninclick = function (event) {
   register.feedback.classList.add("off");
-};
+}
 
 register.ageInput.onclick = register.nameInput.onclick;
 register.emailInput.onclick = register.nameInput.onclick;

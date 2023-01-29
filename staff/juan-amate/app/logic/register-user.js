@@ -7,21 +7,20 @@
  * @param {string} password The user password
  */
 function registerUser(name, age, email, password) {
-    //TODO: implement me
-    if (age < 18) throw new Error('User is under 18 years old')
-  
-    for (var i = 0; i < users.length; i++) {
-      var user = users[i];
-  
-      if (user.email === email) throw new Error('User already registered')
-      }
-    
-     var user= {
-          name,
-          age,
-          email,
-          password
-        };  
-  
-    users.push(user)
+  if (age < 18) throw new Error('user is under 18 years old')
+
+  for (var i = 0; i < users.length; i++) {
+    var user = users[i];
+
+    if (user.email === email) throw new Error('user with email ' + email + ' already exists')
   }
+
+  var user = {
+    name,
+    age,
+    email,
+    password
+  };
+
+  users.push(user)
+}
