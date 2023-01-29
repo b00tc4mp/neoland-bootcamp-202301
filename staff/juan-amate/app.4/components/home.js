@@ -17,4 +17,4 @@ home.listPublicStickies = function () {
     // hacemos que li entre como hijo de ul
     ul.appendChild(li);
   }
-};
+}

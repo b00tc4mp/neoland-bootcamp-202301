@@ -7,7 +7,7 @@ home.listPublicStickies = function () {
     var ul = home.view.querySelector("ul");
     ul.innerHTML = "";
     
-    var stickies = retrievePublicStickies();
+    var stickies = retrieveStickies();
     
   for (var i = 0; i < stickies.length; i++) {
     var sticky = stickies[i];

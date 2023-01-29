@@ -1,4 +1,3 @@
-/*
 // case 0
 
 stickies.length = 0
@@ -41,5 +40,4 @@ stickies.push(sticky)
 
 var results = retrieveStickies()
 // console.log(results)
-verify(results.length === 2)
-*/
+verify(results.length === 4)

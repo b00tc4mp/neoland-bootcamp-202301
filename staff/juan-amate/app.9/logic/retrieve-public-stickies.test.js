@@ -1,4 +1,3 @@
-/*
 // case 0
 
 stickies.length = 0
@@ -39,7 +38,6 @@ var sticky = {
 
 stickies.push(sticky)
 
-var results = retrieveStickies()
+var results = retrievePublicStickies()
 // console.log(results)
 verify(results.length === 2)
-*/

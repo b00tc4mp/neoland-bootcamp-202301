@@ -174,7 +174,7 @@ createSticky("wendy@darling.com", "hello peter ,)", "public");
  * 
  * @return {array} The public stickies
  */
-function retrievePublicStickies() {
+function retrieveStickies() {
   var publicStickies = []
   
   for (var i= 0; i< stickies.length;i++){

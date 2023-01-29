@@ -11,12 +11,11 @@ home.profilePanel.classList.add('off')
 home.updatePasswordPanel = home.profilePanel.querySelector('.update-password-panel')
 home.profileLink = home.view.querySelector('.profile-link')
 home.logoLink = home.view.querySelector('.logo-link')
-home.radioVisibility = home.view.querySelector('.radio-visibility')
 
 home.listPublicStickies = function () {
   home.listPanel.innerHTML = ''
 
-  var stickies = retrieveStickies();
+  var stickies = retrievePublicStickies();
 
   for (var i = 0; i < stickies.length; i++) {
     var sticky = stickies[i];
@@ -53,17 +52,6 @@ home.listPublicStickies = function () {
       }
       li.appendChild(deleteButton)
     }
-// RADIO VISIBILITY
-    if (sticky.user === window.email) {
-      var visibilityRadio = document.createElement('radio')
-
-      visibilityRadio.checked = function(event) {
-        var stickyVisibility = event.target.checked
-
-
-      }
-      li.appendChild(visibilityRadio)
-    }
 
     var strong = document.createElement('strong')
     strong.innerText = sticky.user
@@ -75,6 +63,7 @@ home.listPublicStickies = function () {
     home.listPanel.appendChild(li)
   }
 };
+
 
 home.addButton.onclick = function (event) {
   try {
