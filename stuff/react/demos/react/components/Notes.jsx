@@ -14,8 +14,12 @@ function Notes() {
 
         //console.log(note)
 
-        setNotes(notes.concat(note))   
+        const newNotes = notes.concat(note)
+
+        setNotes(newNotes)   
     }
+
+    const listItems = notes.map(note => <li>{note}</li>)
 
     return <div style={{border: '1px solid black'}}>
         <h1>Notes</h1>
@@ -25,6 +29,7 @@ function Notes() {
             <button type="submit">Add</button>
         </form>
         
-        <ul>{notes.toString()}</ul>
+        {/* <ul>{notes.map(note => <li>{note}</li>)}</ul> */}
+        <ul>{listItems}</ul>
     </div>
 }
