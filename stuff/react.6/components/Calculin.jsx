@@ -1,8 +1,4 @@
 function Calculin() {
-    console.log('Calculin -> render');
-
-    const [result, setResult] = React.useState('')
-
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -17,7 +13,7 @@ function Calculin() {
         else if (op === '-')
             result = sub(a, b)
 
-        setResult(result)
+        console.log(result)
     }
 
     return <form onSubmit={handleSubmit}>
@@ -28,6 +24,5 @@ function Calculin() {
         </select>
         <input type="number" name="b"></input>
         <button type="submit">=</button>
-        <span>{result}</span>
     </form>
 }
