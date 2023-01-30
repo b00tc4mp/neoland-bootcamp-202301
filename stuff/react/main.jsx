@@ -20,5 +20,6 @@ root.render([
         <HelloTo who="Eli" />,
         <SaluteTo salutation="Bye" who="Xavi" />,
         <SaluteTo salutation="Ciao" who="Juan" />,
-        <Counter />
+        <Counter />,
+        <Notes />
 ])
