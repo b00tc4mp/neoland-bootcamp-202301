@@ -7,7 +7,7 @@
     var publicStickies = []
     for (var i = 0; i < stickies.length; i++) {
         var sticky = stickies[i]
-        if (sticky.visibility === 'public')
+        if (sticky.visibility === 'public'/*||window.email=== sticky.user*/)
             publicStickies.push(sticky)
 
 
