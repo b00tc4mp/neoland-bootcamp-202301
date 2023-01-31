@@ -86,7 +86,7 @@ var user = {
 users.push(user)
 stickies.length = 0
 var sticky = {
-    id: createStickyId(),
+    id: 'sticky-1',
     user: 'pepito@grillo.com',
     text: 'hola mundo',
     visibility: 'private'

@@ -11,7 +11,6 @@ home.profilePanel.classList.add('off')
 home.updatePasswordPanel = home.profilePanel.querySelector('.update-password-panel')
 home.profileLink = home.view.querySelector('.profile-link')
 home.logoLink = home.view.querySelector('.logo-link')
-home.radioVisibility = home.view.querySelector('.radio-visibility')
 
 home.listPublicStickies = function () {
   home.listPanel.innerHTML = ''
@@ -27,11 +26,7 @@ home.listPublicStickies = function () {
     p.innerText = sticky.text
     p.contentEditable = window.email === sticky.user
     p.onkeyup = function (event) {
-      try {
-        updateStickyText(window.email, sticky.id, event.target.innerText)
-      } catch (error) {
-        console.error(error.message)
-      }
+      console.log(event.target.innerText)
     }
 
     if (sticky.user === window.email) {
@@ -53,72 +48,58 @@ home.listPublicStickies = function () {
       }
       li.appendChild(deleteButton)
     }
-// RADIO VISIBILITY
-    if (sticky.user === window.email) {
-      var visibilityRadio = document.createElement('radio')
-
-      visibilityRadio.checked = function(event) {
-        var stickyVisibility = event.target.checked
-
-
-      }
-      li.appendChild(visibilityRadio)
-    }
-
     var strong = document.createElement('strong')
     strong.innerText = sticky.user
-
 
     li.appendChild(p)
     li.appendChild(strong)
 
     home.listPanel.appendChild(li)
   }
-};
 
-home.addButton.onclick = function (event) {
-  try {
-    createSticky(window.email, '', 'public')
+  home.addButton.onclick = function (event) {
+    try {
+      createSticky(window.email, '', 'public')
 
-    home.listPublicStickies()
-  } catch (error) {
-    console.error(error.message)
+      home.listPublicStickies()
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-}
 
-home.logoutButton.onclick = function (event) {
-  delete window.email
+  home.logoutButton.onclick = function (event) {
+    delete window.email
 
-  home.view.classList.add('off')
-  login.view.classList.remove('off')
-}
-
-home.profileLink.onclick = function (event) {
-  event.preventDefault()
-
-  home.listPanel.classList.add('off')
-  home.addButton.classList.add('off')
-  home.profilePanel.classList.remove('off')
-}
-
-home.logoLink.onclick = function (event) {
-  event.preventDefault()
-
-  home.profilePanel.classList.add('off')
-  home.listPanel.classList.remove('off')
-  home.addButton.classList.remove('off')
-}
-
-home.updatePasswordPanel.onsubmit = function (event) {
-  event.preventDefault()
-
-  var currentPassword = event.target.currentPassword.value
-  var newPassword = event.target.newPassword.value
-  var newPasswordConfirm = event.target.newPasswordConfirm.value
-
-  try {
-    updateUserPassword(window.email, currentPassword, newPassword, newPasswordConfirm)
-  } catch (error) {
-    console.error(error.message)
+    home.view.classList.add('off')
+    login.view.classList.remove('off')
   }
-}
+
+  home.profileLink.onclick = function (event) {
+    event.preventDefault()
+
+    home.listPanel.classList.add('off')
+    home.addButton.classList.add('off')
+    home.profilePanel.classList.remove('off')
+  }
+
+  home.logoLink.onclick = function (event) {
+    event.preventDefault()
+
+    home.profilePanel.classList.add('off')
+    home.listPanel.classList.remove('off')
+    home.addButton.classList.remove('off')
+  }
+
+  home.updatePasswordPanel.onsubmit = function (event) {
+    event.preventDefault()
+
+    var currentPassword = event.target.currentPassword.value
+    var newPassword = event.target.newPassword.value
+    var newPasswordConfirm = event.target.newPasswordConfirm.value
+
+    try {
+      updateUserPassword(window.email, currentPassword, newPassword, newPasswordConfirm)
+    } catch (error) {
+      console.error(error.message)
+    }
+  }

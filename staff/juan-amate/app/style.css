@@ -154,6 +154,12 @@ strong {
   text-align: right;
 }
 
+.checkbox {
+  width: 10px;
+  height: 10px;
+  border-color: lightslategray;
+}
+
 .home-main {
   margin-top: 60px;
   margin-bottom: 60px;

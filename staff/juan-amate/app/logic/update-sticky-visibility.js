@@ -15,7 +15,7 @@ function updateStickyVisibility(email, stickyId, visibility) {
 
     if (sticky.user !== email) throw new Error(`sticky with id ${stickyId} does not belong to user with email ${email}`)
 
-    if (sticky.id !== stickyId) throw new Error(`sticky with id ${stickyId} not found`)
+    if (sticky.id !== stickyId) throw new Error('sticky with id ' + stickyId + ' not found')
 
     if (sticky.visibility === visibility) throw new Error(`sticky visibility with id ${stickyId} wrong`)
     
