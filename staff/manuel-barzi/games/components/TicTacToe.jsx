@@ -13,7 +13,7 @@ function TicTacToe() {
     const [b8, setB8] = React.useState('')
     const [b9, setB9] = React.useState('')
 
-    const [result, setResult] = React.useState('XO draw')
+    const [result, setResult] = React.useState('')
 
     const switchSymbol = () => {
         // if (symbol === 'X')
@@ -27,7 +27,7 @@ function TicTacToe() {
         if (!b1) {
             setB1(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(symbol, b2, b3, b4, b5, b6, b7, b8, b9)
         }
     }
 
@@ -35,7 +35,7 @@ function TicTacToe() {
         if (!b2) {
             setB2(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, symbol, b3, b4, b5, b6, b7, b8, b9)
         }
     }
 
@@ -43,7 +43,7 @@ function TicTacToe() {
         if (!b3) {
             setB3(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, symbol, b4, b5, b6, b7, b8, b9)
         }
     }
 
@@ -95,8 +95,11 @@ function TicTacToe() {
         }
     }
 
-    const checkStatus = () => {
+    const checkStatus = (b1, b2, b3, b4, b5, b6, b7, b8, b9) => {
         // TODO check all combinations (8) and setResult
+
+        if (b1 && b1 === b2 && b2 === b3)
+            setResult(b1 + ' winner')
     }
 
     const handleRestart = () => {
