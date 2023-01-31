@@ -21,7 +21,7 @@ function Notes() {
 
     const listItems = notes.map(note => <li>{note}</li>)
 
-    return <div className="box">
+    return <div style={{border: '1px solid black'}}>
         <h1>Notes</h1>
 
         <form onSubmit={handleSubmit}>

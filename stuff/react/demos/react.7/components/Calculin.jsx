@@ -10,7 +10,7 @@ function Calculin() {
         const b = Number(event.target.b.value)
         const op = event.target.op.value
 
-        let result
+        let result 
 
         if (op === '+')
             result = add(a, b)
@@ -20,17 +20,14 @@ function Calculin() {
         setResult(result)
     }
 
-    return <div className="box">
-        <h1>Calculín 🤓</h1>
-        <form onSubmit={handleSubmit}>
-            <input type="number" name="a" />
-            <select name="op">
-                <option value="+">+</option>
-                <option value="-">-</option>
-            </select>
-            <input type="number" name="b"></input>
-            <button type="submit">=</button>
-            <span>{result}</span>
-        </form>
-    </div>
+    return <form onSubmit={handleSubmit}>
+        <input type="number" name="a" />
+        <select name="op">
+            <option value="+">+</option>
+            <option value="-">-</option>
+        </select>
+        <input type="number" name="b"></input>
+        <button type="submit">=</button>
+        <span>{result}</span>
+    </form>
 }

@@ -9,17 +9,11 @@ function Counter() {
 
     const [count, setCount] /* array destructuring */ = React.useState(0)
 
-    const handleCountUp = () => setCount(count + 1)
-
-    const handleCountDown = () => setCount(count - 1)
-
-    const handleReset = () => setCount(0)
-
-    return <div className="box">
+    return <div>
         <p>You clicked {count} times</p>
 
-        <button onClick={handleCountUp}>Count up</button>
-        <button onClick={handleCountDown}>Count down</button>
-        <button onClick={handleReset}>Reset</button>
+        <button onClick={() => setCount(count + 1)}>Count up</button>
+        <button onClick={() => setCount(count - 1)}>Count down</button>
+        <button onClick={() => setCount(0)}>Reset</button>
     </div>
 }

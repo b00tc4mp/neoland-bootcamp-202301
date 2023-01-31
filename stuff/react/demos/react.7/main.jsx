@@ -13,15 +13,13 @@ const root = ReactDOM.createRoot(container)
 root.render([
         h1, 
         ul, 
-        <Hello />, 
         <Calculin />, 
-        <TicTacToe />,
+        <Hello />, 
         <HelloTo who="Lau" />, 
         <HelloTo who="Flor" />, 
         <HelloTo who="Eli" />,
         <SaluteTo salutation="Bye" who="Xavi" />,
         <SaluteTo salutation="Ciao" who="Juan" />,
         <Counter />,
-        <Abc />,
         <Notes />
 ])
