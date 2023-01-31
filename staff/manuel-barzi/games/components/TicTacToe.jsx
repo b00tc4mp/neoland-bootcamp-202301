@@ -13,57 +13,102 @@ function TicTacToe() {
     const [b8, setB8] = React.useState('')
     const [b9, setB9] = React.useState('')
 
+    const [result, setResult] = React.useState('XO draw')
+
     const switchSymbol = () => {
-         // if (symbol === 'X')
+        // if (symbol === 'X')
         //     setSymbol('O')
         // else
         //     setSymbol('X')
-        setSymbol(symbol === 'X'? 'O' : 'X')
+        setSymbol(symbol === 'X' ? 'O' : 'X')
     }
 
     const handleB1 = () => {
-        setB1(symbol)  
-        switchSymbol()
+        if (!b1) {
+            setB1(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB2 = () => {
-        setB2(symbol)  
-        switchSymbol()
+        if (!b2) {
+            setB2(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
-    const handleB3= () => {
-        setB3(symbol)  
-        switchSymbol()
+    const handleB3 = () => {
+        if (!b3) {
+            setB3(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB4 = () => {
-        setB4(symbol)  
-        switchSymbol()
+        if (!b4) {
+            setB4(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB5 = () => {
-        setB5(symbol)  
-        switchSymbol()
+        if (!b5) {
+            setB5(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB6 = () => {
-        setB6(symbol)  
-        switchSymbol()
+        if (!b6) {
+            setB6(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB7 = () => {
-        setB7(symbol)  
-        switchSymbol()
+        if (!b7) {
+            setB7(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB8 = () => {
-        setB8(symbol)  
-        switchSymbol()
+        if (!b8) {
+            setB8(symbol)
+            switchSymbol()
+            checkStatus()
+        }
     }
 
     const handleB9 = () => {
-        setB9(symbol)  
-        switchSymbol()
+        if (!b9) {
+            setB9(symbol)
+            switchSymbol()
+            checkStatus()
+        }
+    }
+
+    const checkStatus = () => {
+        // TODO check all combinations (8) and setResult
+    }
+
+    const handleRestart = () => {
+        setB1('')
+        setB2('')
+        setB3('')
+        setB4('')
+        setB5('')
+        setB6('')
+        setB7('')
+        setB8('')
+        setB9('')
     }
 
     return <div className="box">
@@ -82,5 +127,9 @@ function TicTacToe() {
             <button className="ttt-button" onClick={handleB8}>{b8}</button>
             <button className="ttt-button" onClick={handleB9}>{b9}</button>
         </div>
+
+        <button onClick={handleRestart}>Restart</button>
+
+        <p>{result}</p>
     </div>
 }
