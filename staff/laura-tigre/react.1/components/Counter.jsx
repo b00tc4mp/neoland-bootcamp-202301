@@ -2,7 +2,7 @@ function Counter(){
      console.log('Counter -> render')
 
 
-     const [count, setCount]= React.useState(0)
+     const [count, setCount]= React.useState(0) //array destructuring
 
 
      return <div>
