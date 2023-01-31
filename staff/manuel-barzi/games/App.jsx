@@ -1,7 +1,8 @@
 function App() {
 
     return <div>
-        <TicTacToe />
-        <TicTacToe />
+        {/* <TicTacToe />
+        <TicTacToe /> */}
+        <RussianRoulette />
     </div>
 }
