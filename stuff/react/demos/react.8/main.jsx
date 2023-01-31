@@ -16,6 +16,7 @@ root.render([
         <Hello />, 
         <Calculin />, 
         <TicTacToe />,
+        <TicTacToe />,
         <HelloTo who="Lau" />, 
         <HelloTo who="Flor" />, 
         <HelloTo who="Eli" />,
