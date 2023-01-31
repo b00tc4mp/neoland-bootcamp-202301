@@ -51,7 +51,7 @@ function TicTacToe() {
         if (!b4) {
             setB4(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, symbol, b5, b6, b7, b8, b9)
         }
     }
 
@@ -59,7 +59,7 @@ function TicTacToe() {
         if (!b5) {
             setB5(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, b4, symbol, b6, b7, b8, b9)
         }
     }
 
@@ -67,7 +67,7 @@ function TicTacToe() {
         if (!b6) {
             setB6(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, b4, b5, symbol, b7, b8, b9)
         }
     }
 
@@ -75,7 +75,7 @@ function TicTacToe() {
         if (!b7) {
             setB7(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, b4, b5, b6, symbol, b8, b9)
         }
     }
 
@@ -83,7 +83,7 @@ function TicTacToe() {
         if (!b8) {
             setB8(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, b4, b5, b6, b7, symbol, b9)
         }
     }
 
@@ -91,7 +91,7 @@ function TicTacToe() {
         if (!b9) {
             setB9(symbol)
             switchSymbol()
-            checkStatus()
+            checkStatus(b1, b2, b3, b4, b5, b6, b7, b8, symbol)
         }
     }
 
@@ -100,6 +100,22 @@ function TicTacToe() {
 
         if (b1 && b1 === b2 && b2 === b3)
             setResult(b1 + ' winner')
+        else if (b4 && b4 === b5 && b5 === b6)
+            setResult(b4 + ' winner')
+        else if (b7 && b7 === b8 && b8 === b9)
+            setResult(b7 + ' winner')
+        else if (b1 && b1 === b4 && b4 === b7)
+            setResult(b1 + ' winner')
+        else if (b2 && b2 === b5 && b5 === b8)
+            setResult(b2 + ' winner')
+        else if (b3 && b3 === b6 && b6 === b9)
+            setResult(b3 + ' winner')
+        else if (b1 && b1 === b5 && b5 === b9)
+            setResult(b1 + ' winner')
+        else if (b3 && b3 === b5 && b5 === b7)
+            setResult(b3 + ' winner')
+        else if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9)
+            setResult('XO draw')
     }
 
     const handleRestart = () => {
@@ -112,6 +128,8 @@ function TicTacToe() {
         setB7('')
         setB8('')
         setB9('')
+
+        setResult('')
     }
 
     return <div className="box">
