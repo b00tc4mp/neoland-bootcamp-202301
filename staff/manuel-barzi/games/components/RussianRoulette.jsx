@@ -21,7 +21,7 @@ function RussianRoulette() {
     }
 
     return <div>
-        <p>{shoot !== bullet ? '😅' : '😢 💦'} 🔫 {shoot}</p>
+        <p>{shoot !== bullet ? '😅' : '😢💦'} 🔫 {shoot}</p>
         <button onClick={handleShoot}>shoot</button>
         <button onClick={handleRestart}>restart</button>
     </div>
