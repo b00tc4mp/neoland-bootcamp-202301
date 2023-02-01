@@ -1,4 +1,4 @@
-function Register() {
+function Register(props) {
   const [feedback, setFeedback] = React.useState('')
 
 
@@ -12,10 +12,19 @@ function Register() {
 
     try {
       registerUser(name, age, email, password)
+
       setFeedback('')
+
+      props.onNavigateToLogin()
     } catch (error) {
       setFeedback(error.message)
     }
+  }
+
+  const handleNavigateToLogin = event => {
+    event.preventDefault()
+
+    props.onNavigateToLogin()
   }
 
   return <main className="register">
@@ -24,16 +33,16 @@ function Register() {
 
       <div className="form-inner">
         <label htmlFor="name">Name</label>
-        <input type="name" id="name" className="input-text" required />
+        <input type="name" id="name" className="input-text" required/>
 
         <label htmlFor="age">Age</label>
-        <input type="number" id="age" className="input-text" required />
+        <input type="number" id="age" className="input-text" required/>
 
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" className="input-text" required />
+        <input type="email" id="email" className="input-text" required/>
 
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" className="input-text" required />
+        <input type="password" id="password" className="input-text" required/>
 
         <div className="checkbox">
           <input type="checkbox" id="conditions" />
@@ -45,7 +54,7 @@ function Register() {
     </form>
     <p className="feedback">{feedback}</p>
     <div className="or">
-      <p className="question">¿Tienes una cuenta?<a className="option" href=""> Login</a></p>
+      <p className="question">¿Tienes una cuenta?<a className="option" href="" onClick={handleNavigateToLogin}> Login</a></p>
     </div>
   </main>
 }
