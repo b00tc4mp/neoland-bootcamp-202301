@@ -1,4 +1,4 @@
-function Login() {
+function Login(props) {
     console.log('Login -> render')
 
     const [feedback, setFeedback] = React.useState('')
@@ -12,11 +12,19 @@ function Login() {
         //console.log(email, password)
         try {
             authenticateUser(email, password)
+            
             setFeedback('')
-            console.log('ok, logged in')
+
+            console.log('TODO navigate to home')
         } catch(error) {
             setFeedback(error.message)
         }
+    }
+
+    const handleNavigateToRegister = event => {
+        event.preventDefault()
+
+        props.onNavigateToRegister()
     }
 
     return <main className="login">
@@ -31,6 +39,6 @@ function Login() {
             <button type="submit">Login</button>
         </form>
         <p className="feedback">{feedback}</p>
-        <p>or <a href="">Register</a></p>
+        <p>or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
     </main>
 }

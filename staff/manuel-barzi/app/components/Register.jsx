@@ -1,4 +1,4 @@
-function Register() {
+function Register(props) {
     console.log('Register -> render')
 
     const [feedback, setFeedback] = React.useState('')
@@ -13,13 +13,19 @@ function Register() {
 
         try {
             registerUser(name, age, email, password)
+            
             setFeedback('')
-            //alert('user registration successful')
-            // TODO navigate to login
+
+            props.onNavigateToLogin()
         } catch(error) {
-            //alert(error.message)
             setFeedback(error.message)
         }
+    }
+
+    const handleNavigateToLogin = event => {
+        event.preventDefault()
+
+        props.onNavigateToLogin()
     }
 
     return <main className="register">
@@ -40,6 +46,6 @@ function Register() {
             <button type="submit">Register</button>
         </form>
         <p className="feedback">{feedback}</p>
-        <p>or <a href="">Login</a></p>
+        <p>or <a href="" onClick={handleNavigateToLogin}>Login</a></p>
     </main>
 }
