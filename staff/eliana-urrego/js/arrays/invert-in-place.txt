@@ -1,0 +1,49 @@
+- recorrer array desde inicio hasta la mitad
+- cambiar element actual desde inicio por el mismo desde el final:
+    ej: 
+    
+    1) caso "array con longitud par"
+
+    a = [10, 20, 30, 40, 50, 60]
+    
+    t = a[0]
+    a[0] = a[5]
+    a[5] = t
+
+    t = a[1]
+    a[1] = a[4]
+    a[4] = t
+
+    t = a[2]
+    a[2] = a[3]
+    a[3] = t
+
+    // pseudo-code
+
+    for i = 0 -> 2 (a.length / 2 - 1)
+       t = a[i]
+       a[i] = a[a.length - 1 - i]
+       a[a.length - 1 - i] = t
+
+    2) caso "array con longitud impar"
+
+    a = [10, 20, 30, 40, 50, 60, 70]
+
+    t = a[0]
+    a[0] = a[6]
+    a[6] = t
+
+    t = a[1]
+    a[1] = a[5]
+    a[5] = t
+
+    t = a[2]
+    a[2] = a[4]
+    a[4] = t
+
+    // pseudo-code
+
+    for i = 0 -> 2 (floor(a.length / 2) - 1)
+       t = a[i]
+       a[i] = a[a.length - 1 - i]
+       a[a.length - 1 - i] = t
