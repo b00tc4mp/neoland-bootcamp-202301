@@ -114,7 +114,6 @@ function TicTacToe() {
             setResult(b3 + ' winner')
         else if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 &&  b9)
             setResult('XO draw')
-        
     }
    
 

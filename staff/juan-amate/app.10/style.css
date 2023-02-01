@@ -195,7 +195,6 @@ p {
 
 .feedback {
   color: var(--error-color);
-  text-align: center;
 }
 
 .off {
