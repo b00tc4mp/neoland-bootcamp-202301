@@ -13,7 +13,7 @@ function any(array, callback) {
     recorrer array
     hasta que la callback cumpla la condicion
     si la cumple devoler true
-    si ningun element la comuple, devolver fase
+    si ningun elemento la cumple, devolver false
     */
 
     for (var i = 0; i < array.length; i++) {

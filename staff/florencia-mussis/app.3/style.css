@@ -43,24 +43,16 @@ main {
 .register{
   height: 100%;
   background: radial-gradient(circle, var(--primary-form-color) 0%,var(--secondary-form-color) 100%);
-  gap: 10px;
 }
   
 h1{
   text-align: center;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: var(--primary-font-color);
 }
-
-.logo-form{
-  text-align: center;
-  width: 20%;
-}
-
+  
 form{
-  width: 18%;
-  min-width: 200px;
   border-radius: 8px;
   padding: 25px;
   display: flex;
@@ -74,7 +66,7 @@ form{
 }
   
 .form-inner{
-  width: 100%;
+  width: 230px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -103,7 +95,7 @@ form{
   gap: 10px;
 }
 
-button {
+.button {
   background-color: var(--secondary-form-color);
   color: white;
   text-transform: uppercase;
@@ -114,100 +106,63 @@ button {
   align-items: center;
 }
 
-button:hover{
-  cursor: pointer;  
-}
 
 /*************************************** LOGIN ***************************************/ 
 .login{
   height: 100%;
-  gap: 10px;
+  gap: 30px;
   background: radial-gradient(circle, var(--primary-form-color) 0%,var(--secondary-form-color) 100%);
 }
 
-.or{
-  width: 25%;
-  text-align: center;
-  padding: 25px;
-  font-size: 0.85rem;
-}
-
-.option{
-  margin-left: 2px;
-  text-decoration: none;
-  color: white;
-}
 /*************************************** HOME ***************************************/ 
 
 header{
- width: 100%;
- display: flex;
- background-color: var(--primary-bg-color);
- position:fixed;
+  display: flex;
 }
 
 .logo{
-  width: 15%;
-  text-align: center;
-}
-
-.pluma{
-  width: 30%;
+  width: 3em;
 }
 
 .menu {
+  width: 80%;
   display: flex;
-  width: 85%;
   align-items: center;
+  gap: 2rem;
+  font-size: 0.95rem;
   text-transform: uppercase;
-  justify-content: end;
-  gap:30px;
-  padding-right: 30px;
-  font-size: 1.2rem;
 } 
   
 a{
   list-style-type: none;
-  text-decoration: none;
-  }
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+ }
+
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1em;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: var(--primary-bg-color);
+}
 
 ul {
   list-style-type: none;
   padding: 10px;
 }
 
-.home-main{
-  padding: 60px 0px;
-}
-
 li {
   width: 40ch;
   margin: 1em 0;
-  border-radius: 8px;
-  padding: 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 25px;
-  border: 1.5px solid white;
-  background-color: white;
-  box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.179);
-  align-items: flex-end;
 }
 
-li > p{
-  color: black;
-  width: 100%;
-}
-
-.deleteButton{
-  width: fit-content;
-}
-
-strong{
- display: flex;
- justify-content: flex-end;
- width: 100%;
+.home-main {
+  margin-top: 100px;
 }
 
 footer{
@@ -225,50 +180,6 @@ bottom: 0;
 .off{
   display: none;
 }
-
-.add-button{
-  background-color: var(--primary-bg-color);
-  color: white;
-  text-transform: uppercase;
-  border-radius: 6px;
-  border-color: rgb(234, 217, 239);
-  padding: 4px 8px;
-  font-weight: bold;
-  align-items: center;
-  font-size: 1.8rem;
-}
-
-.profile-panel{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.update-password-panel{
-  margin-top: 100px;
-  height: 300px;
-  width: 225px;
-  gap: 30px;
-}
-
-.update-password-panel input{
-  width: 85%;
-  height: 25px;
-  border-width: 0 0 0 0;
-  box-shadow: 0 0 3px gray;
-}
-
-.newPasswordMessage{
-  margin-top: 20px;
- 
-}
-
-  
-.update-password-panel input:focus{
-  outline-color: var(--secondary-form-color);
-}
-
-
  /*************************************** RECETAS ***************************************/ 
  /* .receta{
   text-align:center;

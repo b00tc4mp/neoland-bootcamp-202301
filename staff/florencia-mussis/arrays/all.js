@@ -13,7 +13,7 @@ function all(array, callback) {
     recorrer array
     mientras que la callback cumpla la condicion
     si la cumplen todos devoler true
-    si algun element no la comuple, devolver fase
+    si algun elemento no la cumple, devolver false
     */
 
     for (var i = 0; i < array.length; i++) {

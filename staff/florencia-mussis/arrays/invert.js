@@ -50,7 +50,7 @@ function invert(array) {
     var newArray = []
     var limit = Math.floor(array.length / 2)
 
-    if (array.length % 2 !== 0)
+    if (array.length % 2 !== 0)    //if declarado para los arrays impares
         newArray[limit] = array[limit]
 
 

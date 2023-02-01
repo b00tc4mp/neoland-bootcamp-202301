@@ -8,7 +8,7 @@ var stickies = []
 var user = {
     name: 'Pepito Grillo',
     age: 50,
-    email: 'pepito@gillo.com',
+    email: 'pepito@grillo.com',
     password: '123123123'
 }
 
