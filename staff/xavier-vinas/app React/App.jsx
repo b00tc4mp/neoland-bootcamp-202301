@@ -3,5 +3,6 @@ function App(){
     <Register />
     <Login />
     <Home />
+    <Profile-panel/>
 </div>
 }
