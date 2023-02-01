@@ -30,7 +30,7 @@ function TicTacToe() {
 
 
     const handleB1 =() => {
-        if(!b1){
+        if(!b1){ // si b1 es un string vacio es false por lo tanto el negado de un false es verdadero.
         setB1(symbol)
         switchSymbol()
         checkStatus(symbol, b2, b3, b4, b5, b6, b7, b8, b9)
