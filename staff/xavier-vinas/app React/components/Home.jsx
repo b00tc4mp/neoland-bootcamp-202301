@@ -1,18 +1,9 @@
 function Home() {
-
-
-
-
-
-
-
-
-
     return <div className="home-view">
         <header>
 
             <nav>
-                <a className="logo-link" href=""><img class="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png" alt=""></img></a>
+                <a className="logo-link" href=""><img className="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png" alt=""></img></a>
                 <a href="#">Home</a>
                 <a href="#">About</a>
                 <a href="#">Experience</a>
@@ -70,7 +61,7 @@ function Home() {
 
         <footer>
 
-            <button class="add-button">Add Sticky</button>
+            <button className="add-button">Add Sticky</button>
         </footer>
 
     </div>

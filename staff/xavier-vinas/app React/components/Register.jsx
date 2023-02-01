@@ -1,4 +1,4 @@
-function Register() {
+function Register(props) {
     const [feedback, setFeedback] = React.useState("")
 
     const handleSubmit = event => {
@@ -15,6 +15,12 @@ function Register() {
         } catch (error) {
             setFeedback(error.message)
         }
+    }
+
+    const handleNavigateToLogin = event => {
+        event.preventDefault()
+
+        props.onNavigateToLogin()
     }
 
     return <main className="register">
@@ -39,7 +45,7 @@ function Register() {
             <button type="submit">Sing me up!</button>
         </form>
         <p className="feedback">{feedback} </p>
-        <p>or <a href="">Register</a></p>
+        <p>or <a href="" onClick={handleNavigateToLogin}>Register</a></p>
 
     </main>
 
