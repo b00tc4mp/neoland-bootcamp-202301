@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="register">
+        <h1>Register</h1>
+        <form>
+            <label for="name">Name</label>
+            <input type="name" id="name" placeholder="input your name">
+
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="input your age">
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="input your e-mail">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="input your password">
+
+            <button type="submit">Register</button>
+        </form>
+        <p class="feedback">error...</p>
+        <p>or <a href="">Login</a></p>
+    </main>
+
+    <main class="login">
+        <h1>Login</h1>
+        <form>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="input your e-mail">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="input your password">
+
+            <button type="submit">Login</button>
+        </form>
+        <p class="feedback">error...</p>
+        <p>or <a href="">Register</a></p>
+    </main>
+
+    <div class="home-view">
+        <header>
+            <a class="logo-link" href=""><img class="logo" src="images/logo.png" alt="Chachi Games"></a>
+
+            <nav>
+                <a class="profile-link" href="">Profile</a>
+                <button class="logout-button">Logout</button>
+            </nav>
+        </header>
+        <main class="home-main">
+            <ul class="list-panel">
+                <li>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
+                        repudiandae
+                        fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
+                        consectetur!
+                    </p>
+                    <strong>pepito@grillo.com</strong>
+                </li>
+                <li>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
+                        repudiandae
+                        fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
+                        consectetur!
+                    </p>
+                    <strong>pepito@grillo.com</strong>
+                </li>
+                <li>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
+                        repudiandae
+                        fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
+                        consectetur!
+                    </p>
+                    <strong>pepito@grillo.com</strong>
+                </li>
+                <li>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
+                        repudiandae
+                        fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
+                        consectetur!
+                    </p>
+                    <strong>pepito@grillo.com</strong>
+                </li>
+            </ul>
+
+            <div class="profile-panel">
+                <form class="update-password-panel">
+                    <input type="password" name="currentPassword" placeholder="current password">
+                    <input type="password" name="newPassword" placeholder="new password">
+                    <input type="password" name="newPasswordConfirm" placeholder="confirm new password">
+                    <button type="submit">Update password</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <button class="add-button">+</button>
+        </footer>
+    </div>
+
+    <!-- Data Layer -->
+
+    <script src="data/users.js"></script>
+    <script src="data/stickies.js"></script>
+
+    <script src="data/helpers/create-sticky-id.js"></script>
+
+    <!-- optionl -->
+    <script src="data/users.populate.js"></script>
+    <script src="data/stickies.populate.js"></script>
+
+    <!-- Business (Logic) Layer -->
+
+    <script src="logic/register-user.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/retrieve-public-stickies.js"></script>
+    <script src="logic/create-sticky.js"></script>
+    <script src="logic/update-sticky-text.js"></script>
+    <script src="logic/delete-sticky.js"></script>
+    <script src="logic/update-user-password.js"></script>
+
+    <!-- Presentation Layer -->
+
+    <script src="components/register.js"></script>
+    <script src="components/login.js"></script>
+    <script src="components/home.js"></script>
+</body>
+
+</html>
