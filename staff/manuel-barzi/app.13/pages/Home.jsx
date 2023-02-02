@@ -2,7 +2,6 @@ function Home() {
     console.log('Home -> render')
     
     const [view, setView] = React.useState('list')
-    const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
 
     const handleShowProfile = event => {
         event.preventDefault()
@@ -16,16 +15,6 @@ function Home() {
         setView('list')
     }
 
-    const handleAdd = () => {
-        try {
-            createSticky(sessionStorage.email, '', 'public')
-
-            setListUpdateStamp(Date.now())
-        } catch(error) {
-            alert(error.message)
-        }
-    }
-
     return <div className="home-view">
         <header>
             <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="images/logo.png" alt="Chachi Games" /></a>
@@ -36,12 +25,12 @@ function Home() {
             </nav>
         </header>
         <main className="home-main">
-            {view === 'list' && <List updateStamp={listUpdateStamp} />}
+            {view === 'list' && <List />}
 
             {view === 'profile' && <Profile />}
         </main>
         <footer>
-            <button onClick={handleAdd} className="add-button">+</button>
+            <button className="add-button">+</button>
         </footer>
     </div>
 }
