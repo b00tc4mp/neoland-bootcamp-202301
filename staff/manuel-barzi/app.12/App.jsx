@@ -11,18 +11,12 @@ function App() {
         setView('login')
     }
 
-    const handleShowHome = () => {
-        setView('home')
-    }
-
     return <div className="">
         {/* <button onClick={handleShowRegister}>Show Register</button>
         <button onClick={handleShowLogin}>Show Login</button> */}
 
-        {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />}
-
+        {view === 'login' && <Login onNavigateToRegister={handleShowRegister} />}
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
-        
-        {view === 'home' && <Home />}
+        {view === 'home' && <h1>hola home</h1>}
     </div>
 }
