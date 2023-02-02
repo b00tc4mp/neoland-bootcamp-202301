@@ -1,4 +1,5 @@
 function Register(props) {
+  console.log('Register -> render')
   const [feedback, setFeedback] = React.useState('')
 
 
@@ -12,8 +13,6 @@ function Register(props) {
 
     try {
       registerUser(name, age, email, password)
-
-      setFeedback('')
 
       props.onNavigateToLogin()
     } catch (error) {

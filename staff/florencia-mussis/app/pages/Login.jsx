@@ -1,4 +1,5 @@
 function Login(props) {
+    console.log('Login -> render')
 
     const [feedback, setFeedback] = React.useState('')
 
@@ -11,6 +12,8 @@ function Login(props) {
         try {
             authenticateUser(email, password)
 
+            sessionStorage.email = email
+            
             props.onNavigateToHome()
 
         } catch(error){

@@ -12,6 +12,9 @@
   --secondary-form-color:rgba(146,145,241,1);
 }
 
+#root {
+ height: 100%;
+}
 
 * {
   font-family: 'Montserrat', sans-serif;
@@ -57,6 +60,7 @@ h1{
   text-align: center;
   width: 20%;
 }
+
 
 form{
   width: 18%;
@@ -118,6 +122,10 @@ button:hover{
   cursor: pointer;  
 }
 
+.app{
+  height: 100%;
+}
+
 /*************************************** LOGIN ***************************************/ 
 .login{
   height: 100%;
@@ -149,6 +157,11 @@ header{
 .logo{
   width: 15%;
   text-align: center;
+  transition: transform 1s;
+}
+
+.logo:hover {
+  transform: scale(1.2);
 }
 
 .pluma{
@@ -258,9 +271,9 @@ bottom: 0;
   box-shadow: 0 0 3px gray;
 }
 
-.newPasswordMessage{
+.feedback{
   margin-top: 20px;
- 
+  font-size: 0.9rem;
 }
 
   
