@@ -15,12 +15,6 @@ html,
 body {
   height: 100%;
 }
-/* #root{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-} */
 .center {
   display: flex;
   align-items: center;
@@ -112,16 +106,9 @@ p {
   height: 100%;
 }
 .logo {
-  padding-left: 1em;
   width: 60px;
   height: 60px;
-  transition: transform 1s;
 }
-
-.logo:hover {
-    transform: scale(1.1);
-}
-
 header {
   display: flex;
   flex-grow: 0;
@@ -131,7 +118,6 @@ header {
   padding-right: 1em;
   border-bottom: 0.01em solid grey;
   background-color: grey;
-  height: 80px;
 
   /* position: fixed; */
 }
@@ -193,16 +179,12 @@ footer {
   background-color: grey;
   flex-grow: 0;
   flex-shrink: 0;
-  bottom: 0;
-  position: fixed;
-  height: 80px;
-  width: 100%;
   
 }
-.feedback-success{
+.feedback-changed{
   color: limegreen;
 }
-.feedback-error {
+.feedback {
   color: var(--terciary-color);
 }
 .off {

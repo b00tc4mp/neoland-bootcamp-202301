@@ -1,5 +1,5 @@
 function App(){
-    const [view,setView]= React.useState(sessionStorage.email ? 'home':'login')
+    const [view,setView]= React.useState('login')
 
     const handleShowRegister=()=> {
         setView('register')
@@ -19,6 +19,7 @@ function App(){
         {view === 'register'&& <Register onNavigateToLogin={handleShowLogin}/>}
         {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome}/>}
         {view === 'home' && <Home />} 
+        {/* <Profile /> */}
          
     </div>
 }
