@@ -1,4 +1,6 @@
 function Home() {
+    console.log('Home -> render')
+    
     const [view, setView] = React.useState('list')
 
     const handleShowProfile = event => {
@@ -7,9 +9,15 @@ function Home() {
         setView('profile')
     }
 
+    const handleShowList = event => {
+        event.preventDefault()
+
+        setView('list')
+    }
+
     return <div className="home-view">
         <header>
-            <a className="logo-link" href=""><img className="logo" src="images/logo.png" alt="Chachi Games" /></a>
+            <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="images/logo.png" alt="Chachi Games" /></a>
 
             <nav>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>

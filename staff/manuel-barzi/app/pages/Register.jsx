@@ -43,7 +43,7 @@ function Register(props) {
 
             <button type="submit">Register</button>
         </form>
-        <p className="feedback">{feedback}</p>
+        <p className="feedback-error">{feedback}</p>
         <p>or <a href="" onClick={handleNavigateToLogin}>Login</a></p>
     </main>
 }

@@ -1,40 +1,20 @@
 function List() {
+    console.log('List -> render')
+
+    let stickies
+
+    try {
+        stickies = retrievePublicStickies()
+
+        console.log(stickies)
+    } catch(error) {
+        alert(error.message)
+    }
+
     return <ul className="list-panel">
-        <li>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
-                repudiandae
-                fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
-                consectetur!
-            </p>
-            <strong>pepito@grillo.com</strong>
-        </li>
-        <li>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
-                repudiandae
-                fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
-                consectetur!
-            </p>
-            <strong>pepito@grillo.com</strong>
-        </li>
-        <li>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
-                repudiandae
-                fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
-                consectetur!
-            </p>
-            <strong>pepito@grillo.com</strong>
-        </li>
-        <li>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto
-                repudiandae
-                fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
-                consectetur!
-            </p>
-            <strong>pepito@grillo.com</strong>
-        </li>
+        {stickies.map(sticky => <li>
+            <p>{sticky.text}</p>
+            <strong>{sticky.user}</strong>
+        </li>)}
     </ul>
 }

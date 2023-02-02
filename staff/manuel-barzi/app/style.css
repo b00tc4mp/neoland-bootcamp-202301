@@ -11,6 +11,7 @@
     --secondary-font: 'Odibee Sans';
     --secondary-font-size: 1.5rem;
     --error-color: red;
+    --success-color: yellowgreen;
 }
 
 html, body {
@@ -123,6 +124,11 @@ strong {
 
 .logo {
     width: 3em;
+    transition: transform 1s;
+}
+
+.logo:hover {
+    transform: scale(1.5);
 }
 
 footer {
@@ -142,8 +148,33 @@ p {
 }
 
 .feedback {
-    color: var(--error-color)
+    color: var(--primary-color);
 }
+
+.feedback-success {
+    color: var(--success-color);
+    transform: rotate(-5deg);
+}
+
+.feedback-error {
+    color: var(--error-color);
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
 
 .off {
     display: none;

@@ -9,9 +9,10 @@ function Login(props) {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        //console.log(email, password)
         try {
             authenticateUser(email, password)
+
+            sessionStorage.email = email
 
             props.onNavigateToHome()
         } catch(error) {
@@ -36,7 +37,7 @@ function Login(props) {
 
             <button type="submit">Login</button>
         </form>
-        <p className="feedback">{feedback}</p>
+        <p className="feedback-error">{feedback}</p>
         <p>or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
     </main>
 }
