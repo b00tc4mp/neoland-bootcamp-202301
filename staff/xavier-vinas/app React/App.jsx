@@ -20,7 +20,8 @@ function App() {
     return <div>
         {view === "login" && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome}/>}
         {view === "register" && <Register onNavigateToLogin={handleShowLogin} />}
-        {view === "home" && <Home  />}
-        <Profile-panel />
+        {view === "home" && <Home />}
+        
     </div>
 }
+

@@ -185,6 +185,13 @@ p {
   color: red;
 }
 
+.feedback-success{
+  color : yellowgreen
+}
+
+.feedback-error {
+  color:red
+}
 .off {
   display: none;
 }

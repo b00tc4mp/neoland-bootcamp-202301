@@ -5,12 +5,13 @@ function Login(props) {
         event.preventDefault()
 
         const email = event.target.email.value
-        const password = event.target.email.value
+        const password = event.target.password.value
 
         try {
 
             authenticateUser(email, password)
-            setFeedback("")
+            sessionStorage.email=email
+           props.onNavigateToHome()
             
         } catch (error) {
             setFeedback(error.message)
@@ -22,10 +23,7 @@ function Login(props) {
         event.preventDefault()
         props.onNavigateToRegister()
     }
-    const handleNavigateToHome = event =>{
-        event.preventDefault()
-        props.onNavigateToHome()
-    }
+ 
     return <main className="login">
 
         <form onSubmit={handleSubmit}>
@@ -38,7 +36,7 @@ function Login(props) {
             <label htmlFor="password">Pasword</label>
             <input type="password" placeholder="pasword" id="password" required />
 
-            <button onClick={handleNavigateToHome} type="submit">Login</button>
+            <button  type="submit">Login</button>
         </form>
         <p className="feedback"> {feedback}</p>
         <p>or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
