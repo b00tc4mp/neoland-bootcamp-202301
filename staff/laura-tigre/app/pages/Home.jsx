@@ -1,4 +1,4 @@
-function Home (props){
+function Home (){
     // console.log( 'Home -> render')
     const[view, setView] = React.useState('list')
     const[listUpdateStamp, setListUpdateStamp]= React.useState(Date.now())
@@ -6,6 +6,11 @@ function Home (props){
     event.preventDefault()
 
     setView('profile')
+  }
+  const handleShowMyList= event=>{
+    event.preventDefault()
+
+    setView('my-list')
   }
  
     const handleShowList= event =>{
@@ -21,10 +26,10 @@ function Home (props){
         alert(error.message)
       }
     }
-    const handleLogout=()=>{
-      delete sessionStorage.email
-      props.onLogout()
-    }
+     const handleLogout=()=>{
+    delete sessionStorage.email
+    props.onLogout()
+  }
 
 
     return <div className="home-view">
@@ -33,8 +38,10 @@ function Home (props){
         <img className="logo" src="img/hello!.png" alt="logo" />
       </a>
       <nav>
+        <a onClick={handleShowMyList}className="my-list-link" href="">MY STICKIES</a>
         <a onClick={handleShowProfile}className="profile-link" href="">PROFILE</a>
         <button onClick={handleLogout} className="logout-button">LOGOUT</button>
+       
       </nav>
     </header>
 
@@ -42,6 +49,9 @@ function Home (props){
       {view === 'list' && <List updateStamp={listUpdateStamp}/>}
 
       {view === 'profile' && <Profile />}
+
+      {view === 'my-list' && <MyList />}
+
     </main>
     <footer>
       <button onClick={handleAdd} className="add-button">+</button>

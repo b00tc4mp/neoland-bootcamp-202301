@@ -1,4 +1,5 @@
 function List (){
+  const[listUpdateStamp, setListUpdateStamp]= React.useState(Date.now())
   let stickies
   try {
     stickies=retrievePublicStickies()
@@ -25,9 +26,20 @@ function List (){
 
     try {
       deleteSticky(sessionStorage.email, event.target.id)
+      setListUpdateStamp(Date.now())
     } catch (error) {
      alert(error.message)
       
+    }
+   }
+
+   const handleUpdateVisibility= event=> {
+
+    try {
+      updateStickyVisibility(sessionStorage.email, event.target.id, event.target.dataset.visibility === 'public'? 'private':'public')
+      setListUpdateStamp(Date.now())
+    } catch (error) {
+      alert(error.message)
     }
    }
 
@@ -45,6 +57,8 @@ function List (){
          {/* <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email? true:false} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p> */}
+            {sticky.user === sessionStorage.email &&
+            <button id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> }
             {sticky.user === sessionStorage.email &&
             <button id={sticky.id} onClick={handleDelete}>X</button> }
             <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
