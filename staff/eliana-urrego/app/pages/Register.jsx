@@ -1,4 +1,6 @@
-function Register() {
+function Register(props) {
+    console.log('Register -> render')
+    
     const [feedback, setFeedback] = React.useState('')
 
     const handleSubmit = event => {
@@ -11,21 +13,25 @@ function Register() {
 
         try {
             registerUser(name, age, email, password)
-            setFeedback('')
-            //alert('user registration successful')
-            //TODO navigate to login
+
+            props.onNavigateToLogin()
         }catch(error){
             setFeedback(error.message)
         }
     }
 
+ const handleNavigateToLogin = event => {
+    event.preventDefault()
+    props.onNavigateToLogin()
+ }
+
     return <main className="register">
+    <h1>register</h1>
         <img
-            class="resize"
+            className="resize"
             src="https://cdn-icons-png.flaticon.com/512/2767/2767812.png"
-            alt="company logo"
-        />
-        <h1>Register</h1>
+            alt="company logo"/>
+
         <form onSubmit ={handleSubmit}>
             <label htmlFor="name">Name</label>
             <input type="text" id="name" placeholder="name" required />
@@ -43,7 +49,7 @@ function Register() {
 
             <button type="submit-button">Register</button>
         </form>
-        <p className="feedback">{feedback}</p>
-        <p>or <a href="">Login</a></p>
+        <p className="feedback-error">{feedback}</p>
+        <p>or <a href="" onClick={handleNavigateToLogin}>Login</a></p>
     </main>
 }
