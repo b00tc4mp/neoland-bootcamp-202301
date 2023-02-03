@@ -20,6 +20,6 @@ function App() {
 
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
         
-        {view === 'home' && <Home />}
+        {view === 'home' && <Home onLogout={handleShowLogin} />}
     </div>
 }

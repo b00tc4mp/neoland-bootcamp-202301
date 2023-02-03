@@ -1,4 +1,4 @@
-function Home() {
+function Home(props) {
     console.log('Home -> render')
     
     const [view, setView] = React.useState('list')
@@ -26,13 +26,19 @@ function Home() {
         }
     }
 
+    const handleLogout = () => {
+        delete sessionStorage.email
+
+        props.onLogout()
+    }
+
     return <div className="home-view">
         <header>
             <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="images/logo.png" alt="Chachi Games" /></a>
 
             <nav>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
-                <button className="logout-button">Logout</button>
+                <button onClick={handleLogout} className="logout-button">Logout</button>
             </nav>
         </header>
         <main className="home-main">
