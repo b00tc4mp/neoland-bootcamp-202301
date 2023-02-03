@@ -1,4 +1,4 @@
-function Home (){
+function Home (props){
     // console.log( 'Home -> render')
     const[view, setView] = React.useState('list')
     const[listUpdateStamp, setListUpdateStamp]= React.useState(Date.now())
@@ -7,6 +7,7 @@ function Home (){
 
     setView('profile')
   }
+ 
     const handleShowList= event =>{
       event.preventDefault()
       setView('list')
@@ -20,6 +21,10 @@ function Home (){
         alert(error.message)
       }
     }
+    const handleLogout=()=>{
+      delete sessionStorage.email
+      props.onLogout()
+    }
 
 
     return <div className="home-view">
@@ -29,7 +34,7 @@ function Home (){
       </a>
       <nav>
         <a onClick={handleShowProfile}className="profile-link" href="">PROFILE</a>
-        <button className="logout-button">LOGOUT</button>
+        <button onClick={handleLogout} className="logout-button">LOGOUT</button>
       </nav>
     </header>
 
