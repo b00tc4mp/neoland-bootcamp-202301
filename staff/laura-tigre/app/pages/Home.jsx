@@ -1,4 +1,4 @@
-function Home (){
+function Home (props){
     // console.log( 'Home -> render')
     const[view, setView] = React.useState('list')
     const[listUpdateStamp, setListUpdateStamp]= React.useState(Date.now())

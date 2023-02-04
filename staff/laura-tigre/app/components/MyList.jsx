@@ -40,18 +40,15 @@ function MyList(){
     return<ul className="list-panel">
          {stickies.map(sticky => 
         <li key={sticky.id}>
-      
-     
-        <button id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button>
-
-      
+        {sticky.visibility === 'public'?
+        <button id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> 
+        :
+        <button id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🛑</button>
+         }
         <button id={sticky.id} onClick={handleDelete}>X</button> 
         
         <p id={sticky.id} contentEditable onKeyUp={handleEditText} suppressContentEditableWarning= {true}>{sticky.text}</p>
        
-        
-       
-      
         <strong>{sticky.user}</strong>
         </li>)}
        
