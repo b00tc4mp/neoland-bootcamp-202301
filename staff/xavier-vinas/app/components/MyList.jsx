@@ -9,11 +9,18 @@ function MyList() {
 
 
 
- return <div> <h1>gholaadasd sw</h1>
-  <h1>gholaadasd sw</h1>
-  <h1>gholaadasd sw</h1>
-  <h1>gholaadasd sw</h1>
-  <h1>gholaadasd sw</h1>
+ return <ul className="list-my-stikies"> 
+ {stickies.map(sticky => <li key={sticky.id} >
+
+
+
+
+
+
+
+</li>)}
+ </ul>
+
 
   
 
@@ -25,7 +32,7 @@ function MyList() {
 
 
    
- </div>
+
     
 }
 
