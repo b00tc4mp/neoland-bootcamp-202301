@@ -5,4 +5,5 @@ My GitHub [account](https://github.com/LauraTigre).
 
 My favorite techs
 - HTML
--
+- CSS
+- JS
