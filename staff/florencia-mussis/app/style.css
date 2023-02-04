@@ -122,6 +122,28 @@ button:hover{
   cursor: pointer;  
 }
 
+.classPublic {
+  background-color: green;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border-color: white;
+  padding: 4px 8px;
+  font-weight: bold;
+  align-items: center;
+}
+
+.classPrivate {
+  background-color: red;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border-color: white;
+  padding: 4px 8px;
+  font-weight: bold;
+  align-items: center;
+}
+
 .app{
   height: 100%;
 }

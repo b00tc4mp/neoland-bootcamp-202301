@@ -1,12 +1,11 @@
-function List(props){
-    console.log('List ->render')
+function MyList(){
 
     const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
 
     let stickies 
 
     try{
-        stickies = retrievePublicStickies ()
+        stickies = retrieveMyStickies (sessionStorage.email)
     } catch (error) {
         alert(error.message)
     }
@@ -36,21 +35,19 @@ function List(props){
         } catch (error) {
             alert(error.message)
         }
-    }
+    }   
+
     
+
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id}>
+        
+            {<button className={sticky.visibility === 'public' ?  'classPublic '  : 'classPrivate'} id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>}
 
-            {sticky.user === sessionStorage.email && 
-            <button className={sticky.visibility === 'public' ? 'classPublic' : 'classPrivate'} id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>}
-           
             {sticky.user === sessionStorage.email &&
-            <button id={sticky.id} onClick={handleDeleteSticky}>X</button>}
-
+            <button id={sticky.id} onClick={handleDeleteSticky}>x</button>}
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
-            
             <strong>{sticky.user}</strong>
-            
         </li>)}
     </ul>
 }

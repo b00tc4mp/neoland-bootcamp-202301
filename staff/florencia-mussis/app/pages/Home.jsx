@@ -1,8 +1,8 @@
-function Home() {
+function Home(props) {
     console.log('Home -> render')
 
     const [view, setView] = React.useState('list')
-    const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
+    const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now()) //cuando necesitamos que se actualice y pinte, lo asociamos a date now
 
 
     const handleShowProfile = event => {
@@ -25,6 +25,18 @@ function Home() {
         }
     }
 
+    const handleShowMyList = event => {
+        event.preventDefault()
+
+        setView('my-list')
+    }
+
+    const handleLogout = () => {
+        delete sessionStorage.email
+
+        props.onLogout()
+    }
+
     return <div className="home-view">
         <header>
             <a onClick={handleShowList} className="logo" href=""><img className="pluma"
@@ -32,9 +44,9 @@ function Home() {
                 alt="Posts"></img></a>
 
             <nav className="menu">
-
+                <a onClick={handleShowMyList} className="my-list-link" href="">My stickies</a>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
-                <button className="logout-button">Logout</button>
+                <button onClick={handleLogout} className="logout-button">Logout</button>
             </nav>
         </header>
 
@@ -42,6 +54,8 @@ function Home() {
            {view ==='list' && <List updateStamp = {listUpdateStamp}/>}
            
            {view ==='profile' && <Profile/>}
+
+           {view === 'my-list' && <MyList/>}
         </main>
 
         <footer>

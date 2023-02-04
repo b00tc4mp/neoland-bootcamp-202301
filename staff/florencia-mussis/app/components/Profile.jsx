@@ -40,6 +40,6 @@ function Profile() {
             <input type="password" name="newPasswordConfirm" placeholder="Confirm new password" />
             <button className="update-password" type="submit"> Update password</button>
         </form>
-        <p className={"feedback feedback-" + feedback.type} > {feedback.message}</p>
+         <p className={"feedback feedback-" + feedback.type} > {feedback.message}</p> {/* pq se pone dos veces feedback? */}
     </div>
 }
