@@ -14,8 +14,9 @@ body {
 body {
   margin: 0;
   background-color: whitesmoke;
-  
+
 }
+
 main {
   height: 100%;
   display: flex;
@@ -23,7 +24,8 @@ main {
   justify-content: center;
   align-items: center;
 }
-p{
+
+p {
   font-family: monospace;
   font-size: 15px;
   font-weight: bolder;
@@ -38,14 +40,15 @@ form {
   border: solid lightgray 5px;
   border-radius: 10px;
   padding: 2rem;
-  background-color:lightgray;
+  background-color: lightgray;
   font-family: monospace;
   font-weight: bolder;
 
-  
-  
-  
+
+
+
 }
+
 form img {
   filter: drop-shadow(0 0 0.75rem rgb(7, 0, 2));
 }
@@ -60,11 +63,12 @@ input {
   font-family: monospace;
   padding: 5px;
   border-radius: 20px;
-  
 
-  
+
+
 }
-button:hover{
+
+button:hover {
   cursor: pointer;
 }
 
@@ -85,10 +89,11 @@ nav {
   justify-content: space-evenly;
   align-items: center;
   background-color: whitesmoke;
-
+  gap: 450px;
   width: 100%;
   position: fixed;
-  
+  border: solid 2px black;
+
 }
 
 nav a {
@@ -97,20 +102,36 @@ nav a {
   text-decoration: none;
   font-size: 30px;
 
-  
+
 }
 
 
 nav button {
   color: gray;
+  padding: 10px;
+  font-size: 20px;
+  font-family: monospace;
+}
+
+.logo-link {
+
+  width: 3em;
+  transition: transform 2s;
+}
+
+.logo-link:hover {
+  transform: scale(1.1);
 }
 
 ul {
   list-style-type: none;
   padding: 20px;
   padding-top: 150px;
- 
+
+
+
 }
+
 
 
 li {
@@ -118,37 +139,41 @@ li {
   width: 40ch;
   margin: 1em 0;
   padding: 20px;
-  
+
   border: solid black 1px;
   border-radius: 5px;
   box-shadow: 10px 10px 30px rgb(10, 10, 30);
 
-
+  transition: transform 1s;
 }
+li:hover {
+  transform: scale(1.5);
+}
+
 li button {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: end;
-  
+
 
 }
- 
+
 
 strong {
   display: block;
   text-align: right;
-  color : lightslategray
-  
+  color: lightslategray
 }
 
-.profile-panel{
+.profile-panel {
   padding-top: 200px;
-  
-  
-  
+
+
+
 }
-footer  {
+
+footer {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -156,25 +181,27 @@ footer  {
   justify-content: center;
   background-color: lightgray;
 
-  
+
 }
 
 footer button {
   background-color: whitesmoke;
-  color :black;
+  color: black;
   font-size: 20px;
   border-radius: 50px;
   font-family: monospace;
   cursor: pointer;
   outline: none;
   transition: 0.2s all;
-  
+
 }
+
 button:active {
   transform: scale(0.98);
   /* Scaling button to 0.98 to its original size */
   box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-  /* Lowering the shadow */}
+  /* Lowering the shadow */
+}
 
 
 p {
@@ -185,13 +212,14 @@ p {
   color: red;
 }
 
-.feedback-success{
-  color : yellowgreen
+.feedback-success {
+  color: yellowgreen
 }
 
 .feedback-error {
-  color:red
+  color: red
 }
+
 .off {
   display: none;
 }

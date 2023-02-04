@@ -27,7 +27,12 @@ home.listPublicStickies = function () {
         p.innerText = sticky.text
         p.contentEditable = true
         p.onkeyup = function (event) {
-            console.log(event.target.innerText)
+              p.oonkeyup = function (event) {
+      try {
+        updateStickyText(window.email, sticky.id, event.target.innerText) 
+      } catch (error) {
+        console.error(error.message)
+      }
         }
 
         if (sticky.user === window.email) {
@@ -106,4 +111,4 @@ home.updatePasswordPanel.onsubmit = function(event) {
     } catch(error) {
         console.error(error)
     }
-}
+}}

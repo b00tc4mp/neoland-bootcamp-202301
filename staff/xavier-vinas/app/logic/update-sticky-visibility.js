@@ -2,7 +2,7 @@
 
 
 
-function uptadeStikyVisibility ( email , stickyId, visibility){
+function updateStickyVisibility ( email , stickyId, visibility){
 
     var user = users.find(user => user.email === email)
     var sticky = stickies.find(sticky => sticky.id === stickyId)
