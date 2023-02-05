@@ -169,6 +169,13 @@ strong {
   text-align: right;
 }
 
+.sticky-buttons {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: large;
+}
+
 .checkbox {
   width: 10px;
   height: 10px;

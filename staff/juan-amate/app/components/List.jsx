@@ -39,18 +39,21 @@ function List() {
     }
 
     return <ul className="list-panel">
-        {stickies.map(sticky => <li key={sticky.id}>
-            {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>🚦</button>}
+        {stickies.map(sticky => <li key={sticky.id} className='li-sticky'>
+            <div className="sticky-buttons">
 
-            {sticky.user === sessionStorage.email && <button id={sticky.id} onClick={handleDelete}>❌</button>}
+                {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>🚦</button>}
 
-            {
-                //sticky.user === sessionStorage.email ?
-                //     <p id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
-                //     :
-                //     <p id={sticky.id}>{sticky.text}</p>
-            }
-            {/* <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email? true : false} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p> */}
+                {sticky.user === sessionStorage.email && <button id={sticky.id} onClick={handleDelete}>❌</button>}
+
+                {
+                    //sticky.user === sessionStorage.email ?
+                    //     <p id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+                    //     :
+                    //     <p id={sticky.id}>{sticky.text}</p>
+                }
+                {/* <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email? true : false} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p> */}
+            </div>
 
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
