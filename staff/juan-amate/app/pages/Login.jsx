@@ -11,7 +11,9 @@ function Login(props) {
 
         try {
             authenticateUser(email, password)
-            setFeedback('')
+
+            sessionStorage.email = email
+
             props.onNavigateToHome()
         } catch (error) {
             setFeedback(error.message)
@@ -24,12 +26,6 @@ function Login(props) {
         props.onNavigateToRegister()
     }
 
-    const handleNavigateToHome = event => {
-        event.preventDefault()
-
-        props.onNavigateToHome()
-    }
-
     return <main className="login">
         <img src="images/mylogo.png" alt="logo" className="logo" />
         <h1>Welcome back!</h1>
@@ -40,9 +36,9 @@ function Login(props) {
             <label htmlFor="password">Password</label>
             <input type="password" id="password" placeholder="Input your password" />
 
-            <button type="submit" onClick={handleNavigateToHome}>Login</button>
+            <button type="submit">Login</button>
         </form>
-        <p className="feedback">{feedback}</p>
+        <p className="feedback-error">{feedback}</p>
         <a className="remember" onClick={handleNavigateToRegister}>Not a member? Register</a>
     </main>
 }

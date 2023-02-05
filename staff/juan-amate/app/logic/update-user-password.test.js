@@ -23,7 +23,7 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grill.com', '123123123', '234234234', '234234234')
 } catch (error) {
     verify(error.message === 'user with email pepito@grill.com not found')
@@ -40,7 +40,7 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grillo.com', '_123123123', '234234234', '234234234')
 } catch (error) {
     verify(error.message === 'wrong credentials')
@@ -57,7 +57,7 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grillo.com', '123123123', '234234234', '_234234234')
 } catch (error) {
     verify(error.message === 'new password does not match the confirmation password')
@@ -74,7 +74,7 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grillo.com', '123123123', '123123123', '123123123')
 } catch (error) {
     verify(error.message === 'new password is equal to current password')
@@ -91,10 +91,10 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grillo.com', '123123123', '234', '234')
 } catch (error) {
-    verify(error.message === 'new password lengtg is lower than 8 characters')
+    verify(error.message === 'new password length is lower than 8 characters')
 }
 
 // case 6
@@ -108,7 +108,7 @@ var user = {
 }
 users.push(user)
 
-try{
+try {
     updateUserPassword('pepito@grillo.com', '123123123', '        ', '        ')
 } catch (error) {
     verify(error.message === 'new password contains space characters')

@@ -18,7 +18,7 @@ function updateUserPassword(email, currentPassword, newPassword, newPasswordConf
 
     if (newPassword === currentPassword) throw new Error('new password is equal to current password')
 
-    if (newPassword.length < 8) throw new Error ('new password lengtg is lower than 8 characters')
+    if (newPassword.length < 8) throw new Error ('new password length is lower than 8 characters')
 
     if (newPassword.includes(' ')) throw new Error ('new password contains space characters')
 

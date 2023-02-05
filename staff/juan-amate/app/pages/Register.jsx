@@ -13,7 +13,7 @@ function Register(props) {
 
         try {
             registerUser(name, age, email, password)
-            setFeedback('')
+        
             props.onNavigateToLogin()
         } catch (error) {
             setFeedback(error.message)
@@ -44,7 +44,7 @@ function Register(props) {
 
             <button type="submit">Register</button>
         </form>
-        <p className="feedback">{feedback}</p>
+        <p className="feedback-error">{feedback}</p>
         <a className="remember" onClick={handleNavigateToLogin}>Do you have an account? Login</a>
     </main>
 }

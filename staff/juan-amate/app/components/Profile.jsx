@@ -1,9 +1,12 @@
 function Profile() {
     console.log('Profile -> render')
 
-    const [feedback, setFeedback] = React.useState('')
+    const [feedback, setFeedback] = React.useState({
+        message: '',
+        type: ''
+    })
 
-    const handleSubmit = event => {
+    const handleChangePassword = event => {
         event.preventDefault()
 
         const currentPassword = event.target.currentPassword.value
@@ -11,14 +14,24 @@ function Profile() {
         const newPasswordConfirm = event.target.newPasswordConfirm.value
 
         try {
-            updateUserPassword(currentPassword, newPassword, newPasswordConfirm)
-        } catch(error) {
-            setFeedback(error.message)
+            updateUserPassword(sessionStorage.email, currentPassword, newPassword, newPasswordConfirm)
+
+            event.target.reset()
+
+            setFeedback({
+                message: 'password updated successfully',
+                type: 'success'
+            })
+        } catch (error) {
+            setFeedback({
+                message: error.message,
+                type: 'error'
+            })
         }
     }
 
-    return < div className = "profile-panel" >
-        <form onSubmit={handleSubmit} className="update-password-panel">
+    return <div className="profile-panel">
+        <form onSubmit={handleChangePassword} className="update-password-panel">
             <input
                 type="password"
                 name="currentPassword"
@@ -36,5 +49,6 @@ function Profile() {
             />
             <button type="submit">Update password</button>
         </form>
-    </div >
+        <p className={"feedback fedback-" + feedback.type}>{feedback.message}</p>
+    </div>
 }

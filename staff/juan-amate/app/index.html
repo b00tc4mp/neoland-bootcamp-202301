@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
- 
   <body>
     <div id="root"></div>
 
@@ -28,12 +27,13 @@
 
     <script src="logic/register-user.js"></script>
     <script src="logic/authenticate-user.js"></script>
-    <script src="logic/retrieve-stickies.js"></script>
+    <script src="logic/retrieve-public-stickies.js"></script>
     <script src="logic/create-sticky.js"></script>
     <script src="logic/update-sticky-text.js"></script>
     <script src="logic/delete-sticky.js"></script>
     <script src="logic/update-user-password.js"></script>
     <script src="logic/update-sticky-visibility.js"></script>
+    <script src="logic/retrieve-my-stickies.js"></script>
 
     <!-- Presentation Layer -->
 
@@ -41,10 +41,13 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <script src="components/Register.jsx" type="text/babel"></script>
-    <script src="components/Login.jsx" type="text/babel"></script>
-    <script src="components/Home.jsx" type="text/babel"></script>
     <script src="components/Profile.jsx" type="text/babel"></script>
+    <script src="components/List.jsx" type="text/babel"></script>
+    <script src="components/MyList.jsx" type="text/babel"></script>
+
+    <script src="pages/Register.jsx" type="text/babel"></script>
+    <script src="pages/Login.jsx" type="text/babel"></script>
+    <script src="pages/Home.jsx" type="text/babel"></script>
     <script src="App.jsx" type="text/babel"></script>
     <script src="index.jsx" type="text/babel"></script>
   </body>

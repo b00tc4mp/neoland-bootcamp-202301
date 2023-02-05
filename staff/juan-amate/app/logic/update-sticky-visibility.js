@@ -1,23 +1,25 @@
-/**
- * Updates the sticky visibility
- * 
- * @param {string} email The user email 
- * @param {string} stickyId The sticky id 
- * @param {string} visibility The sticky visibility
- */
 function updateStickyVisibility(email, stickyId, visibility) {
+    var userFound = false
 
-    var user = users.find(user => user.email === email)
+    for (var i = 0; i < users.length && !userFound; i++) {
+        var user = users[i]
 
-    var sticky = stickies.find(sticky => sticky.id === stickyId)
-    
-    if (!user) throw new Error(`user with email ${email} not found`)
+        if (user.email === email) userFound = true
+    }
 
-    if (sticky.user !== email) throw new Error(`sticky with id ${stickyId} does not belong to user with email ${email}`)
+    if (!userFound) throw new Error('user with email '  + email + ' not found')
 
-    if (sticky.id !== stickyId) throw new Error('sticky with id ' + stickyId + ' not found')
+    var foundSticky
 
-    if (sticky.visibility === visibility) throw new Error(`sticky visibility with id ${stickyId} wrong`)
-    
-    sticky.visibility = visibility
+    for (var i = 0; i < stickies.length && !foundSticky; i++) {
+        var sticky = stickies[i]
+
+        if (sticky.id === stickyId) foundSticky = sticky
+    }
+
+    if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
+
+    if (foundSticky.user !== email) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + email)
+
+    foundSticky.visibility = visibility
 }
