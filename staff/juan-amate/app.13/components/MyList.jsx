@@ -41,7 +41,7 @@ function MyList() {
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id} className='li-sticky'>
             <div className='sticky-buttons'>
-                {sticky.visibility === 'private' ? <p>⛔️ private</p> : <p>👨‍👩‍👧‍👦 public</p>}
+                {sticky.visibility === 'private' && <p>⛔️</p>}
                 
                 {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>🚦</button>}
 

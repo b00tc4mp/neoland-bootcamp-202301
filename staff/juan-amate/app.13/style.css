@@ -173,8 +173,7 @@ strong {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  font-size: small;
-
+  font-size: large;
 }
 
 .checkbox {

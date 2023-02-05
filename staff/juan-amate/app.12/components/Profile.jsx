@@ -49,6 +49,6 @@ function Profile() {
             />
             <button type="submit">Update password</button>
         </form>
-        <p className={"feedback feedback-" + feedback.type}>{feedback.message}</p>
+        <p className={"feedback fedback-" + feedback.type}>{feedback.message}</p>
     </div>
 }
