@@ -8,8 +8,7 @@
  */
 
 function updateUserPassword(email, currentPassword, newPassword, newPasswordConfirm) {
-    var user = users.find(user => user.email === email)
-    
+    var user = user.find(user => user.email === email)
     //case 1
     if (!user) throw new Error('user with email ' + email + ' not found')
 

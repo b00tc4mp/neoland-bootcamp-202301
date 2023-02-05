@@ -11,18 +11,11 @@ body {
 
 }
 
-#root {
-    height: 100%;   
-}
-
-.app{
-    display: flex;
+body {
+    /* display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-}
-
-body {
+    flex-direction: column; */
     background-color: lightgrey;
 }
 
@@ -121,8 +114,6 @@ header {
 
 .home-main {
     margin-top: 14px;
-    display: flex;
-    justify-content: center;
 }
 
 li {

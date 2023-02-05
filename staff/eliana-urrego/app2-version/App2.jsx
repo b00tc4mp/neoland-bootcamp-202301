@@ -16,11 +16,11 @@ function App() {
 
     }
 
-    return <div className="app">
+    return <div className="">
         {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />}
         
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
         
-        {view === 'home' && <Home onLogout={handleShowLogin} />}
+        {view === 'home' && <Home/>}
     </div>
 }
