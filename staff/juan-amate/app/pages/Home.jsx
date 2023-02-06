@@ -43,7 +43,7 @@ function Home(props) {
         <header>
             <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="images/mylogo.png" alt="logo" /></a>
 
-            <nav>
+            <nav className="header-nav">
                 <a onClick={handleShowMyList} className="my-list-link" href="">My stickies</a>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
                 <button onClick={handleLogout} className="logout-button">Logout</button>

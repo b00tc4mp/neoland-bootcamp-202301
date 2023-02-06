@@ -1,5 +1,7 @@
 // case 0
+
 users.length = 0
+
 var user = {
     name: 'Pepito Grillo',
     age: 50,
@@ -7,6 +9,7 @@ var user = {
     password: '123123123'
 }
 users.push(user)
+
 stickies.length=0
 var sticky = {
     id : createStickyId(),
@@ -15,6 +18,7 @@ var sticky = {
     user: 'pepito@grillo.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id : createStickyId(),
     text: 'hola mundo',
@@ -22,6 +26,7 @@ var sticky = {
     user: 'pepito@grillo.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id: createStickyId(),
     text: 'hello world',
@@ -29,6 +34,7 @@ var sticky = {
     user: 'wendy@darling.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id: createStickyId(),
     text: 'hello world',
@@ -36,10 +42,11 @@ var sticky = {
     user: 'peter@pan.com'
 }
 stickies.push(sticky)
+
 var results = retrieveMyStickies('pepito@grillo.com')
 verify(results.length === 2)
 
-//case 1 email wrong email
+// case 1
 
 users.length = 0
 var user = {
@@ -58,6 +65,7 @@ var sticky = {
     user: 'pepito@grillo.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id : createStickyId(),
     text: 'hola mundo',
@@ -65,6 +73,7 @@ var sticky = {
     user: 'pepito@grillo.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id: createStickyId(),
     text: 'hello world',
@@ -72,6 +81,7 @@ var sticky = {
     user: 'wendy@darling.com'
 }
 stickies.push(sticky)
+
 var sticky = {
     id: createStickyId(),
     text: 'hello world',

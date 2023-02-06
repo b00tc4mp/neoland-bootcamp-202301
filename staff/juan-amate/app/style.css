@@ -124,6 +124,10 @@ header {
   position: fixed;
 }
 
+.header-nav {
+  gap: 4px;
+}
+
 ul {
   display: flex;
   flex-direction: column;
@@ -174,7 +178,12 @@ strong {
   align-items: baseline;
   gap: 4px;
   font-size: small;
+}
 
+.like {
+  height: 20px;
+  width: 20px;
+  color: red;
 }
 
 .checkbox {

@@ -19,7 +19,8 @@ function createSticky(email, text, visibility) {
         id: createStickyId(),
         user: email,
         text,
-        visibility
+        visibility,
+        likes:[]
       }
       
       stickies.push(sticky)

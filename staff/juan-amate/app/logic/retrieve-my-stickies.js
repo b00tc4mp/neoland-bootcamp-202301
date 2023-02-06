@@ -1,7 +1,8 @@
 /**
  * Retrieves the user´s stickies.
  * 
- * @return {array} The user´s stickies
+ * @param {string} email 
+ * @return {Array} The stickies that belong to the specified user(email)
  */
 function retrieveMyStickies(email) {
     var user = users.find(user => user.email === email)
