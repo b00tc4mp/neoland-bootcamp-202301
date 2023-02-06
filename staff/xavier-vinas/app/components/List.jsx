@@ -51,6 +51,7 @@ function List() {
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email ? true : false} onKeyUp={handleText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <strong>{sticky.user}</strong>
+            <img src="public/heart.svg" />
         </li>)}
     </ul>
 }
