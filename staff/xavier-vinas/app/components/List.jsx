@@ -1,6 +1,6 @@
 function List() {
     const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
-    
+
     let stickies
 
     try {
@@ -40,18 +40,33 @@ function List() {
         }
     }
 
+    const handleLike = event => {
+        try {
+            toggleLikeSticky(sessionStorage.email, event.target.id)
+
+            setListUpdateStamp(Date.now())
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     // repasar parte de añadir el botton de delete sticky
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id} >
             {sticky.user === sessionStorage.email &&
-             <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>+/-</button>}
+                <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>+/-</button>}
             {sticky.user === sessionStorage.email &&
-             <button id={sticky.id} onClick={handleDelete}>X</button>}
+                <button id={sticky.id} onClick={handleDelete}>X</button>}
 
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email ? true : false} onKeyUp={handleText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <strong>{sticky.user}</strong>
-            <img src="public/heart.svg" />
+            <div >
+                <img
+                    src={sticky.likes.includes(sessionStorage.email) ? "public/heart-full.svg" : "public/heart.svg"}
+                    onClick={handleLike} id={sticky.id}
+                />
+            </div>
         </li>)}
     </ul>
 }
