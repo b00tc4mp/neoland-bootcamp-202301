@@ -32,18 +32,11 @@ function Home(props) {
         props.onLogout()
     }
 
-    const handleShowMyList = event => {
-        event.preventDefault()
-
-        setView('my-list')
-    }
-
     return <div className="home-view">
         <header>
             <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="images/logo.png" alt="Chachi Games" /></a>
 
-            <nav className="header-nav">
-                <a onClick={handleShowMyList} className="profile-link" href="">My stickies</a>
+            <nav>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
                 <button onClick={handleLogout} className="logout-button">Logout</button>
             </nav>
@@ -52,8 +45,6 @@ function Home(props) {
             {view === 'list' && <List updateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile />}
-
-            {view === 'my-list' && <MyList />}
         </main>
         <footer>
             <button onClick={handleAdd} className="add-button">+</button>

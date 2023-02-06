@@ -131,12 +131,6 @@ strong {
     transform: scale(1.5);
 }
 
-.header-nav {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
 footer {
     position: fixed;
     bottom: 0;
