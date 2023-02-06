@@ -39,17 +39,12 @@ function List() {
 
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id}>
-            {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>+/-</button>}
+            <div className="item-controls">
+                {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
 
-            {sticky.user === sessionStorage.email && <button id={sticky.id} onClick={handleDelete}>x</button>}
+                {sticky.user === sessionStorage.email && <button id={sticky.id} onClick={handleDelete}>x</button>}
+            </div>
 
-            {
-                // sticky.user === sessionStorage.email ?
-                //     <p id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
-                //     :
-                //     <p id={sticky.id}>{sticky.text}</p>
-            }
-            {/* <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email? true : false} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p> */}
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <strong>{sticky.user}</strong>

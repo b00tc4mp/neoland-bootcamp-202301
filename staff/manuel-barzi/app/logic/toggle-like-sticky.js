@@ -1,0 +1,3 @@
+function toggleLikeSticky(email, stickyId) {
+    
+}
