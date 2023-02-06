@@ -15,6 +15,7 @@ function createSticky(email, text, visibility) {
         user: email,
         text,
         visibility,
+        likes: []
       }
 
       stickies.push(newSticky);

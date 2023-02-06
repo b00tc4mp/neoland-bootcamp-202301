@@ -1,4 +1,4 @@
-// shoot disparo , bullet bala
+x// shoot disparo , bullet bala
 function RussianRoulette() {
     console.log ('RussianRoulette -> render');
 

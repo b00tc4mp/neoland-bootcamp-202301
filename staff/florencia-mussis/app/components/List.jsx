@@ -37,6 +37,16 @@ function List(props){
             alert(error.message)
         }
     }
+
+    const handleLike = event => {
+        try {
+            toggleLikeSticky(sessionStorage.email, event.target.id)
+
+            setListUpdateStamp(Date.now())
+        } catch (error) {
+            alert(error.message)
+        }
+    }
     
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id}>
@@ -50,6 +60,12 @@ function List(props){
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
             
             <strong>{sticky.user}</strong>
+            <div >
+                <img className="heart-icon"
+                    src={sticky.likes.includes(sessionStorage.email) ? "public/heart-full.svg" : "public/heart.svg"}
+                    onClick={handleLike} id={sticky.id}
+                />
+            </div>
             
         </li>)}
     </ul>

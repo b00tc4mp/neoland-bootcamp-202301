@@ -46,7 +46,7 @@ var sticky = {
 
 stickies.push(sticky)
 
-retrieveMyStickies('pepito@grillo.com')
+var results = retrieveMyStickies('pepito@grillo.com')
 verify(results.length === 2)
 
 //case 1 wrong email
@@ -102,7 +102,6 @@ try {
    retrieveMyStickies('pepit@grillo.com')
 } catch (error) {
     verify(error.message === 'user with email pepit@grillo.com not found')
-    verify(results.length === 2)
 }
 
 

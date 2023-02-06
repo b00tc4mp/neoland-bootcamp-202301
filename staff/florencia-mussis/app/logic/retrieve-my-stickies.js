@@ -1,5 +1,4 @@
 function retrieveMyStickies(email) {
-    // var user= users.find(user => user.email === email)
     var user= users.find(user=> user.email=== email)
     if (!user) throw new Error('user with email '+email+ ' not found')
 
