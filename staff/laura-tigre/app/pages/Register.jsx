@@ -30,7 +30,7 @@ function Register(props) {
     return <div className="center">
     <main>
       <form onSubmit={handleSubmit}>
-        <img className="colorreg" src="img/hello!.png" alt="logo empresa" />
+        <img className="colorreg" src="public/hello!.png" alt="logo empresa" />
         <legend>Register</legend>
 
         <div className="container">

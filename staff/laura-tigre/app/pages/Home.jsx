@@ -35,7 +35,7 @@ function Home (props){
     return <div className="home-view">
     <header>
       <a onClick={handleShowList} className="logo-link" href="">
-        <img className="logo" src="img/hello!.png" alt="logo" />
+        <img className="logo" src="public/hello!.png" alt="logo" />
       </a>
       <nav>
         <a onClick={handleShowMyList}className="my-list-link" href="">MY STICKIES</a>

@@ -1,6 +1,8 @@
 function List (){
   const[listUpdateStamp, setListUpdateStamp]= React.useState(Date.now())
+  
   let stickies
+  
   try {
     stickies=retrievePublicStickies()
     console.log(stickies)
@@ -42,6 +44,15 @@ function List (){
       alert(error.message)
     }
    }
+   const handleLike = event =>{
+    try {
+      toggleLikeSticky(sessionStorage.email, event.target.id)
+      setListUpdateStamp(Date.now)
+    } catch (error) {
+      alert(error.message)
+      
+    }
+   }
 
     return <ul className="list-panel">
         {stickies.map(sticky => 
@@ -57,16 +68,22 @@ function List (){
          {/* <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email? true:false} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p> */}
+            <div className="button-position">
             {sticky.user === sessionStorage.email &&
-            <button id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> }
+            <button className="button-sticky" id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> }
             {sticky.user === sessionStorage.email &&
-            <button id={sticky.id} onClick={handleDelete}>X</button> }
+            <button className="button-sticky" id={sticky.id} onClick={handleDelete}>X</button> }
+            </div>
             <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p>
-        
-        
-          <strong>{sticky.user}</strong>
+            
+              <div className="img-strong">
+              <img className="img-likes"
+              src={sticky.likes.includes(sessionStorage.email)? 'public/heart-full.svg': 'public/heart.svg'}
+              onClick={handleLike} id={sticky.id}/>
+              <strong>{sticky.user}</strong>
+              </div>
         </li>)}
       </ul>
       
