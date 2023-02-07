@@ -59,13 +59,12 @@ function MyList(){
         <p id={sticky.id} contentEditable onKeyUp={handleEditText} suppressContentEditableWarning= {true}>{sticky.text}</p>
        
        
-        <div className="img-strong">
+        <div>
               <img className="img-likes"
               src={sticky.likes.includes(sessionStorage.email)? 'public/heart-full.svg': 'public/heart.svg'}
-              onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/> <p>{sticky.likes.length}</p>
-           
+              onClick={handleLike} id={sticky.id}/>
+            <strong>{sticky.user}</strong>
         </div>
-        <strong>{sticky.user}</strong>
         </li>)}
        
     </ul>

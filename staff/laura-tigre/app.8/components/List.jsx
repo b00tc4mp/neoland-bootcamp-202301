@@ -81,10 +81,9 @@ function List (){
               <div >
               <img className="img-likes"
               src={sticky.likes.includes(sessionStorage.email)? 'public/heart-full.svg': 'public/heart.svg'}
-              onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/><p>{sticky.likes.length}</p>
-              
-              </div>
+              onClick={handleLike} id={sticky.id}/>
               <strong>{sticky.user}</strong>
+              </div>
         </li>)}
       </ul>
       
