@@ -1,7 +1,7 @@
 /**
  * Retrieves the public stickies from all users that publish them
  * 
- * @return {array} The public stickies
+ * @return {Array} The public stickies
  */
 function retrievePublicStickies() {
     var publicStickies = []

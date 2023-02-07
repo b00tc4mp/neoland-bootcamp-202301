@@ -29,5 +29,5 @@ function createSticky(email, text, visibility) {
         }
     }
 
-    throw new Error('User not found')
+    throw new Error('user with email ' + email + ' not found')
 }

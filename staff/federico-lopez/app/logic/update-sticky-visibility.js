@@ -1,4 +1,4 @@
-function updateStickyText(email, stickyId, text) {
+function updateStickyVisibility(email, stickyId, visibility) {
     var userFound = false
 
     for (var i = 0; i < users.length && !userFound; i++) {
@@ -21,6 +21,6 @@ function updateStickyText(email, stickyId, text) {
 
     if (foundSticky.user !== email) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + email)
 
-    foundSticky.text = text
+    foundSticky.visibility = visibility
 }
 

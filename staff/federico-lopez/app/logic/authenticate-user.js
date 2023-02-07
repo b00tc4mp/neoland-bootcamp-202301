@@ -18,5 +18,5 @@ function authenticateUser(email, password) {
         if (user.email === email && user.password === password) return
     }
 
-    throw new Error('Wrong credentials')
+    throw new Error('wrong credentials')
 }
