@@ -46,21 +46,18 @@ function List() {
         }
     }
 
-    return <ul className="flex flex-col items-center">
-        {stickies.map(sticky => <li className="bg-[gold] m-10 w-[40ch]" key={sticky.id}>
-            <div className="text-right">
-                {sticky.user === sessionStorage.email && <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
+    return <ul className="list-panel">
+        {stickies.map(sticky => <li key={sticky.id}>
+            <div className="item-controls">
+                {sticky.user === sessionStorage.email && <button id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
 
-                {sticky.user === sessionStorage.email && <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleDelete}>x</button>}
+                {sticky.user === sessionStorage.email && <button id={sticky.id} onClick={handleDelete}>x</button>}
             </div>
 
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+            <button id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.email)? '♥️' :'🤍'} {sticky.likes.length}</button>
 
-            <div className="text-right">
-            <button className="h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.email)? '💚' :'🤍'} {sticky.likes.length}</button>
             <strong>{sticky.user}</strong>
-            </div>
-
         </li>)}
     </ul>
 }
