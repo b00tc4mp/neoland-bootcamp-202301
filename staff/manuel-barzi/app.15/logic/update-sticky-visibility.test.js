@@ -1,125 +1,109 @@
-// caso 0
+// case 0
 
 users.length = 0
-
 var user = {
     name: 'Pepito Grillo',
     age: 50,
     email: 'pepito@grillo.com',
     password: '123123123'
 }
-
 users.push(user)
-
 stickies.length = 0
-
 var sticky = {
     id: createStickyId(),
-    user: 'wendy@darling.com',
+    user: 'pepito@grillo.com',
     text: 'hola mundo',
-    visibility: 'public',
-    likes: []
+    visibility: 'private'
 }
-
 stickies.push(sticky)
+var stickyId = stickies[0].id // 'sticky-0'
 
-var stickyId = stickies[0].id
+updateStickyVisibility('pepito@grillo.com', stickyId, 'public')
 
-toggleLikeSticky('pepito@grillo.com', stickyId)
-verify(stickies[0].likes.includes('pepito@grillo.com'))
+verify(stickies[0].visibility === 'public')
+verify(stickies.length === 1)
 
-// caso 1
+// case 1
 
 users.length = 0
-
 var user = {
     name: 'Pepito Grillo',
     age: 50,
     email: 'pepito@grillo.com',
     password: '123123123'
 }
-
 users.push(user)
-
 stickies.length = 0
-
 var sticky = {
     id: createStickyId(),
-    user: 'wendy@darling.com',
+    user: 'pepito@grillo.com',
     text: 'hola mundo',
-    visibility: 'public',
-    likes: ['pepito@grillo.com']
+    visibility: 'private'
 }
-
 stickies.push(sticky)
+var stickyId = stickies[0].id // 'sticky-0'
 
-var stickyId = stickies[0].id
-
-toggleLikeSticky('pepito@grillo.com', stickyId)
-verify(!stickies[0].likes.includes('pepito@grillo.com'))
+try {
+    updateStickyVisibility('pepito@grill.com', stickyId, 'public')
+} catch (error) {
+    verify(error.message === 'user with email pepito@grill.com not found')
+}
 
 // case 2
 
 users.length = 0
-
 var user = {
     name: 'Pepito Grillo',
     age: 50,
     email: 'pepito@grillo.com',
     password: '123123123'
 }
-
 users.push(user)
-
+var user = {
+    name: 'Wendy Darling',
+    age: 18,
+    email: 'wendy@darling.com',
+    password: '123123123'
+}
+users.push(user)
 stickies.length = 0
-
 var sticky = {
     id: createStickyId(),
     user: 'wendy@darling.com',
-    text: 'hola mundo',
-    visibility: 'public',
-    likes: ['pepito@grillo.com']
+    text: 'hello world',
+    visibility: 'public'
 }
-
 stickies.push(sticky)
-
 var stickyId = stickies[0].id
 
 try {
-    toggleLikeSticky('pepito@grill.com', stickyId)
-} catch(error) {
-    verify(error.message === 'user with email pepito@grill.com not found')
+    updateStickyVisibility('pepito@grillo.com', stickyId, 'public')
+} catch (error) {
+    verify(error.message === 'sticky with id ' + stickyId + ' does not belong to user with email pepito@grillo.com')
 }
 
 // case 3
 
 users.length = 0
-
 var user = {
     name: 'Pepito Grillo',
     age: 50,
     email: 'pepito@grillo.com',
     password: '123123123'
 }
-
 users.push(user)
-
 stickies.length = 0
-
 var sticky = {
     id: createStickyId(),
-    user: 'wendy@darling.com',
+    user: 'pepito@grillo.com',
     text: 'hola mundo',
-    visibility: 'public',
-    likes: ['pepito@grillo.com']
+    visibility: 'private'
 }
-
 stickies.push(sticky)
-
 var stickyId = createStickyId()
 
 try {
-    toggleLikeSticky('pepito@grillo.com', stickyId)
-} catch(error) {
+    updateStickyVisibility('pepito@grillo.com', stickyId, 'public')
+} catch (error) {
     verify(error.message === 'sticky with id ' + stickyId + ' not found')
 }

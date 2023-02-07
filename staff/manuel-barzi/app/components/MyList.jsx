@@ -37,6 +37,15 @@ function MyList() {
         }
     }
 
+    const handleToggleLike = event => {
+        try {
+            toggleLikeSticky(sessionStorage.email, event.target.id)
+            setUpdateStamp(Date.now())
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     return <ul className="list-panel">
         {stickies.map(sticky => <li key={sticky.id}>
             <div className="item-controls">
@@ -46,6 +55,7 @@ function MyList() {
             </div>
 
             <p id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+            <button id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.email)? '♥️' :'🤍'} {sticky.likes.length}</button>
 
             <strong>{sticky.user}</strong>
         </li>)}
