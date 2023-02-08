@@ -24,22 +24,22 @@ function Login(props) {
         props.onNavigateToRegister()
     }
  
-    return <main className="login">
+    return <main className="mx-12 bg-neutral-300  w-96 " >
 
-        <form onSubmit={handleSubmit}>
+        <form className=" gap-2 rounded-lg border-double border-4 border-neutral-400  flex flex-col items-center" onSubmit={handleSubmit}>
 
-            <img src="https://cdn-icons-png.flaticon.com/128/6239/6239002.png" alt=""></img>
+            <img className="" src="https://cdn-icons-png.flaticon.com/128/6239/6239002.png" alt=""></img>
 
             <label htmlFor="email">Username </label>
-            <input type="email" placeholder="Enter Email" id="email" required />
+            <input className="shadow-lg shadow-black p-1 rounded-full " type="email" placeholder="Enter Email" id="email" required />
 
             <label htmlFor="password">Pasword</label>
-            <input type="password" placeholder="pasword" id="password" required />
+            <input className="shadow-lg shadow-black p-1 rounded-full " type="password" placeholder="pasword" id="password" required />
 
-            <button  type="submit">Login</button>
-        </form>
+            <button className="p-2 px-10 bg-neutral-400 rounded-full"  type="submit">Login</button>
         <p className="feedback"> {feedback}</p>
-        <p>or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
+        <p className="flex flex-col items-center">or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
+        </form>
 
     </main>
 

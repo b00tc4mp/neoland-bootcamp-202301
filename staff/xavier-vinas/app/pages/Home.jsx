@@ -36,14 +36,14 @@ function Home(props) {
         props.onLogout()
     }
     
-       return <div className="home-view">
-        <header>
+       return <div className="w-full" >
+        <header className=" " >
        
-            <nav>
+            <nav className="px-8 flex justify-between  flex items-center gap-5 bg-slate-400 w-full " >
             <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png" alt=""></img></a>
-                <a onClick={handleShowMyList} className="my-list-link" href="">My Stickies</a>
-                <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
-                <button onClick={handleLogout}  className="logout-button">logout</button>
+                <a onClick={handleShowMyList} className="text-2xl font-black  underline" href="">My Stickies</a>
+                <a onClick={handleShowProfile} className="text-2xl font-black  underline" href="">Profile</a>
+                <button onClick={handleLogout}  className="border-[2px] border-[black] text-[black] p-3 rounded-full text-2xl">logout</button>
                
             </nav>
          
@@ -58,9 +58,9 @@ function Home(props) {
             {view === "my-list" && <MyList />}
         </main>
 
-        <footer>
+        <footer className="fixed w-full  ">
 
-            <button onClick={handleAdd} className="add-button">Add Sticky</button>
+            <button  onClick={handleAdd} className="add-b bg-slate-400 w-full  h-24 border-[2px] border-[black] text-[black] ">Add Sticky</button>
         </footer>
 
     </div>

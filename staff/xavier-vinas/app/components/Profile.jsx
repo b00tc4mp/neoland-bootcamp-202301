@@ -27,11 +27,11 @@ function Profile(){
         }
     }
 
-    return     <div className="profile-panel">
-    <form onSubmit={handleChangePassword} className="update-password-panel">
-        <input type="password" name="currentPassword" placeholder="current password" />
-        <input type="password" name="newPassword" placeholder="new password" />
-        <input type="password" name="newPasswordConfirm" placeholder="confirm new password" />
+    return     <div className="mx-12 bg-neutral-300   ">
+    <form className="py-10 gap-5 rounded-lg border-double border-4 border-neutral-400  flex flex-col items-center" onSubmit={handleChangePassword}>
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="currentPassword" placeholder="current password" />
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPassword" placeholder="new password" />
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPasswordConfirm" placeholder="confirm new password" />
         <button type="submit">Update password</button>
     </form>
     <p className={"feedback feedback-"+ feedback.type}>{feedback.message}</p>
