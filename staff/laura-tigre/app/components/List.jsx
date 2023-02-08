@@ -54,9 +54,9 @@ function List (){
     }
    }
 
-    return <ul className="list-panel">
+    return <ul className="flex flex-col items-center h-screen gap-4 m-3">
         {stickies.map(sticky => 
-        <li key={sticky.id}>
+        <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-4 border-[#6b7280] " key={sticky.id}>
 
           {/* {
             sticky.user===sessionStorage.email ?
@@ -68,20 +68,21 @@ function List (){
          {/* <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email? true:false} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p> */}
-            <div className="button-position">
+            <div className="flex ">
             {sticky.user === sessionStorage.email &&
-            <button className="button-sticky" id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> }
+            <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button> }
             {sticky.user === sessionStorage.email &&
-            <button className="button-sticky" id={sticky.id} onClick={handleDelete}>X</button> }
+            <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky.id} onClick={handleDelete}>X</button> }
             </div>
-            <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
+            <p className="w-[35ch] text-left" id={sticky.id} contentEditable={sticky.user=== sessionStorage.email} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p>
             
-              <div >
-              <img className="img-likes"
+              <div className="flex" >
+              <img className="h-5 w-5"
               src={sticky.likes.includes(sessionStorage.email)? 'public/heart-full.svg': 'public/heart.svg'}
-              onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/><p>{sticky.likes.length}</p>
+              onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/>
+              <p>{sticky.likes.length}</p>
               
               </div>
               <strong>{sticky.user}</strong>

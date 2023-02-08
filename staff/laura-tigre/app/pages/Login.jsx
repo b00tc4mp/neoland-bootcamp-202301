@@ -25,30 +25,31 @@ function Login(props) {
     }
 
 
-    return <div className="center">
+    return <div className="flex flex-col items-center justify-center font-['Montserrat']">
         <main>
-            <form onSubmit={handleSubmit}>
-                <img className="colorreg" src="public/hello!.png" alt="logo empresa" />
-                <legend>My account</legend>
+            <form className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3" onSubmit={handleSubmit}>
+                <img className="ml-3" src="public/hello!.png" alt="logo empresa" />
+                <legend className="text-2xl">My account</legend>
 
-                <div className="container">
+                <div className="flex flex-col justify-center gap-2">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" placeholder="Your email" required />
+                    <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] " type="email" id="email" placeholder="Your email" required />
                     <label htmlFor="password">Password</label>
-                    <input
+                    <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] "
                         type="password"
                         id="password"
                         placeholder="Your password"
                         required
                     />
+                 </div>
 
-                    <button className="button" type="submit">login</button>
+                 <div>
+                    <button className=" bg-[#facc15] h-7 w-20" type="submit">login</button>
                 </div>
             </form>
-            <p className="feedback-error">{feedBack}</p>
-            <p>
-                or
-                <a href="" onClick={handleNavigateToRegister}>Register</a>
+            <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedBack}</p>
+            <p className="flex items-center justify-center gap-2" >
+                or  <a className="text-2xl" href="" onClick={handleNavigateToRegister}>Register</a>
             </p>
         </main>
     </div>

@@ -27,32 +27,35 @@ function Register(props) {
 
 
 
-    return <div className="center">
-    <main>
-      <form onSubmit={handleSubmit}>
-        <img className="colorreg" src="public/hello!.png" alt="logo empresa" />
-        <legend>Register</legend>
+    return <div className="flex flex-col items-center justify-center font-['Montserrat'] max-h-max">
+    <main  >
+      <form className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3"s onSubmit={handleSubmit}>
+        <img className="ml-3" src="public/hello!.png" alt="logo empresa" />
+        <legend className="text-2xl">Register</legend>
 
-        <div className="container">
+        <div className="flex flex-col justify-center gap-2">
           <label htmlFor="name">Name</label>
-          <input type="text" id="name" placeholder="Your name" required />
+          <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] " type="text" id="name" placeholder="Your name" required />
           <label htmlFor="age">Age</label>
-          <input type="number" id="age" placeholder="Your age" required />
+          <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] " type="number" id="age" placeholder="Your age" required />
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" placeholder="Your email" required />
+          <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] " type="email" id="email" placeholder="Your email" required />
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" placeholder="Your password"required/>
+          <input className="bg-[#d6d3d1] border-4 hover:border-[#facc15] " type="password" id="password" placeholder="Your password"required/>
           <div className="accept">
             <input type="checkbox" id="conditions" />
             <label htmlFor="conditions">Accept conditions.</label>
           </div>
-          <button className="button" type="submit">Sign in</button>
+          </div>
+          <div>
+          <button className=" bg-[#facc15] h-7 w-20" type="submit">Sign in</button>
         </div>
+
       </form>
-      <p className="feedback-error">{feedBack}</p>
-      <p>
+      <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedBack}</p>
+      <p className= "flex items-center justify-center gap-2">
         or
-        <a href=""onClick={handleNavigateToLogin}>Login</a>
+        <a className="text-2xl" href=""onClick={handleNavigateToLogin}>Login</a>
       </p>
     </main>
   </div>

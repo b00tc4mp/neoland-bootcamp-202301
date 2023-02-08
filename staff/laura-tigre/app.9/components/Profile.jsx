@@ -29,8 +29,8 @@ function Profile(){
         }
     }
 
-    return <div className="profile-panel">
-    <form onSubmit={handleChangePassword} className="update-password-panel">
+    return <div className="font-['Montserrat']bg-[#d1d5db] mt-10 p-3 ">
+    <form className="flex flex-col " onSubmit={handleChangePassword} >
       <input
         type="password"
         name="currentPassword"
