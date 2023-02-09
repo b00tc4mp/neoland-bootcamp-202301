@@ -6,28 +6,17 @@
  * @param {string} visibility The visibility of the sticky
  */
 function createSticky(email, text, visibility) {
-    for (var i = 0; i < users.length; i++) {
-        var user = users[i];
+    const found = users.some(user => user.email === email)
 
-        if (user.email === email) {
-            // var sticky = {
-            //     user: email,
-            //     text: text,
-            //     visibility: visibility
-            // }
+    if (!found) throw new Error('user with email ' + email + ' not found')
 
-            var sticky = {
-                id: createStickyId(),
-                user: email,
-                text,
-                visibility
-            }
-
-            stickies.push(sticky)
-
-            return
-        }
+    const sticky = {
+        id: createStickyId(),
+        user: email,
+        text,
+        visibility,
+        likes: []
     }
 
-    throw new Error('user with email ' + email + ' not found')
+    stickies.push(sticky)    
 }

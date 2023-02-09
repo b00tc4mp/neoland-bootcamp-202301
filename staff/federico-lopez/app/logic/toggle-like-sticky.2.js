@@ -5,18 +5,15 @@
  * @param {string} stickyId The sticky identifier
  */
 function toggleLikeSticky(email, stickyId) {
-    const found = users.some(user => user.email === email)
-
-    if (!found) throw new Error('user with email ' + email + ' not found')
-
+    // buscar sticky por id
+    // poner email en array de likes en el sticky
     const sticky = stickies.find(sticky => sticky.id === stickyId)
 
-    if (!sticky) throw new Error('sticky with id ' + stickyId + ' not found')
-
-    const index = sticky.likes.indexOf(email)
-
-    if (index < 0)
+    if (!sticky.likes.includes(email))
         sticky.likes.push(email)
-    else
+    else {
+        const index = sticky.likes.indexOf(email)
+
         sticky.likes.splice(index, 1)
+    }
 }
