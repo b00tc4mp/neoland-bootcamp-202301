@@ -1,25 +1,23 @@
-function setTimeoutBlocking(callback, milis) {
-    for (var initial = Date.now(); Date.now() - initial < milis;);
+function setTimeoutBlocking(callback, millis) {
+    for (var initial = Date.now(); Date.now() - initial < millis;);
 
     callback()
 }
 
+console.log('hey')
 
+setTimeout(() => console.log('do this asap 1'), 3000)
+setTimeoutBlocking(() => console.log('do this asap 2'), 5000)
 
-console.log(0)
-
-//setTimeout(() => console.log(1), 1000)
-
-//for (var initial = Date.now(); Date.now() - initial < 1000;);
-//console.log(1)
-
-setTimeout(() => console.log(3), 1000)
-
-setTimeoutBlocking(() => console.log(1), 3000)
-
-console.log(2)
-// VM3381:9 0
-// VM3381:18 1
-// VM3381:20 2
+console.log('do it now! 1')
+console.log('do it now! 2')
+console.log('do it now! 3')
+console.log('do it now! 4')
+// VM3018:7 hey
+// VM3018:10 do this asap 2
+// VM3018:12 do it now! 1
+// VM3018:13 do it now! 2
+// VM3018:14 do it now! 3
+// VM3018:15 do it now! 4
 // undefined
-// VM3381:16 3
+// VM3018:9 do this asap 1
