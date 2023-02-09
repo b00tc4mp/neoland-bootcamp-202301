@@ -1,6 +1,7 @@
 document.body.innerHTML = "";
 
 var form = document.createElement("form");
+form.classList.add("border-2", "border-red-500");
 
 form.onsubmit = (event) => {
   event.preventDefault();
@@ -17,7 +18,17 @@ form.onsubmit = (event) => {
 
   var query = event.target.q.value;
 
-  searchGiphyAndRenderResults(query);
+  searchGiphy(query, (result) => {
+    result.data.forEach((item) => {
+      var url = item.images.original.url;
+
+      var img = document.createElement("img");
+      img.src = url;
+      img.classList.add("giphy-image", "border-2", "border-black");
+
+      document.body.append(img);
+    });
+  });
 
   form.reset();
 };
@@ -33,31 +44,3 @@ button.innerText = "Busca con Giphy";
 
 form.append(input, button);
 document.body.append(form);
-
-function searchGiphyAndRenderResults(query) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.onload = function (event) {
-    var result = JSON.parse(event.target.response);
-
-    result.data.forEach((item) => {
-      var url = item.images.original.url;
-
-      var img = document.createElement("img");
-      img.src = url;
-      img.classList.add("giphy-image");
-
-      document.body.append(img);
-    });
-  };
-
-  // WARN replace YOUR_API_KEY with your api key from giphy
-
-  xhr.open(
-    "GET",
-    "https://api.giphy.com/v1/gifs/search?api_key=zVCDuTIML1CwHv0boTLXAQF0IoxxsMnE&q=" +
-      query +
-      "&limit=25&offset=0&rating=g&lang=en"
-  );
-  xhr.send();
-}
