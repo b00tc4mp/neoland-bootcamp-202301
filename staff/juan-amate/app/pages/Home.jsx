@@ -44,8 +44,8 @@ function Home(props) {
             <a onClick={handleShowList} className="logo-link" href=""><img className="w-16" src="images/mylogo.png" alt="logo" /></a>
 
             <nav className="flex items-center gap-2">
-                <a onClick={handleShowMyList} className="hover:underline cursor-pointer" href="">My stickies</a>
-                <a onClick={handleShowProfile} className="hover:underline cursor-pointer" href="">Profile</a>
+                <a onClick={handleShowMyList} className="text-gray-500 hover:underline cursor-pointer" href="">My stickies</a>
+                <a onClick={handleShowProfile} className="text-gray-500 hover:underline cursor-pointer" href="">Profile</a>
                 <button onClick={handleLogout} className="bg-blue-600 text-white font-semibold border border-gray-400 p-1 rounded-md pointer">Logout</button>
             </nav>
         </header>

@@ -69,7 +69,7 @@ function List() {
                 <img className="w-5 pb-0 cursor-pointer" src={sticky.likes.includes(sessionStorage.email) ? "public/heart-full.svg" : "public/heart.svg" } onClick={handleLike} id={sticky.id}></img>
                 <p title={sticky.likes.join('\n')}>{sticky.likes.length}</p>
             </div>
-            <strong className="p-1">{sticky.user}</strong>
+            <strong className="text-gray-500 p-1">{sticky.user}</strong>
         </li>)}
     </ul>
 }
