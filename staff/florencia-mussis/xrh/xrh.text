@@ -1,0 +1,46 @@
+// creo un objeto xhr para realizar una comunicación HTTP
+
+var xhr = new XMLHttpRequest()
+
+// le agrego un manejador de eventos donde indicaré qué realizar cuando llegue la response
+
+xhr.onload = () => {
+    console.log("response received")
+
+    if(xhr.status === 200) {
+        console.log('everything was fine - status 200')
+
+        var domParser = new DOMParser()
+
+        var html = xhr.responseText //texto del html
+
+        var doc = domParser.parseFromString(html, 'text/html')
+
+        var cards = doc.querySelectorAll('.Thumbnail_content__2eR9q')
+
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i]
+
+            var statusCode = card.querySelector('div').innerText
+
+            var description = card.querySelector('p').innerText
+
+            console.log(statusCode, description)
+        }
+    } else {
+        console.log('something fail')
+    }
+}
+
+xhr.onerror = () => {
+    console.log("connection error")
+}
+
+// configuro el método ("GET") y la URL a la que se realizará la
+// request
+xhr.open("GET", "https://http.cat")
+
+// lanzo la request
+xhr.send()
+
+console.log("request sent")

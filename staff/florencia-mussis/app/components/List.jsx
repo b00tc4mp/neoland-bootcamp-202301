@@ -48,21 +48,22 @@ function List(props){
         }
     }
     
-    return <ul className="list-panel">
-        {stickies.map(sticky => <li key={sticky.id}>
-
-            {sticky.user === sessionStorage.email && 
-            <button className={sticky.visibility === 'public' ? 'classPublic' : 'classPrivate'} id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>}
-           
-            {sticky.user === sessionStorage.email &&
-            <button id={sticky.id} onClick={handleDeleteSticky}>X</button>}
-
-            <p id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+    return <ul className="flex flex-col items-center">
+        {stickies.map(sticky => <li className="m-10 p-4 w-[40ch] border-2" key={sticky.id}>
+            <div className="text-right">
+                {sticky.user === sessionStorage.email && 
+                <button className={sticky.visibility === 'public' ? 'classPublic' : 'classPrivate'} id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>}
             
-            <strong>{sticky.user}</strong>
+                {sticky.user === sessionStorage.email &&
+                <button id={sticky.id} onClick={handleDeleteSticky}>X</button>}
+            </div>
+        
+            <p className="text-left" id={sticky.id} contentEditable={sticky.user === sessionStorage.email} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
             
-            <div >
-                <img className="heart-icon"
+            <strong className="text-right w-full block">{sticky.user}</strong>
+            
+            <div className="flex items-center gap-1 justify-end" >
+                <img className="heart-icon w-8"
                     src={sticky.likes.includes(sessionStorage.email) ? "public/heart-full.svg" : "public/heart.svg"}
                     onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}
                 />

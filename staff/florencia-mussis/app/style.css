@@ -12,30 +12,34 @@
   --secondary-form-color:rgba(146,145,241,1);
 }
 
+
 #root {
- height: 100%;
-}
-
-* {
-  font-family: 'Montserrat', sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
   height: 100%;
-}
+ }
+ 
+ * {
+   font-family: 'Montserrat', sans-serif;
+ }
+ 
+ * {
+   margin: 0;
+   padding: 0;
+ }
+ 
+ html,
+ body {
+   height: 100%;
+ }
+ 
+ body{
+   margin: 0;
+ }
+ 
+/* 
 
-body{
-  margin: 0;
-}
 
 /*************************************** REGISTER ***************************************/ 
-main {
+/* main {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -149,7 +153,7 @@ button:hover{
 }
 
 /*************************************** LOGIN ***************************************/ 
-.login{
+/* .login{
   height: 100%;
   gap: 10px;
   background: radial-gradient(circle, var(--primary-form-color) 0%,var(--secondary-form-color) 100%);
@@ -166,9 +170,9 @@ button:hover{
   margin-left: 2px;
   text-decoration: none;
   color: white;
-}
+} */
 /*************************************** HOME ***************************************/ 
-
+/* 
 header{
  width: 100%;
  display: flex;
@@ -307,7 +311,7 @@ bottom: 0;
 .heart-icon{
   width: 25px;
 
-}
+} */ 
 
  /*************************************** RECETAS ***************************************/ 
  /* .receta{
@@ -324,4 +328,4 @@ bottom: 0;
 .receta-text{
   font-size: 1.5rem;
   margin-top: 4rem;
-  } */
+  } */ 

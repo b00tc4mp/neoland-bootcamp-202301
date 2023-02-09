@@ -37,20 +37,21 @@ function Home(props) {
         props.onLogout()
     }
 
-    return <div className="home-view">
-        <header>
-            <a onClick={handleShowList} className="logo" href=""><img className="pluma"
+    return <div className="h-screen">
+        <header className="fixed w-full flex justify-between p-2 bg-purple-300">
+            <a onClick={handleShowList} className="w-16" href=""><img className="pluma"
                 src="https://icons-for-free.com/download-icon-tweet+post+twitter+write+icon-1320196019185766457_512.png"
-                alt="Posts"></img></a>
+                alt="Posts"></img>
+            </a>
 
-            <nav className="menu">
+            <nav className="flex items-center gap-5">
                 <a onClick={handleShowMyList} className="my-list-link" href="">My stickies</a>
                 <a onClick={handleShowProfile} className="profile-link" href="">Profile</a>
-                <button onClick={handleLogout} className="logout-button">Logout</button>
+                <button onClick={handleLogout} className="bg-purple-300 border-2 rounded-md text-white w-20 drop-shadow-sm">Logout</button>
             </nav>
         </header>
 
-        <main className="home-main">
+        <main className="home-main flex flex-colum">
            {view ==='list' && <List updateStamp = {listUpdateStamp}/>}
            
            {view ==='profile' && <Profile/>}
@@ -58,8 +59,8 @@ function Home(props) {
            {view === 'my-list' && <MyList/>}
         </main>
 
-        <footer>
-            <button onClick={handleAdd} className="add-button">+</button>
+        <footer className="fixed bottom-0 left-0 flex justify-center bg-purple-300 border-2 rounded-md text-white w-full" >
+            <button className="drop-shadow-sm text-5xl" onClick={handleAdd} >+</button>
         </footer>
     </div>
 }

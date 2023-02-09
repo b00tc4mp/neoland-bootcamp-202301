@@ -14,7 +14,7 @@ function App() {
         setView('home')
     }
 
-    return <div className="app">
+    return <div className="h-full">
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin}/>}
         {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome}/>}
         {view === 'home' && <Home onLogout={handleShowLogin}/>}
