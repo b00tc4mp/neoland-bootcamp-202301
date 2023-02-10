@@ -21,7 +21,7 @@ form.onsubmit = (event) => {
     searchGiphy(query, (result) => {
         var imagesContainer= document.createElement('div')
 
-        imagesContainer.classList.add('grid','grid-cols-5','grid-rows-5', 'm-4','gap-8')
+        imagesContainer.classList.add('grid','grid-cols-3','md:grid-cols-5','grid-rows-8','md:grid-rows-5' , 'p-4','gap-8','position-fixed')
 
         result.data.forEach((item) => {
             var url = item.images.original.url
