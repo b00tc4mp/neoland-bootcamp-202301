@@ -21,9 +21,9 @@ function App() {
     }
 
     return <div>
-        <form onSubmit={handleSearch}>
-                <input type="search" name="query" />
-                <button type="submit">Drunk</button>
+        <form className='form-class flex flex-col items-center justify-center mt-20' onSubmit={handleSearch}>
+                <input className="border-double border-2 rounded-full border-[#5b21b6] w-[20ch] m-4 text-center p-3 hover:bg-[#a78bfa] focus:outline-none visited:bg-[#a78bfa]" type="search" name="query" />
+                <button className="button border-2 border-[#5b21b6] bg-[#a78bfa] p-3 rounded-lg" type="submit">Drunk</button>
             </form>
         
         {view === 'search' && <div>
@@ -31,26 +31,27 @@ function App() {
                 <input type="search" name="query" />
                 <button type="submit">Drunk</button>
             </form> */}
-            <ul>{items.map(item =>
+            <ul className="grid grid-cols-3 p-4 gap-8">{items.map(item =>
                 <li key={item.idDrink} onClick={() => handleDrinkClick(item.idDrink)}>
-                    <img src={item.strDrinkThumb} />
-                    <h2>{item.strDrink}</h2>
+                    <img className="giphy-image rounded shadow-lg w-[250px] h-[250px]"  src={item.strDrinkThumb} />
+                    <h2 className="text-xl ">🍹 {item.strDrink} 🍹</h2>
                 </li>)}
             </ul>
 
         </div>}
 
-        {view === 'drink' && <div>
+        {view === 'drink' && <div className="flex flex-col items-center">
      
-            <ul>
+            <ul className="m-8">
                 <li>
-                    <img src={itemShown.strDrinkThumb} />
-                    <h2>{itemShown.strDrink}</h2>
-                    <p>Alcohol:{itemShown.strAlcoholic}</p>
-                    <p>Ingredients:</p>
-                    <ul>{itemShown.ingredients.map(ingredient => <li>{ingredient}</li>)}
-                    </ul>
-                    <p>Instructions:{itemShown.strInstructions}</p>
+                    <div className="flex flex-col border-2 border-[#5b21b6] bg-[#c4b5fd] w-[60ch] p-4">
+                    <img className="giphy-image rounded shadow-lg w-[250px] h-[250px]" src={itemShown.strDrinkThumb} />
+                    <h2 className="text-3xl">{itemShown.strDrink}</h2>
+                    <p> Alcohol: {itemShown.strAlcoholic}</p>
+                    <p className="flex flex-row "> Ingredients: <ul className="flex flex-col list-disc m-5">{itemShown.ingredients.map(ingredient => <li>{ingredient}</li>)}
+                    </ul></p>
+                    <p>Instructions: {itemShown.strInstructions}</p>
+                    </div>
                 </li>
             </ul>
 
