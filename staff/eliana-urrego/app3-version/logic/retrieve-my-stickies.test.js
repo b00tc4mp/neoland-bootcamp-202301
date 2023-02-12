@@ -1,9 +1,11 @@
+//case 0
+stickies.length = 0
+    
 var sticky = {
     id: createStickyId(),
     user: "pepito@grillo.com",
     text: "hola mundo!",
     visibility: "private",
-    likes:['wendy@Darling.com']
 }
 stickies.push(sticky)
 
@@ -12,7 +14,6 @@ var sticky = {
     user: "wendy@Darling.com",
     text: "hello world!",
     visibility: "public",
-    likes: ['pepito@grillo.com']
 }
 
 stickies.push(sticky)
@@ -22,8 +23,7 @@ var sticky = {
     id: createStickyId(),
     user: 'peter@pan.com',
     text: 'hello world',
-    visibility: 'public',
-    likes: ['wendy@Darling.com']
+    visibility: 'private',
 }
 
 stickies.push(sticky)
@@ -31,9 +31,14 @@ stickies.push(sticky)
 var sticky = {
     id: createStickyId(),
     user: "peter@pan.com",
-    text: "hello world...",
+    text: "hello world",
     visibility: "public",
-    likes: ['wendy@Darling.com']
 }
 
 stickies.push(sticky)
+try{
+    var result = retrieveMyStickies('pepito@grillo.com')
+}catch(error){
+verify(error.message === 'wrong email')
+verify(result.length=4)
+}

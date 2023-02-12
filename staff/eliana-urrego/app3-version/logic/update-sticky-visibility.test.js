@@ -1,11 +1,11 @@
 // case 0
-users.length = 0
 
-var user = {
-    name: 'Pepito Grillo',
-    age: 50,
-    email: 'pepito@grillo.com',
-    password: '123123123'
+users.length = 0
+var sticky = {
+    id: createStickyId(),
+    user: "pepito@grillo.com",
+    text: "hola mundo!",
+    visibility: "private",
 }
 users.push(user)
 
