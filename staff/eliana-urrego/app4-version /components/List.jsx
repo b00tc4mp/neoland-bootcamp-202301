@@ -46,9 +46,9 @@ function List() {
         }
     }
 
-    return <ul className="flex flex-col items-center">
+    return <ul className="list-panel">
         {stickies.map(sticky => 
-        <li className="bg-white m-5 w-[40ch] rounded" key={sticky.id}>
+        <li key={sticky.id}>
 
           {/* {
             sticky.user===sessionStorage.email ?
@@ -60,22 +60,23 @@ function List() {
          {/* <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email? true:false} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p> */}
-            <div className="text-right">
+            <div className="button-position">
             {sticky.user === sessionStorage.email &&
-            <button className="p-1 border-[2px] border-[#528AAE] text-[#DB4704] p-1 m-1" id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>{sticky.visibility}</button> }
-            {sticky.user === sessionStorage.email && <button className="p-1 border-[2px] border-[#528AAE] text-[#DB4704] p-1 m-1" id={sticky.id} onClick={handleDelete}>X</button> }
+            <button className="button-sticky" id={sticky.id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>{sticky.visibility}</button> }
+            {sticky.user === sessionStorage.email &&
+            <button className="button-sticky" id={sticky.id} onClick={handleDelete}>X</button> }
             </div>
             <p id={sticky.id} contentEditable={sticky.user=== sessionStorage.email} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
             {sticky.text}
             </p>
             
-              <div className="text-right" >
-              <img className="h-5 float-right"
+              <div >
+              <img className="img-likes"
               src={sticky.likes.includes(sessionStorage.email)? 'public/heart-full.svg': 'public/heart.svg'}
               onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/><p>{sticky.likes.length}</p>
-            <strong>{sticky.user}</strong>
-              </div>
               
+              </div>
+              <strong>{sticky.user}</strong>
         </li>)}
       </ul>
       
