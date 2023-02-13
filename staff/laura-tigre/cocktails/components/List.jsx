@@ -1,7 +1,10 @@
 function List({query, onItemClick}){
   console.log('List -> render')
+//   const items= props.items sustituimos item por query, que es la búsqueda que tenemos definida
+// en la App
+//   const onItemClick= props.onItemClick
 
-  const [items, setItems]= React.useState([])
+  const [items, setItems]= React.useState([]) //el estado en el que partimos es un array vacio
 
 
      React.useEffect(()=>{
@@ -9,7 +12,7 @@ function List({query, onItemClick}){
              setItems(results)
      })
     }, [query])
-
+    //usamos useEfect para que solo se renderice una sola vez y cuando cambie la query y que pinte cuando tenga los resultados, es asíncrono
     const handleItemClick = event => {
         const itemId = event.currentTarget.dataset.id
 

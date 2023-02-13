@@ -1,5 +1,6 @@
-function Detail({ itemId }) {
+function Detail({ itemId }) { {/**props */}
     console.log('Detail-> render')
+    // const item = props.item
     const [item, setItem] = React.useState()
 
 React.useEffect(()=> {
