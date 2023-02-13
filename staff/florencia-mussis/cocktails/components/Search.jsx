@@ -6,7 +6,7 @@ function Search({ onQuery }) {
 
         const query = event.target.query.value
 
-        onQuery(query)
+        onQuery(query) //envio la query a  App- search
 
     }
 

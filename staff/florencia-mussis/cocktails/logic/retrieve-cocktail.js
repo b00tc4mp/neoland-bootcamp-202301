@@ -8,7 +8,6 @@ function retrieveCocktail (cocktailId, callback){
 
     }
     
-
     xhr.open("GET", "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + cocktailId)
     xhr.send()
 }

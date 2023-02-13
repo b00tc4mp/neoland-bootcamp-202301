@@ -8,7 +8,7 @@ function Detail({ itemId }) {
         retrieveCocktail(itemId, result => {
             setItem(result)
         })
-    }, [])
+    }, []) 
 
     return <div>
         {item && <div>
