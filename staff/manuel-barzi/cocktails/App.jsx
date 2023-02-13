@@ -2,32 +2,24 @@ function App() {
     console.log('App -> render')
 
     const [view, setView] = React.useState('list')
-    const [items, setItems] = React.useState([])
-    const [item, setItem] = React.useState()
+    const [query, setQuery] = React.useState()
+    const [itemId, setItemId] = React.useState()
 
-    const handleSearch = event => {
-        event.preventDefault()
-
-        const query = event.target.query.value
-
-        searchCocktails(query, results => {
-            setItems(results)
-            setView('list')
-        })
+    const handleQuery = query => {
+        setQuery(query)
+        setView('list')
     }
 
-    const handleDetail = event => {
-        retrieveCocktail(event.currentTarget.dataset.id, result => {
-            setItem(result)
-            setView('detail')
-        })
+    const handleDetail = itemId => {
+        setItemId(itemId)
+        setView('detail')
     }
 
     return <div>
-        <Search onFormSubmit={handleSearch}/>
+        <Search onQuery={handleQuery} />
 
-        {view === 'list' && !!items.length && <List items={items} onItemClick={handleDetail} />}
+        {view === 'list' && <List query={query} onItemClick={handleDetail} />}
 
-        {view === 'detail' && <Detail item={item} />}
+        {view === 'detail' && <Detail itemId={itemId} />}
     </div>
 }
