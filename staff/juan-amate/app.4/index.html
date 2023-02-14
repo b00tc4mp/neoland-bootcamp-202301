@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+<!--     REGISTER      -->
+  <body>
+    <main class="register">
+      <img src="images/mylogo.png" alt="logo" class="logo" />
+      <h1>Register</h1>
+      <form>
+        <label for="name">Name</label>
+        <input type="name" id="name" placeholder="Input your name" />
+
+        <label for="age">Age</label>
+        <input type="number" id="age" placeholder="Input your age" />
+
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Input your e-mail"
+          required
+        />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Input your password"
+          required
+        />
+
+        <button type="submit">Register</button>
+      </form>
+      <p>Do you have an account? <a>Login</a></p>
+      <p class="feedback">error...</p>
+    </main>
+<!--     LOGIN     -->
+    <main class="login">
+      <img src="images/mylogo.png" alt="logo" class="logo" />
+      <h1>Welcome back!</h1>
+      <form>
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Input your e-mail"
+          required
+        />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Input your password"
+          required
+        />
+
+        <button type="submit">Login</button>
+      </form>
+      <p>Not a member? <a class="">Sign up</a></p>
+      <p class="feedback">error...</p>
+    </main>
+<!--     HOME     -->
+    <div class="home">
+      <header>
+        <img src="images/mylogo.png" alt="logo" class="logo" />
+
+        <nav>
+          <a href="#">News</a>
+          <a href="#">Top 10</a>
+          <a href="#">Feature</a>
+          <a href="#">Blog</a>
+        </nav>
+      </header>
+
+      <main class="home-main">
+        <ul>
+          <li>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam
+            enim commodi, ut possimus repellat consequatur ratione soluta
+            suscipit magni incidunt! In non voluptatem rerum molestias quas
+            nihil voluptatibus deserunt placeat?
+          </li>
+          <li>
+            Velit, deleniti? Eligendi, eius velit autem ducimus suscipit
+            officiis saepe voluptas reiciendis minus quaerat dolore consectetur,
+            libero id maxime soluta pariatur dolorum dolorem, quisquam sed
+            temporibus cumque? Provident, dolorum illo.
+          </li>
+          <li>
+            Ut qui iusto perspiciatis! Voluptates dolore asperiores libero,
+            eligendi id laborum cum, quisquam dignissimos dolor repellat illum
+            neque porro ipsa, doloribus sed sunt aliquam commodi alias mollitia
+            incidunt ducimus corporis.
+          </li>
+          <li>
+            Magnam, ducimus optio. Labore numquam quas error! Repellat
+            cupiditate quam doloremque totam blanditiis minima libero nisi
+            ducimus error, numquam amet natus animi quis sit dolores neque
+            corrupti atque in laboriosam!
+          </li>
+          <li>
+            In, perferendis? Modi tempore quis fugit rerum accusantium amet eum
+            quae, maiores voluptates repellendus perspiciatis quo, ipsum
+            voluptatem illum, magni non! Harum necessitatibus quibusdam deserunt
+            facere pariatur, quisquam consequuntur! Suscipit.
+          </li>
+          <li>
+            Impedit laboriosam consequatur repellendus perferendis ut id magni
+            inventore quia assumenda eveniet quidem odit, vero ipsa illo
+            mollitia dicta doloribus animi consequuntur ullam. Unde at
+            necessitatibus consequuntur amet, nihil quas.
+          </li>
+          <li>
+            Autem asperiores sed, hic possimus quae dolorem rem impedit
+            expedita! Neque rem, consequatur ducimus, dolorem harum quas ratione
+            perferendis quibusdam magnam soluta quod. Iure, est dolore officiis
+            exercitationem porro libero.
+          </li>
+          <li>
+            Enim eos deleniti tenetur, necessitatibus eum aspernatur quidem
+            ipsam quod placeat deserunt possimus blanditiis earum repellendus
+            iure laborum in perferendis vitae ullam accusamus! Fugiat sequi id
+            odit quo ut ratione?
+          </li>
+          <li>
+            Possimus nulla incidunt distinctio hic placeat adipisci doloribus
+            quis reiciendis illum officiis dolorum laudantium officia aliquam
+            illo harum, reprehenderit doloremque, vel culpa facilis!
+            Exercitationem possimus iusto, nulla natus maxime minus?
+          </li>
+          <li>
+            Dolore, unde iste id aliquid facilis nulla? Maiores repellat
+            perferendis at cumque veritatis iure distinctio nisi animi velit
+            odio qui doloribus quod eum consequuntur numquam aperiam, optio
+            similique vel sapiente?
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <button class="footer-button">+</button>
+      </footer>
+    </div>
+
+    <!-- Data Layer -->
+
+    <script src="data/users.js"></script>
+    <script src="data/stickies.js"></script>
+
+    <!-- Optional -->
+    <script src="data/users.populate.js"></script>
+    <script src="data/stickies.populate.js"></script>
+
+    <!-- Business (Logic) Layer -->
+
+    <script src="logic/register-user.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/retrieve-public-stickies.js"></script>
+    <script src="logic/create-sticky.js"></script>
+
+    <!-- Optional -->
+    <script src="logic/register-user.test.js"></script>
+    <script src="logic/authenticate-user.test.js"></script>
+    <script src="logic/retrieve-public-stickies.test.js"></script>
+    <script src="logic/create-sticky.test.js"></script>
+
+    <!-- Presentation Layer -->
+
+    <script src="components/register.js"></script>
+    <script src="components/login.js"></script>
+    <script src="components/home.js"></script>
+  </body>
+</html>
