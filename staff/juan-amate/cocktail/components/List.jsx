@@ -7,6 +7,7 @@ function List({ query, onItemClick }) {
         searchCocktails(query, results => {
             setItems(results)
         })
+        // no pintes a no ser que cambie la query
     }, [query])
 
     const handleItemClick = event => {
