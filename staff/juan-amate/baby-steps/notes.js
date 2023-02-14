@@ -27,50 +27,113 @@
 // note-1676383832973
 // note-1676385834604
 
-
 const [, , operation] = process.argv
 
-const fs = require('fs')
+const fs = requires('fs')
 
 if (operation === 'add') {
-    const content = process.argv[3]
-    
-    const { writeFile } = fs
+    if (process.argv.length === 4) {
+        const content = process.argv[3]
 
-    const file = 'note-' + Date.now() + '.txt'
+        const { writeFile } = fs
 
-    writeFile(file, content, 'utf8', error => {
-        if (error) {
-            console.error('could not write note, because of error: ' + error.message)
+        const file = 'note-' + Date.now() + '.txt'
 
-            return
+        writeFile(file, content, 'utf8', error => {
+            if (error) {
+                console.error('could not write note, because of error: ' + error.message)
+
+                return
+            }
+
+            console.log('note created (' + file + ')')
+        })
+    } else if (process.argv.length === 5) {
+        const noteId = process.argv[3]
+        const file = noteId + '.txt'
+
+        const newText = process.argv[4]
+
+        const { readFile, writeFile } = fs
+
+        readFile(file, 'utf8', (error, content) => {
+            if (error) {
+                console.error('could not read note, because of error: ' + error.message)
+
+                return
+            } else if () {
+
+            })
+
+        }
         }
 
-        console.log('note created (' + file + ')')
-    })
-} else if (operation === 'get') {
-    const noteId = process.argv[3]
-
-    const { readFile } = fs
-
-    const file = noteId + '.txt'
-
-    readFile(file, 'utf8', (error, content) => {
-        if (error) {
-            console.error('could not read note, because of error: ' + error.message)
-
-            return
         }
-
-        console.log(content)
-    })
-} else if (operation === 'set')  {
-    const noteId = process.argv[3]
-
-    const { writeFile } = fs
-
-    const file = noteId + '.txt'
-
-    writeFile(file, content,)
-
 }
+
+
+
+
+
+
+// const [, , operation] = process.argv
+
+// const fs = require('fs')
+
+
+// if (operation === 'add') {
+//     if ( process.argv.length === 4) {}
+//     const content = process.argv[3]
+
+//     const { writeFile } = fs
+
+//     const file = 'note-' + Date.now() + '.txt'
+
+//     writeFile(file, content, 'utf8', error => {
+//         if (error) {
+//             console.error('could not write note, because of error: ' + error.message)
+
+//             return
+//         }
+
+//         console.log('note created (' + file + ')')
+//     })
+// } else if (operation === 'get') {
+//     const noteId = process.argv[3]
+
+//     const { readFile } = fs
+
+//     const file = noteId + '.txt'
+
+//     readFile(file, 'utf8', (error, content) => {
+//         if (error) {
+//             console.error('could not read note, because of error: ' + error.message)
+
+//             return
+//         }
+
+//         console.log(content)
+//     })
+// } else if (operation === 'set') {
+//     const noteId = process.argv[3]
+//     const content = process.argv[4]
+
+//     const { writeFile } = fs
+
+//     const file = noteId + '.txt'
+
+
+//     writeFile(file, content, 'utf8', (error, content) => {
+//         if (error) {
+//             console.error('could not read note, because of error: ' + error.message)
+
+//             return
+//         }
+
+//         console.log(content)
+//     })
+// } else if (operation === 'modify') {
+//     const noteId = process.argv[3]
+//     const content = process.argv[4]
+
+// }
