@@ -7,7 +7,7 @@ React.useEffect(()=> {
     retrieveCocktail(itemId, result => {
         setItem(result)
     })
-},[])
+},[])// cuando ponemos corchetes vacios decimos que se pinte una sola vez
 
     return <div>
         {item && <div className="flex flex-col items-center">

@@ -17,7 +17,6 @@ function App() {
     //     })
     // }
     // sustituimos la handleSearch por la query ya que lo que buscamos es el resultado de la query que es la busqueda en el momento y por lo tanto la vista
-    //que se mostrara es la de list
     const handleQuery = query => {
         setQuery(query) // seteamos el estado de query y se lo actualizaos a la query del input
         setView('list')
@@ -40,7 +39,7 @@ function App() {
 
     return <div>
   
-        < Search onQuery={handleQuery} /> {/**onFormSubmit={handleSearch} */}
+        < Search onQuery={handleQuery} /> {/**onFormSubmit={handleSearch} envio callback */}
     
         {view === 'list' && <List query={query} onItemClick={handleDetail}/>}
         {/* && !!items.length && <List items={items} onItemClick={handleDetail} />} */}

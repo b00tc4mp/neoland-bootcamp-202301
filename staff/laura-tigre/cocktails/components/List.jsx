@@ -8,7 +8,7 @@ function List({query, onItemClick}){
 
 
      React.useEffect(()=>{
-        searchCocktails(query, results =>{
+        query && searchCocktails(query, results =>{
              setItems(results)
      })
     }, [query])
