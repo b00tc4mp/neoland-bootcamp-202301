@@ -11,7 +11,7 @@
 // note updated (note-1676382448483.txt)
 
 // DEMO add more content to existing one (with line break)
-// $ node notes add note-1676382448483 'ciao mondo'
+// $ node notes add-text note-1676382448483 'ciao mondo'
 // note updated (note-1676382448483.txt)
 
 // DEMO delete a note
@@ -33,8 +33,9 @@ const [, , operation] = process.argv
 const fs = require('fs')
 
 if (operation === 'add') {
+    if (process.argv.length === 4) { }
     const content = process.argv[3]
-    
+
     const { writeFile } = fs
 
     const file = 'note-' + Date.now() + '.txt'
@@ -64,5 +65,95 @@ if (operation === 'add') {
 
         console.log(content)
     })
+
+} else if (operation === 'set') {
+    const noteId = process.argv[3]
+
+    const content = process.argv[4]
+
+    const { writeFile } = fs
+    const file = noteId + '.txt'
+
+    writeFile(file, content, 'utf8', error => {
+        if (error) {
+            console.error('could not write this note, because of error: ' + error.message)
+
+            return
+        }
+
+        console.log('note (' + file + ') updated')
+    })
+
+} else if (operation === 'delete') {
+    const noteId = process.argv[3]
+    const { unlink } = fs
+    const file = noteId + '.txt'
+
+    unlink(file, error => {
+        if (error) {
+            console.error('could not delete this note, because of error: ' + error.message)
+            return
+        }
+        console.log('note (' + file + ') deleted')
+    })
+
+} else if (operation === 'list') {
+    const folder = prdocess.agrv[3]
+    const { readdir } = fs
+
+    readdir(folder, (error, files) => {
+        if (error) {
+            console.error('could not find these files, because of error: ' + error.message)
+            return
+        }
+
+        for (var i = 0; i < files.length; i++) {
+            const element = files[i]
+            if (element.slice(-4) === ' .text') {
+                console.log(element)
+            }
+
+        }
+
+    })
+
 }
 
+
+
+
+
+
+
+
+
+
+// } else if (operation = 'modify') {
+//     const noteId = process.argv[3]
+//     const newContent = process.argv[4]
+
+//     const { readFile, writeFile } = fs
+
+//     const file = noteId + '.txt'
+
+//     readFile(file, 'utf8', (error, previousContent) => {
+//         if (error) {
+//             console.error('could not read note, because of error: ' + error.message)
+
+//             return
+//         }
+//         const allContent = previousContent + '\n' + newContent
+
+//         writeFile(file, content, 'utf8', error => {
+//             if (error) {
+//                 console.error('could not modify this note, because of error: ' + error.message)
+
+//                 return
+//             }
+
+//         })
+//         console.log('note (' + file + ') updated')
+
+//     })
+
+// }
