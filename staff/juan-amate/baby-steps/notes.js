@@ -71,6 +71,6 @@ if (operation === 'add') {
 
     const file = noteId + '.txt'
 
-    writeFile(file, content, )
+    writeFile(file, content,)
 
 }
