@@ -1,16 +1,16 @@
-function List({query, onItemClick}){
+function List({ query, onItemClick }) {
 
-    const [items, setItems]= React.useState([]) // arranca el array vacio
+    const [items, setItems] = React.useState([]) // arranca el array vacio
 
-    React.useEffect(()=>{
-        searchCocktails(query,results =>{
+    React.useEffect(() => {
+       query && searchCocktails(query, results => { // solo pinta si encuentra algo 
             setItems(results)
         })
     }, [query]) // que pinte cuando tenga los resultados , es asincrono . se ejecuta cuando renderiza la pagina y cuando hay un cambio en query
 
-    const handleItemClick = event =>{
+    const handleItemClick = event => {
         const itemId = event.currentTarget.dataset.id
-        onItemClick(itemId)        
+        onItemClick(itemId)
     }
     return <div>
         {items && <ul>{items.map(item =>

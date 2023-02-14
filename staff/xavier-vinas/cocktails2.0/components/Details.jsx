@@ -1,5 +1,5 @@
 function Detail({ itemId }) {
-    
+
 
     const [item, setItem] = React.useState()
 
