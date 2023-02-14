@@ -4,8 +4,8 @@ function Detail({ itemId }) {
     const [item, setItem] = React.useState()
 
 
-    React.useEffect(() => {
-        retrieveCocktail(itemId, result => {
+    React.useEffect(() => { //se usa para cosas asincronas que no bloquean, primero se pinta vacio y cuando reciba el cocktail pintara el detalle
+        retrieveCocktail(itemId, result => { //busca el cocktail en la api, recibe el cocktail, lo guarda en result y lo setea en state, entonces repinta
             setItem(result)
         })
     }, []) 

@@ -3,8 +3,8 @@ function retrieveCocktail (cocktailId, callback){
 
     xhr.onload = function (event) {
         const result = JSON.parse(event.target.response)
-
-        callback(result.drinks[0])
+       
+        callback(result.drinks[0]) 
 
     }
     
