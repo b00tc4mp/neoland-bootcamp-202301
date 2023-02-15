@@ -126,23 +126,5 @@ if (operation === 'add') {
 
         console.log('note deleted (' + file + ')');
     })
-} else if (operation === 'list') {
-    const { readdir } = fs
-
-    readdir('.', (error, files) => {
-        if (error) {
-            console.error('could not list notes, because of error: ' + error.message)
-
-            return
-        }
-
-        const noteFiles = files.filter(file => file.startsWith('note-') && file.endsWith('.txt'))
-
-        noteFiles.forEach(noteFile => {
-            const noteId =  noteFile.slice(0, -4)
-
-            console.log(noteId)
-        })
-    })
 }
 

@@ -70,10 +70,10 @@ if (operation === 'add') {
             writeFile(file, newContent, 'utf8', error => {
                 if (error) {
                     console.error('could not write note, because of error: ' + error.message)
-
+        
                     return
                 }
-
+        
                 console.log('note updated (' + file + ')')
             })
         })
@@ -109,40 +109,6 @@ if (operation === 'add') {
         }
 
         console.log('note updated (' + file + ')')
-    })
-} else if (operation === 'del') {
-    const noteId = process.argv[3]
-
-    const { unlink } = fs
-
-    const file = noteId + '.txt'
-
-    unlink(file, error => {
-        if (error) {
-            console.error('could not delete note, because of error: ' + error.message)
-
-            return
-        }
-
-        console.log('note deleted (' + file + ')');
-    })
-} else if (operation === 'list') {
-    const { readdir } = fs
-
-    readdir('.', (error, files) => {
-        if (error) {
-            console.error('could not list notes, because of error: ' + error.message)
-
-            return
-        }
-
-        const noteFiles = files.filter(file => file.startsWith('note-') && file.endsWith('.txt'))
-
-        noteFiles.forEach(noteFile => {
-            const noteId =  noteFile.slice(0, -4)
-
-            console.log(noteId)
-        })
     })
 }
 
