@@ -65,7 +65,7 @@ if (operation === 'add') {
             }
             const allContent = previousContent + '\n' + newContent
 
-            writeFile(file, content, 'utf8', error => {
+            writeFile(file, allContent, 'utf8', error => {
                 if (error) {
                     console.error('could not modify this note, because of error: ' + error.message)
 
@@ -131,9 +131,15 @@ if (operation === 'add') {
 
     readdir(folder, (error, files) => {
         if (error) {
-            console.error('could not find these files, because of error: ' + error.message)
+            console.error('could not list notes, because of error: ' + error.message)
             return
         }
+    
+        // const notesFiles = files.filter(file => startsWith('note-') && file.endWith('.txt))
+        //noteFiles.forEach(notefile =>
+       // const noteId = noteFile.slice(0,-4)
+       //console.log(noteId)
+
 
         for (var i = 0; i < files.length; i++) {
             const element = files[i]
@@ -146,13 +152,6 @@ if (operation === 'add') {
     })
 
 }
-
-
-
-
-
-
-
 
 
 
