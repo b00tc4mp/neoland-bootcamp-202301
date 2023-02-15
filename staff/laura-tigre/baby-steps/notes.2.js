@@ -50,7 +50,7 @@ if(operation=== 'add'){
         console.log('note created (note-' +file + ')')
     })
 
-}else if(process.argv=== 5){
+}else if(process.argv.length=== 5){
     
         const noteId= process.argv[3]
         const newContent= process.argv[4]

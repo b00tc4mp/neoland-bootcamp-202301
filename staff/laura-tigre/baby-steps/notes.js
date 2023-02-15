@@ -27,69 +27,69 @@
 // note-1676383826688
 // note-1676383832973
 // note-1676385834604
-const[, , operation]= process.argv
+const [, , operation] = process.argv
 
-const fs= require('fs')
+const fs = require('fs')
 
-if(operation=== 'add'){
-    if( process.argv.length===4){
-const content= process.argv[3]
-const{writeFile}= fs
-const file= 'note-'+Date.now() +'.txt'
+if (operation === 'add') {
+    if (process.argv.length === 4) {
+        const content = process.argv[3]
+        const { writeFile } = fs
+        const file = 'note-' + Date.now() + '.txt'
 
-writeFile(file, content, 'utf8', error=> {
-    if(error){
-        console.error('could not write note, because of error: ' + error.message)
-        return
-    }
- console.log('note (' + file + ')')
-})
-
-    }else if(process.argv === 5){
-        const noteId = process.argv[3]
-        const newContent = process.argv[4]
-        const{readFile,writeFile} = fs
-        const file = noteId + '.txt'
-
-        readFile(file,'utf8',(error, previousContent)=>{
-        if(error){
-            console.error('could not read file, because of error: ' + error.message)
-                return
-        }
-        const allContent= previousContent + '\n' + newContent
-        writeFile(file, allContent, 'utf8', error =>{
-            if(error){
+        writeFile(file, content, 'utf8', error => {
+            if (error) {
                 console.error('could not write note, because of error: ' + error.message)
                 return
             }
+            console.log('note (' + file + ')')
         })
-        console.log('note update (' + file + ')')
+
+    } else if (process.argv.length === 5) {
+        const noteId = process.argv[3]
+        const newContent = process.argv[4]
+        const { readFile, writeFile } = fs
+        const file = noteId + '.txt'
+
+        readFile(file, 'utf8', (error, previousContent) => {
+            if (error) {
+                console.error('could not read file, because of error: ' + error.message)
+                return
+            }
+            const allContent = previousContent + '\n' + newContent
+            writeFile(file, allContent, 'utf8', error => {
+                if (error) {
+                    console.error('could not write note, because of error: ' + error.message)
+                    return
+                }
+            })
+            console.log('note update (' + file + ')')
         })
-       
+
     }
-}else if(operation === 'get'){
-    const noteId= process.argv[3]
+} else if (operation === 'get') {
+    const noteId = process.argv[3]
 
 
-    const{readFile}=fs
+    const { readFile } = fs
 
-    const file= noteId+ '.txt'
+    const file = noteId + '.txt'
 
-    readFile(file, 'utf8',(error, content)=>{
-        if(error){
+    readFile(file, 'utf8', (error, content) => {
+        if (error) {
             console.error('could not read note, because of error: ' + error.message)
             return
         }
         console.log(content)
     })
-}else if(operation ==='set'){
+} else if (operation === 'set') {
     const noteId = process.argv[3]
     const content = process.argv[4]
-    const{writeFile} = fs
-    const file= noteId + '.txt'
+    const { writeFile } = fs
+    const file = noteId + '.txt'
 
-    writeFile(file, content,'utf8', error => {
-        if(error){
+    writeFile(file, content, 'utf8', error => {
+        if (error) {
             console.error('could not write, because of error: ' + error.message)
             return
         }
@@ -97,33 +97,37 @@ writeFile(file, content, 'utf8', error=> {
     })
 
 
-}else if (operation === 'delete'){
-    const noteId= process.argv[3]
-    const{unlink}= fs
+} else if (operation === 'del') {
+    const noteId = process.argv[3]
+    const { unlink } = fs
 
-    const file= noteId + '.txt'
+    const file = noteId + '.txt'
 
-    unlink(file, error=>{
-        if(error){
+    unlink(file, error => {
+        if (error) {
             console.error('could not delete note because:' + error.message)
             return
         }
-        console.log('note deleted ( ' +file + ')')
+        console.log('note deleted ( ' + file + ')')
     })
-} else if( operation === 'list'){
-    const folder= process.argv[3]
-    const {readdir}= fs
+} else if (operation === 'list') {
 
-    readdir(folder, (error, files)=>{
-        if(error){
+    const { readdir } = fs
+
+    readdir('.', (error, files) => {
+        if (error) {
             console.error('could not found files, because of error: ' + error.message)
             return
-        }for( let i=0 ; i<files.length; i++){
-            const file= files[i]
-            if(file.slice(-4)=== '.txt'){
-                console.log(file)
-            }
-
         }
+        const noteFiles = files.filter(file => file.startsWith('note-') && file.endsWith('.txt'))
+
+        noteFiles.forEach(noteFile => {
+            const noteId = noteFile.slice(0, -4)
+            console.log(noteId)
+        })
     })
+
+
+
 }
+
