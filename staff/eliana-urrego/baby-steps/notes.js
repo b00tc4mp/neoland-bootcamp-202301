@@ -134,11 +134,11 @@ if (operation === 'add') {
             console.error('could not list notes, because of error: ' + error.message)
             return
         }
-    
+
         // const notesFiles = files.filter(file => startsWith('note-') && file.endWith('.txt))
         //noteFiles.forEach(notefile =>
-       // const noteId = noteFile.slice(0,-4)
-       //console.log(noteId)
+        // const noteId = noteFile.slice(0,-4)
+        //console.log(noteId)
 
 
         for (var i = 0; i < files.length; i++) {
