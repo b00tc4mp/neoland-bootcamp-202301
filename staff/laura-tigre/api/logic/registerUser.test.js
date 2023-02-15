@@ -59,7 +59,7 @@ function case1(done) {
         const filePath= 'data/users/' + fileName
         const userJson= JSON.stringify(user, null,4)
 
-        writeFile(filePath, userJson,'utf-8', error=>{
+        writeFile(filePath, userJson,'utf8', error=>{
             if(error){
                 console.error(error.message)
 
