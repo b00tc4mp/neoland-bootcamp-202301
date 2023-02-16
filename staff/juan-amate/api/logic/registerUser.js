@@ -1,7 +1,6 @@
 const { writeFile, readdir, readFile } = require('fs')
 
 function registerUser(name, age, email, password, callback) {
-
     readdir('data/users', (error, files) => {
         if (error) {
             callback(error)
@@ -9,62 +8,89 @@ function registerUser(name, age, email, password, callback) {
             return
         }
 
-        let countRead = 0
+        if (!files.length) {
+            const user = {
+                name,
+                age,
+                email,
+                password,
+            }
 
-        const email = []
+            const userId = 'user-' + Date.now()
 
-        files.forEach(file => {
-            const filePath = 'data/users/' + file
+            const fileName = userId + '.json'
 
-            readFile(filePath, (error, content) => {
+            const filePath = 'data/users/' + fileName
+
+            const userJson = JSON.stringify(user, null, 4)
+
+            writeFile(filePath, userJson, 'utf8', error => {
                 if (error) {
                     callback(error)
 
                     return
                 }
 
-                const user = JSON.parse(content)
+                callback(null, userId)
+            })
 
-                email.push(user.email)
+            return
+        }
 
-                countRead++
+        const emails = []
 
-                if (countRead === files.length) {
-                    const alreadyRegistered = emails.some(registeredEmail => registeredEmail === email)
+        let countReads = 0
 
-                    if (alreadyRegistered) {
-                        const error = {message: 'user already registered'}
+        files.forEach(file => {
+            const filePath = 'data/users/' + file
 
-                        callback(error)
-                    } 
+            readFile(filePath, 'utf8', (error, json) => {
+                if (error) {
+                    callback(error)
+
+                    return
+                }
+
+                const user = JSON.parse(json)
+
+                emails.push(user.email)
+
+                countReads++
+
+                if (countReads === files.length) {
+                    if (emails.includes(email)) {
+                        callback(new Error('user already registered'))
+
+                        return
+                    }
+
+                    const user = {
+                        name,
+                        age,
+                        email,
+                        password,
+                    }
+
+                    const userId = 'user-' + Date.now()
+
+                    const fileName = userId + '.json'
+
+                    const filePath = 'data/users/' + fileName
+
+                    const userJson = JSON.stringify(user, null, 4)
+
+                    writeFile(filePath, userJson, 'utf8', error => {
+                        if (error) {
+                            callback(error)
+
+                            return
+                        }
+
+                        callback(null, userId)
+                    })
                 }
             })
         })
-    })
-
-    const user = {
-        name,
-        age,
-        email,
-        password,
-    }
-
-    const userId = 'user-' + Date.now()
-
-    const fileName = userId + '.json'
-
-    const filePath = 'data/users/' + fileName 
-
-    const userJson = JSON.stringify(user, null, 4)
-
-    writeFile(filePath, userJson, 'utf8', error => {
-        if (error) {
-            callback(error)
-            
-            return    
-        }
-
-        callback(null, userId)
     })
 }
 

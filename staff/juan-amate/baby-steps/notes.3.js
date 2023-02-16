@@ -119,20 +119,21 @@ if (operation === 'add') {
         console.log('note (' + file + ') deleted')
     })
 } else if (operation === 'list') {
+    const folder = process.argv[3]
     const { readdir } = fs
 
-    readdir('.', (error, files) => {
+    readdir(folder, (error, files) => {
         if (error) {
             console.error('could not found files, because of error: ' + error.message)
 
             return
         }
-        const noteFiles = files.filter(file => file.startsWith('note-') && file.endsWith('.txt'))
-        
-        noteFiles.forEach(noteFile => {
-            const noteId = noteFile.slice(0, -4)
-
-            console.log(noteId)
-        })  
+        for (var i = 0; i < files.length; i++) {
+            const element = files[i]
+            if (element.slice(-4) === '.txt') {
+                console.log(element)
+            }
+        }
     })
 }
+// node baby-steps/notes list baby-steps

@@ -8,12 +8,6 @@ function deleteAllFilesFromDirectory(directoryPath, callback) {
             return
         }
 
-        if (!files.length) {
-            callback(null)
-
-            return
-        }
-        
         let countDeletions = 0
 
         files.forEach(file => {
@@ -28,8 +22,9 @@ function deleteAllFilesFromDirectory(directoryPath, callback) {
 
                 countDeletions++
 
-                if (countDeletions === files.length)
+                if (countDeletions === files.length) {
                     callback(null)
+                }
             })
         })
     })

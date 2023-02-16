@@ -1,18 +1,20 @@
-console.log('%cTest it! v0.1', 'color: white; background: radial-gradient(circle, gold 0%, darkgoldenrod 100%); padding: .5rem;')
+console.log('%cTest it! v0.2', 'color: white; background: radial-gradient(circle, gold 0%, darkgoldenrod 100%); padding: .5rem;')
 
 function verify(condition) {
     if (condition)
-        console.log('%cOK ✅ ' + getFileAndLineFrom(new Error().stack), 'color: green; font-weight: bold')
+        console.log('%cOK ✅ ' + getFileAndLineFromStack(new Error().stack), 'color: green; font-weight: bold')
     else
         console.error('%cKO 🛑', 'color: tomato; font-weight: bold;')
 }
 
 // helpers
 
-function getFileAndLineFrom(stack) {
-    var lastIndexOfSlash = stack.lastIndexOf('/')
+function getFileAndLineFromStack(stack) {
+    const filePath = stack.split('\n')[2]
 
-    var fileAndLine = stack.substring(lastIndexOfSlash + 1)
+    var lastIndexOfSlash = filePath.lastIndexOf('/')
+
+    var fileAndLine = filePath.substring(lastIndexOfSlash + 1)
 
     return fileAndLine
 }
@@ -21,6 +23,4 @@ function getFileAndLineFrom(stack) {
 //     verify : verify
 // }
 
-module.exports = {
-    verify
-}
+module.exports = { verify }

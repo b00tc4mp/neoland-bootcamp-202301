@@ -1,4 +1,4 @@
-const { access, constants } = require('fs')
+const { access, constants} = require('fs')
 
 function checkFileExists(filePath, callback) {
     access(filePath, constants.F_OK, error => {
@@ -12,4 +12,4 @@ function checkFileExists(filePath, callback) {
     })
 }
 
-module.exports = checkFileExists
+module.exports = checkFileExists 
