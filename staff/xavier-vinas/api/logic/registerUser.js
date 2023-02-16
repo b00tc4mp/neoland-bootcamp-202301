@@ -1,66 +1,91 @@
-const {writeFile,readdir,readFile}= require("fs")
+const { writeFile, readdir, readFile } = require('fs')
 
-
-function registerUser(name, age, email, password, callback){
-
-
-
-    readdir("data/users",(error,files)=>{
-        if(error){
+function registerUser(name, age, email, password, callback) {
+    readdir('data/users', (error, files) => {
+        if (error) {
             callback(error)
+
             return
         }
-        let countRead = 0
-        const emails =[]
-        files.forEach(file=>{
-            const filePath = "data/users/"+ file 
 
+        if (!files.length) {
+            const user = {
+                name,
+                age,
+                email,
+                password,
+            }
 
-            readFile(filePath,(error,content)=>{
-                if(error){
+            const userId = 'user-' + Date.now()
+            const fileName = userId + '.json'
+            const filePath = 'data/users/' + fileName
+            const userJson = JSON.stringify(user, null, 4)
+
+            writeFile(filePath, userJson, 'utf8', error => {
+                if (error) {
                     callback(error)
+
                     return
                 }
-                const user = JSON.parse(content)
+
+                callback(null, userId)
+            })
+
+            return
+        }
+
+        const emails = []
+
+        let countReads = 0
+
+        files.forEach(file => {
+            const filePath = 'data/users/' + file
+
+            readFile(filePath, 'utf8', (error, json) => {
+                if (error) {
+                    callback(error)
+
+                    return
+                }
+
+                const user = JSON.parse(json)
 
                 emails.push(user.email)
 
-                countRead++
+                countReads++
 
-                if(countRead === files.length){    
-                    const alreadyRegistered = emails.some(registeredEmail => registeredEmail === email)
+                if (countReads === files.length) {
+                    if (emails.includes(email)) {
+                        callback(new Error('user already exists'))
 
-                    if(alreadyRegistered){
-                        const error = {message: 'user already registered'}
-                        callback(error)
+                        return
                     }
+
+                    const user = {
+                        name,
+                        age,
+                        email,
+                        password,
+                    }
+
+                    const userId = 'user-' + Date.now()
+                    const fileName = userId + '.json'
+                    const filePath = 'data/users/' + fileName
+                    const userJson = JSON.stringify(user, null, 4)
+
+                    writeFile(filePath, userJson, 'utf8', error => {
+                        if (error) {
+                            callback(error)
+
+                            return
+                        }
+
+                        callback(null, userId)
+                    })
                 }
             })
         })
     })
-
-    const user = {
-        name,
-        age,
-        email,
-        password,
-    }
-
-    const userId = "user-" + Date.now()
-    const fileName = userId + ".json"
-    const filePath = "data/users/" + fileName
-    const userJson = JSON.stringify(user, null, 4)
-
-    writeFile(filePath , userJson, "utf-8", error =>{
-        if (error){
-            callback(error)
-            return
-        }
-        callback(null,userId)
-    })
-
-
-    
-    
 }
+
 module.exports = registerUser
