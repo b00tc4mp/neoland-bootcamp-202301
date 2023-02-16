@@ -6,7 +6,11 @@ function deleteAllFilesFromDirectory(directoryPath, callback){
             callback(error)
             return
         }
+        if(!files.length){
+            callback(null)
 
+            return
+        }
         let countDeletions =0
 
         files.forEach(file => {

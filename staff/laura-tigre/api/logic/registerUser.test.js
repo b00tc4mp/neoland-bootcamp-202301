@@ -3,37 +3,40 @@ const { verify } = require('../utils/test-it')
 const registerUser = require('./registerUser')
 const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirectory')
 const checkFileExists = require('../utils/checkFileExists')
+const fs = require('fs')
 
 //case 0
-function case0(done){
-deleteAllFilesFromDirectory('data/users', error => {
-    if (error) {
-        console.error(error.message)
-        return
-    }
-})
-const name = 'Marie Curie'
-const age = 87
-const email = 'marie@curie.com'
-const password = '123123123'
-
-registerUser(name, age, email, password, (error, userId) => {
-    if (error) {
-        console.error(error.message)
-        return
-    }
-    const fileName = userId + '.json'
-    const filePath = 'data/users/' + fileName
-
-    checkFileExists(filePath, (error, exists) => {
+function case0(done) {
+    deleteAllFilesFromDirectory('data/users', error => {
         if (error) {
             console.error(error.message)
             return
         }
-        verify(exists)
-        done()
+
+        const name = 'Marie Curie'
+        const age = 87
+        const email = 'marie@curie.com'
+        const password = '123123123'
+
+        registerUser(name, age, email, password, (error, userId) => {
+            if (error) {
+                console.error(error.message)
+                return
+            }
+            const fileName = userId + '.json'
+            const filePath = 'data/users/' + fileName
+
+            checkFileExists(filePath, (error, exists) => {
+                if (error) {
+                    console.error(error.message)
+                    return
+                }
+                verify(exists)
+
+                done()
+            })
+        })
     })
-})
 }
 // TODO unhappy test case: register fails because user already registered
 function case1(done) {
@@ -47,47 +50,52 @@ function case1(done) {
             console.error(error.message)
             return
         }
-        const {writeFile}= require('fs')
-        const user ={
-            name:'Marie Curie',
-            age:87,
-            email:'marie@curie.com',
-            password:'123123123',
-        }
-        const userId= 'user-'+ Date.now()
-        const fileName= userId +'.json'
-        const filePath= 'data/users/' + fileName
-        const userJson= JSON.stringify(user, null,4)
 
-        writeFile(filePath, userJson,'utf8', error=>{
-            if(error){
+
+
+        const name = 'Marie Curie'
+        const age = 87
+        const email = 'marie@curie.com'
+        const password = '123123123'
+
+        const user = { name, age, email, password }
+
+        const userId = 'user-' + Date.now()
+        const fileName = userId + '.json'
+        const filePath = 'data/users/' + fileName
+        const userJson = JSON.stringify(user, null, 4)
+
+        const { writeFile } = fs
+
+
+        writeFile(filePath, userJson, 'utf8', error => {
+            if (error) {
                 console.error(error.message)
 
                 return
             }
 
+            registerUser(name, age, email, password, (error, userId) => {
 
-            const{name,age, email,password}= user
 
-            registerUser(name,age, email,password,(error, userId)=>{
-                if (error){
-                    console.log(error.message)
-                    verify(error.message)
-                    done()
-                }
+                verify(!!error)
+                verify(error.message === 'user already registered')
+                verify(!userId)
+                done()
+
             })
         })
     })
 
-    
-    
-    
-    
-}  
-    
+
+
+
+
+}
+
 case0(() => {
     case1(() => {
-        // ...)
+
         console.log('end')
     })
 })
