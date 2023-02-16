@@ -22,9 +22,8 @@ function deleteAllFilesFromDirectory(directoryPath, callback) {
 
                 countDeletions++
 
-                if (countDeletions === files.length) {
+                if (countDeletions === files.length)
                     callback(null)
-                }
             })
         })
     })
