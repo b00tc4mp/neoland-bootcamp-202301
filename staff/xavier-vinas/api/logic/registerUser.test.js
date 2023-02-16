@@ -66,7 +66,12 @@ function case1(done) {
 
         const { writeFile } = fs
 
-        const userFilePath = 'data/users/user-123.json'
+        const userId ="user-" + Date.now()
+        
+        const file = userId + '.json'
+
+        const userFilePath = 'data/users/' + file
+
    // 3. call registerUser logic (you will run this in the previous writeFile callback)
         writeFile(userFilePath, userJson, 'utf8', error => {
             if (error) {
@@ -74,10 +79,9 @@ function case1(done) {
                 return
             }
 
-
-    // 4. verify that registerUser sent and error to its callback (run this in registerUser callback)
-
             registerUser(name, age, email, password, (error, userId) => {
+     // 4. verify that registerUser sent and error to its callback (run this in registerUser callback)
+                verify(error.message === "user already registered")
                 verify(!!error)
                 verify(!userId)
 

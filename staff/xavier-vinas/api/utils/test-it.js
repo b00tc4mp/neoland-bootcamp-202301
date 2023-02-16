@@ -10,16 +10,15 @@ function verify(condition) {
 // helpers
 
 function getFileAndLineFromStack(stack) {
-    var lastIndexOfSlash = stack.lastIndexOf('/')
+    const filePath = stack.split("\n")[2]
 
-    var fileAndLine = stack.substring(lastIndexOfSlash + 1)
+    var lastIndexOfSlash = filePath.lastIndexOf('/')
+
+    var fileAndLine = filePath.substring(lastIndexOfSlash + 1)
 
     return fileAndLine
 }
 
-// module.exports = {
-//     verify: verify
-// }
 
 module.exports = {
     verify
