@@ -71,7 +71,11 @@ function case1(done) {
 
         const { writeFile } = fs
 
-        const userFilePath = 'data/users/user-123.json'
+        const userId = 'user-' + Date.now()
+
+        const file = userId + '.json'
+
+        const userFilePath = 'data/users/' + file
 
         writeFile(userFilePath, userJson, 'utf8', error => {
             if (error) {
@@ -82,6 +86,7 @@ function case1(done) {
 
             registerUser(name, age, email, password, (error, userId) => {
                 verify(!!error)
+                verify(error.message === 'user already registered')
                 verify(!userId)
 
                 done()

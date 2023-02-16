@@ -1,4 +1,4 @@
-console.log('%cTest it! v0.1', 'color: white; background: radial-gradient(circle, tomato 0%, dodgerblue 100%); padding: .5rem;')
+console.log('%cTest it! v0.2', 'color: white; background: radial-gradient(circle, tomato 0%, dodgerblue 100%); padding: .5rem;')
 
 function verify(condition) {
     if (condition)
@@ -10,9 +10,11 @@ function verify(condition) {
 // helpers
 
 function getFileAndLineFromStack(stack) {
-    var lastIndexOfSlash = stack.lastIndexOf('/')
+    const filePath = stack.split('\n')[2]
 
-    var fileAndLine = stack.substring(lastIndexOfSlash + 1)
+    const lastIndexOfSlash = filePath.lastIndexOf('/')
+
+    const fileAndLine = filePath.substring(lastIndexOfSlash + 1)
 
     return fileAndLine
 }

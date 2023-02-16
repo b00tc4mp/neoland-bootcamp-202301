@@ -59,7 +59,7 @@ function registerUser(name, age, email, password, callback) {
 
                 if (countReads === files.length) {
                     if (emails.includes(email)) {
-                        callback(new Error('user already exists'))
+                        callback(new Error('user already registered'))
 
                         return
                     }
