@@ -10,7 +10,9 @@
     "mocha": "^10.2.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "npx mocha *.test.js",
+    "test-debug": "npx mocha --inspect-brk mocha *.test.js",
+    "helloworld": "echo hello world!"
   },
   "keywords": [],
   "author": "",

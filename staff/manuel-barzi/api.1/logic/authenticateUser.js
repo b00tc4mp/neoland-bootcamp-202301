@@ -2,18 +2,6 @@ const { readdir, readFile } = require('fs')
 
 function authenticateUser(email, password, callback) {
     readdir('data/users', (error, files) => {
-        if (error) {
-            callback(error)
-
-            return
-        }
-
-        if (!files.length) {
-            callback(new Error('user not found'))
-
-            return
-        }
-
         const users = []
 
         let countReads = 0
