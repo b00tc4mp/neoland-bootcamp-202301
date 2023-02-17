@@ -1,10 +1,10 @@
-console.log('%cTest it! v0.1')
+console.log('Test it! v0.1')
 
 function verify(condition) {
     if (condition)
-        console.log('%cTA-GUENO ✅ ' + getFileAndLineFromStack(new Error().stack))
+        console.log('TA-GUENO ✅ ' + getFileAndLineFromStack(new Error().stack))
     else
-        console.error('%cTA-MALO 🛑')
+        console.error('TA-MALO 🛑')
 }
 
 // helpers
