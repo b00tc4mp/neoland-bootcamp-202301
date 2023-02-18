@@ -10,15 +10,15 @@ const a = process.argv[2]
 const b = JSON.parse(a)
 let result = ""
 
-for (let index = 0; index < b.length; index++) {
-    const element = b [index];
+for (let i = 0; i < b.length; i++) { //recorre los 3 elementos
+    const element = b [i];
 
-    for (let index2 = 0; index2 < element.length; index2++) {
-        const element2 = element [index2]
+    for (let j = 0; j < element.length; j++) { //recorre cada elemento por dentro
+        const element2 = element [j]
 
         if (element2 === 1) {result = result + "▮"}
         else {result = result + " "}
     }
-    result = result + "\n"
+    result = result + "\n" //salto de linea
 }
 console.log(result)
