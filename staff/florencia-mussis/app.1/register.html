@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My App</title>
+</head>
+<body>
+    
+    <header></header>
+
+    <main class="background">
+        <form>
+            <h1>sing up</h1>
+
+            <div class="registro">
+                <label for="name">Nombre</label>
+                <input type="name" id="name" class="input-text" required>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" class="input-text" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" class="input-text" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" class="input-text" required> 
+            </div>  
+
+
+            <div>
+                <input type="checkbox" id="conditions">
+                <label for="conditions" class="agree" >He leído y acepto los términos y condiciones</label>
+            </div>
+            
+            <button type= "submit" class="button">Create account</button>
+        </form>
+    </main>
+
+    <script src="register.js"></script>
+    <script src="logic.js"></script>
+
+</body>
+
+</html>
