@@ -54,7 +54,7 @@ server.get('/users/:userId', (req, res) => {
     })
 })
 
-server.delete('/users', (req, res) => {
+server.delete('/users/:userId', (req, res) => {
     // TODO unregister user
 })
 
