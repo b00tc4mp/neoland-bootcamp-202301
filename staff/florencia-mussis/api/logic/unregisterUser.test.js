@@ -1,19 +1,20 @@
-const unregisterUser = require('./unregisterUser')
+const { expect } = require('chai')  //para comprobar los resultados
 const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirectory')
-const fs = require('fs')
-const { expect } = require('chai')
-// case 0
+const checkFileExists = require('../utils/checkFileExists')
+const { writeFile } = require('fs')
+const unregisterUser = require('./unregisterUser')
 
+// case 0
 // 1. delete db
 // 2. create test user (writeFile)
 // 3. call unregisterUser
 // 4. check file does not exist
 
 describe('unregisterUser', () => {
-    it('succees for a deleted user', done => {
+    it('succeeds on existing user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
                 return
             }
 
@@ -22,11 +23,9 @@ describe('unregisterUser', () => {
             const email = 'marie@curie.com'
             const password = '123123123'
 
-            const user = {name, age, email, password}
+            const user = {name, age, email, password} //creo el objeto
 
-            const userJson = JSON.stringify(user)
-
-            const { writeFile } = fs
+            const userJson = JSON.stringify(user) // lo convierto a string
 
             const userId = 'user-' + Date.now()
 
@@ -36,30 +35,85 @@ describe('unregisterUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
 
                 unregisterUser(userId, password, error => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
                         return
                     }
 
-                    const { readdir } = fs
+                    checkFileExists(userFilePath, error => {
+                        expect(error).to.exist
 
-                    readdir('data/users', (error, files) => {
-                        if (error) {
-                            callback(error)
-                            return
-                        }
-                        
-                        const fileIsDeleted = !files.some(fileDb => fileDb === file)
-
-                        expect(fileIsDeleted).to.be.true
-                      
                         done()
+                    
                     })
+                })
+            })
+        })
+    })
+
+    it('fails on non existing user', done => {
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+
+            const password = '123123123'
+
+            const userId = 'user-' + Date.now()
+
+            unregisterUser(userId, password, error => {
+                expect(error).to.exist
+                expect(error.message).to.equal('user not found')
+
+                done()
+            })
+        })
+    })
+
+    it('fails on existing user but wrong user id', done => {
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+
+            const name = 'Marie Curie'
+            const age = 87
+            const email = 'marie@curie.com'
+            const password = '123123123'
+
+            const user = { name, age, email, password }
+
+            const json = JSON.stringify(user)
+
+            const userId = 'user-' + Date.now()
+
+            const file = userId + '.json'
+
+            const filePath = 'data/users/' + file
+
+            writeFile(filePath, json, 'utf8', error => {
+                if (error) {
+                    done(error)
+
+                    return
+                }
+
+                const wrongUserId = 'user-' + (Date.now() + 1)
+
+                unregisterUser(wrongUserId, password, error => {
+                    expect(error).to.exist
+                    expect(error.message).to.equal('user not found')
+
+                    done()
                 })
             })
         })
@@ -83,8 +137,6 @@ describe('unregisterUser', () => {
 
             const userJson = JSON.stringify(user)
 
-            const { writeFile } = fs
-
             const userId = 'user-' + Date.now()
 
             const file = userId + '.json'
@@ -93,7 +145,7 @@ describe('unregisterUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
 
@@ -101,33 +153,11 @@ describe('unregisterUser', () => {
                
                 unregisterUser(userId, passwordWrong, (error, userId) => {
                     expect(error).to.exist
-                    expect(error.message).to.equal('wrong password')
-                    expect(userId).to.be.undefined
+                    expect(error.message).to.equal('wrong credentials')
 
                     done ()
                 })
             })
         })            
-    })
-
-//////////////////////// cuando el usuario no existe
-    it('fails when user does not exist', done =>{
-        deleteAllFilesFromDirectory('data/users', error => {
-            if (error) {
-                console.error(error)
-                return
-            }
-
-            const userId = 'user-' + Date.now()
-            const password = '123123123'
-
-            unregisterUser(userId, password, (error, userId) => {
-                expect(error).to.exist
-                expect(error.message).to.equal('user not found')
-                expect(userId).to.be.undefined
-
-                done()
-            })
-        })
     })
 }) 

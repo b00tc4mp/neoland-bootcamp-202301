@@ -1,4 +1,4 @@
-const { writeFile, readdir, readFile } = require('fs')
+const { readdir, writeFile, readFile } = require('fs')
 
 function registerUser(name, age, email, password, callback) {
     readdir('data/users', (error, files) => {
@@ -7,7 +7,7 @@ function registerUser(name, age, email, password, callback) {
             return
         }
 
-        if (!files.length) {
+        if (!files.length) { // primero lista los usuarios y si no hay nada ya lo crea pq no esta registrado
             
             const user = {
                 name,
@@ -16,18 +16,17 @@ function registerUser(name, age, email, password, callback) {
                 password,
             }
 
-            const userId = 'user-' + Date.now()
+            const userId = 'user-' + Date.now() //define el id
 
-            const fileName = userId + '.json'
+            const fileName = userId + '.json' //define el archivo
 
-            const filePath = 'data/users/' + fileName
+            const filePath = 'data/users/' + fileName //define la ruta
 
-            const userJson = JSON.stringify(user, null, 4)
-
+            const userJson = JSON.stringify(user, null, 4) //convierte a string el objeto que contiene los datos del usuario
+ 
             writeFile(filePath, userJson, 'utf8', error => {
                 if (error) {
                     callback(error)
-
                     return
                 }
 
@@ -37,7 +36,7 @@ function registerUser(name, age, email, password, callback) {
             return
         }
 
-        const emails = []
+        const emails = [] //para el caso que ya hay usuarios registrados debera comprobar (por el email) si ya esta registrado o no
 
         let countReads = 0
 
@@ -47,11 +46,10 @@ function registerUser(name, age, email, password, callback) {
             readFile(filePath, 'utf8', (error, json) => {
                 if (error) {
                     callback(error)
-
                     return
                 }
 
-                const user = JSON.parse(json) //lo convierto a objeto en memoria
+                const user = JSON.parse(json) //convierto el string user a objeto
 
                 emails.push(user.email)
 
@@ -60,7 +58,6 @@ function registerUser(name, age, email, password, callback) {
                 if (countReads === files.length) {
                     if (emails.includes(email)) {
                         callback(new Error('user already registered'))
-
                         return
                     }
 
@@ -77,12 +74,11 @@ function registerUser(name, age, email, password, callback) {
 
                     const filePath = 'data/users/' + fileName
 
-                    const userJson = JSON.stringify(user, null, 4)
+                    const userJson = JSON.stringify(user, null, 4) //lo convierte otra vez a string para escribirlo en el archivo
 
                     writeFile(filePath, userJson, 'utf8', error => {
                         if (error) {
                             callback(error)
-
                             return
                         }
 

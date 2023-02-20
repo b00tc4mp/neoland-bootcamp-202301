@@ -4,12 +4,8 @@ const fs = require("fs")
 const { expect } = require("chai")
 
 
-// case 0 HAPPY ;D
-
 describe("retrieveUser", () => {
     it("succeds for an existent user", done => {
-        //limpiamos db
-
         deleteAllFilesFromDirectory("data/users", error => {
             if (error) {
                 console.error(error)
@@ -35,14 +31,13 @@ describe("retrieveUser", () => {
 
             writeFile(userFilePath, userJson, "utf8", error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
-                // sin parentesis por un solo parametro 
-                //nos da el error o el usuario 
-                retrieveUser(userId, (error, user) => {
+                
+                retrieveUser(userId, (error, user) => { // sin parentesis por un solo parametro 
                     if (error) {
-                        console.error(error.message)
+                        done(error)
                         return
                     }
 
@@ -51,18 +46,12 @@ describe("retrieveUser", () => {
                     expect(user.password).to.be.undefined
                     expect(user.name).to.equal("Marie Curie")
 
-
                     done()
 
                 })
-
-
             })
-
         })
     })
-
-    // case 2 unHappy 
 
     it("fail when user doesnt exist", done => {
         deleteAllFilesFromDirectory("data/users", error => {
@@ -79,21 +68,14 @@ describe("retrieveUser", () => {
                 expect(error.message).to.equal('user not found')
                 expect(user).to.be.undefined
 
-
                 done()
 
             })
-
-
         })
-
     })
-
-    // case 3 
 
     it("fail because the user doesnt mach any user in the db", done => {
         deleteAllFilesFromDirectory("data/users", error => {
-
             if (error) {
                 console.error(error)
                 return
@@ -116,14 +98,13 @@ describe("retrieveUser", () => {
 
             const userFilePath = "data/users/" + file
 
-
             writeFile(userFilePath, userJson, "utf8", error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
 
-                wrongUserId = "user-" + Date.now()
+                wrongUserId = "user-" + Date.now() + 1
 
                 retrieveUser(wrongUserId, (error, user) => {
 
@@ -131,17 +112,12 @@ describe("retrieveUser", () => {
                     expect(error.message).to.equal('user not found')
                     expect(user).to.be.undefined
 
-
                     done()
 
                 })
-
-
             })
-
         })
     })
-
 })
 
 

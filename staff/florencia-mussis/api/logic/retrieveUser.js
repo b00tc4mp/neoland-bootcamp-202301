@@ -2,7 +2,6 @@ const { readFile } = require("fs")
 
 
 function retrieveUser(userId, callback) {
-
     const filePath = "data/users/" + userId + ".json"
 
     readFile(filePath, "utf8", (error, json) => {

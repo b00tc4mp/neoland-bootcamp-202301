@@ -1,43 +1,60 @@
-const { readFile } = require('fs')
+const { readFile, writeFile } = require('fs')
 
 // TODO
-// 1. readFile -> user
-// 2. user.password === newpassword
-// 3. update o error
+/*
+0. check new password equals new password repeat
+1. read file
+2. check current password equals user password
+3. update user password with new password
+4. update file
+*/
 
 function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
-   const file = userId + '.json'
-   const filePath = 'data/users/' + file
+    if (currentPassword === newPassword) {
+        callback(new Error('current password and new password are equal'))
+
+        return 
+    }
+
+    if (newPassword !== newPasswordRepeat) {
+        callback(new Error('new password and new password repeat do not match'))
+
+        return
+    }
+
+    const file = userId + '.json'
+
+    const filePath = 'data/users/' + file
 
     readFile(filePath, 'utf8', (error, json) => {
         if (error) {
-            callback(error)
+            callback(new Error('user not found'))
+
             return
         }
 
         const user = JSON.parse(json)
 
-        const userId = file.slice(0, -5)
+        if (user.password !== currentPassword) {
+            callback(new Error('wrong credentials'))
 
-        
-    
-        if (countReads === files.length) {
-            const user = users.find(user => user.password === password)
-            
-            if (!user) {
-                callback(new Error('user not found'))
+            return
+        }
+
+        user.password = newPassword
+
+        const newJson = JSON.stringify(user)
+
+        writeFile(filePath, newJson, 'utf8', error => {
+            if (error) {
+                callback(error)
+
                 return
             }
-        
-            if (user.password !== password) {
-                callback(new Error ('wrong credentials'))
-                return
-            }
 
-            callback(null, user.id)
-            }
-        })  
-    })      
+            callback(null)
+        })
+    })
 }
 
 module.exports = updateUserPassword

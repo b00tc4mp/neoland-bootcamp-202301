@@ -3,13 +3,12 @@ const { readdir, unlink } = require('fs')
 function deleteAllFilesFromDirectory(directoryPath, callback) { //el calback nos informara si ha terminado
     //readdir funcion asincrona, le pasamos callback para que nos avise cuando termino
     readdir(directoryPath, (error, files) => {
-
         if (error) { //si hay algo mal informa y se va con el return, no continua
             callback(error)
             return
         }
 
-        if(!files.length){
+        if(!files.length){ //cuando no hay archivos
             callback(null)
             return
         }
@@ -26,7 +25,7 @@ function deleteAllFilesFromDirectory(directoryPath, callback) { //el calback nos
                     return
                 }
 
-                //si no hay error contamos
+                //si no hay error contamos las que vamos borrando
 
                 countDeletions++
 

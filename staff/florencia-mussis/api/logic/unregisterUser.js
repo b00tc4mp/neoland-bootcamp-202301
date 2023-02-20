@@ -1,34 +1,42 @@
 const { readFile, unlink } = require('fs')
 
+
 // TODO
-// 1. readFile -> user
-// 2. password === password
-// 3. unregister o error
+/*
+1. read file by userId
+2. check if user passed password
+3. if not, then error
+4. if yes, then delete user file
+*/
+
 
 function unregisterUser(userId, password, callback) {
     const file = userId + '.json'
     const filePath = 'data/users/' + file
 
-    readFile(filePath, 'utf8', (error, json) => {
+    readFile(filePath, 'utf8', (error, json) => { //json es el contenido del fichero
         if (error) {
             callback(new Error('user not found'))
             return
         }
 
-        const user = JSON.parse(json)
-        if (user.password === password) {
-            unlink(filePath, error => {
-                if (error) {
-                    callback(error)
-                    return
-                }
+        const user = JSON.parse(json) //convertimos el user a objeto
+        
+        if (user.password !== password) {
+            callback(new Error('wrong credentials'))
 
-                callback(null)
-            })
-            
-        } else {
-            callback(new Error('wrong password'))
+            return 
         }
+
+        unlink(filePath, error => {
+            if (error) {
+                callback(error)
+
+                return
+            }
+
+            callback(null)
+        })    
     })
 }
 
