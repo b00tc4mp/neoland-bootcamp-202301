@@ -17,7 +17,7 @@ for (let i = 0; i < limit; i++) {
 
     writeFile(file, content, 'utf8', error => {
         if (error) {
-            console.error(error.message)
+            done(error)
 
             return
         }
@@ -29,7 +29,7 @@ for (let i = 0; i < limit; i++) {
 
             deleteAllFilesFromDirectory('temp', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -40,7 +40,7 @@ for (let i = 0; i < limit; i++) {
 
                 readdir('temp', (error, files) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }

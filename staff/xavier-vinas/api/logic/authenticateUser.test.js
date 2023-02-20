@@ -6,6 +6,7 @@ const { expect } = require("chai")
 
 // case 0 
 describe("authenticateUser", () => {
+
     it("succeds for an existent user", done => {
         deleteAllFilesFromDirectory("data/users", error => {
             if (error) {
@@ -31,13 +32,13 @@ describe("authenticateUser", () => {
 
             writeFile(userFilePath, userJson, "utf-8", error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
 
                 authenticateUser(email, password, (error, userId) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
                         return
                     }
 
@@ -65,7 +66,7 @@ describe("authenticateUser", () => {
             const password = '123123123'
 
             authenticateUser(email, password, (error, userId) => {
-               
+
                 // verify(!!error)
                 expect(error).to.exist
                 // verify(error.message === 'user not found')
@@ -107,7 +108,7 @@ describe("authenticateUser", () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -153,7 +154,7 @@ describe("authenticateUser", () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

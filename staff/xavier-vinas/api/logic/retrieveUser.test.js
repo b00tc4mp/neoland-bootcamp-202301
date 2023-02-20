@@ -35,14 +35,14 @@ describe("retrieveUser", () => {
 
             writeFile(userFilePath, userJson, "utf8", error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
                 // sin parentesis por un solo parametro 
                 //nos da el error o el usuario 
                 retrieveUser(userId, (error, user) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
                         return
                     }
 
@@ -119,7 +119,7 @@ describe("retrieveUser", () => {
 
             writeFile(userFilePath, userJson, "utf8", error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
                     return
                 }
 
