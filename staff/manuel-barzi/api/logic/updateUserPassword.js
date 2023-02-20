@@ -9,6 +9,12 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
     3. update user password with new password
     4. update file
     */
+    if (currentPassword === newPassword) {
+        callback(new Error('current password and new password are equal'))
+
+        return 
+    }
+
     if (newPassword !== newPasswordRepeat) {
         callback(new Error('new password and new password repeat do not match'))
 

@@ -15,7 +15,7 @@ describe('unregisterUser', () => {
     it('succeeds on existing user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -37,14 +37,14 @@ describe('unregisterUser', () => {
 
             writeFile(filePath, json, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
 
                 unregisterUser(userId, password, error => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }
@@ -62,7 +62,7 @@ describe('unregisterUser', () => {
     it('fails on non existing user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -83,7 +83,7 @@ describe('unregisterUser', () => {
     it('fails on existing user but wrong user id', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -105,7 +105,7 @@ describe('unregisterUser', () => {
 
             writeFile(filePath, json, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -125,7 +125,7 @@ describe('unregisterUser', () => {
     it('fails on existing user but wrong password', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -147,7 +147,7 @@ describe('unregisterUser', () => {
 
             writeFile(filePath, json, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
