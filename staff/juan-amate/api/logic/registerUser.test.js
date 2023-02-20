@@ -8,7 +8,7 @@ describe('registerUser', () => {
     it('succeeds for a new user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -20,7 +20,7 @@ describe('registerUser', () => {
 
             registerUser(name, age, email, password, (error, userId) => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -31,7 +31,7 @@ describe('registerUser', () => {
 
                 checkFileExists(filePath, (error, exists) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }
@@ -48,7 +48,7 @@ describe('registerUser', () => {
     it('succeeds for a new user and others already exist', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -72,7 +72,7 @@ describe('registerUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -84,7 +84,7 @@ describe('registerUser', () => {
 
                 registerUser(name, age, email, password, (error, userId) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }
@@ -95,7 +95,7 @@ describe('registerUser', () => {
 
                     checkFileExists(filePath, (error, exists) => {
                         if (error) {
-                            console.error(error.message)
+                            done(error)
 
                             return
                         }
@@ -113,7 +113,7 @@ describe('registerUser', () => {
     it('fails when user already registered', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -137,7 +137,7 @@ describe('registerUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

@@ -5,7 +5,9 @@ function unregisterUser(userId, password, callback) {
     // 1. readFile -> user
     // 2. password === password
     // 3. unregister o error
+
     const file = userId + '.json'
+
     const filePath = 'data/users/' + file
 
     readFile(filePath, 'utf8', (error, json) => {
@@ -16,19 +18,23 @@ function unregisterUser(userId, password, callback) {
         }
 
         const user = JSON.parse(json)
-        if (user.password === password) {
-            unlink(filePath, error => {
-                if (error) {
-                    callback(error)
 
-                    return
-                }
+        if (user.password !== password) {
+            callback(new Error('wrong credentials'))
 
-                callback(null)
-            })
-        } else {
-            callback(new Error('wrong password'))
+            return
         }
+
+        unlink(filePath, error => {
+            if (error) {
+                callback(error)
+
+                return
+            }
+
+            callback(null)
+
+        })
     })
 }
 
