@@ -12,10 +12,10 @@ const { expect } = require('chai')
 */
 
 describe('updateUserPassword', () => {
-    it('succees for change password', done => {
+    it('succeeds for change password', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -39,22 +39,19 @@ describe('updateUserPassword', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
 
-                
-                const currentPassword = '123123123'
+
                 const newPassword = '234234234'
                 const newPasswordRepeat = '234234234'
 
-                
 
-
-                updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, error => {
+                updateUserPassword(userId, password, newPassword, newPasswordRepeat, error => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
                         return
                     }
 
@@ -63,15 +60,15 @@ describe('updateUserPassword', () => {
                     readFile(userFilePath, 'utf8', (error, json) => {
                         if (error) {
 
-                            console.error(error.message)
+                            done(error)
                             return
 
                         }
 
                         const user = JSON.parse(json)
 
-                        expect(user.password).to.equal(newPassword)
-                        expect(newPassword).to.equal(newPasswordRepeat)
+                        expect(user.password).to.equal('234234234')
+
 
                         done()
 
@@ -82,5 +79,186 @@ describe('updateUserPassword', () => {
 
 
         })
+    })
+    it('fails on non existing user', done => {
+
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+
+            const password = '123123123'
+
+            const userId = 'user-' + Date.now()
+
+            const newPassword = '234234234'
+            const newPasswordRepeat = '234234234'
+            updateUserPassword(userId, password, newPassword, newPasswordRepeat, error => {
+                expect(error).to.exist
+
+                expect(error.message).to.equal('user not found')
+
+                done()
+
+
+
+
+            })
+        })
+
+
+    })
+    it('fails on existing useer and incorrect credentials', done => {
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+            const name = 'Marie Curie'
+            const age = 87
+            const email = 'marie@curie.com'
+            const password = '123123123'
+
+            const user = { name, age, email, password }
+
+            const userJson = JSON.stringify(user)
+
+            const { writeFile } = fs
+            const userId = 'user-' + Date.now()
+
+            const file = userId + '.json'
+
+            const userFilePath = 'data/users/' + file
+
+
+
+            writeFile(userFilePath, userJson, 'utf8', error => {
+                if (error) {
+                    done(error)
+
+                    return
+                }
+
+                const wrongPassword = '345345345'
+                const newPassword = '234234234'
+                const newPasswordRepeat = '234234234'
+
+
+                updateUserPassword(userId, wrongPassword, newPassword, newPasswordRepeat, error => {
+                    expect(error).to.exist
+                    expect(error.message).to.equal('wrong credentials')
+
+                    done()
+
+                })
+
+
+            })
+        })
+
+    })
+    it('fails on existing user and new password does not match repetition', done => {
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+            const name = 'Marie Curie'
+            const age = 87
+            const email = 'marie@curie.com'
+            const password = '123123123'
+
+            const user = { name, age, email, password }
+
+            const userJson = JSON.stringify(user)
+
+            const { writeFile } = fs
+            const userId = 'user-' + Date.now()
+
+            const file = userId + '.json'
+
+            const userFilePath = 'data/users/' + file
+
+
+
+            writeFile(userFilePath, userJson, 'utf8', error => {
+                if (error) {
+                    done(error)
+
+                    return
+                }
+
+               
+                const newPassword = '234234234'
+                const newPasswordRepeat = '23423423'
+
+
+                updateUserPassword(userId, password, newPassword, newPasswordRepeat, error => {
+                    expect(error).to.exist
+                    expect(error.message).to.equal('new password and new password repeat do not match')
+
+                    done()
+
+                })
+
+
+            })
+        })
+
+    }) 
+    
+    it('fails on existing user and new password equals current password', done => {
+        deleteAllFilesFromDirectory('data/users', error => {
+            if (error) {
+                done(error)
+
+                return
+            }
+            const name = 'Marie Curie'
+            const age = 87
+            const email = 'marie@curie.com'
+            const password = '123123123'
+
+            const user = { name, age, email, password }
+
+            const userJson = JSON.stringify(user)
+
+            const { writeFile } = fs
+            const userId = 'user-' + Date.now()
+
+            const file = userId + '.json'
+
+            const userFilePath = 'data/users/' + file
+
+
+
+            writeFile(userFilePath, userJson, 'utf8', error => {
+                if (error) {
+                    done(error)
+
+                    return
+                }
+
+               
+                const newPassword = password
+                const newPasswordRepeat = password
+
+
+                updateUserPassword(userId, password, newPassword, newPasswordRepeat, error => {
+                    expect(error).to.exist
+                    expect(error.message).to.to.equal('current password and new password are equal')
+
+                    done()
+
+                })
+
+
+            })
+        })
+
     })
 })

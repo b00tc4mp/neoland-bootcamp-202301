@@ -4,13 +4,11 @@ const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirector
 const fs = require('fs')
 const { expect } = require('chai')
 
-
-
 describe('authenticateUser', () => {
     it('succeeds for an existent user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -34,16 +32,14 @@ describe('authenticateUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
 
-
-
                 authenticateUser(email, password, (error, userId) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }
@@ -65,7 +61,7 @@ describe('authenticateUser', () => {
         // 1. delete all files
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -90,7 +86,7 @@ describe('authenticateUser', () => {
     it('fails for an existent user email is wrong', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -113,7 +109,7 @@ describe('authenticateUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -140,7 +136,7 @@ describe('authenticateUser', () => {
     it('fails for an existent user password is wrong', done=>{
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -163,7 +159,7 @@ describe('authenticateUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

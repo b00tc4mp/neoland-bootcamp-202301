@@ -9,7 +9,7 @@ describe('retrieveUser', () => {
     it('succeeds for an existent user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -33,7 +33,7 @@ describe('retrieveUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }
@@ -42,10 +42,11 @@ describe('retrieveUser', () => {
 
                 retrieveUser(userId, (error, user) => {
                     if (error) {
-                        console.error(error.message)
+                        done(error)
 
                         return
                     }
+                    expect(user.name).to.equal('Marie Curie')
                     expect(user.email).to.equal('marie@curie.com')
                     expect(user.password).to.be.undefined
 
@@ -58,11 +59,11 @@ describe('retrieveUser', () => {
     it('fail when user does not exist',done=>{
         deleteAllFilesFromDirectory('data/users', error=>{
             if(error){
-                console.error('error')
+                done(error)
 
                 return
             }
-            const userId= 'user-' +Date.now
+            const userId= 'user-' +Date.now()
             retrieveUser(userId, (error, user)=>{
                 expect(error).to.exist
                 expect(error.message).to.equal('user not found')
@@ -75,7 +76,7 @@ describe('retrieveUser', () => {
     it('fail because the user does not match any user in the data base', done=>{
         deleteAllFilesFromDirectory('data/users', error=>{
             if(error){
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -99,7 +100,7 @@ describe('retrieveUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error=>{
                 if(error){
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

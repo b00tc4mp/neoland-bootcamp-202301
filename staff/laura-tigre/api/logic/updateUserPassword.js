@@ -5,37 +5,59 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
     //1 readFile -> user
     //2 user.password === password
     //3 sustituir currentPassword=== newPassword
+    if (currentPassword === newPassword) {
+        callback(new Error('current password and new password are equal'))
+        return
 
+    }
+
+    if (newPassword !== newPasswordRepeat) {
+        callback(new Error('new password and new password repeat do not match'))
+
+        return
+    }
     const file = userId + '.json'
     const filePath = 'data/users/' + file
 
     readFile(filePath, 'utf8', (error, json) => {
         if (error) {
-            callback(error)
+            callback(new Error('user not found'))
 
             return
         }
 
-        const user = JSON.stringify(json)
+        const user = JSON.parse(json)
 
-        if (user.password === currentPassword) {
+        if (user.password !== currentPassword) {
+            callback(new Error('wrong credentials'))
 
-            writeFile(filePath, user, 'utf8', (error => {
-                if (error) {
-                    callback(error)
-
-                    return
-                }
-                if (user.password === newPassword && newPassword === newPasswordRepeat) {
-                    callback(null)
-                }
-              
-
-            }))
-        
+            return
         }
 
+        user.password = newPassword
+
+        const newJson = JSON.stringify(user)
+
+
+        writeFile(filePath, newJson, 'utf8', (error => {
+            if (error) {
+                callback(error)
+
+                return
+            }
+
+            callback(null)
+
+
+
+        }))
+
+
     })
+        
+
+    
+
 
 }
 module.exports = updateUserPassword
