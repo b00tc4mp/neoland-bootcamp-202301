@@ -10,11 +10,18 @@ function Login(props) {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password)
+            authenticateUser(email, password, (error, userId) => {
+                if (error) {
+                    setFeedback(error.message)
 
-            sessionStorage.email = email
+                    return
+                }
 
-            props.onNavigateToHome()
+                sessionStorage.userId = userId
+    
+                props.onNavigateToHome()
+            })
+
         } catch(error) {
             setFeedback(error.message)
         }

@@ -1,7 +1,7 @@
 function App() {
     console.log('App -> render')
 
-    const [view, setView] = React.useState(sessionStorage.email? 'home' : 'login')
+    const [view, setView] = React.useState(sessionStorage.userId? 'home' : 'login')
 
     const handleShowRegister = () => {
         setView('register')

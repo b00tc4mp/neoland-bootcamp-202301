@@ -6,14 +6,14 @@ function MyList() {
     let stickies
 
     try {
-        stickies = retrieveMyStickies(sessionStorage.email)
+        stickies = retrieveMyStickies(sessionStorage.userId)
     } catch (error) {
         alert(error.message)
     }
 
     const handleUpdateText = event => {
         try {
-            updateStickyText(sessionStorage.email, event.target.id, event.target.innerText)
+            updateStickyText(sessionStorage.userId, event.target.id, event.target.innerText)
         } catch (error) {
             alert(error.message)
         }
@@ -21,7 +21,7 @@ function MyList() {
 
     const handleDelete = event => {
         try {
-            deleteSticky(sessionStorage.email, event.target.id)
+            deleteSticky(sessionStorage.userId, event.target.id)
             setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
@@ -30,7 +30,7 @@ function MyList() {
 
     const handleUpdateVisibility = event => {
         try {
-            updateStickyVisibility(sessionStorage.email, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public')
+            updateStickyVisibility(sessionStorage.userId, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public')
             setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
@@ -39,7 +39,7 @@ function MyList() {
 
     const handleToggleLike = event => {
         try {
-            toggleLikeSticky(sessionStorage.email, event.target.id)
+            toggleLikeSticky(sessionStorage.userId, event.target.id)
             setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
@@ -55,7 +55,7 @@ function MyList() {
             </div>
 
             <p id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
-            <button id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.email)? '♥️' :'🤍'} {sticky.likes.length}</button>
+            <button id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId)? '♥️' :'🤍'} {sticky.likes.length}</button>
 
             <strong>{sticky.user}</strong>
         </li>)}

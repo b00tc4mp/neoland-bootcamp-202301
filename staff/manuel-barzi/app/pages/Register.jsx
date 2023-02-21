@@ -12,9 +12,15 @@ function Register(props) {
         const password = event.target.password.value
 
         try {
-            registerUser(name, age, email, password)
+            registerUser(name, age, email, password, error => {
+                if (error) {
+                    setFeedback(error.message)
 
-            props.onNavigateToLogin()
+                    return
+                }
+
+                props.onNavigateToLogin()
+            })
         } catch(error) {
             setFeedback(error.message)
         }

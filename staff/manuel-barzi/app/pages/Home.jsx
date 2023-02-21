@@ -18,7 +18,7 @@ function Home(props) {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.email, '', 'public')
+            createSticky(sessionStorage.userId, '', 'public')
 
             setListUpdateStamp(Date.now())
         } catch(error) {
@@ -27,7 +27,7 @@ function Home(props) {
     }
 
     const handleLogout = () => {
-        delete sessionStorage.email
+        delete sessionStorage.userId
 
         props.onLogout()
     }
@@ -55,8 +55,8 @@ function Home(props) {
 
             {view === 'my-list' && <MyList />}
         </main>
-        <footer>
-            <button onClick={handleAdd} className="add-button">+</button>
+        <footer className="fixed bottom-0 w-full flex justify-center">
+            <button onClick={handleAdd} className="logout-button font-['Press_Start_2P'] border-[2px] border-[gold] text-[gold] p-1">+</button>
         </footer>
     </div>
 }
