@@ -1,20 +1,17 @@
 /**
  * Retrieves the user´s stickies.
- * 
- * @param {string} email 
- * @return {Array} The stickies that belong to the specified user(email)
+ * @param {string} userId The user id of the user to retrieve the stickies
+ * @return {Array} The stickies that belong to the specified user
  */
-function retrieveMyStickies(email) {
-    var user = users.find(user => user.email === email)
+function retrieveMyStickies(userId) {
+    const myStickies = []
 
-    if (!user) throw new Error(`user with email ${email} not found`)
-
-    var myStickies = []
     for (var i = 0; i < stickies.length; i++) {
-        var sticky = stickies[i]
+        const sticky = stickies[i]
 
-        if (sticky.user === email)
+        if (sticky.user === userId)
             myStickies.push(sticky)
     }
+
     return myStickies.reverse()
 }

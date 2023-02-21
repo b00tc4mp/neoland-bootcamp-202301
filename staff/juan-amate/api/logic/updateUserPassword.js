@@ -5,18 +5,18 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
     //1. readFile -> user
     //2. password === password
     //3. currrent password >> newPassword
-    if(currentPassword === newPassword) {
+    if (currentPassword === newPassword) {
         callback(new Error('current password and new password are equal'))
 
         return
     }
 
-    if(newPassword !== newPasswordRepeat) {
+    if (newPassword !== newPasswordRepeat) {
         callback(new Error('new password and new password repeat do not match'))
 
         return
     }
-    
+
     const file = userId + '.json'
 
     const filePath = 'data/users/' + file
@@ -27,7 +27,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
 
             return
         }
-        
+
         const user = JSON.parse(json)
 
         if (user.password !== currentPassword) {
@@ -39,7 +39,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         user.password = newPassword
 
         const newJson = JSON.stringify(user, null, 4)
-    
+
         writeFile(filePath, newJson, 'utf8', error => {
             if (error) {
                 callback(error)
@@ -47,8 +47,8 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
                 return
             }
 
-             callback(null)
-        })    
+            callback(null)
+        })
     })
 }
 

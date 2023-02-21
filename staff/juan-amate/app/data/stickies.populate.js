@@ -1,6 +1,6 @@
 var sticky = {
     id: createStickyId(),
-    user: "pepito@grillo.com",
+    user: "user-1676901888410",
     text: "hola mundo",
     visibility: "private",
     likes: []
@@ -10,7 +10,7 @@ var sticky = {
   
   var sticky = {
     id: createStickyId(),
-    user: "wendy@darling.com",
+    user: "user-1677014741739",
     text: "hello world",
     visibility: "public",
     likes: []
@@ -20,20 +20,20 @@ var sticky = {
   
   var sticky = {
     id: createStickyId(),
-    user: "peter@pan.com",
+    user: "user-1676990298205",
     text: "hello world",
     visibility: "public",
-    likes: ["wendy@darling.com"]
+    likes: []
   }
   
   stickies.push(sticky)
 
   var sticky = {
     id: createStickyId(),
-    user: 'peter@pan.com',
+    user: 'user-1676990298205',
     text: 'hello world',
     visibility: 'public',
-    likes: ["wendy@darling.com"]
+    likes: []
 }
 
 stickies.push(sticky)

@@ -11,17 +11,29 @@ function Profile() {
 
         const currentPassword = event.target.currentPassword.value
         const newPassword = event.target.newPassword.value
-        const newPasswordConfirm = event.target.newPasswordConfirm.value
+        const newPasswordRepeat = event.target.newPasswordRepeat.value
 
         try {
-            updateUserPassword(sessionStorage.email, currentPassword, newPassword, newPasswordConfirm)
+            updateUserPassword(sessionStorage.userId, currentPassword, newPassword, newPasswordRepeat, error => {
+                if (error) {
+                    setFeedback({
+                        message: error.message,
+                        type: 'error'
+                    })
 
-            event.target.reset()
+                    return
+                }
 
-            setFeedback({
-                message: 'password updated successfully',
-                type: 'success'
+                event.target.reset()
+
+                setFeedback({
+                    message: 'password updated successfully',
+                    type: 'success'
+                })
             })
+
+
+
         } catch (error) {
             setFeedback({
                 message: error.message,
@@ -44,7 +56,7 @@ function Profile() {
             />
             <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic"
                 type="password"
-                name="newPasswordConfirm"
+                name="newPasswordRepeat"
                 placeholder="confirm new password"
             />
             <button className="bg-blue-600 text-white font-semibold border border-gray-400 mt-5 p-2 rounded-md w-30" type="submit">Update password</button>

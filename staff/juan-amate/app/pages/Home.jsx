@@ -1,5 +1,5 @@
 function Home(props) {
-    console.log('Home -> render')
+    // console.log('Home -> render')
 
     const [view, setView] = React.useState('list')
     const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
@@ -25,17 +25,17 @@ function Home(props) {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.email, '', 'public')
+            createSticky(sessionStorage.userId, '', 'public')
 
             setListUpdateStamp(Date.now())
-        } catch(error) {
+        } catch (error) {
             alert(error.message)
         }
     }
 
     const handleLogout = () => {
-        delete sessionStorage.email
-        
+        delete sessionStorage.userId
+
         props.onLogout()
     }
 
@@ -57,7 +57,7 @@ function Home(props) {
 
             {view === 'my-list' && <MyList updateStamp={listUpdateStamp} />}
         </main>
-        
+
         <footer className="bg-white flex justify-center items-center fixed bottom-0 left-0 w-full">
             <button onClick={handleAdd} className="bg-blue-600 text-white font-semibold border border-gray-400 m-5 rounded-md h-10 w-10">+</button>
         </footer>

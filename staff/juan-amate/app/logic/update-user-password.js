@@ -1,26 +1,37 @@
 /**
  * Updates the user password
  * 
- * @param {string} email The user email
+ * @param {string} userId The user id
  * @param {string} currentPassword The user current password
  * @param {string} newPassword The user new password
- * @param {string} newPasswordConfirm The confirmation of the new password
+ * @param {string} newPasswordRepeat The confirmation of the new password
+ * @param {function} callback The callback
  */
-function updateUserPassword(email, currentPassword, newPassword, newPasswordConfirm) {
+function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
+    const xhr = new XMLHttpRequest
 
-    var user = users.find(user => user.email === email)
+    xhr.onload = () => {
+        const { status } = xhr
 
-    if (!user) throw new Error('user with email ' + email + ' not found')
+        if (status === 500) {
+            const { response } = xhr
 
-    if (user.password !== currentPassword) throw new Error('wrong credentials')
+            const body = JSON.parse(response)
+            
+            const { error } = body
 
-    if (newPassword !== newPasswordConfirm) throw new Error('new password does not match the confirmation password')
+            callback(new Error(error))
 
-    if (newPassword === currentPassword) throw new Error('new password is equal to current password')
+            return
+        }
 
-    if (newPassword.length < 8) throw new Error ('new password length is lower than 8 characters')
+        callback(null)
+    }
 
-    if (newPassword.includes(' ')) throw new Error ('new password contains space characters')
+    xhr.open('PATCH', 'http://localhost:8080/users/' + userId)
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
-    user.password = newPassword
+    const payload = { currentPassword, newPassword, newPasswordRepeat }
+    const json = JSON.stringify(payload)
+    xhr.send(json)
 }

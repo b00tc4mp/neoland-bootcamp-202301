@@ -5,10 +5,13 @@ const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
+const cors = require('cors')
 
 const server = express()
 const jsonBodyParser = bodyParser.json()
 // trasnforma la request a json para el servidor
+server.use(cors())
+
 server.post('/users', jsonBodyParser, (req, res) => {
     const user = req.body
 
