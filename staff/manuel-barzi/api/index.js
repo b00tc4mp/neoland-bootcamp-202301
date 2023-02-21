@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const registerUser = require('./logic/registerUser')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
+const unregisterUser = require('./logic/unregisterUser')
+const updateUserPassword = require('./logic/updateUserPassword')
 
 const server = express()
 const jsonBodyParser = bodyParser.json()
@@ -54,12 +56,38 @@ server.get('/users/:userId', (req, res) => {
     })
 })
 
-server.delete('/users/:userId', (req, res) => {
+server.delete('/users/:userId', jsonBodyParser, (req, res) => {
     // TODO unregister user
+    //const userId = req.params.userId
+    const { userId } = req.params
+    //const password = req.body.password
+    const { password } = req.body
+
+    unregisterUser(userId, password, error => {
+        if (error) {
+            res.status(500).json({ error: error.message })
+
+            return
+        }
+
+        res.status(204).send()
+    })
 })
 
 server.patch('/users/:userId', jsonBodyParser, (req, res) => {
     // TODO update user password
+    const { userId } = req.params
+    const { currentPassword, newPassword, newPasswordRepeat } = req.body
+
+    updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, error => {
+        if (error) {
+            res.status(500).json({ error: error.message })
+
+            return
+        }
+
+        res.status(204).send()
+    })
 })
 
-server.listen(8080)
+server.listen(8080, () => console.log('server running on port ' + 8080))
