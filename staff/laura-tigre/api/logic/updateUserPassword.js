@@ -1,4 +1,4 @@
-const { writeFile, readFile } = require('fs')
+const { readFile, writeFile } = require('fs')
 
 function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
     //TODO
@@ -36,10 +36,10 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
 
         user.password = newPassword
 
-        const newJson = JSON.stringify(user)
+        const newJson = JSON.stringify(user, null,4)
 
 
-        writeFile(filePath, newJson, 'utf8', (error => {
+        writeFile(filePath, newJson, 'utf8', error => {
             if (error) {
                 callback(error)
 
@@ -50,13 +50,10 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
 
 
 
-        }))
+        })
 
 
     })
-        
-
-    
 
 
 }

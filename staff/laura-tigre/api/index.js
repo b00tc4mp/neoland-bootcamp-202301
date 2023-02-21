@@ -5,11 +5,13 @@ const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
-
+const cors= require('cors')
 
 const server = express()
 const jsonBodyParser = bodyParser.json()
 //transforma la request parqa el servidor
+server.use(cors())
+
 server.post('/users', jsonBodyParser, (req, res) => {
 
     const user = req.body
@@ -76,7 +78,7 @@ server.delete('/users/:userId', jsonBodyParser, (req, res) => {
             return
 
         }
-        res.status(202).send()
+        res.status(204).send()
     })
 })
 
@@ -97,9 +99,9 @@ server.patch('/users/:userId', jsonBodyParser, (req, res) => {
             return
 
         }
-        res.status(201).send()
+        res.status(204).send()
     })
 
 
 })
-server.listen(8080)
+server.listen(8080, ()=> console.log('server running on port ' + 8080))
