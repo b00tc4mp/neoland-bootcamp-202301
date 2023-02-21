@@ -8,7 +8,7 @@ describe('registerUser', () => {
     it('succeeds for a new user', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                done(error)
+                console.error(error.message)
 
                 return
             }
@@ -20,7 +20,7 @@ describe('registerUser', () => {
 
             registerUser(name, age, email, password, (error, userId) => {
                 if (error) {
-                    done(error)
+                    console.error(error.message)
 
                     return
                 }
@@ -31,12 +31,12 @@ describe('registerUser', () => {
 
                 checkFileExists(filePath, (error, exists) => {
                     if (error) {
-                        done(error)
+                        console.error(error.message)
 
                         return
                     }
 
-                    //verify (exists)
+                    //verify(exists)
                     expect(exists).to.be.true
 
                     done()
@@ -48,7 +48,7 @@ describe('registerUser', () => {
     it('succeeds for a new user and others already exist', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                done(error)
+                console.error(error.message)
 
                 return
             }
@@ -60,7 +60,7 @@ describe('registerUser', () => {
 
             const user = { name, age, email, password }
 
-            const userJson = JSON.stringify(user)
+            const userJson = JSON.stringify(user) // { "name": "Marie Curie", "age": 87, "email": "marie@curie.com", "password": "123123123" }
 
             const { writeFile } = fs
 
@@ -72,7 +72,7 @@ describe('registerUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    done(error)
+                    console.error(error.message)
 
                     return
                 }
@@ -84,7 +84,7 @@ describe('registerUser', () => {
 
                 registerUser(name, age, email, password, (error, userId) => {
                     if (error) {
-                        done(error)
+                        console.error(error.message)
 
                         return
                     }
@@ -95,13 +95,12 @@ describe('registerUser', () => {
 
                     checkFileExists(filePath, (error, exists) => {
                         if (error) {
-                            done(error)
+                            console.error(error.message)
 
                             return
                         }
 
                         //verify(exists)
-
                         expect(exists).to.be.true
 
                         done()
@@ -112,10 +111,14 @@ describe('registerUser', () => {
     })
 
     it('fails when user already registered', done => {
+        // 1. clean db
+        // 2. create with writeFile a user in data/users
+        // 3. call registerUser logic (you will run this in the previous writeFile callback)
+        // 4. verify that registerUser sent and error to its callback (run this in registerUser callback)
 
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                done(error)
+                console.error(error.message)
 
                 return
             }
@@ -127,7 +130,7 @@ describe('registerUser', () => {
 
             const user = { name, age, email, password }
 
-            const userJson = JSON.stringify(user)
+            const userJson = JSON.stringify(user) // { "name": "Marie Curie", "age": 87, "email": "marie@curie.com", "password": "123123123" }
 
             const { writeFile } = fs
 
@@ -139,7 +142,7 @@ describe('registerUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                    done(error)
+                    console.error(error.message)
 
                     return
                 }

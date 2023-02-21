@@ -13,7 +13,7 @@ const password = "123123123"
 
 registerUser(name, age, email, password, (error, userId) => {
     if (error) {
-        console.error(error.message)
+        done(error)
         return
     }
     const fileName = userId + ".json"

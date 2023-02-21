@@ -11,10 +11,10 @@ function retrieveUser(userId, callback) {
             return
         }
         const user = JSON.parse(json)
-      
+
         delete user.password
 
-        callback(null, user) 
+        callback(null, user)
     })
 }
 
