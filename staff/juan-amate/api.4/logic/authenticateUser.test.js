@@ -32,14 +32,14 @@ function test0(done) {
         
         writeFile(userFilePath, userJson, 'utf8', error => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
             
             authenticateUser(email, password, (error, userId) => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

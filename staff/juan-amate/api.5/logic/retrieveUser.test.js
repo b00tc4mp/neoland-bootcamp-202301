@@ -1,5 +1,4 @@
 const retrieveUser = require('./retrieveUser')
-
 const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirectory')
 const fs = require('fs')
 const { expect } = require('chai')
@@ -44,8 +43,9 @@ describe('retrieveUser', () => {
                         return
                     }
 
-                    expect(user.name).to.equal('Marie Curie')
                     expect(user.email).to.equal('marie@curie.com')
+                    expect(user.name).to.equal('Marie Curie')
+                    expect(user.age).to.equal(98)
                     expect(user.password).to.be.undefined
 
                     done()

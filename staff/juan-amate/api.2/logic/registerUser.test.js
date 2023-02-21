@@ -7,7 +7,7 @@ const checkFileExists = require('../utils/checkFileExists')
 function case0(done) {
     deleteAllFilesFromDirectory('data/users/', error => {
         if (error) {
-            console.error(error.message)
+            done(error)
 
             return
         }
@@ -19,7 +19,7 @@ function case0(done) {
 
         registerUser(name, age, email, password, (error, userId) => {
             if (error) {
-                console.error(error.message)
+                done(error)
 
                 return
             }
@@ -30,7 +30,7 @@ function case0(done) {
 
             checkFileExists(filePath, (error, exists) => {
                 if (error) {
-                    console.error(error.message)
+                    done(error)
 
                     return
                 }

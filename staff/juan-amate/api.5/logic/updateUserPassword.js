@@ -38,7 +38,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
 
         user.password = newPassword
 
-        const newJson = JSON.stringify(user, null, 4)
+        const newJson = JSON.stringify(user)
     
         writeFile(filePath, newJson, 'utf8', error => {
             if (error) {
