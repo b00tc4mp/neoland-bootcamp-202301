@@ -9,7 +9,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
     3. update user password with new password
     4. update file
     */
-    
+
     if (newPassword !== newPasswordRepeat) {
         callback(new Error('new password and new password repeat do not match'))
 
@@ -37,7 +37,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
 
         user.password = newPassword
 
-        const newJson = JSON.stringify(user)
+        const newJson = JSON.stringify(user, null, 4)
 
         writeFile(filePath, newJson, 'utf8', error => {
             if (error) {

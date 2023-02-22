@@ -1,6 +1,6 @@
 /**
  * Authenticates a user against database
- *
+ * 
  * @param {string} email The user's email address
  * @param {string} password The user's password
  * @param {function} callback The callback
@@ -10,6 +10,7 @@ function authenticateUser(email, password, callback) {
 
   xhr.onload = () => {
     const { status } = xhr
+
     if (status === 500) {
       const { response } = xhr
 
@@ -31,8 +32,8 @@ function authenticateUser(email, password, callback) {
     callback(null, userId)
   }
 
-  xhr.open("POST", "http://localhost:8080/users/auth")
-  xhr.setRequestHeader("Content-Type", "application/json")
+  xhr.open('POST', 'http://localhost:8080/users/auth')
+  xhr.setRequestHeader('Content-Type', 'application/json')
 
   const credentials = { email, password }
   const json = JSON.stringify(credentials)

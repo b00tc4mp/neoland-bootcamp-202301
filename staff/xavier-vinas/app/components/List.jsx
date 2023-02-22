@@ -51,7 +51,7 @@ function List() {
     }
 
 
-    return <ul className="flex flex-col items-center bg-slate-200 ">
+    return <ul className="flex flex-col items-center h-screen gap-4 m-3">
         {stickies.map(sticky => <li className="gap-5 p-5 shadow-lg shadow-black flex flex-col items-center m-10 w-[40ch] bg-white rounded-full" key={sticky.id} >
             <div className="text-right">
                 {sticky.user === sessionStorage.userId &&

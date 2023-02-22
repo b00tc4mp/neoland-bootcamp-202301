@@ -1,14 +1,19 @@
-function updateStickyText(email, stickyId, text) {
-   
-  var user = users.find(user => user.email === email)
+function updateStickyText(userId, stickyId, text) {
 
-  if (!user) throw new Error('user with email ' + email + ' not found')
+  if (!userId) throw new Error('user with id ' + userId + ' not found')
+  var foundSticky
 
-  var foundSticky = stickies.find(sticky => sticky.id === stickyId)
-    
+  for (var i = 0; i < stickies.length && !foundSticky; i++) {
+    var sticky = stickies[i]
+
+    if (sticky.id === stickyId) foundSticky = sticky
+
+  }
+
   if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
-  
-  if (foundSticky.user !== email) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + email)
 
-  foundSticky.text = text;
+  if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with id ' + userId)
+
+  foundSticky.text = text
+
 }

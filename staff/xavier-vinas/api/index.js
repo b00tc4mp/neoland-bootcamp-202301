@@ -91,7 +91,7 @@ server.patch('/users/:userId', jsonBodyParser, (req, res) => {
 
             return
         }
-        res.status(202).send()
+        res.status(204).send()
     })
 
 
