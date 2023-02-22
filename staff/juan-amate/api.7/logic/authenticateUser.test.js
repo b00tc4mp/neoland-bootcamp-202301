@@ -13,7 +13,6 @@ describe('authenticateUser', () => {
             }
 
             const name = 'Marie Curie'
-
             const age = 87
             const email = 'marie@curie.com'
             const password = '123123123'
