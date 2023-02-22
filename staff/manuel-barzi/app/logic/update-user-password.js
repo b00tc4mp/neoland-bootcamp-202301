@@ -1,7 +1,7 @@
 /**
  * Updates the user password
  * 
- * @param {string} email The user email
+ * @param {string} userId The userId
  * @param {string} currentPassword The user current password
  * @param {string} newPassword The user new password
  * @param {string} newPasswordConfirm The confirmation of the new password

@@ -1,14 +1,4 @@
-function updateStickyVisibility(email, stickyId, visibility) {
-    var userFound = false
-
-    for (var i = 0; i < users.length && !userFound; i++) {
-        var user = users[i]
-
-        if (user.email === email) userFound = true
-    }
-
-    if (!userFound) throw new Error('user with email '  + email + ' not found')
-
+function updateStickyVisibility(userId, stickyId, visibility) {
     var foundSticky
 
     for (var i = 0; i < stickies.length && !foundSticky; i++) {
@@ -19,7 +9,7 @@ function updateStickyVisibility(email, stickyId, visibility) {
 
     if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
 
-    if (foundSticky.user !== email) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + email)
+    if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with userId ' + userId)
 
     foundSticky.visibility = visibility
 }

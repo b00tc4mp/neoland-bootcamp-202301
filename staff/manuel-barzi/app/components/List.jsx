@@ -54,13 +54,13 @@ function List() {
                 {sticky.user === sessionStorage.userId && <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleDelete}>x</button>}
             </div>
 
-            <p id={sticky.id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+            <p className="p-2" id={sticky.id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <div className="text-right">
-            <button className="h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId)? '💚' :'🤍'} {sticky.likes.length}</button>
-            <strong>{sticky.user}</strong>
-            </div>
+                <button className="h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? '💚' : '🤍'} {sticky.likes.length}</button>
 
+                <strong>{sticky.user}</strong>
+            </div>
         </li>)}
     </ul>
 }
