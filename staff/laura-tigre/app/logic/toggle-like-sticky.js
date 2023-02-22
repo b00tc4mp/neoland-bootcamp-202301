@@ -7,7 +7,7 @@ function toggleLikeSticky(userId, stickyId){
 
     const sticky = stickies.find(sticky => sticky.id === stickyId)
    
-    if(!userId) throw new Error ('user with email '+ userId +' not found')
+    if(!userId) throw new Error ('user with id '+ userId +' not found')
 
     if(!sticky) throw new Error ('sticky with id ' +stickyId +' not found')
   
