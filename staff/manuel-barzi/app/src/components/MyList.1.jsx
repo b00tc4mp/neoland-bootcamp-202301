@@ -4,8 +4,6 @@ import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
 function MyList() {
     console.log('MyList -> render')
@@ -48,7 +46,7 @@ function MyList() {
 
     const handleToggleLike = event => {
         try {
-            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id)
+            toggleLikeSticky(sessionStorage.userId, event.target.id)
             setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
@@ -65,8 +63,8 @@ function MyList() {
 
             <p className="p-2" id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
-            <div className="flex flex-col items-end">
-                <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
+            <div className="text-right">
+                <button className="h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? '♥️' : '🤍'} {sticky.likes.length}</button>
 
                 <strong>{sticky.user}</strong>
             </div>
