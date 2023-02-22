@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "npx mocha logic/*.test.js",
     "test-debug": "npx mocha --inspect-brk logic/*.test.js",
     "test-coverage": "npx nyc --reporter=text --reporter=html mocha logic/*.test.js"
@@ -17,6 +18,7 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "mongodb": "^5.0.1"
   }
 }
