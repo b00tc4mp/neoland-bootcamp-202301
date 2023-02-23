@@ -24,7 +24,7 @@ function Register(props) {
 
                 props.onNavigateToLogin()
             })
-        } catch(error) {
+        } catch (error) {
             setFeedback(error.message)
         }
     }
@@ -35,25 +35,27 @@ function Register(props) {
         props.onNavigateToLogin()
     }
 
-    return <main className="register">
-        <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name</label>
-            <input type="name" id="name" placeholder="input your name" />
+    return <main className="h-screen flex justify-center items-center">
+        <div className="border">
+            <h1>Register</h1>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
+                <label htmlFor="name">Name</label>
+                <input type="name" id="name" placeholder="input your name" />
 
-            <label htmlFor="age">Age</label>
-            <input type="number" id="age" placeholder="input your age" />
+                <label htmlFor="age">Age</label>
+                <input type="number" id="age" placeholder="input your age" />
 
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email" placeholder="input your e-mail" />
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" placeholder="input your e-mail" />
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="input your password" />
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" placeholder="input your password" />
 
-            <button type="submit">Register</button>
-        </form>
-        <p className="feedback-error">{feedback}</p>
-        <p>or <a href="" onClick={handleNavigateToLogin}>Login</a></p>
+                <button type="submit">Register</button>
+            </form>
+            <p className="feedback-error">{feedback}</p>
+            <p className="text-center">or <a href="" onClick={handleNavigateToLogin}>Login</a></p>
+        </div>
     </main>
 }
 

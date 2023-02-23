@@ -21,11 +21,11 @@ function Login(props) {
                 }
 
                 sessionStorage.userId = userId
-    
+
                 props.onNavigateToHome()
             })
 
-        } catch(error) {
+        } catch (error) {
             setFeedback(error.message)
         }
     }
@@ -36,19 +36,21 @@ function Login(props) {
         props.onNavigateToRegister()
     }
 
-    return <main className="login">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email" placeholder="input your e-mail" />
+    return <main className="h-screen flex justify-center items-center">
+        <div className="border">
+            <h1>Login</h1>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" placeholder="input your e-mail" />
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="input your password" />
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" placeholder="input your password" />
 
-            <button type="submit">Login</button>
-        </form>
-        <p className="feedback-error">{feedback}</p>
-        <p>or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
+                <button type="submit">Login</button>
+            </form>
+            <p className="feedback-error">{feedback}</p>
+            <p className="text-center">or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
+        </div>
     </main>
 }
 
