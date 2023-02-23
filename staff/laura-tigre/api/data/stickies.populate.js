@@ -10,8 +10,12 @@ client.connect()
     //     const stickies = db.collection('stickies')
 
     //     return stickies.find().toArray()
+    // const query = {text:{$regex:"hola"}}regex busca un patron a cumplir
+    //     return stickies.find(query).toArray()
+
     // })
     // .then(all => console.log(all))
+    // .then(()=> client.close())
     // .catch(error => console.error(error))
 
     //  .then(connection =>{
@@ -29,8 +33,11 @@ client.connect()
 
     //     return stickies.insertOne(sticky)
     //  })
-    //  .then(response => console.log(response))
+    //  .then(result => console.log(result))
+    //  .then(()=> client.close()) para cerrar la conexion y no tener que hacer control+C
     //  .catch(error=> console.error(error))
+
+
     // .then(connection=>{
     //  //update
 
@@ -44,9 +51,13 @@ client.connect()
 
 
     //     return stickies.updateOne({"_id": new ObjectId("63f640a9636d4b52fa3bc636")}, {$set:sticky})
+    //     return stickies.updateOne({"_id": new ObjectId("63f640a9636d4b52fa3bc636")}, {$push:{likes:'user-111111111'}
     // })
     // .then (response=> console.log(response))
+    // .then(()=> client.close())
     // .catch(error=> console.error(error))
+
+
 
     // .then(connection=>{
     //      //update
@@ -59,7 +70,10 @@ client.connect()
 
     // })
     // .then (response=> console.log(response))
+    // .then(()=> client.close())
     // .catch(error=> console.error(error))
+
+
 
     .then(connection => {
         //update
@@ -67,7 +81,15 @@ client.connect()
         const db = connection.db('mydb')
 
         const stickies = db.collection('stickies')
-        return stickies.find({user:'user-1676992518546', visibility:'public'}).toArray()
+        return stickies.find({ user: 'user-1676992518546', visibility: 'public' }).toArray()
+
+        //buscame el sticky que tenga el like de un usuario
+        // const query={likes:'user-1111111111'}
+        // return stickies.find(query).toArray()
+
+
+
     })
-    .then(all => console.log(all))
+    .then(result => console.log(result))
+    .then(() => client.close())
     .catch(error => console.error(error))
