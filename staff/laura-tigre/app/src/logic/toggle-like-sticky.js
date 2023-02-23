@@ -1,3 +1,4 @@
+import stickies from "../data/stickies"
 /**
  * toggles the likeability of specific sticky
  * @param {string } email the user email
@@ -7,7 +8,6 @@ function toggleLikeSticky(userId, stickyId){
 
     const sticky = stickies.find(sticky => sticky.id === stickyId)
    
-    if(!userId) throw new Error ('user with id '+ userId +' not found')
 
     if(!sticky) throw new Error ('sticky with id ' +stickyId +' not found')
   
@@ -17,3 +17,4 @@ function toggleLikeSticky(userId, stickyId){
 
    index > -1 ? sticky.likes.splice(index,1): sticky.likes.push(userId)
 }
+export default toggleLikeSticky

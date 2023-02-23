@@ -1,3 +1,5 @@
+import stickies from "../data/stickies"
+
 /**
  * publica los stickies privados
  * 
@@ -6,7 +8,7 @@
 
     function updateStickyVisibility(userId, stickyId, visibility) {
         
-        if (!userId) throw new Error('user with id ' + userId + ' not found')
+        
         var foundSticky
     
         for (var i = 0; i < stickies.length && !foundSticky; i++) {
@@ -26,3 +28,4 @@
     
     }
 
+export default updateStickyVisibility

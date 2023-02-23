@@ -1,6 +1,6 @@
 function updateStickyText(userId, stickyId, text) {
    
-    if (!userId) throw new Error('user with id ' + userId + ' not found')
+    
     var foundSticky
 
     for (var i = 0; i < stickies.length && !foundSticky; i++) {

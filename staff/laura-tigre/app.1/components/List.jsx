@@ -80,7 +80,7 @@ function List (){
             
               <div className="flex" >
               <img className="h-5 w-5"
-              src={sticky.likes.includes(sessionStorage.userId)? 'public/heart-full.svg': 'public/heart.svg'}
+              src={sticky.likes.includes(sessionStorage.userId)? '../public/images/heart-full.svg': '../public/images/heart.svg'}
               onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}/>
               <p>{sticky.likes.length}</p>
               
