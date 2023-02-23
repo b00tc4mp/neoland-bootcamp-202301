@@ -9,7 +9,11 @@ const cors = require('cors')
 const { MongoClient } = require('mongodb')
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
-
+const retrieveMyStickies = require('./logic/retrieveMyStickies')
+const updateStickyText = require('./logic/updateStickyText')
+const updateStickyVisibility = require('./logic/updateStickyVisibility')
+const toggleLikeSticky = require('./logic/toggleLikeSticky')
+const deleteSticky = require('./logic/deleteSticky')
 
 const client = new MongoClient('mongodb://127.0.0.1:27017')
 
@@ -115,25 +119,74 @@ client.connect()
                 res.status(204).send()
             })
 
-
-
-
         })
 
-        server.post('/stickies', jsonBodyParser, (req, res)=>{
+        server.post('/stickies', jsonBodyParser, (req, res) => {
             const userId = req.headers.authorization.slice(7)
-            const {text, visibility} = req.body
+            const { text, visibility } = req.body
 
             createSticky(userId, text, visibility)
-            .then(()=> res.status(201).send())
-            .catch(error=> res.status(500).send(error.message))
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).send(error.message))
         })
 
-        server.get('/stickies',(req, res) => {
+        server.get('/stickies', (req, res) => {
             retrievePublicStickies()
                 .then(stickies => res.status(200).json(stickies))
                 .catch(error => res.status(500).send(error.message))
-        }) 
+        })
+
+        server.get('/user/stickies', (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            retrieveMyStickies(userId)
+                .then(stickies => res.status(200).json(stickies))
+                .catch(error => res.status(500).send(error.message))
+        })
+
+
+        server.patch('/sticky/text/:stickyId', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { stickyId } = req.params
+            const { text } = req.body
+
+            updateStickyText(userId, stickyId, text)
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).send(error.message))
+
+        })
+
+        server.patch('/sticky/visibility/:stickyId', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { stickyId } = req.params
+            const { visibility } = req.body
+
+            updateStickyVisibility(userId, stickyId, visibility)
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).send(error.message))
+
+        })
+
+        server.patch('/sticky/likes/:stickyId', (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { stickyId } = req.params
+
+            toggleLikeSticky(userId, stickyId)
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).send(error.message))
+
+        })
+
+        server.delete('/sticky/:stickyId', (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { stickyId } = req.params
+            deleteSticky(userId, stickyId)
+                .then(stickies => res.status(204).send())
+                .catch(error => res.status(500).send(error.message))
+
+        })
+
+
+
         server.listen(8080, () => console.log('server running on port ' + 8080))
     })
 
