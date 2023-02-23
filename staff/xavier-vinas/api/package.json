@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-debug": "npx mocha --inspect-brk logic/*.test.js",
     "test-coverage": "npx nyc --reporter=text --reporter=html mocha logic/*.test.js"
