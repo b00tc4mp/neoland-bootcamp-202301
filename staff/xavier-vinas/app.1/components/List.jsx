@@ -1,17 +1,5 @@
-import { useState } from "react"
-import retrievePublicStickies from "../logic/retrieve-public-stickies"
-import retrieveMyStickies from "../logic/retrieve-my-stickies"
-import updateStickyText from "../logic/update-sticky-text"
-import deleteSticky from "../logic/delete-sticky"
-import updateStickyVisibility from "../logic/update-sticky-text"
-import toggleLikeSticky from "../logic/toggle-like-sticky"
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
-
-
-
 function List() {
-    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
+    const [listUpdateStamp, setListUpdateStamp] = React.useState(Date.now())
 
     let stickies
 
@@ -74,16 +62,14 @@ function List() {
             <p id={sticky.id} contentEditable={sticky.user === sessionStorage.userId ? true : false} onKeyUp={handleText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <strong>{sticky.user}</strong>
-            <div >
-                <div className="flex flex-col items-end">
-                    <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" id={sticky.id} onClick={handleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
+            <div  >
+                <img className="flex flex-col items-center w-10"
+                    src={sticky.likes.includes(sessionStorage.userId) ? "public/heart-full.svg" : "public/heart.svg"}
+                    onClick={handleLike} id={sticky.id} title={sticky.likes.join('\n')}
+                />
 
-                    <strong>{sticky.user}</strong>
-                </div>
             </div>
             {sticky.likes.length}
         </li>)}
     </ul>
 }
-
-export default List
