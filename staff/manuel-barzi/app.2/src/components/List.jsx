@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import retrieveMyStickies from '../logic/retrieve-my-stickies'
+import { useState } from 'react'
+import retrievePublicStickies from '../logic/retrieve-public-stickies'
 import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
@@ -7,27 +7,18 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
-function MyList() {
-    console.log('MyList -> render')
+function List() {
+    console.log('List -> render')
 
     const [updateStamp, setUpdateStamp] = useState(Date.now())
-    const [stickies, setStickies] = useState([])
 
-    useEffect(() => {
-        try {
-            retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
-                if (error) {
-                    alert(error.message)
+    let stickies
 
-                    return
-                }
-
-                setStickies(stickies)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }, [])
+    try {
+        stickies = retrievePublicStickies()
+    } catch (error) {
+        alert(error.message)
+    }
 
     const handleUpdateText = event => {
         try {
@@ -67,12 +58,12 @@ function MyList() {
     return <ul className="flex flex-col items-center">
         {stickies.map(sticky => <li className="bg-[gold] m-10 w-[40ch]" key={sticky.id}>
             <div className="text-right">
-                <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
 
-                <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleDelete}>x</button>
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky.id} onClick={handleDelete}>x</button>}
             </div>
 
-            <p className="p-2" id={sticky.id} contentEditable onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+            <p className="p-2" id={sticky.id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <div className="flex flex-col items-end">
                 <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
@@ -83,4 +74,4 @@ function MyList() {
     </ul>
 }
 
-export default MyList
+export default List

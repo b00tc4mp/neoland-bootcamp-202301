@@ -17,7 +17,7 @@ function createSticky(userId, text, visibility) {
         likes: []
     }
 
-    stickies.push(sticky)
+    stickies.push(sticky)    
 }
 
 export default createSticky

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
@@ -11,23 +11,14 @@ function MyList() {
     console.log('MyList -> render')
 
     const [updateStamp, setUpdateStamp] = useState(Date.now())
-    const [stickies, setStickies] = useState([])
 
-    useEffect(() => {
-        try {
-            retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
-                if (error) {
-                    alert(error.message)
+    let stickies
 
-                    return
-                }
-
-                setStickies(stickies)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }, [])
+    try {
+        stickies = retrieveMyStickies(sessionStorage.userId)
+    } catch (error) {
+        alert(error.message)
+    }
 
     const handleUpdateText = event => {
         try {

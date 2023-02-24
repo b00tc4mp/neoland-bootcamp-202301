@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import retrievePublicStickies from '../logic/retrieve-public-stickies'
 import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
@@ -11,14 +11,23 @@ function List() {
     console.log('List -> render')
 
     const [updateStamp, setUpdateStamp] = useState(Date.now())
+    const [stickies, setStickies] = useState([])
 
-    let stickies
+    useEffect(() => {
+        try {
+            retrievePublicStickies((error, stickies) => {
+                if (error) {
+                    alert(error.message)
 
-    try {
-        stickies = retrievePublicStickies()
-    } catch (error) {
-        alert(error.message)
-    }
+                    return
+                }
+
+                setStickies(stickies)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }, [])
 
     const handleUpdateText = event => {
         try {
