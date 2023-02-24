@@ -1,21 +1,30 @@
 const { ObjectId } = require('mongodb')
 
+/**
+ * Toggles the likeability of a specific sticky
+ * 
+ * @param {string} userId The userId
+ * @param {string} stickyId The sticky identifier
+ */
 function toggleLikeSticky(userId, stickyId) {
-
     const stickies = process.db.collection('stickies')
 
-
     return stickies.findOne({ _id: new ObjectId(stickyId) })
-
         .then(sticky => {
-          
-            const index = sticky.likes.indexOf(userId)
+            if (!sticky)
+                throw new Error('sticky with id ' + stickyId + ' not found')
 
-            index > -1 ? sticky.likes.splice(index, 1) : sticky.likes.push(userId)
+            const likes = sticky.likes
 
-            return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes: sticky.likes } })
+            const index = likes.indexOf(userId)
 
+            if (index < 0)
+                likes.push(userId)
+            else
+                likes.splice(index, 1)
+
+            return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes } })
         })
-
 }
+
 module.exports = toggleLikeSticky

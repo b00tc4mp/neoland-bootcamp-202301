@@ -8,7 +8,7 @@ client.connect()
         const db = connection.db('mydb')
         process.db = db
 
-        return deleteSticky('user-1676988822365', '63f62524b6ac9e206bc4d811')
+        return deleteSticky('user-1676980509816', '63f6252be2129e040c4d84a1')
     })
     .then(result => console.log(result))
     .catch(error => console.error(error.message))

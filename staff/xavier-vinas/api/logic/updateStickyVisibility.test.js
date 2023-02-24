@@ -1,6 +1,6 @@
 
 const { MongoClient } = require('mongodb')
-const updateStickyVisibility = require('./updateStickyText')
+const updateStickyVisibility = require('./updateStickyVisibility')
 
 const client = new MongoClient('mongodb://127.0.0.1:27017')
 

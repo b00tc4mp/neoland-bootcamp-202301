@@ -1,33 +1,37 @@
-import { useState } from "react"
-import retrievePublicStickies from "../logic/retrieve-public-stickies"
-import retrieveMyStickies from "../logic/retrieve-my-stickies"
-import updateStickyText from "../logic/update-sticky-text"
-import deleteSticky from "../logic/delete-sticky"
-import updateStickyVisibility from "../logic/update-sticky-text"
-import toggleLikeSticky from "../logic/toggle-like-sticky"
+import { useState, useEffect } from 'react'
+import retrievePublicStickies from '../logic/retrieve-public-stickies'
+import updateStickyText from '../logic/update-sticky-text'
+import deleteSticky from '../logic/delete-sticky'
+import updateStickyVisibility from '../logic/update-sticky-visibility'
+import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
+function List({ listUpdateStamp }) {
+    console.log('List -> render')
 
+    const [updateStamp, setUpdateStamp] = useState(Date.now())
+    const [stickies, setStickies] = useState([])
 
-function List() {
-    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
+    useEffect(() => {
+        try {
+            retrievePublicStickies((error, stickies) => {
+                if (error) {
+                    alert(error.message)
 
-    let stickies
+                    return
+                }
 
-    try {
-        stickies = retrievePublicStickies()
+                setStickies(stickies.reverse())
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }, [listUpdateStamp])
 
-        console.log(stickies)
-    } catch (error) {
-        alert(error.message)
-    }
-
-    const handleText = event => {
-
+    const handleUpdateText = event => {
         try {
             updateStickyText(sessionStorage.userId, event.target.id, event.target.innerText)
-
         } catch (error) {
             alert(error.message)
         }
@@ -35,53 +39,46 @@ function List() {
 
     const handleDelete = event => {
         try {
-
             deleteSticky(sessionStorage.userId, event.target.id)
-            setListUpdateStamp(Date.now())
-
+            setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
         }
     }
+
     const handleUpdateVisibility = event => {
         try {
             updateStickyVisibility(sessionStorage.userId, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public')
-            setListUpdateStamp(Date.now())
+            setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
         }
     }
 
-    const handleLike = event => {
+    const handleToggleLike = event => {
         try {
-            toggleLikeSticky(sessionStorage.userId, event.target.id)
-
-            setListUpdateStamp(Date.now())
+            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id)
+            setUpdateStamp(Date.now())
         } catch (error) {
             alert(error.message)
         }
     }
 
-
-    return <ul className="flex flex-col items-center h-screen gap-4 m-3">
-        {stickies.map(sticky => <li className="gap-5 p-5 shadow-lg shadow-black flex flex-col items-center m-10 w-[40ch] bg-white rounded-full" key={sticky.id} >
+    return <ul className="flex flex-col items-center ">
+        {stickies.map(sticky => <li className="bg-[#dfd9d9] m-10 w-[40ch] rounded-full p-10 border-double" key={sticky._id}>
             <div className="text-right">
-                {sticky.user === sessionStorage.userId &&
-                    <button className="w-5 h-5 bg-black text-[white] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>+/-</button>}
-                {sticky.user === sessionStorage.userId &&
-                    <button className="w-5 h-5 bg-black text-[white] m-1" id={sticky.id} onClick={handleDelete}>X</button>}
-            </div>
-            <p id={sticky.id} contentEditable={sticky.user === sessionStorage.userId ? true : false} onKeyUp={handleText} suppressContentEditableWarning={true}>{sticky.text}</p>
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#020200] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
 
-            <strong>{sticky.user}</strong>
-            <div >
-                <div className="flex flex-col items-end">
-                    <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" id={sticky.id} onClick={handleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
-
-                    <strong>{sticky.user}</strong>
-                </div>
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#030301] m-1" id={sticky.id} onClick={handleDelete}>x</button>}
             </div>
-            {sticky.likes.length}
+
+            <p className="p-2" id={sticky.id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+
+            <div className="flex flex-col items-end">
+                <button className="h-5 w-10 text-[#0a0802] m-1 flex justify-center" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
+
+                <strong>{sticky.user}</strong>
+            </div>
         </li>)}
     </ul>
 }

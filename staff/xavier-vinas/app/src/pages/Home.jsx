@@ -30,13 +30,22 @@ function Home(props) {
     }
 
     const handleAdd = () => {
+
         try {
-            createSticky(sessionStorage.userId, "", "public")
-            setListUpdateStamp(Date.now())
+            createSticky(sessionStorage.userId, "", "public", error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                setListUpdateStamp(Date.now())
+            })
         } catch (error) {
             alert(error.message)
         }
+
     }
+
     const handleLogout = () => {
         delete sessionStorage.userId
 
@@ -71,6 +80,6 @@ function Home(props) {
         </footer>
 
     </div>
-}
 
+}
 export default Home
