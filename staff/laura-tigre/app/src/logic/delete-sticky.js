@@ -1,14 +1,30 @@
-import stickies from "../data/stickies"
-function deleteSticky(userId, stickyId) {
+
+function deleteSticky(userId, stickyId, callback) {
    
-  
+   const xhr = new XMLHttpRequest()
 
-   var foundStickyIndex = stickies.findIndex(sticky => sticky.id === stickyId)
-   if (foundStickyIndex < 0) throw new Error("sticky with id '" +stickyId+ "' not found")
+    xhr.onload =()=> {
+     const {status}= xhr
+ 
+     if (status === 500) {
+         const { response } = xhr
+ 
+         const body = JSON.parse(response)
+ 
+         const { error } = body
+ 
+         callback(new Error(error))
+ 
+         return
+     }
 
-   var sticky = stickies[foundStickyIndex]
-   if (sticky.user !== userId) throw new Error("sticky with id '" + stickyId +"' does not belong to user with email '"+ userId +"'")
+     callback(null)
+ }
 
-   stickies.splice(foundStickyIndex, 1)
+  xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
+  xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+  xhr.send()
+
+   
 }
 export default deleteSticky

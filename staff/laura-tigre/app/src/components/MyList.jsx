@@ -50,8 +50,14 @@ function MyList({ listUpdateStamp }) {
 
     const handleDelete = event => {
         try {
-            deleteSticky(sessionStorage.userId, event.target.id)
-            setUpdateStamp(Date.now())
+            deleteSticky(sessionStorage.userId, event.target.id, error => {
+                if (error) {
+                    alert(error.message)
+                    return
+                }
+                setUpdateStamp(Date.now())
+
+            })
 
         } catch (error) {
             alert(error.message)
@@ -73,8 +79,8 @@ function MyList({ listUpdateStamp }) {
     }
     const handleLike = event => {
         try {
-            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id, error=>{
-                if(error){
+            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id, error => {
+                if (error) {
                     alert(error.message)
                     return
                 }
@@ -97,7 +103,7 @@ function MyList({ listUpdateStamp }) {
                         :
                         <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🛑</button>
                     }
-                    <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky.id} onClick={handleDelete}>X</button>
+                    <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleDelete}>X</button>
                 </div>
                 <p className="w-[35ch] text-left" id={sticky._id} contentEditable onKeyUp={handleEditText} suppressContentEditableWarning={true}>{sticky.text}</p>
 

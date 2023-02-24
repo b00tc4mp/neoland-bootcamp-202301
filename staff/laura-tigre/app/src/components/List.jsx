@@ -49,8 +49,14 @@ function List({ listUpdateStamp }) {
   }
   const handleDelete = event => {
     try {
-      deleteSticky(sessionStorage.userId, event.target.id)
-      setUpdateStamp(Date.now())
+      deleteSticky(sessionStorage.userId, event.target.id, error=>{
+        if(error){
+          alert(error.message)
+          return
+        }
+        
+        setUpdateStamp(Date.now())
+      })
     } catch (error) {
       alert(error.message)
     }
