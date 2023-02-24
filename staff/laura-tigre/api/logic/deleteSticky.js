@@ -7,6 +7,8 @@ function deleteSticky( userId, stickyId){
 
     return stickies.findOne({_id: new ObjectId(stickyId)})
     .then(sticky=> {
+
+      if(!sticky) throw new Error(`sticky with id '${stickyId}s' not found`)
       if(sticky.user !== userId) throw new Error(`sticky with id '${stickyId}s' does not belong to user with id '${userId}'`)
 
       return stickies.deleteOne({_id: new ObjectId(stickyId)})

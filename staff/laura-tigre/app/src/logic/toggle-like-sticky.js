@@ -1,20 +1,36 @@
-import stickies from "../data/stickies"
+
 /**
  * toggles the likeability of specific sticky
- * @param {string } email the user email
+ * @param {string } userId the user email
  * @param {string} stickyId the sticky identifier
  */
-function toggleLikeSticky(userId, stickyId){
+function toggleLikeSticky(userId, stickyId, callback){
+    const xhr = new XMLHttpRequest()
 
-    const sticky = stickies.find(sticky => sticky.id === stickyId)
+    xhr.onload =()=> {
+     const {status}= xhr
+ 
+     if (status === 500) {
+         const { response } = xhr
+ 
+         const body = JSON.parse(response)
+ 
+         const { error } = body
+ 
+         callback(new Error(error))
+ 
+         return
+     }
+
+     callback(null)
+ }
+
+  xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/likes`)
+  xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+  xhr.send()
+
+
+
    
-
-    if(!sticky) throw new Error ('sticky with id ' +stickyId +' not found')
-  
-    
-    
-    const index = sticky.likes.indexOf(userId)
-
-   index > -1 ? sticky.likes.splice(index,1): sticky.likes.push(userId)
 }
 export default toggleLikeSticky

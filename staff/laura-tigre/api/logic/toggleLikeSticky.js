@@ -10,7 +10,9 @@ function toggleLikeSticky( userId, stickyId){
     .then( sticky => {
         // array de likes mirar si esta el id
         // si esta hay que quitarlo 
+        
         // si no esta ponerlo
+        if(!sticky) throw new Error(`sticky with id '${stickyId}s' not found`)
         const index= sticky.likes.indexOf(userId)
 
         index>-1 ? sticky.likes.splice(index,1): sticky.likes.push(userId)
