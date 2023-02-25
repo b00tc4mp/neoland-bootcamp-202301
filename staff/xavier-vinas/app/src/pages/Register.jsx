@@ -62,7 +62,7 @@ function Register(props) {
             </form>
 
             <p className="feedback">{feedback} </p>
-            <p>or <a href="" onClick={handleNavigateToLogin}>Register</a></p>
+            <p className="flex items-center justify-center gap-2">to <a href="" onClick={handleNavigateToLogin}>Login</a></p>
         </main>
     </div>
 }
