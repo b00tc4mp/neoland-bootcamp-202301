@@ -71,7 +71,7 @@ function Home(props) {
 
             {view === "profile" && <Profile />}
 
-            {view === "my-list" && <MyList />}
+            {view === "my-list" && <MyList listUpdateStamp={listUpdateStamp} />}
         </main>
 
         <footer className=" border-double border-4 fixed bottom-0 left-0 flex justify-center bg-[#d1d5db] w-full  ">

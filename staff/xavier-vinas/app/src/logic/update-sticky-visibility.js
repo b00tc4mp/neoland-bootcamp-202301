@@ -1,22 +1,31 @@
-import stickies from "../data/stickies"
-function updateStickyVisibility(userId, stickyId, visibility) {
 
-    var foundSticky
+function updateStickyVisibility(userId, stickyId, visibility, callback) {
 
-    for (var i = 0; i < stickies.length && !foundSticky; i++) {
-        var sticky = stickies[i]
+    const xhr = new XMLHttpRequest()
 
-        if (sticky.id === stickyId) foundSticky = sticky
+    xhr.onload = () => {
+        const { status } = xhr
 
+        if (status === 500) {
+            const { response } = xhr
+
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            callback(new Error(error))
+
+            return
+
+        }
+
+        callback(null)
     }
-
-    if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
-
-    if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with email ' + userId)
-
-    foundSticky.visibility = visibility
-
-
-
+    xhr.open("PATCH", `http://localhost:8080/stickies/${stickyId}/visibility`)
+    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    const sticky = { visibility }
+    const json = JSON.stringify(sticky)
+    xhr.send(json)
 }
 export default updateStickyVisibility

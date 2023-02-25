@@ -27,11 +27,17 @@ function List({ listUpdateStamp }) {
         } catch (error) {
             alert(error.message)
         }
-    }, [listUpdateStamp])
+    }, [listUpdateStamp, updateStamp])
 
     const handleUpdateText = event => {
         try {
-            updateStickyText(sessionStorage.userId, event.target.id, event.target.innerText)
+            updateStickyText(sessionStorage.userId, event.target.id, event.target.innerText, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+            })
         } catch (error) {
             alert(error.message)
         }
@@ -48,8 +54,14 @@ function List({ listUpdateStamp }) {
 
     const handleUpdateVisibility = event => {
         try {
-            updateStickyVisibility(sessionStorage.userId, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public')
-            setUpdateStamp(Date.now())
+            updateStickyVisibility(sessionStorage.userId, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public', error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                setUpdateStamp(Date.now())
+            })
         } catch (error) {
             alert(error.message)
         }
@@ -57,8 +69,14 @@ function List({ listUpdateStamp }) {
 
     const handleToggleLike = event => {
         try {
-            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id)
-            setUpdateStamp(Date.now())
+            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                setUpdateStamp(Date.now())
+            })
         } catch (error) {
             alert(error.message)
         }
@@ -67,15 +85,15 @@ function List({ listUpdateStamp }) {
     return <ul className="flex flex-col items-center ">
         {stickies.map(sticky => <li className="bg-[#dfd9d9] m-10 w-[40ch] rounded-full p-10 border-double" key={sticky._id}>
             <div className="text-right">
-                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#020200] m-1" id={sticky.id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#020200] m-1" id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>}
 
-                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#030301] m-1" id={sticky.id} onClick={handleDelete}>x</button>}
+                {sticky.user === sessionStorage.userId && <button className="w-5 h-5  text-[#030301] m-1" id={sticky._id} onClick={handleDelete}>x</button>}
             </div>
 
-            <p className="p-2" id={sticky.id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
+            <p className="p-2" id={sticky._id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
             <div className="flex flex-col items-end">
-                <button className="h-5 w-10 text-[#0a0802] m-1 flex justify-center" id={sticky.id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
+                <button className="h-5 w-10 text-[#0a0802] m-1 flex justify-center" id={sticky._id} onClick={handleToggleLike} title={sticky.likes.join('\n')}>{sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{sticky.likes.length}</span></button>
 
                 <strong>{sticky.user}</strong>
             </div>
