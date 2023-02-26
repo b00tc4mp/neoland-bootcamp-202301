@@ -1,21 +1,37 @@
-import stickies from '../data/stickies'
-
 /**
  * Retrieves the user´s stickies.
  * @param {string} userId The user id of the user to retrieve the stickies
+ * @param {function} callback The function to call back with the stickies (or an error)
  * @return {Array} The stickies that belong to the specified user
  */
-function retrieveMyStickies(userId) {
-    const myStickies = []
+function retrieveMyStickies(userId, callback) {
+    const xhr = new XMLHttpRequest()
 
-    for (var i = 0; i < stickies.length; i++) {
-        const sticky = stickies[i]
+    xhr.onload = () => {
+        const { status } = xhr
 
-        if (sticky.user === userId)
-            myStickies.push(sticky)
+        if (status === 500) {
+            const { response } = xhr
+
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            callback(new Error(error))
+
+            return
+        }
+
+        const { response } = xhr
+
+        const stickies = JSON.parse(response)
+
+        callback(null, stickies)
     }
 
-    return myStickies.reverse()
+    xhr.open('GET', 'http://localhost:8080/stickies/user')
+    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.send()
 }
 
 export default retrieveMyStickies

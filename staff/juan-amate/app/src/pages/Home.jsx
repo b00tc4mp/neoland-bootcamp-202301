@@ -9,7 +9,6 @@ function Home(props) {
 
     const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
-    // const (updateText, setUpdateText) = React.useState('')
 
     const handleShowProfile = event => {
         event.preventDefault()
@@ -31,9 +30,15 @@ function Home(props) {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.userId, '', 'public')
+            createSticky(sessionStorage.userId, '', 'public', error => {
+                if (error) {
+                    alert(error.message)
 
-            setListUpdateStamp(Date.now())
+                    return
+                }
+
+                setListUpdateStamp(Date.now())
+            })
         } catch (error) {
             alert(error.message)
         }
@@ -57,11 +62,11 @@ function Home(props) {
         </header>
 
         <main className="bg-blue-50 py-20 min-h-screen">
-            {view === 'list' && <List updateStamp={listUpdateStamp} />}
+            {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile />}
 
-            {view === 'my-list' && <MyList updateStamp={listUpdateStamp} />}
+            {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
         </main>
 
         <footer className="bg-white flex justify-center items-center fixed bottom-0 left-0 w-full">

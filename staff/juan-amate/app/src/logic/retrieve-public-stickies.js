@@ -1,20 +1,37 @@
-import stickies from '../data/stickies'
-
 /**
  * Retrieves the public stickies from all users that publish them
  * 
+ * @param {function} callback The function to call back with stickies (or an error)
  * @return {array} The public stickies
  */
-function retrievePublicStickies() {
-    var publicStickies = []
+function retrievePublicStickies(callback) {
+    const xhr = new XMLHttpRequest()
 
-    for (var i = 0; i < stickies.length; i++) {
-        var sticky = stickies[i]
-        if (sticky.visibility === 'public')
-            publicStickies.push(sticky)
+    xhr.onload = () => {
+        const { status } = xhr
+
+        if (status === 500) {
+            const { response } = xhr
+
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            callback(new Error(error))
+
+            return
+        }
+
+        const { response } = xhr
+
+        const stickies = JSON.parse(response)
+
+        callback(null, stickies)
     }
 
-    return publicStickies.reverse()
+    xhr.open('GET', 'http://localhost:8080/stickies')
+    xhr.send()
 }
 
 export default retrievePublicStickies
+

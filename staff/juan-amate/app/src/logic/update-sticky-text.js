@@ -1,21 +1,30 @@
-import stickies from '../data/stickies'
+function updateStickyText(userId, stickyId, text, callback) {
+    const xhr = new XMLHttpRequest()
 
-function updateStickyText(userId, stickyId, text) {
-    if (!userId) throw new Error('user with id ' + userId + ' not found')
+    xhr.onload = () => {
+        const { status } = xhr
 
-    var foundSticky
+        if (status === 500) {
+            const { response } = xhr
 
-    for (var i = 0; i < stickies.length && !foundSticky; i++) {
-        var sticky = stickies[i]
+            const body = JSON.parse(response)
 
-        if (sticky.id === stickyId) foundSticky = sticky
+            const { error } = body
+
+            callback(new Error(error))
+
+            return
+        }
+
+        callback(null)
     }
 
-    if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
-
-    if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with id ' + userId)
-
-    foundSticky.text = text
+    xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
+    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    const sticky = { text }
+    const json = JSON.stringify(sticky)
+    xhr.send(json)
 }
 
 export default updateStickyText

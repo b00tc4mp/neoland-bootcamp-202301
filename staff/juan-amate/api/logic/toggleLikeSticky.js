@@ -6,11 +6,16 @@ function toggleLikeSticky(userId, stickyId) {
     return stickies.findOne({ _id: new ObjectId(stickyId) })
 
         .then(sticky => {
-            const index = sticky.likes.indexOf(userId)
+            if (!sticky)
+                throw new Error(`sticky  with id ${stickyId} not found`)
+
+            const likes = sticky.likes
+
+            const index = likes.indexOf(userId)
 
             index > -1 ? sticky.likes.splice(index, 1) : sticky.likes.push(userId)
 
-            return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes: sticky.likes } })
+            return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes } })
         })
 }
 
