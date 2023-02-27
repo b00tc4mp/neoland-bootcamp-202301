@@ -2,7 +2,7 @@ import { useState } from "react"
 import unregisterUser from "../logic/unregister-user"
 import updateUserPassword from "../logic/update-user-password"
 
-function Profile(props) {
+function Profile({onUnregisterUser}) {
     console.log('Profile -> render')
 
     const [feedback, setFeedback] = useState({
@@ -57,8 +57,7 @@ function Profile(props) {
                     return
                 }
 
-                delete sessionStorage.userId
-                props.onNavigateToLogin()
+                onUnregisterUser()
             })
         } catch (error) {
             alert(error.message)

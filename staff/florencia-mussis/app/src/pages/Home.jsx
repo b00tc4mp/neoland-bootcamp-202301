@@ -65,8 +65,6 @@ function Home(props) {
         }
     }, [])
 
-    const onNavigateToLogin = () => props.onUnregisterUser() 
-
     return <div className="max-h-md font-['Montserrat']">
         <header className="fixed w-full flex justify-between p-2 bg-purple-300">
             <a onClick={handleShowList} className="w-16" href=""><img className="pluma"
@@ -84,7 +82,7 @@ function Home(props) {
         <main className="flex flex-col items-center">
             {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
-            {view === 'profile' && <Profile onNavigateToLogin={onNavigateToLogin} />}
+            {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
 
             {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
         </main>

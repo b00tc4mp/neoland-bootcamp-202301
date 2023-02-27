@@ -19,12 +19,10 @@ function App() {
         setView('home')
     }
 
-    const onUnregisterUser = () => setView('login')
-
     return <div>
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
         {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />}
-        {view === 'home' && <Home onLogout={handleShowLogin} onUnregisterUser={onUnregisterUser}/>}
+        {view === 'home' && <Home onLogout={handleShowLogin}/>}
     </div>
 }
 
