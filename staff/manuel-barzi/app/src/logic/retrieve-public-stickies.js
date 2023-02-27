@@ -26,7 +26,7 @@ function retrievePublicStickies(callback) {
 
         const stickies = JSON.parse(response)
 
-        callback(null, stickies)
+        callback(null, stickies.reverse())
     }
 
     xhr.open('GET', 'http://localhost:8080/stickies')

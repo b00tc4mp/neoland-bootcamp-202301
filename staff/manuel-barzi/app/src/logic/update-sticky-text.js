@@ -1,19 +1,40 @@
-import stickies from '../data/stickies'
+/**
+ * Updates the sticky text
+ * 
+ * @param {string} userId The user id
+ * @param {string} stickyId The sticky's id to update
+ * @param {string} text The sticky text
+ * @param {function} callback The function to call when the update is complete (or failed)
+ */
+function updateStickyText(userId, stickyId, text, callback) {    
+    const xhr = new XMLHttpRequest()
 
-function updateStickyText(userId, stickyId, text) {    
-    var foundSticky
+    xhr.onload = () => {
+        const { status } = xhr
 
-    for (var i = 0; i < stickies.length && !foundSticky; i++) {
-        var sticky = stickies[i]
+        if (status === 500) {
+            const { response } = xhr
+        
+            const payload = JSON.parse(response)
 
-        if (sticky.id === stickyId) foundSticky = sticky
+            const { error } = payload
+
+            callback(new Error(error))
+
+            return
+        }
+
+        callback(null)
     }
 
-    if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
+    xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
-    if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with userId ' + userId)
+    const payload = { text }
+    const json = JSON.stringify(payload)
 
-    foundSticky.text = text
+    xhr.send(json)
 }
 
 export default updateStickyText

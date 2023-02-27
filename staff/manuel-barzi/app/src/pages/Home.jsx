@@ -24,9 +24,15 @@ function Home(props) {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.userId, '', 'public')
+            createSticky(sessionStorage.userId, '', 'public', error => {
+                if (error) {
+                    alert(error.message)
 
-            setListUpdateStamp(Date.now())
+                    return
+                }
+
+                setListUpdateStamp(Date.now())
+            })
         } catch(error) {
             alert(error.message)
         }

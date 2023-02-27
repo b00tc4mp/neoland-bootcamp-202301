@@ -1,19 +1,40 @@
-import stickies from '../data/stickies'
+/**
+ * Updates the sticky visibility
+ * 
+ * @param {string} userId The user id
+ * @param {string} stickyId The sticky's id to update
+ * @param {string} visibility The sticky visibility
+ * @param {function} callback The function to call when the update is complete (or failed)
+ */
+function updateStickyVisibility(userId, stickyId, visibility, callback) {
+    const xhr = new XMLHttpRequest()
 
-function updateStickyVisibility(userId, stickyId, visibility) {
-    var foundSticky
+    xhr.onload = () => {
+        const { status } = xhr
 
-    for (var i = 0; i < stickies.length && !foundSticky; i++) {
-        var sticky = stickies[i]
+        if (status === 500) {
+            const { response } = xhr
 
-        if (sticky.id === stickyId) foundSticky = sticky
+            const payload = JSON.parse(response)
+
+            const { error } = payload
+
+            callback(new Error(error))
+
+            return
+        }
+
+        callback(null)
     }
 
-    if (!foundSticky) throw new Error('sticky with id ' + stickyId + ' not found')
+    xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/visibility`)
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
-    if (foundSticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with userId ' + userId)
+    const payload = { visibility }
+    const json = JSON.stringify(payload)
 
-    foundSticky.visibility = visibility
+    xhr.send(json)
 }
 
 export default updateStickyVisibility
