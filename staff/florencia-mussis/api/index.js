@@ -6,8 +6,10 @@ const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
+
 const cors = require("cors")
 const { MongoClient } = require('mongodb')
+
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
 const retrieveMyStickies = require('./logic/retrieveMyStickies')
@@ -115,60 +117,60 @@ client.connect ()
 
             createSticky(userId, text, visibility)
                 .then(() => res.status(201).send())
-                .catch(error => res.status(500).send(error.message))
+                .catch(error => res.status(500).json(error.message))
         })
 
-        server.get('/stickies', (req,res) => {
+        server.get('/stickies', (req, res) => { //va req? si, se pone igual
             retrievePublicStickies()
                 .then(stickies => res.status(200).json(stickies))
-                .catch(error => res.status(500).send(error.message))
+                .catch(error => res.status(500).json(error.message))
         })
 
-        server.get('/user/stickies', (req, res) => {
+        server.get('/stickies/user', (req, res) => {
             const userId = req.headers.authorization.slice(7)
 
             retrieveMyStickies(userId)
                 .then(stickies => res.status(200).json(stickies))
-                .catch(error => res.status(500).send(error.message))
+                .catch(error => res.status(500).json(error.message))
         })
 
-        server.patch('/sticky/text/:stickyId', jsonBodyParser, (req, res) => {
+        server.patch('/stickies/:stickyId/text', jsonBodyParser, (req, res) => {
             const { text } = req.body
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
 
             updateStickyText(userId, stickyId, text)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).send(error.message))
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json(error.message))
         })
 
 
-        server.patch('/sticky/visibility/:stickyId', jsonBodyParser, (req, res) => {
+        server.patch('/stickies/:stickyId/visibility', jsonBodyParser, (req, res) => {
             const { visibility } = req.body
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
 
             updateStickyVisibility(userId, stickyId, visibility)
                 .then(() => res.status(201).send())
-                .catch(error => res.status(500).send(error.message))
+                .catch(error => res.status(500).json(error.message))
         })
 
-        server.patch('/sticky/likes/:stickyId', (req, res) => {
+        server.patch('/stickies/:stickyId/likes', (req, res) => {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
 
             toggleLikeSticky(userId, stickyId)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).send(error.message))
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json(error.message))
         })
 
-        server.delete('/sticky/:stickyId', (req, res) => {
+        server.delete('/stickies/:stickyId', (req, res) => {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
 
             deleteSticky(userId, stickyId)
                 .then(() => res.status(204).send())
-                .catch(error => res.status(500).send(error.message))
+                .catch(error => res.status(500).json(error.message))
         })
 
         server.listen(8080, () => console.log('server running on port' + 8080)) 

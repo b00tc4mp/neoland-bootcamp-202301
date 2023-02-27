@@ -4,7 +4,7 @@
  * @param {string} userId The userId the sticky belongs to
  * @param {string} text The text of the sticky
  * @param {string} visibility The visibility of the sticky
- */
+*/
 
 function createSticky(userId, text, visibility){
     const stickies = process.db.collection('stickies')
