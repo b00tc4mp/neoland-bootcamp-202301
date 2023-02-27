@@ -1,6 +1,3 @@
-import createStickyId from '../data/helpers/create-sticky-id'
-import stickies from '../data/stickies'
-
 /**
  * Creates a new sticky in the database
  * 
