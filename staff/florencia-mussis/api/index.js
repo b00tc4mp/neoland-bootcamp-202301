@@ -36,14 +36,9 @@ client.connect ()
 
             const { name, age, email, password } = user  //los datos que escribimos en el cuerpo de insomnia
 
-            registerUser(name, age, email, password, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message})
-                    return
-                }
-
-                res.status(201).send() //los datos se han enviado correctamente y el usuario se ha registrado
-            })
+            registerUser(name, age, email, password)
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).json({ error: error.message}))
         })
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {  //metodo post pq enviamos datos en el body
@@ -51,64 +46,38 @@ client.connect ()
 
             const { email, password } = credentials
 
-            authenticateUser( email, password, (error, userId) => {
-                if (error) {
-                    res.status(500).json({ error: error.message})
-                    return
-                }
-
-                res.status(200).json({ userId })
-            })
+            authenticateUser( email, password)
+                .then(userId => res.status(200).json({ userId }))
+                .catch(error => res.status(500).json({ error: error.message}))
         })
 
 
-        server.get('/users/:userId', (req, res) => {
-            const userId = req.params.userId //params cuando se lo envio en la ruta, van los :
+        server.get('/users', (req, res) => {
+            const userId = req.headers.authorization.slice(7) //params cuando se lo envio en la ruta, van los :
 
-            retrieveUser(userId, (error, user) => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.json(user) //devuelve el usuario si va bien convertido en json
-            })
+            retrieveUser(userId)
+                .then(user => res.json(user))
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
-        server.delete('/users/:userId',jsonBodyParser, (req, res) => { // jsonBodyParser traduce los datos q le enviamos
-            const userId = req.params.userId
-
+        server.delete('/users',jsonBodyParser, (req, res) => { // jsonBodyParser traduce los datos q le enviamos
+            const userId = req.headers.authorization.slice(7)
             const { password } = req.body //para extraer la propiedad password de body
             // const password = req.body.password
 
-            unregisterUser(userId, password, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message }) //devuelve el error como json
-
-                    return
-                }
-                res.status(204).send()
-            })
+            unregisterUser(userId, password)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message}))  
         })
 
 
-        server.patch('/users/:userId', jsonBodyParser, (req, res) => { //patch es actualizar
+        server.patch('/users', jsonBodyParser, (req, res) => { //patch es actualizar
+            const userId = req.headers.authorization.slice(7)
+            const { currentPassword, newPassword, newPasswordRepeat } = req.body
 
-            const userId = req.params.userId
-
-            const credentials = req.body
-
-            const { currentPassword, newPassword, newPasswordRepeat } = credentials
-
-            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message})
-
-                    return
-                }
-                res.status(204).send()
-            })
+            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message}))
         })
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
