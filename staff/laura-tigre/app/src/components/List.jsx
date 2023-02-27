@@ -9,11 +9,11 @@ import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
 
 function List({ listUpdateStamp }) {
-  const [updateStamp, setUpdateStamp] = useState(Date.now())
+ 
 
   const [stickies, setStickies] = useState([])
 
-  useEffect(() => {
+  const loadlist = ()=>{
     try {
       retrievePublicStickies((error, stickies) => {
 
@@ -29,7 +29,11 @@ function List({ listUpdateStamp }) {
     } catch (error) {
       alert(error.message)
     }
-  }, [listUpdateStamp, updateStamp])
+  }
+
+  useEffect(() => {
+   loadlist()
+  }, [listUpdateStamp])
 
 
   const handleEditText = (event) => {
@@ -55,7 +59,7 @@ function List({ listUpdateStamp }) {
           return
         }
         
-        setUpdateStamp(Date.now())
+       loadlist()
       })
     } catch (error) {
       alert(error.message)
@@ -70,7 +74,7 @@ function List({ listUpdateStamp }) {
           alert(error.message)
           return
         }
-        setUpdateStamp(Date.now())
+       loadlist()
 
       })
     } catch (error) {
@@ -79,13 +83,13 @@ function List({ listUpdateStamp }) {
   }
   const handleLike = event => {
     try {
-      toggleLikeSticky(sessionStorage.userId, event.currentTarget.id,error=>{
+      toggleLikeSticky(sessionStorage.userId, event.currentTarget.id, error=>{
 
         if(error){
           alert(error.message)
           return
         }
-        setUpdateStamp(Date.now())
+      loadlist()
       })
     } catch (error) {
       alert(error.message)
@@ -95,12 +99,12 @@ function List({ listUpdateStamp }) {
 
   return <ul className="flex flex-col items-center h-screen gap-4 m-3">
     {stickies.map(sticky =>
-      <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-4 border-[#6b7280] " key={sticky._id}>
+      <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] " key={sticky._id}>
         <div className="flex ">
           {sticky.user === sessionStorage.userId &&
-            <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button>}
+            <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button>}
           {sticky.user === sessionStorage.userId &&
-            <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleDelete}>X</button>}
+            <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleDelete}>X</button>}
         </div>
         <p className="w-[35ch] text-left" id={sticky._id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
           {sticky.text}
@@ -108,7 +112,7 @@ function List({ listUpdateStamp }) {
 
         <div className="flex" >
           <button className="h-5 w-5" onClick={handleLike} id={sticky._id} title={sticky.likes.join('\n')} >
-            {sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : < HeartIconOutline className='h-4 w-4 text-black-500' />}</button>
+            {sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-5 w-5 text-red-500" /> : < HeartIconOutline className='h-5 w-5 text-black-500' />}</button>
           <p>{sticky.likes.length}</p>
 
         </div>

@@ -1,8 +1,8 @@
-import{useState} from 'react'
+import { useState } from 'react'
 import updateUserPassword from '../logic/update-user-password'
+import unregisterUser from '../logic/unregister-user'
 
-
-function Profile() {
+function Profile({onUnregisterUser}) {
   console.log('Profile -> render')
 
   const [feedback, setFeedback] = useState({
@@ -31,6 +31,7 @@ function Profile() {
           message: 'password update successfully',
           type: 'success'
         })
+
       })
 
 
@@ -43,8 +44,27 @@ function Profile() {
     }
   }
 
+  const handleUnregisterUser = (event) => {
+    event.preventDefault()
+
+    const password = event.target.password.value
+    try {
+      unregisterUser(sessionStorage.userId, password, error => {
+        if (error) {
+          alert(error.message)
+          return
+        }
+        // delete sessionStorage.userId
+        // onNavigateToLogin()
+        onUnregisterUser()
+      })
+    } catch (error) {
+      alert(error.message)
+    }
+  }
   return <div className="profile-panel">
-    <form onSubmit={handleChangePassword} className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3">
+    <form onSubmit={handleChangePassword} className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3 rounded-lg">
+    <legend className="text-xl">CHANGE PASSWORD</legend>
       <input
         className="bg-[#d6d3d1] border-4 hover:border-[#facc15] "
         type="password"
@@ -66,6 +86,20 @@ function Profile() {
       <button className=" bg-[#facc15] h-7 w-40" type="submit">Update password</button>
     </form>
     <p className={"feedback feedback-" + feedback.type}>{feedback.message}</p>
+
+
+
+    <form onSubmit={handleUnregisterUser} className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3 rounded-lg">
+    <legend className="text-xl">DELETE USER</legend>
+      <input
+        className="bg-[#d6d3d1] border-4 hover:border-[#facc15] "
+        type="password"
+        name="password"
+        placeholder=" your password" />
+
+      <button className=" bg-[#facc15] h-7 w-40" type="submit">Delete user</button>
+    </form>
+
   </div>
 }
 

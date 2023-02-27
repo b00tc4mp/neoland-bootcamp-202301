@@ -3,6 +3,7 @@
  * toggles the likeability of specific sticky
  * @param {string } userId the user email
  * @param {string} stickyId the sticky identifier
+ * @param {function} callback the callback
  */
 function toggleLikeSticky(userId, stickyId, callback){
     const xhr = new XMLHttpRequest()

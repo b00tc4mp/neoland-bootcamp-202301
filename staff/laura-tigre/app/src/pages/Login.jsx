@@ -36,7 +36,7 @@ function Login(props) {
 
     return <div className="flex flex-col items-center justify-center font-['Montserrat']">
         <main>
-            <form className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3" onSubmit={handleSubmit}>
+            <form className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3 rounded-lg" onSubmit={handleSubmit}>
                 <img className="ml-3" src="images/hello!.png" alt="logo empresa" />
                 <legend className="text-2xl">My account</legend>
 

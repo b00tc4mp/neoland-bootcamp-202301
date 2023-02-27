@@ -4,6 +4,9 @@
  * @param {string} email The user the sticky belongs to
  * @param {string} text The text of the sticky
  * @param {string} visibility The visibility of the sticky
+ * @param {function} callback the callback
+    
+ }}
  */
 function createSticky(userId, text, visibility, callback) {
     const xhr = new XMLHttpRequest()
@@ -30,8 +33,8 @@ function createSticky(userId, text, visibility, callback) {
   xhr.open('POST', 'http://localhost:8080/stickies')
   xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
   xhr.setRequestHeader('Content-Type', 'application/json')
-  const sticky= {text, visibility}
-  const json = JSON.stringify(sticky)
+  const payload= {text, visibility}
+  const json = JSON.stringify(payload)
   xhr.send(json)
 
 }

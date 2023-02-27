@@ -35,14 +35,15 @@ client.connect()
             const { name, age, email, password } = user
 
 
-            registerUser(name, age, email, password)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            registerUser(name, age, email, password, error => {
+                if (error) {
+                    res.status(500).json({ error: error.message })
+                    return
+                }
+                res.status(201).send()
 
-
-
+            })
         })
-
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {
 
@@ -50,53 +51,75 @@ client.connect()
 
             const { email, password } = credentials
 
-            authenticateUser(email, password)
-                .then(userId => res.status(200).json({ userId }))
-                .catch(error => res.status(500).json({ error: error.message }))
+            authenticateUser(email, password, (error, userId) => {
+
+                if (error) {
+                    res.status(500).json({ error: error.message })
+
+                    return
+                }
+
+                res.status(200).json({ userId })
+            })
+        })
+
+        server.get('/users/:userId', (req, res) => {
+            const { params: { userId } } = req
+            // const {userId} = req.params
+            // const userId = req.params.userId
+
+
+
+            retrieveUser(userId, (error, user) => {
+
+                if (error) {
+                    res.status(500).json({ error: error.message })
+
+                    return
+
+                }
+                res.json(user)
+            })
 
         })
 
-
-        server.get('/users', (req, res) => {
-            const userId = req.headers.authorization.slice(7)
-            
-            retrieveUser(userId)
-
-            .then(user => res.json(user))
-            .catch(error => res.status(500).json({ error: error.message }))
-    
-        })
-
-
-
-        server.delete('/users', jsonBodyParser, (req, res) => {
-            const userId = req.headers.authorization.slice(7)
+        server.delete('/users/:userId', jsonBodyParser, (req, res) => {
+            // TODO unregister user
+            const userId = req.params.userId
             const { password } = req.body
 
-            unregisterUser(userId, password)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
-        })
-        
-        
+            unregisterUser(userId, password, error => {
+                if (error) {
+                    res.status(500).json({ error: error.message })
 
-        server.patch('/users', jsonBodyParser, (req, res) => {
+                    return
+
+                }
+                res.status(204).send()
+            })
+        })
+
+        server.patch('/users/:userId', jsonBodyParser, (req, res) => {
             // TODO update user password
-            const userId = req.headers.authorization.slice(7)
+            const userId = req.params.userId
             const credentials = req.body
 
             const { currentPassword, newPassword, newPasswordRepeat } = credentials
 
 
 
-            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, error => {
 
+                if (error) {
+                    res.status(500).json({ error: error.message })
+
+                    return
+
+                }
+                res.status(204).send()
+            })
 
         })
-
-
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
             const userId = req.headers.authorization.slice(7)
