@@ -12,10 +12,9 @@ import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 function List({ listUpdateStamp }) {
     console.log('List ->render')
 
-    const [updateStamp, setUpdateStamp] = useState(Date.now())
     const [stickies, setStickies] = useState([])
 
-    useEffect(() => {
+    const loadList = () => {
         try {
             retrievePublicStickies((error, stickies) => {
                 if (error) {
@@ -24,12 +23,16 @@ function List({ listUpdateStamp }) {
                     return
                 }
 
-                setStickies(stickies.reverse())
+                setStickies(stickies)
             })
         } catch (error) {
             alert(error.message)
         }
-    }, [listUpdateStamp, updateStamp])
+    }
+
+    useEffect(() => { //se pinta solo al cargar el componente si quiero que se refresque debo indicarlo dentro de los []
+       loadList()
+    }, [listUpdateStamp])
 
 
     const handleUpdateText = (event) => {
@@ -54,7 +57,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -69,7 +72,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -84,7 +87,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)

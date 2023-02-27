@@ -4,6 +4,7 @@
  * @param {string} userId The userId the sticky belongs to
  * @param {string} text The text of the sticky
  * @param {string} visibility The visibility of the sticky
+ *  * @param {function} callback The function  to call when the 
  */
 
 function createSticky(userId, text, visibility, callback) { 
@@ -12,7 +13,7 @@ function createSticky(userId, text, visibility, callback) {
     xhr.onload = () => {
         const { status } = xhr
 
-        if (status === 500) {
+        if (status === 500) { //miro el status
             const { response } = xhr
 
             const body = JSON.parse(response) //CONVIERTE LA RTA EN BODY PARSE

@@ -3,13 +3,14 @@ import createSticky from "../logic/create-sticky"
 import List from '../components/List'
 import Profile from '../components/Profile'
 import MyList from "../components/MyList"
+import retrieveUser from "../logic/retrieve-user"
 
 function Home(props) {
     console.log('Home -> render')
 
     const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now()) //cuando necesitamos que se actualice y pinte, lo asociamos a date now
-
+    const [user, setUser] = useState({})
 
     const handleShowProfile = event => {
         event.preventDefault()
@@ -43,10 +44,28 @@ function Home(props) {
     }
 
     const handleLogout = () => {
-        delete sessionStorage.email
+        delete sessionStorage.userId
 
         props.onLogout()
     }
+
+    useEffect(() => {
+        try {
+            retrieveUser(sessionStorage.userId, (error, user) => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setUser(user)
+            })
+        } catch(error) {
+            alert(error.message)
+        }
+    }, [])
+
+    const onNavigateToLogin = () => props.onUnregisterUser() 
 
     return <div className="max-h-md font-['Montserrat']">
         <header className="fixed w-full flex justify-between p-2 bg-purple-300">
@@ -57,7 +76,7 @@ function Home(props) {
 
             <nav className="flex items-center gap-5">
                 <a onClick={handleShowMyList} className="my-list-link font-montserrat" href="">My stickies</a>
-                <a onClick={handleShowProfile} className="profile-link font-montserrat" href="">Profile</a>
+                <a onClick={handleShowProfile} className="profile-link font-montserrat" href="">{user.name}</a>
                 <button onClick={handleLogout} className="bg-purple-300 border-2 rounded-md text-white w-20 drop-shadow-sm font-montserrat">Logout</button>
             </nav>
         </header>
@@ -65,7 +84,7 @@ function Home(props) {
         <main className="flex flex-col items-center">
             {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
-            {view === 'profile' && <Profile />}
+            {view === 'profile' && <Profile onNavigateToLogin={onNavigateToLogin} />}
 
             {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
         </main>

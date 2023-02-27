@@ -2,8 +2,6 @@ import { useState } from "react"
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
-import './data/stickies.populate'
-
 
 function App() {
 
@@ -21,10 +19,12 @@ function App() {
         setView('home')
     }
 
+    const onUnregisterUser = () => setView('login')
+
     return <div>
         {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
         {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />}
-        {view === 'home' && <Home onLogout={handleShowLogin} />}
+        {view === 'home' && <Home onLogout={handleShowLogin} onUnregisterUser={onUnregisterUser}/>}
     </div>
 }
 
