@@ -4,6 +4,8 @@ const checkFileExists = require('../utils/checkFileExists')
 const { writeFile } = require('fs')
 const unregisterUser = require('./unregisterUser')
 
+// TODO update
+
 describe('unregisterUser', () => {
     // case 0
     /*

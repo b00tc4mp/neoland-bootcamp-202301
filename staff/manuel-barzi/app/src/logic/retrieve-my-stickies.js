@@ -3,7 +3,6 @@
  * 
  * @param {string} userId The userId of the user to retrieve the stickies from
  * @param {function} callback The function to call back with the stickies (or an error)
- * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId, callback) {
     const xhr = new XMLHttpRequest()

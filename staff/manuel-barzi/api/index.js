@@ -47,37 +47,21 @@ client.connect()
                 .catch(error => res.status(500).json({ error: error.message }))
         })
 
-        server.get('/users/:userId', (req, res) => {
-            // TODO retrieve user
-            const userId = req.params.userId
+        server.get('/users', (req, res) => {
+            const userId = req.headers.authorization.slice(7)
 
-            retrieveUser(userId, (error, user) => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.json(user)
-            })
+            retrieveUser(userId)
+                .then(user => res.json(user))
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
-        server.delete('/users/:userId', jsonBodyParser, (req, res) => {
-            // TODO unregister user
-            //const userId = req.params.userId
-            const { userId } = req.params
-            //const password = req.body.password
+        server.delete('/users', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
             const { password } = req.body
 
-            unregisterUser(userId, password, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.status(204).send()
-            })
+            unregisterUser(userId, password)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
         server.patch('/users', jsonBodyParser, (req, res) => {

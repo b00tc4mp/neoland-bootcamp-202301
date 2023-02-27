@@ -2,7 +2,6 @@
  * Retrieves the public stickies from all users that publish them
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
- * @return {Array} The public stickies
  */
 function retrievePublicStickies(callback) {
     const xhr = new XMLHttpRequest()
