@@ -32,15 +32,9 @@ client.connect()
 
             const { name, age, email, password } = user
 
-            registerUser(name, age, email, password, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.status(201).send()
-            })
+            registerUser(name, age, email, password)
+                .then(() => res.status(201).send())
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {
@@ -48,15 +42,9 @@ client.connect()
 
             const { email, password } = credentials
 
-            authenticateUser(email, password, (error, userId) => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.status(200).json({ userId })
-            })
+            authenticateUser(email, password)
+                .then(userId => res.status(200).json({ userId }))
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
         server.get('/users/:userId', (req, res) => {
@@ -92,20 +80,13 @@ client.connect()
             })
         })
 
-        server.patch('/users/:userId', jsonBodyParser, (req, res) => {
-            // TODO update user password
-            const { userId } = req.params
+        server.patch('/users', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
             const { currentPassword, newPassword, newPasswordRepeat } = req.body
 
-            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, error => {
-                if (error) {
-                    res.status(500).json({ error: error.message })
-
-                    return
-                }
-
-                res.status(204).send()
-            })
+            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message }))
         })
 
         server.post('/stickies', jsonBodyParser, (req, res) => {

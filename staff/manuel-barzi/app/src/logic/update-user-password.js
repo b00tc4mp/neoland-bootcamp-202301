@@ -28,7 +28,8 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         callback(null)
     }
 
-    xhr.open('PATCH', 'http://localhost:8080/users/' + userId)
+    xhr.open('PATCH', 'http://localhost:8080/users')
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { currentPassword, newPassword, newPasswordRepeat }
