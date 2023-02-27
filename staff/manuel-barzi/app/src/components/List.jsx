@@ -10,10 +10,9 @@ import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 function List({ updateStamp }) {
     console.log('List -> render')
 
-    const [updateStamp2, setUpdateStamp2] = useState(Date.now())
     const [stickies, setStickies] = useState([])
 
-    useEffect(() => {
+    const loadList = () => {
         try {
             retrievePublicStickies((error, stickies) => {
                 if (error) {
@@ -27,7 +26,11 @@ function List({ updateStamp }) {
         } catch (error) {
             alert(error.message)
         }
-    }, [updateStamp, updateStamp2])
+    }
+
+    useEffect(() => {
+        loadList()
+    }, [updateStamp])
 
     const handleUpdateText = event => {
         try {
@@ -52,7 +55,7 @@ function List({ updateStamp }) {
                     return
                 }
 
-                setUpdateStamp2(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -68,7 +71,7 @@ function List({ updateStamp }) {
                     return
                 }
 
-                setUpdateStamp2(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -84,7 +87,7 @@ function List({ updateStamp }) {
                     return
                 }
 
-                setUpdateStamp2(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)

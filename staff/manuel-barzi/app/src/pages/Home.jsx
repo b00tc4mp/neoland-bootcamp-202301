@@ -65,7 +65,7 @@ function Home(props) {
 
             {view === 'profile' && <Profile />}
 
-            {view === 'my-list' && <MyList />}
+            {view === 'my-list' && <MyList updateStamp={listUpdateStamp} />}
         </main>
         <footer className="fixed bottom-0 w-full flex justify-center">
             <button onClick={handleAdd} className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">+</button>
