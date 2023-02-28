@@ -17,7 +17,7 @@ function unregisterUser(userId, password) {
                         _id: new ObjectId(userId)
                     })
                 })
-        })º
+        })
 }
 
 module.exports = unregisterUser

@@ -91,12 +91,13 @@ function MyList({ listUpdateStamp }) {
     }
 
 
-    return <ul className="flex flex-col items-center h-screen pt-20 gap-4 m-3">
+    return <ul className="flex flex-col items-center gap-4 m-3">
         {stickies.map(sticky =>
             <li className="p-4 w-[50ch] border-2 flex flex-col items-end rounded-lg border-solid" key={sticky._id}>
                 <div>
-                    <button className= "border-solid border-2 border-[black] w-16 h-6 text-center m-1" id={sticky.visibility === 'public' ? 'classPublic ' : 'classPrivate'} id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>     
-                    <button className="border-solid border-2 border-[black] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleDeleteSticky}>X</button>
+                    <button className={"text-white uppercase rounded-md border-white py-1 px-1 text-sm items-center" + (sticky.visibility === 'public' ? ' bg-green-500' : ' bg-red-500')} id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>
+ 
+                    <button className="border-2 border-[black] w-7 h-7 text-center m-1 text-black uppercase rounded-md text-sm" id={sticky._id} onClick={handleDeleteSticky}>X</button>
                 </div>
                 <p className="w-[45ch] text-left" id={sticky._id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
 

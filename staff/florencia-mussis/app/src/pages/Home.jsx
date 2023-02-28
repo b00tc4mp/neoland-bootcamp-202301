@@ -79,7 +79,7 @@ function Home(props) {
             </nav>
         </header>
 
-        <main className="flex flex-col items-center">
+        <main className="py-20">
             {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
