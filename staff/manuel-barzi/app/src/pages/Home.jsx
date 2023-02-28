@@ -68,8 +68,8 @@ function Home(props) {
         }
     }, [])
 
-    return <div className="bg-black h-screen">
-        <header className="flex justify-between p-2">
+    return <div className="bg-black h-full">
+        <header className="fixed top-0 w-full flex justify-between p-2 bg-[black]">
             <a onClick={handleShowList} className="logo-link" href=""><img className="w-10" src="images/logo.png" alt="Chachi Games" /></a>
 
             <nav className="flex items-center gap-5">
@@ -78,14 +78,14 @@ function Home(props) {
                 <button onClick={handleLogout} className="logout-button border-[2px] border-[gold] text-[gold] p-1 font-press">Logout</button>
             </nav>
         </header>
-        <main className="home-main">
+        <main className="py-16">
             {view === 'list' && <List updateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile />}
 
             {view === 'my-list' && <MyList updateStamp={listUpdateStamp} />}
         </main>
-        <footer className="fixed bottom-0 w-full flex justify-center">
+        <footer className="fixed bottom-0 w-full flex justify-center bg-[black]">
             <button onClick={handleAdd} className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">+</button>
         </footer>
     </div>
