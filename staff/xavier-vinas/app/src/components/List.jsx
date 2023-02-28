@@ -7,13 +7,12 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
-function List({ listUpdateStamp }) {
+function List({ updateStamp }) {
     console.log('List -> render')
 
-    const [updateStamp, setUpdateStamp] = useState(Date.now())
     const [stickies, setStickies] = useState([])
 
-    useEffect(() => {
+    const loadList = () => {
         try {
             retrievePublicStickies((error, stickies) => {
                 if (error) {
@@ -27,7 +26,12 @@ function List({ listUpdateStamp }) {
         } catch (error) {
             alert(error.message)
         }
-    }, [listUpdateStamp, updateStamp])
+
+    }
+
+    useEffect(() => {
+       loadList()
+    }, [updateStamp])
 
     const handleUpdateText = event => {
         try {
@@ -51,7 +55,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+              loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -66,7 +70,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+               loadList()
             })
         } catch (error) {
             alert(error.message)
@@ -81,7 +85,7 @@ function List({ listUpdateStamp }) {
 
                     return
                 }
-                setUpdateStamp(Date.now())
+                loadList()
             })
         } catch (error) {
             alert(error.message)

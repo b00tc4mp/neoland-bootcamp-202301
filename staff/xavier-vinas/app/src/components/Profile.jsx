@@ -1,7 +1,9 @@
 import { useState } from "react"
+import unregisterUser from "../logic/unregisterUser"
 import updateUserPassword from "../logic/update-user-password"
 
-function Profile() {
+
+function Profile(props) {
 
     const [feedback, setFeedback] = useState({
         message: "",
@@ -38,14 +40,58 @@ function Profile() {
         }
     }
 
-    return <div className="mx-12 bg-neutral-300   ">
-        <form className="py-10 gap-5 rounded-lg border-double border-4 border-neutral-400  flex flex-col items-center" onSubmit={handleChangePassword}>
-            <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="currentPassword" placeholder="current password" />
-            <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPassword" placeholder="new password" />
-            <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPasswordConfirm" placeholder="confirm new password" />
-            <button type="submit">Update password</button>
+    const handleDeleteUser = event => {
+        event.preventDefault()
+
+        const password = event.target.password.value
+        const userId = sessionStorage.userId
+        
+
+        try {
+            unregisterUser(userId,password, error => {
+                if (error) {
+                    setFeedback({
+                        message: error.message,
+                        type: "error"
+                    })
+                    return
+                }
+                delete sessionStorage.userId
+                props.onNavigateToLogin()
+
+              
+                setFeedback({
+                    message: "user deleted successfully",
+                    type: "success"
+                })
+            })
+
+        } catch (error) {
+
+            setFeedback({
+                message: error.message,
+                type: "error"
+            })
+        }
+
+    }
+
+return <div className="mx-12 bg-neutral-300   ">
+    <form className="py-10 gap-5 rounded-lg border-double border-4 border-neutral-400  flex flex-col items-center" onSubmit={handleChangePassword}>
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="currentPassword" placeholder="current password" />
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPassword" placeholder="new password" />
+        <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPasswordConfirm" placeholder="confirm new password" />
+        <button type="submit">Update password</button>
+    </form>
+    <div className="mx-12 bg-neutral-300" >
+        <form className="py-10 gap-5 rounded-lg   border-neutral-400  flex flex-col items-center" onSubmit={handleDeleteUser}>
+            <input className="shadow-lg shadow-black p-1 rounded-full" type="password" name="password" placeholder="your password" />
+            <button type="submit">Delete Account</button>
+
+
         </form>
-        <p className={"feedback feedback-" + feedback.type}>{feedback.message}</p>
     </div>
+    <p className={"feedback feedback-" + feedback.type}>{feedback.message}</p>
+</div>
 }
 export default Profile

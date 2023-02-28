@@ -1,7 +1,6 @@
 
-function updateStickyVisibility(userId, stickyId, visibility, callback) {
-
-    const xhr = new XMLHttpRequest()
+function unregisterUser(userId, password, callback) {
+    const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
         const { status } = xhr
@@ -16,18 +15,21 @@ function updateStickyVisibility(userId, stickyId, visibility, callback) {
             callback(new Error(error))
 
             return
-
         }
 
         callback(null)
     }
-    xhr.open("PATCH", `http://localhost:8080/stickies/${stickyId}/visibility`)
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+
+    xhr.open("DELETE", "http://localhost:8080/users")
+    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const sticky = { visibility }
-    
-    const json = JSON.stringify(sticky)
+    const user = { password }
+    const json = JSON.stringify(user)
+
     xhr.send(json)
+
 }
-export default updateStickyVisibility
+
+export default unregisterUser
+

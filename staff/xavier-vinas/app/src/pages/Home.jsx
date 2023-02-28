@@ -1,13 +1,16 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import createSticky from "../logic/create-sticky"
 import List from "../components/List"
 import Profile from "../components/Profile"
 import MyList from "../components/MyList"
+import retrieveUser from "../logic/retrieve-user"
 
 
 function Home(props) {
     const [view, setView] = useState("list")
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
+    const [user, setUser] = useState({})
+
 
 
     const handleShowProfile = event => {
@@ -52,13 +55,35 @@ function Home(props) {
         props.onLogout()
     }
 
+    useEffect(() => {
+        try {
+            retrieveUser(sessionStorage.userId, (error, user) => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setUser(user)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }, [])
+
+    const onNavigateToLogin = () => {
+        props.onUnregisterUser()
+
+    }
+
+
     return <div className="max-h-md" >
         <header className="" >
 
             <nav className="flex justify-between items-center " >
                 <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png" alt=""></img></a>
                 <a onClick={handleShowMyList} className="text-2xl font-black  underline" href="">My Stickies</a>
-                <a onClick={handleShowProfile} className="text-2xl font-black  underline" href="">Profile</a>
+                <a onClick={handleShowProfile} className="text-2xl font-black  underline" href="">{user.name}</a>
                 <button onClick={handleLogout} className="border-[2px] border-[black] text-[black] p-3 rounded-full text-2xl">logout</button>
 
             </nav>
@@ -69,7 +94,7 @@ function Home(props) {
 
             {view === "list" && <List listUpdateStamp={listUpdateStamp} />}
 
-            {view === "profile" && <Profile />}
+            {view === "profile" && <Profile onNavigateToLogin ={onNavigateToLogin} />}
 
             {view === "my-list" && <MyList listUpdateStamp={listUpdateStamp} />}
         </main>
