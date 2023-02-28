@@ -1,5 +1,6 @@
 import{useState} from 'react'
 import authenticateUser from '../logic/authenticate-user'
+import Button from '../library/Button'
 
 function Login(props) {
     console.log('Login -> render')
@@ -53,7 +54,8 @@ function Login(props) {
                  </div>
 
                  <div>
-                    <button className=" bg-[#facc15] h-7 w-20" type="submit">login</button>
+                    {/* <button className=" bg-[#facc15] h-7 w-20" type="submit">login</button> */}
+                    <Button type= "submit">login</Button>
                 </div>
             </form>
             <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedBack}</p>

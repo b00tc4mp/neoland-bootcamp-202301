@@ -1,5 +1,6 @@
 import{ useState} from 'react'
 import registerUser from '../logic/register-user'
+import Button from '../library/Button'
 
 function Register(props) {
     console.log('Register -> render')
@@ -56,7 +57,8 @@ function Register(props) {
           </div>
           </div>
           <div>
-          <button className=" bg-[#facc15] h-7 w-20" type="submit">Sign in</button>
+          {/* <button className=" bg-[#facc15] h-7 w-20" type="submit">Sign in</button> */}
+          <Button type='submit'>Sing in</Button>
         </div>
 
       </form>

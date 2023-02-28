@@ -1,5 +1,5 @@
 const {ObjectId} =require('mongodb')
-function updateUserEmail(userId, password,newEmail) {
+function updateUserEmail(userId, password, newEmail) {
 
        const users= process.db.collection('users')
     

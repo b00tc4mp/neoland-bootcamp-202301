@@ -81,7 +81,7 @@ client.connect()
         
         
 
-        server.patch('/users', jsonBodyParser, (req, res) => {
+        server.patch('/users/updatePassword', jsonBodyParser, (req, res) => {
             // TODO update user password
             const userId = req.headers.authorization.slice(7)
             const credentials = req.body

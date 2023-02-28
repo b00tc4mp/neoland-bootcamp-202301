@@ -97,7 +97,7 @@ function List({ listUpdateStamp }) {
     }
   }
 
-  return <ul className="flex flex-col items-center h-screen gap-4 my-8 ">
+  return <ul className="flex flex-col items-center gap-4 py-10 ">
     {stickies.map(sticky =>
       <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] " key={sticky._id}>
         <div className="flex ">

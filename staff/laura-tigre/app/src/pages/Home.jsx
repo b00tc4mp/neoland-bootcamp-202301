@@ -66,7 +66,7 @@ function Home(props) {
 
 
   return <div className="max-h-md font-['Montserrat']">
-    <header className="flex justify-between items-center bg-[#d1d5db] ">
+    <header className="flex justify-between items-center bg-[#d1d5db] fixed top-0 w-full">
       <a onClick={handleShowList} href="">
         <img className="w-20" src="images/hello!.png" alt="logo" />
       </a>
@@ -78,7 +78,7 @@ function Home(props) {
       </nav>
     </header>
 
-    <main className="flex flex-col items-center">
+    <main className="py-20 ">
       {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
       {view === 'profile' && <Profile onUnregisterUser={handleLogout}/>}
