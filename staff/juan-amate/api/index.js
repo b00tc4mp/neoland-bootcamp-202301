@@ -37,9 +37,13 @@ client.connect()
 
             const { name, age, email, password } = user
 
-            registerUser(name, age, email, password)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(201).json({ error: error.message }))
+            try {
+                registerUser(name, age, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {
@@ -47,9 +51,13 @@ client.connect()
 
             const { email, password } = credentials
 
-            authenticateUser(email, password)
-                .then(userId => res.status(200).json({ userId }))
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                authenticateUser(email, password)
+                    .then(userId => res.status(200).json({ userId }))
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.get('/users', (req, res) => {
@@ -64,9 +72,13 @@ client.connect()
             const userId = req.headers.authorization.slice(7)
             const { password } = req.body
 
-            unregisterUser(userId, password)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                unregisterUser(userId, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.patch('/users/password', jsonBodyParser, (req, res) => {
@@ -87,9 +99,13 @@ client.connect()
             const userId = req.headers.authorization.slice(7)
             const { newEmail, password } = req.body
 
-            updateUserEmail(userId, newEmail, password)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                updateUserEmail(userId, newEmail, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.post('/stickies', jsonBodyParser, (req, res) => {

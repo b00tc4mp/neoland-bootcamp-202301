@@ -70,29 +70,29 @@ function Home({ onLogout, onUnregisterUser }) {
         }
     }, [])
 
-    return <div className="bg-white h-screen">
+    return <Container className="h-screen bg-blue-50">
         <header className="flex justify-between p-2 bg-white fixed top-0 left-0 w-full">
             <a onClick={handleShowList} className="logo-link" href=""><img className="w-16" src="images/mylogo.png" alt="logo" /></a>
 
             <nav className="flex items-center gap-2">
                 <a onClick={handleShowMyList} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href="">My stickies</a>
                 <a onClick={handleShowProfile} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href="">{user.name}</a>
-                <button onClick={handleLogout} className="bg-blue-600 text-white font-quicksand border border-gray-400 p-1 rounded-md pointer">Logout</button>
+                <Button onClick={handleLogout} >Logout</Button>
             </nav>
         </header>
 
-        <main className="bg-blue-50 py-20 min-h-screen">
+        <Container className="bg-blue-50 w-full py-20">
             {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
 
             {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
-        </main>
+        </Container>
 
         <footer className="bg-white flex justify-center items-center fixed bottom-0 left-0 w-full">
             {view !== 'profile' && <Button onClick={handleAdd}>+</Button>}
         </footer>
-    </div>
+    </Container>
 }
 
 export default Home
