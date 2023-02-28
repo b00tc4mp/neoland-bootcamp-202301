@@ -2,12 +2,11 @@
  * Updates the user password
  * 
  * @param {string} userId The userId
- * @param {string} currentPassword The user current password
- * @param {string} newPassword The user new password
- * @param {string} newPasswordConfirm The confirmation of the new password
- * @param {function} callback The callback
+ * @param {string} newEmail The user new email
+ * @param {string} password The user password
+ * @param {function} callback The function to call when the update is complete (or fails)
  */
-function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
+function updateUserEmail(userId, newEmail, password, callback) {
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
@@ -28,13 +27,13 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         callback(null)
     }
 
-    xhr.open('PATCH', 'http://localhost:8080/users/password',)
+    xhr.open('PATCH', 'http://localhost:8080/users/email',)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const payload = { currentPassword, newPassword, newPasswordRepeat }
+    const payload = { newEmail, password }
     const json = JSON.stringify(payload)
     xhr.send(json)
 }
 
-export default updateUserPassword
+export default updateUserEmail

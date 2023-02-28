@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import authenticateUser from '../logic/authenticate-user'
+import Button from '../library/Button'
 
 function Login(props) {
     console.log('Login -> render')
@@ -42,7 +43,8 @@ function Login(props) {
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="email" placeholder="e-mail" name="email" />
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="password" placeholder="password" name="password" />
 
-                <button className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1" type="submit">Login</button>
+                {/* <button className="font-press border-[2px] border-[gold] text-[gold] p-1" type="submit">Login</button> */}
+                <Button type="submit">Login</Button>
             </form>
             <p className="text-[red] font-odibee">{feedback}</p>
             <p className="text-[gold] font-odibee">or <a className="underline" href="" onClick={handleNavigateToRegister}>Register</a></p>

@@ -5,6 +5,7 @@ const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
+const updateUserEmail = require('./logic/updateUserEmail')
 const cors = require('cors')
 const { MongoClient } = require('mongodb')
 const createSticky = require('./logic/createSticky')
@@ -14,6 +15,7 @@ const updateStickyText = require('./logic/updateStickyText')
 const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
+
 
 const client = new MongoClient('mongodb://127.0.0.1:27017')
 
@@ -64,11 +66,33 @@ client.connect()
                 .catch(error => res.status(500).json({ error: error.message }))
         })
 
-        server.patch('/users', jsonBodyParser, (req, res) => {
+        server.patch('/users/password', jsonBodyParser, (req, res) => {
             const userId = req.headers.authorization.slice(7)
             const { currentPassword, newPassword, newPasswordRepeat } = req.body
 
-            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+            try {
+                updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
+        })
+
+        server.patch('/users/email', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { newEmail, password } = req.body
+
+            updateUserEmail(userId, newEmail, password)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message }))
+        })
+
+        server.delete('/users', jsonBodyParser, (req, res) => {
+            const userId = req.headers.authorization.slice(7)
+            const { password } = req.body
+
+            unregisterUser(userId, password)
                 .then(() => res.status(204).send())
                 .catch(error => res.status(500).json({ error: error.message }))
         })
