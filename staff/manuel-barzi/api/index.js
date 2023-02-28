@@ -34,9 +34,13 @@ client.connect()
 
             const { name, age, email, password } = user
 
-            registerUser(name, age, email, password)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                registerUser(name, age, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch(error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {
@@ -44,9 +48,13 @@ client.connect()
 
             const { email, password } = credentials
 
-            authenticateUser(email, password)
-                .then(userId => res.status(200).json({ userId }))
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                authenticateUser(email, password)
+                    .then(userId => res.status(200).json({ userId }))
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch(error) {
+                res.status(500).json({ error: error.message })
+            }
         })
 
         server.get('/users', (req, res) => {
