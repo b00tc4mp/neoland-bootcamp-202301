@@ -100,7 +100,7 @@ function MyList({ listUpdateStamp }) {
     }
 
 
-    return <ul className="flex flex-col items-center h-screen gap-4 m-3">
+    return <ul className="flex flex-col items-center h-screen gap-4 m-3 ">
         {stickies.map(sticky =>
             <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] " key={sticky._id}>
                 <div className="flex">

@@ -14,6 +14,7 @@ const updateStickyText = require('./logic/updateStickyText')
 const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
+const updateUserEmail = require('./logic/updateUserEmail')
 
 const client = new MongoClient('mongodb://127.0.0.1:27017')
 
@@ -90,6 +91,22 @@ client.connect()
 
 
             updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                .then(() => res.status(204).send())
+                .catch(error => res.status(500).json({ error: error.message }))
+
+
+        })
+
+        server.patch('/users/updateEmail', jsonBodyParser, (req, res) => {
+            // TODO update user password
+            const userId = req.headers.authorization.slice(7)
+            const credentials = req.body
+
+            const {password, newEmail} = credentials
+
+
+
+            updateUserEmail(userId,password,newEmail)
                 .then(() => res.status(204).send())
                 .catch(error => res.status(500).json({ error: error.message }))
 

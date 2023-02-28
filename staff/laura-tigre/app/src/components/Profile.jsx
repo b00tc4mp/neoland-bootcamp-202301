@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import updateUserPassword from '../logic/update-user-password'
 import unregisterUser from '../logic/unregister-user'
+import updateUserEmail from '../logic/update-user-Email'
 
 function Profile({onUnregisterUser}) {
   console.log('Profile -> render')
@@ -62,7 +63,26 @@ function Profile({onUnregisterUser}) {
       alert(error.message)
     }
   }
-  return <div className="profile-panel">
+
+  const handleUpdateUserEmail= (event) =>{
+    event.preventDefault()
+
+    const password = event.target.password.value
+    const newEmail = event.target.newEmail.value
+
+    try {
+      updateUserEmail(sessionStorage.userId, password, newEmail, error=>{
+        if (error) {
+          alert(error.message)
+          return
+        }
+        event.target.reset()
+      })
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+  return <div className="profile-panel, h-screen">
     <form onSubmit={handleChangePassword} className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3 rounded-lg">
     <legend className="text-xl">CHANGE PASSWORD</legend>
       <input
@@ -98,6 +118,22 @@ function Profile({onUnregisterUser}) {
         placeholder=" your password" />
 
       <button className=" bg-[#facc15] h-7 w-40" type="submit">Delete user</button>
+    </form>
+
+    <form onSubmit={handleUpdateUserEmail} className="flex flex-col items-center gap-4 bg-[#d1d5db] mt-10 p-3 rounded-lg">
+    <legend className="text-xl">NEW EMAIL</legend>
+      <input
+        className="bg-[#d6d3d1] border-4 hover:border-[#facc15] "
+        type="newEmail"
+        name="newEmail"
+        placeholder=" new email" />
+      <input
+        className="bg-[#d6d3d1] border-4 hover:border-[#facc15] "
+        type="password"
+        name="password"
+        placeholder=" your password" />  
+
+      <button className=" bg-[#facc15] h-7 w-40" type="submit">New Email</button>
     </form>
 
   </div>
