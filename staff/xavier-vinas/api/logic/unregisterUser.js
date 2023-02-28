@@ -1,43 +1,27 @@
-const { readFile, unlink } = require('fs')
+const { ObjectId } = require('mongodb')
 
-function unregisterUser(userId, password, callback) {
-    // TODO
-    /*
-    1. read file by userId
-    2. check if user passed password
-    3. if not, then error
-    4. if yes, then delete user file
-    */
 
-    const file = userId + '.json'
 
-    const filePath = 'data/users/' + file
+function unregisterUser(userId, password) {
 
-    readFile(filePath, 'utf8', (error, json) => {
-        if (error) {
-            callback(new Error('user not found'))
+    const users = process.db.collection('users')
+    const stickies = process.db.collection('stickies')
 
-            return
-        }
 
-        const user = JSON.parse(json)
+    return users.findOne({ _id: new ObjectId(userId) })
+        .then(user => {
+            if (user.password !== password) throw new Error('wrong credentials')
 
-        if (user.password !== password) {
-            callback(new Error('wrong credentials'))
+            return stickies.deleteMany({ "user": userId })
 
-            return
-        }
-
-        unlink(filePath, error => {
-            if (error) {
-                callback(error)
-
-                return
-            }
-
-            callback(null)
+                .then(() => {
+                    return users.deleteOne({
+                        _id: new ObjectId(userId)
+                    })
+                })
         })
-    })
 }
+
+
 
 module.exports = unregisterUser

@@ -1,54 +1,27 @@
-const { readFile, writeFile } = require('fs')
+const { ObjectId } = require('mongodb')
 
-function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
-    // TODO
-    /*
-    0. check new password equals new password repeat
-    1. read file
-    2. check current password equals user password
-    3. update user password with new password
-    4. update file
-    */
+function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat) {
+ 
+   
+    if (currentPassword === newPassword)
+        throw new Error('current password and new password are equal')
 
-    if (newPassword !== newPasswordRepeat) {
-        callback(new Error('new password and new password repeat do not match'))
+    if (newPassword !== newPasswordRepeat)
+        throw new Error('new password and new password repeat do not match')
 
-        return
-    }
 
-    const file = userId + '.json'
+    const users = process.db.collection('users')
 
-    const filePath = 'data/users/' + file
+    const filter = { _id: new ObjectId(userId) }
 
-    readFile(filePath, 'utf8', (error, json) => {
-        if (error) {
-            callback(new Error('user not found'))
+    return users.findOne(filter)
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
-            return
-        }
+            if (user.password !== currentPassword) throw new Error('wrong credentials')
 
-        const user = JSON.parse(json)
-
-        if (user.password !== currentPassword) {
-            callback(new Error('wrong credentials'))
-
-            return
-        }
-
-        user.password = newPassword
-
-        const newJson = JSON.stringify(user, null, 4)
-
-        writeFile(filePath, newJson, 'utf8', error => {
-            if (error) {
-                callback(error)
-
-                return
-            }
-
-            callback(null)
+            return users.updateOne(filter, { $set: { password: newPassword } })
         })
-    })
 }
 
 module.exports = updateUserPassword

@@ -1,21 +1,18 @@
-const { readFile } = require("fs")
+const { ObjectId } = require('mongodb')
 
+function retrieveUser(userId) {
+    const users = process.db.collection('users')
 
-function retrieveUser(userId, callback) {
+    return users.findOne({ _id: new ObjectId(userId) })
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
-    const filePath = "data/users/" + userId + ".json"
+            //       sanitization
+            delete user._id
+            delete user.password
 
-    readFile(filePath, "utf8", (error, json) => {
-        if (error) {
-            callback(new Error("user not found"))
-            return
-        }
-        const user = JSON.parse(json)
-
-        delete user.password
-
-        callback(null, user)
-    })
+            return user
+        })
 }
 
 module.exports = retrieveUser
