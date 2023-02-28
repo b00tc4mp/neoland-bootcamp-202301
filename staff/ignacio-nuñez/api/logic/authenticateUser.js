@@ -1,66 +1,19 @@
-const { readdir, readFile } = require('fs')
+function authenticateUser(email, password) {
+    if (typeof email !== 'string') throw new Error('email is not a string')
+    if (!isEmail(email)) throw new Error('email is not an email')
+    if (typeof password !== 'string') throw new Error('password is not a string')
+    if (password.length < 8) throw new Error('password is shorter than 8 characters')
+    
+    const users = process.db.collection('users')
 
-function authenticateUser(email, password, callback) {
-    readdir('data/users', (error, files) => {
-        if (error) {
-            callback(error)
+    return users.findOne({ email })
+        .then(user => {
+            if (!user) throw new Error('user not found')
 
-            return
-        }
+            if (user.password !== password) throw new Error('wrong credentials')
 
-        if (!files.length) {
-            callback(new Error('user not found'))
-
-            return
-        }
-
-        const users = []
-
-        let countReads = 0
-
-        files.forEach(file => {
-            const filePath = 'data/users/' + file
-
-            readFile(filePath, 'utf8', (error, json) => {
-                if (error) {
-                    callback(error)
-
-                    return
-                }
-
-                const user = JSON.parse(json)
-                const userId = file.slice(0, -5)
-
-                const user2 = { 
-                    id: userId, 
-                    email: user.email, 
-                    password: user.password 
-                }
-
-                users.push(user2)
-
-                countReads++
-
-                if (countReads === files.length) {
-                    const user = users.find(user => user.email === email)
-
-                    if (!user) {
-                        callback(new Error('user not found'))
-
-                        return
-                    }
-
-                    if (user.password !== password) {
-                        callback(new Error('wrong credentials'))
-
-                        return
-                    }
-
-                    callback(null, user.id)
-                }
-            })
+            return user._id.toString()
         })
-    })
 }
 
 module.exports = authenticateUser

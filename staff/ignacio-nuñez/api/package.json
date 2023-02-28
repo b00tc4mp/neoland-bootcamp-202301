@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
+    "start-debug": "node --inspect .",
     "test": "npx mocha logic/*.test.js",
     "test-debug": "npx mocha --inspect-brk logic/*.test.js",
     "test-coverage": "npx nyc --reporter=text --reporter=html mocha logic/*.test.js"
@@ -18,6 +20,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongodb": "^5.0.1"
   }
 }
