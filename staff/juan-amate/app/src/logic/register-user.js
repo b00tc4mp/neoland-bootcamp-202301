@@ -8,7 +8,7 @@
  * @param {function} callback The calllback
  */
 function registerUser(name, age, email, password, callback) {
-  const xhr = new XMLHttpRequest
+  const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
     const { status } = xhr
@@ -30,8 +30,11 @@ function registerUser(name, age, email, password, callback) {
 
   xhr.open('POST', 'http://localhost:8080/users')
   xhr.setRequestHeader('Content-Type', 'application/json')
-  
+
   const user = { name, age, email, password }
   const json = JSON.stringify(user)
+
   xhr.send(json)
 }
+
+export default registerUser

@@ -1,14 +1,15 @@
 const retrieveUser = require('./retrieveUser')
-
 const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirectory')
 const fs = require('fs')
 const { expect } = require('chai')
+
+// TODO update 
 
 describe('retrieveUser', () => {
     it("succeeds for an existent user", done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-                console.error(error)
+                done(error)
 
                 return
             }
@@ -57,9 +58,9 @@ describe('retrieveUser', () => {
     it('fails when user does not exist', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-            done(error)
-            
-            return
+                done(error)
+
+                return
             }
 
             const userId = 'user-' + Date.now()
@@ -78,9 +79,9 @@ describe('retrieveUser', () => {
     it('fails because the user does not match any user in the db', done => {
         deleteAllFilesFromDirectory('data/users', error => {
             if (error) {
-            done(error)
-            
-            return
+                done(error)
+
+                return
             }
 
             const name = "Marie Curie"
@@ -102,9 +103,9 @@ describe('retrieveUser', () => {
 
             writeFile(userFilePath, userJson, 'utf8', error => {
                 if (error) {
-                done(error)
-                
-                return
+                    done(error)
+
+                    return
                 }
 
                 wrongUserId = 'user-' + (Date.now() + 1)

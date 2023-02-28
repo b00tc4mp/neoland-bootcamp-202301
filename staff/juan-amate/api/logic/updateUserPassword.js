@@ -1,55 +1,24 @@
-const { readFile, writeFile } = require('fs')
+const { ObjectId } = require('mongodb')
 
-function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
-    // TODO
-    //1. readFile -> user
-    //2. password === password
-    //3. currrent password >> newPassword
-    if (currentPassword === newPassword) {
+function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat) {
+    if (currentPassword === newPassword)
         callback(new Error('current password and new password are equal'))
 
-        return
-    }
-
-    if (newPassword !== newPasswordRepeat) {
+    if (newPassword !== newPasswordRepeat)
         callback(new Error('new password and new password repeat do not match'))
 
-        return
-    }
+    const users = process.db.collection('users')
 
-    const file = userId + '.json'
+    const filter = { _id: new ObjectId(userId) }
 
-    const filePath = 'data/users/' + file
+    return users.findOne(filter)
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
-    readFile(filePath, 'utf8', (error, json) => {
-        if (error) {
-            callback(new Error('user not found'))
+            if (user.password !== currentPassword) throw new Error('wrong credentials')
 
-            return
-        }
-
-        const user = JSON.parse(json)
-
-        if (user.password !== currentPassword) {
-            callback(new Error('wrong credentials'))
-
-            return
-        }
-
-        user.password = newPassword
-
-        const newJson = JSON.stringify(user, null, 4)
-
-        writeFile(filePath, newJson, 'utf8', error => {
-            if (error) {
-                callback(error)
-
-                return
-            }
-
-            callback(null)
+            return users.updateOne(filter, { $set: { password: newPassword } })
         })
-    })
 }
 
 module.exports = updateUserPassword

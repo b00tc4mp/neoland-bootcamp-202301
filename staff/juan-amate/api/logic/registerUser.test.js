@@ -4,6 +4,8 @@ const checkFileExists = require('../utils/checkFileExists')
 const fs = require('fs')
 const { expect } = require('chai')
 
+//TODO update
+
 describe('registerUser', () => {
     it('succeeds for a new user', done => {
         deleteAllFilesFromDirectory('data/users', error => {

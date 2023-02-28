@@ -3,6 +3,8 @@ const deleteAllFilesFromDirectory = require('../utils/deleteAllFilesFromDirector
 const fs = require('fs')
 const { expect } = require('chai')
 
+// TODO update 
+
 describe('authenticateUser', () => {
     it('succeeds for an existent user', done => {
         deleteAllFilesFromDirectory('data/users', error => {

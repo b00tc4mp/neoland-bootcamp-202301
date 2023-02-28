@@ -22,8 +22,10 @@ function updateStickyText(userId, stickyId, text, callback) {
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
     xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
     xhr.setRequestHeader('Content-Type', 'application/json')
+
     const sticky = { text }
     const json = JSON.stringify(sticky)
+
     xhr.send(json)
 }
 

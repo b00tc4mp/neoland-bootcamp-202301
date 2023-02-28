@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
-import './data/stickies.populate'
 
 function App() {
   console.log('App -> render')
@@ -26,8 +25,8 @@ function App() {
 
     {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
 
-    {view === 'home' && <Home onLogout={handleShowLogin} />}
+    {view === 'home' && <Home onLogout={handleShowLogin} onUnregisterUser={handleShowLogin} />}
   </div>
 }
 
-export default App;
+export default App

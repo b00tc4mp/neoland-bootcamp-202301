@@ -6,7 +6,7 @@
  * @param {function} callback The callback
  */
 function authenticateUser(email, password, callback) {
-  const xhr = new XMLHttpRequest
+  const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
     const { status } = xhr

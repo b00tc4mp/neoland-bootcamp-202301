@@ -8,7 +8,7 @@
  * @param {function} callback The callback
  */
 function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
         const { status } = xhr
@@ -28,7 +28,8 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         callback(null)
     }
 
-    xhr.open('PATCH', 'http://localhost:8080/users/' + userId)
+    xhr.open('PATCH', 'http://localhost:8080/users/password')
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { currentPassword, newPassword, newPasswordRepeat }

@@ -7,7 +7,7 @@
  * @param {function} callback
  */
 function createSticky(userId, text, visibility, callback) {
-  const xhr = new XMLHttpRequest
+  const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
     const { status } = xhr
@@ -15,9 +15,9 @@ function createSticky(userId, text, visibility, callback) {
     if (status === 500) {
       const { response } = xhr
 
-      const body = JSON.parse(response)
+      const payload = JSON.parse(response)
 
-      const { error } = body
+      const { error } = payload
 
       callback(new Error(error))
 
