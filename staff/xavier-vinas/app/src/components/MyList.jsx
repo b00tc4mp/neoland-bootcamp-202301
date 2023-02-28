@@ -93,7 +93,7 @@ function MyList({ updateStamp }) {
     }
 
     return <ul className="flex flex-col items-center">
-        {stickies.map(sticky => <li className="bg-[#d1d0cc] m-10 w-[40ch] rounded-full p-10 border-double" key={sticky._id}>
+        {stickies.map(sticky => <li className="bg-[#d1d0cc] m-10 w-[40ch] rounded-full p-10 p-10 border-double  border-2" key={sticky._id}>
             <div className="text-right">
                 <button className="w-5 h-5 text-[#0e0e03] m-1" id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>
 
