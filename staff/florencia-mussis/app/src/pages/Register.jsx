@@ -1,5 +1,7 @@
 import { useState } from "react"
 import registerUser from "../logic/register-user"
+import Button from '../library/Button'
+import Container from '../library/Container'
 
 function Register(props) {
   console.log('Register -> render')
@@ -10,7 +12,7 @@ function Register(props) {
     event.preventDefault()
 
     const name = event.target.name.value
-    const age = event.target.age.value
+    const age = Number(event.target.age.value)
     const email = event.target.email.value
     const password = event.target.password.value
 
@@ -21,7 +23,7 @@ function Register(props) {
 
           return
         }
-        
+
         props.onNavigateToLogin()
       })
     } catch (error) {
@@ -35,8 +37,8 @@ function Register(props) {
     props.onNavigateToLogin()
   }
 
-  return <main className="h-screen font-['Montserrat'] bg-purple-300 flex flex-col items-center justify-center gap-2">
-    <form className="bg-white w-1/4 h-3/4 flex flex-col items-center justify-center rounded-2xl border-white gap-8 drop-shadow-2xl" onSubmit={handleSubmit}>
+  return <Container TagName="main" className="h-screen font-['Montserrat'] bg-purple-300 justify-center">
+    <Container TagName="form" className="bg-white w-1/4 h-3/4 justify-center rounded-2xl border-white gap-8 drop-shadow-2xl" onSubmit={handleSubmit}>
 
       <h1>REGISTER</h1>
 
@@ -60,12 +62,12 @@ function Register(props) {
       </div>
 
       <button type="submit" className="bg-purple-300 border-2 rounded-md text-white w-40 drop-shadow-sm">Create account</button>
-    </form>
+    </Container>
     <p className="feedback">{feedback}</p>
     <div className="pt-4 text-sm">
       <p className="question">¿Tienes una cuenta?<a className="text-white" href="" onClick={handleNavigateToLogin}> Login</a></p>
     </div>
-  </main>
+  </Container>
 }
 
 export default Register

@@ -6,6 +6,7 @@ import updateStickyVisibility from "../logic/update-sticky-visibility"
 import toggleLikeSticky from "../logic/toggle-like-sticky"
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import Container from '../library/Container'
 
 function MyList({ listUpdateStamp }) {
 
@@ -48,13 +49,13 @@ function MyList({ listUpdateStamp }) {
     const handleDeleteSticky = (event) => {
         try {
             deleteSticky(sessionStorage.userId, event.target.id, error => {
-                if (error){
+                if (error) {
                     alert(error.message)
 
                     return
                 }
                 loadList()
-            }) 
+            })
         } catch (error) {
             console.error(error.message)
         }
@@ -91,12 +92,12 @@ function MyList({ listUpdateStamp }) {
     }
 
 
-    return <ul className="flex flex-col items-center gap-4 m-3">
+    return <Container TagName="ul" className="gap-4 m-3">
         {stickies.map(sticky =>
             <li className="p-4 w-[50ch] border-2 flex flex-col items-end rounded-lg border-solid" key={sticky._id}>
                 <div>
                     <button className={"text-white uppercase rounded-md border-white py-1 px-1 text-sm items-center" + (sticky.visibility === 'public' ? ' bg-green-500' : ' bg-red-500')} id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>
- 
+
                     <button className="border-2 border-[black] w-7 h-7 text-center m-1 text-black uppercase rounded-md text-sm" id={sticky._id} onClick={handleDeleteSticky}>X</button>
                 </div>
                 <p className="w-[45ch] text-left" id={sticky._id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
@@ -108,7 +109,7 @@ function MyList({ listUpdateStamp }) {
                 </div>
                 <strong className="text-xs">{sticky.user}</strong>
             </li>)}
-    </ul>
+    </Container>
 }
 
 export default MyList

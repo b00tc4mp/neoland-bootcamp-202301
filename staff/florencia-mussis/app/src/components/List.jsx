@@ -6,7 +6,7 @@ import updateStickyVisibility from "../logic/update-sticky-visibility"
 import toggleLikeSticky from "../logic/toggle-like-sticky"
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
-
+import Container from '../library/Container'
 
 
 function List({ listUpdateStamp }) {
@@ -94,7 +94,7 @@ function List({ listUpdateStamp }) {
         }
     }
 
-    return <ul className="flex flex-col items-center gap-4 m-3">
+    return <Container TagName="ul" className="gap-4 m-3">
         {stickies.map(sticky => <li className="p-4 w-[50ch] border-2 flex flex-col items-end rounded-lg border-solid" key={sticky._id}>
             <div>
                 {sticky.user === sessionStorage.userId &&
@@ -113,7 +113,7 @@ function List({ listUpdateStamp }) {
             </div>
             <strong className="text-xs">{sticky.user}</strong>
         </li>)}
-    </ul>
+    </Container>
 }
 
 export default List

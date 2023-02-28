@@ -5,6 +5,7 @@ import Profile from '../components/Profile'
 import MyList from "../components/MyList"
 import retrieveUser from "../logic/retrieve-user"
 
+
 function Home(props) {
     console.log('Home -> render')
 
@@ -88,7 +89,7 @@ function Home(props) {
         </main>
 
         <footer className="fixed bottom-0 left-0 flex justify-center bg-purple-300 border-2 rounded-md text-white w-full" >
-            <button className="drop-shadow-sm text-5xl" onClick={handleAdd} >+</button>
+            {view !== 'profile' && <button className="drop-shadow-sm text-5xl" onClick={handleAdd}>+</button>}
         </footer>
     </div>
 }
