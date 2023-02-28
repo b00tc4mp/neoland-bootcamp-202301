@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import registerUser from '../logic/register-user'
 import Button from '../library/Button'
-import Container from '../library/Container'
 
 function Register(props) {
     console.log('Register -> render')
@@ -37,9 +36,9 @@ function Register(props) {
         props.onNavigateToLogin()
     }
 
-    return <Container TagName="main" className="justify-center bg-black h-screen">
-        <Container>
-            <Container TagName="form" onSubmit={handleSubmit}>
+    return <main className="h-screen flex justify-center items-center bg-black h-screen">
+        <div className="flex flex-col items-center gap-2">
+            <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="name" id="name" placeholder="name" name="name" />
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="number" id="age" placeholder="age" name="age" />
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="email" placeholder="e-mail" name="email" />
@@ -47,12 +46,11 @@ function Register(props) {
 
                 {/* <button className="font-press border-[2px] border-[gold] text-[gold] p-1" type="submit">Register</button> */}
                 <Button type="submit">Register</Button>
-            </Container>
-            
+            </form>
             <p className="text-[red] font-odibee">{feedback}</p>
             <p className="text-[gold] font-odibee">or <a className="underline" href="" onClick={handleNavigateToLogin}>Login</a></p>
-        </Container>
-    </Container>
+        </div>
+    </main>
 }
 
 export default Register

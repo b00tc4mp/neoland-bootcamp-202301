@@ -6,7 +6,6 @@ import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
-import Container from '../library/Container'
 
 function MyList({ updateStamp }) {
     console.log('MyList -> render')
@@ -95,7 +94,7 @@ function MyList({ updateStamp }) {
         }
     }
 
-    return <Container TagName="ul" className="gap-5">
+    return <ul className="flex flex-col items-center gap-5">
         {stickies.map(sticky => <li className="bg-[gold] w-[40ch]" key={sticky._id}>
             <div className="text-right">
                 <button className="w-5 h-5 bg-black text-[gold] m-1" id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility === 'public' ? '-' : '+'}</button>
@@ -111,7 +110,7 @@ function MyList({ updateStamp }) {
                 <strong>{sticky.user}</strong>
             </div>
         </li>)}
-    </Container>
+    </ul>
 }
 
 export default MyList

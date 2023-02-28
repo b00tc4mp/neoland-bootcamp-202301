@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import updateUserEmail from '../logic/update-user-email'
+import unregisterUser from '../logic/unregister-user'
 import Button from '../library/Button'
-import Container from '../library/Container'
 
-function UpdateUserEmail() {
-    console.log('UpdateUserEmail -> render')
+function UnregisterUser({ onUnregisterUser }) {
+    console.log('UnregisterUser -> render')
 
     const [feedback, setFeedback] = useState({
         message: '',
@@ -14,11 +13,10 @@ function UpdateUserEmail() {
     const handleSubmit = event => {
         event.preventDefault()
 
-        const newEmail = event.target.newEmail.value
         const password = event.target.password.value
 
         try {
-            updateUserEmail(sessionStorage.userId, newEmail, password, error => {
+            unregisterUser(sessionStorage.userId, password, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -30,10 +28,9 @@ function UpdateUserEmail() {
 
                 event.target.reset()
 
-                setFeedback({
-                    message: 'email updated successfully',
-                    type: 'success'
-                })
+                delete sessionStorage.userId
+
+                onUnregisterUser()
             })
         } catch (error) {
             setFeedback({
@@ -43,16 +40,15 @@ function UpdateUserEmail() {
         }
     }
 
-    return <Container>
-        <Container TagName="form" onSubmit={handleSubmit}>
-            <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="email" name="newEmail" placeholder="new email" />
+    return <div className="flex flex-col items-center">
+        <form onSubmit={handleSubmit} className="update-password-panel flex flex-col gap-2">
             <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="password" name="password" placeholder="password" />
 
-            <Button type="submit">Update email</Button>
-        </Container>
-
+            {/* <button type="submit" className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">Unregister</button> */}
+            <Button type="submit">Unregister</Button>
+        </form>
         <p className={`font-odibee ${feedback.type === 'success' ? "text-[greenyellow]" : "text-[tomato]"}`}>{feedback.message}</p>
-    </Container>
+    </div>
 }
 
-export default UpdateUserEmail
+export default UnregisterUser

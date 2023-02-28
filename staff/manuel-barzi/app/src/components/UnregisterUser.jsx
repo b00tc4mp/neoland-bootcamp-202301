@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import unregisterUser from '../logic/unregister-user'
 import Button from '../library/Button'
+import Container from '../library/Container'
 
 function UnregisterUser({ onUnregisterUser }) {
     console.log('UnregisterUser -> render')
@@ -40,15 +41,15 @@ function UnregisterUser({ onUnregisterUser }) {
         }
     }
 
-    return <div className="flex flex-col items-center">
-        <form onSubmit={handleSubmit} className="update-password-panel flex flex-col gap-2">
+    return <Container>
+        <Container TagName="form" onSubmit={handleSubmit}>
             <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="password" name="password" placeholder="password" />
 
-            {/* <button type="submit" className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">Unregister</button> */}
             <Button type="submit">Unregister</Button>
-        </form>
+        </Container>
+        
         <p className={`font-odibee ${feedback.type === 'success' ? "text-[greenyellow]" : "text-[tomato]"}`}>{feedback.message}</p>
-    </div>
+    </Container>
 }
 
 export default UnregisterUser

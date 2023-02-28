@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import updateUserPassword from '../logic/update-user-password'
 import Button from '../library/Button'
-import Container from '../library/Container'
 
 function UpdateUserPassword() {
     console.log('UpdateUserPassword -> render')
@@ -44,17 +43,16 @@ function UpdateUserPassword() {
         }
     }
 
-    return <Container>
-        <Container TagName="form" onSubmit={handleSubmit}>
+    return <div className="flex flex-col items-center">
+        <form onSubmit={handleSubmit} className="update-password-panel flex flex-col gap-2">
             <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="password" name="currentPassword" placeholder="current password" />
             <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="password" name="newPassword" placeholder="new password" />
             <input className="text-[gold] placeholder-[gold] bg-[transparent] font-odibee border-2 border-[gold] focus:outline-none p-1" type="password" name="newPasswordConfirm" placeholder="confirm new password" />
-            
+            {/* <button type="submit" className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">Update password</button> */}
             <Button type="submit">Update password</Button>
-        </Container>
-
+        </form>
         <p className={`font-odibee ${feedback.type === 'success' ? "text-[greenyellow]" : "text-[tomato]"}`}>{feedback.message}</p>
-    </Container>
+    </div>
 }
 
 export default UpdateUserPassword

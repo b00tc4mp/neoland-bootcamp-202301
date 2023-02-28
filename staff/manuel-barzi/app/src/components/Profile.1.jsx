@@ -1,16 +1,15 @@
 import UpdateUserPassword from './UpdateUserPassword'
 import UpdateUserEmail from './UpdateUserEmail'
 import UnregisterUser from './UnregisterUser'
-import Container from '../library/Container'
 
 function Profile({onUnregisterUser}) {
     console.log('Profile -> render')
 
-    return <Container className="gap-10">
+    return <div className="flex flex-col items-center gap-5">
         <UpdateUserPassword />
         <UpdateUserEmail />
         <UnregisterUser onUnregisterUser={onUnregisterUser} />
-    </Container>
+    </div>
 }
 
 export default Profile
