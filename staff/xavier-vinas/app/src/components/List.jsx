@@ -7,7 +7,7 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
-function List({ updateStamp }) {
+function List({ listUpdateStamp }) {
     console.log('List -> render')
 
     const [stickies, setStickies] = useState([])
@@ -31,7 +31,7 @@ function List({ updateStamp }) {
 
     useEffect(() => {
        loadList()
-    }, [updateStamp])
+    }, [listUpdateStamp])
 
     const handleUpdateText = event => {
         try {
