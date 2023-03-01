@@ -1,23 +1,37 @@
 const { ObjectId } = require('mongodb')
-
+const { validateUserId, validateStickyId } = require('com')
 /**
- * Retrieves the public stickies from all users that publish them
+ * Toggles the likeability of a specific sticky
  * 
- * @return {Array} The public stickies
-*/
+ * @param {string} userId The userId
+ * @param {string} stickyId The sticky identifier
+ */
+function toggleLikeSticky(userId, stickyId) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
 
-function toggleLikeSticky(userId, stickyId){
+    const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')
 
-    return stickies.findOne({'_id':new ObjectId (stickyId)}) //que busque UNO que el id sea el que le pasamos
+    return users.findOne({ _id: new ObjectId(userId) })
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
+
+            return stickies.findOne({ _id: new ObjectId(stickyId) })
+        })
         .then(sticky => {
-            if (!sticky) throw new Error ('sticky with id ' + stickyId + ' not found')
+            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
-            const index = sticky.likes.indexOf(userId) //que pase la posicion de userId, si no lo encuentra retorna -1
+            const likes = sticky.likes
 
-            index > -1 ? sticky.likes.splice(index,1): sticky.likes.push(userId)
+            const index = likes.indexOf(userId)
 
-            return stickies.updateOne({_id: new ObjectId(stickyId)}, {$set:{likes:sticky.likes}}) // reemplaza set a diferencia de push
+            if (index < 0)
+                likes.push(userId)
+            else
+                likes.splice(index, 1)
+
+            return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes } })
         })
 }
 

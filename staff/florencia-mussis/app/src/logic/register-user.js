@@ -1,3 +1,4 @@
+import { validateName, validateAge, validateEmail, validatePassword, validateCallback } from 'com'
 /**
  * Registers a user in the database
  * 
@@ -8,32 +9,38 @@
  * @param {function} callback The callback
  */
 function registerUser(name, age, email, password, callback) {
-  const xhr = new XMLHttpRequest
+    validateName(name)
+    validateAge(age)
+    validateEmail(email)
+    validatePassword(password)
+    validateCallback(callback)
 
-  xhr.onload = () => {
-    const { status } = xhr
+    const xhr = new XMLHttpRequest
 
-    if (status === 500) {
-        const { response } = xhr
+    xhr.onload = () => {
+      const { status } = xhr
 
-        const body = JSON.parse(response)
+      if (status === 500) {
+          const { response } = xhr
 
-        const { error } = body
+          const body = JSON.parse(response)
 
-        callback(new Error(error))
+          const { error } = body
 
-        return
+          callback(new Error(error))
+
+          return
+      }
+
+      callback(null)
     }
 
-    callback(null)
-  }
+    xhr.open('POST', 'http://localhost:8080/users')
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
-  xhr.open('POST', 'http://localhost:8080/users')
-  xhr.setRequestHeader('Content-Type', 'application/json')
-
-  const user = { name, age, email, password }
-  const json = JSON.stringify(user)
-  xhr.send(json)
+    const user = { name, age, email, password }
+    const json = JSON.stringify(user)
+    xhr.send(json)
 }
 
 export default registerUser

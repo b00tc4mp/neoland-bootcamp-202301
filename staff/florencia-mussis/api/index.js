@@ -74,19 +74,22 @@ client.connect()
             const userId = req.headers.authorization.slice(7)
             const { password } = req.body //para extraer la propiedad password de body
             // const password = req.body.password
-
-            unregisterUser(userId, password)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            try {
+                unregisterUser(userId, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {     
+                res.status(500).json({ error: error.message })  
+            }     
         })
 
 
         server.patch('/users/password', jsonBodyParser, (req, res) => { //patch es actualizar
             const userId = req.headers.authorization.slice(7)
-            const { currentPassword, newPassword, newPasswordRepeat } = req.body
+            const { password, newPassword, newPasswordConfirm } = req.body
 
             try {
-                updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
@@ -117,7 +120,9 @@ client.connect()
         })
 
         server.get('/stickies', (req, res) => { //va req? si, se pone igual
-            retrievePublicStickies()
+            const userId = req.headers.authorization.slice(7)
+          
+            retrievePublicStickies(userId)
                 .then(stickies => res.status(200).json(stickies))
                 .catch(error => res.status(500).json(error.message))
         })

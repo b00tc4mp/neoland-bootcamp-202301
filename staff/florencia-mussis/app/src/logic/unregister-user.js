@@ -1,3 +1,4 @@
+import { validatePassword, validateCallback, validateUserId } from 'com'
 /**
  * Unregisters a user in the database
  * 
@@ -8,6 +9,10 @@
  * @param {function} callback The callback
  */
 function unregisterUser(userId, password, callback) {
+  validateUserId(userId)
+  validatePassword(password)
+  validateCallback(callback)
+
   const xhr = new XMLHttpRequest
 
   xhr.onload = () => {

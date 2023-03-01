@@ -1,11 +1,11 @@
 const { ObjectId } = require('mongodb')
-/**
- * Retrieves the public stickies from all users that publish them
- * 
- * @return {Array} The public stickies
- */
+const { validateUserId, validateStickyId } = require('com')
+
 
 function deleteSticky(userId, stickyId){
+  validateUserId(userId)
+  validateStickyId(stickyId)
+
     const stickies = process.db.collection('stickies')
 
     return stickies.findOne({_id: new ObjectId (stickyId)})

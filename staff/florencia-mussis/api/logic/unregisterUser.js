@@ -1,6 +1,9 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validatePassword } = require('com')
 
 function unregisterUser(userId, password) {
+    validateUserId(userId)
+    validatePassword(password)
     /* 1. read db by userId*/
     const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')

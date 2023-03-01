@@ -1,10 +1,8 @@
-const isEmail = require('../utils/isEmail')
+const { validateEmail, validatePassword } = require('com')
 
 function authenticateUser(email, password) {
-  if (typeof email !== 'string') throw new Error('email is not a string')
-  if (!isEmail(email)) throw new Error('email is not an email')
-  if (typeof password !== 'string') throw new Error('password is not a string')
-  if (password.length < 8) throw new Error('password is shorter than 8 characters')
+  validateEmail(email)
+  validatePassword(password)
 
   const users = process.db.collection('users')
 

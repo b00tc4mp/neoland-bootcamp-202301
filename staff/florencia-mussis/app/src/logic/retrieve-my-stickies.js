@@ -1,3 +1,4 @@
+import { validateCallback, validateUserId } from 'com'
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
@@ -7,6 +8,9 @@
  */
 
 function retrieveMyStickies(userId, callback) {
+    validateUserId(userId)
+    validateCallback(callback)
+    
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

@@ -1,4 +1,10 @@
+import { validateCallback, validateStickyId, validateUserId } from 'com'
+
 function deleteSticky(userId, stickyId, callback){
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
