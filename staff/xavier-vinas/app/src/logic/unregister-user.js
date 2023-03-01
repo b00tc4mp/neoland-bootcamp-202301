@@ -1,5 +1,8 @@
-
+import { validateCallback,validatePassword } from "com"
 function unregisterUser(userId, password, callback) {
+    validateCallback(callback)
+    validatePassword(password)
+    
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {

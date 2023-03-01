@@ -1,4 +1,4 @@
-
+import { validateCallback } from "com"
 /**
  * Creates a new sticky 
  * 
@@ -7,7 +7,9 @@
  * @param {string} visibility The visibility of the sticky
  */
 function createSticky(userId, text, visibility, callback) {
+  validateCallback(callback)
   const xhr = new XMLHttpRequest()
+
 
   xhr.onload = () => {
     const { status } = xhr

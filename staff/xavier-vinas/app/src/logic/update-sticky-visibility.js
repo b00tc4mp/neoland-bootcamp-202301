@@ -1,5 +1,6 @@
-
+import { validateCallback } from "com"
 function updateStickyVisibility(userId, stickyId, visibility, callback) {
+    validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
 

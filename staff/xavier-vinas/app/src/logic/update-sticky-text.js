@@ -1,6 +1,8 @@
-
+import { validateCallback } from "com"
 
 function updateStickyText(userId, stickyId, text, callback) {
+  validateCallback(callback)
+  
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {

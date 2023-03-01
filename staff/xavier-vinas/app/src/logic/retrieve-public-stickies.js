@@ -1,10 +1,13 @@
+import { validateCallback } from "com"
 /**
  * Retrieves the public stickies from all users that publish them
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
  * @return {Array} The public stickies
  */
-function retrievePublicStickies(userId ,callback) {
+function retrievePublicStickies(userId, callback) {
+  validateCallback(callback)
+  
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {

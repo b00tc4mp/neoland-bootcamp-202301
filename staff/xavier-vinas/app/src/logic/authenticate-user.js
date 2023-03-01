@@ -1,3 +1,4 @@
+import { validateEmail, validatePassword, validateCallback } from "com"
 /**
  * Authenticates a user against database
  * 
@@ -6,6 +7,9 @@
  * @param {function} callback The callback
  */
 function authenticateUser(email, password, callback) {
+  validateEmail(email)
+  validatePassword(password)
+  validateCallback(callback)
   const xhr = new XMLHttpRequest
 
   xhr.onload = () => {

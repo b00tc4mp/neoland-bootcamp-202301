@@ -1,3 +1,4 @@
+import { validateCallback } from "com"
 /**
  * Updates the user password
  * 
@@ -8,6 +9,8 @@
  * @param {function} callback The callback
  */
 function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
@@ -28,7 +31,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         callback(null)
     }
 
-    xhr.open('PATCH', 'http://localhost:8080/users')
+    xhr.open('PATCH', 'http://localhost:8080/users/password')
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

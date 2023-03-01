@@ -1,3 +1,4 @@
+import { validateCallback } from "com"
 /**
  * Deletes the specified sticky by id that belongs to the specified user (by email)
  * 
@@ -5,6 +6,8 @@
  * @param {string} stickyId The sticky id of the sticky
  */
 function deleteSticky(userId, stickyId, callback) {
+  validateCallback(callback)
+
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {

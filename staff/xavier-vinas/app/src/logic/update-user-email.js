@@ -1,4 +1,5 @@
-/**
+import { validatePassword,validateEmail,validateCallback } from "com"
+/** 
  * Updates the user password
  * 
  * @param {string} userId The userId
@@ -7,6 +8,10 @@
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 function updateUserEmail(userId, newEmail, password, callback) {
+    validateEmail(newEmail)
+    validatePassword(password)
+    validateCallback(callback)
+    
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
