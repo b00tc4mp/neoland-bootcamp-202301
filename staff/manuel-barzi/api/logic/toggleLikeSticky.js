@@ -7,12 +7,21 @@ const { ObjectId } = require('mongodb')
  * @param {string} stickyId The sticky identifier
  */
 function toggleLikeSticky(userId, stickyId) {
-    const stickies = process.db.collection('stickies')
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    if (typeof stickyId !== 'string') throw new Error('stickyId is not a string')
 
-    return stickies.findOne({ _id: new ObjectId(stickyId) })
+    const users = process.db.collection('users')
+
+    return users.findOne({ _id: new ObjectId(userId) })
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
+
+            const stickies = process.db.collection('stickies')
+
+            return stickies.findOne({ _id: new ObjectId(stickyId) })
+        })
         .then(sticky => {
-            if (!sticky)
-                throw new Error('sticky with id ' + stickyId + ' not found')
+            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
             const likes = sticky.likes
 

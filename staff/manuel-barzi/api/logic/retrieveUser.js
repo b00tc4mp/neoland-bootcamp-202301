@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongodb')
 
 function retrieveUser(userId) {
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
+
     const users = process.db.collection('users')
 
     return users.findOne({ _id: new ObjectId(userId) })

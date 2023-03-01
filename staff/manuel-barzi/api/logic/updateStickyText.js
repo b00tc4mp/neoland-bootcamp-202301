@@ -16,9 +16,9 @@ function updateStickyText(userId, stickyId, text) {
             return stickies.findOne({ _id: new ObjectId(stickyId) })
         })
         .then(sticky => {
-            if (!sticky) throw new Error('sticky with id ' + stickyId + ' not found')
+            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
-            if (sticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with id ' + userId)
+            if (sticky.user !== userId) throw new Error(`sticky with id ${stickyId} does not belong to user with id ${userId}`)
 
             return stickies.updateOne({ _id: new ObjectId(stickyId) }, { $set: { text } })
         })
