@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb')
+
 /**
  * Retrieves the public stickies from all users that publish them
  * 
