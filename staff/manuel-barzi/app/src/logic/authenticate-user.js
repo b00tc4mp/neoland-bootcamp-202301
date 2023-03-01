@@ -1,4 +1,4 @@
-import { isEmail } from 'com'
+import { validateEmail, validatePassword, validateCallback } from 'com'
 
 /**
  * Authenticates a user against database
@@ -8,8 +8,9 @@ import { isEmail } from 'com'
  * @param {function} callback The callback
  */
 function authenticateUser(email, password, callback) {
-    if (typeof email !== 'string') throw new Error('email is not a string')
-    if (!isEmail(email)) throw new Error('email is not a valid')
+    validateEmail(email)
+    validatePassword(password)
+    validateCallback(callback)
 
     const xhr = new XMLHttpRequest
 
