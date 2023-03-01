@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb')
+
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
@@ -6,7 +8,7 @@
  * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId) {
-    if (typeof userId === 'string') throw new Error('userId is not a string')
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
 
     const users = process.db.collection('users')
 

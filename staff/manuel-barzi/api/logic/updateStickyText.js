@@ -6,12 +6,11 @@ function updateStickyText(userId, stickyId, text) {
     if (typeof text !== 'string') throw new Error('text is not a string')
 
     const users = process.db.collection('users')
+    const stickies = process.db.collection('stickies')
 
     return users.findOne({ _id: new ObjectId(userId) })
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
-
-            const stickies = process.db.collection('stickies')
 
             return stickies.findOne({ _id: new ObjectId(stickyId) })
         })

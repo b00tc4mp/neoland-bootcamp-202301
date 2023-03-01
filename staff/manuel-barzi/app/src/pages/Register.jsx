@@ -12,7 +12,7 @@ function Register(props) {
         event.preventDefault()
 
         const name = event.target.name.value
-        const age = event.target.age.value
+        const age = parseInt(event.target.age.value)
         const email = event.target.email.value
         const password = event.target.password.value
 
