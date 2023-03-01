@@ -8,6 +8,8 @@
  * @param {function} callback callback
  */
 function registerUser(name, age, email, password, callback) {
+
+
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {

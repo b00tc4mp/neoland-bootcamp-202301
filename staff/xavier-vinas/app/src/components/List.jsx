@@ -14,7 +14,7 @@ function List({ listUpdateStamp }) {
 
     const loadList = () => {
         try {
-            retrievePublicStickies((error, stickies) => {
+            retrievePublicStickies(sessionStorage.userId, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
