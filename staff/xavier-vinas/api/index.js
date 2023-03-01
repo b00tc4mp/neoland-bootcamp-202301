@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// users
 const registerUser = require('./logic/registerUser')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
@@ -10,7 +9,6 @@ const updateUserEmail = require('./logic/updateUserEmail')
 
 const cors = require('cors')
 const { MongoClient } = require('mongodb')
-//stickies
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
 const retrieveMyStickies = require('./logic/retrieveMyStickies')
@@ -19,9 +17,7 @@ const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 
-
 const client = new MongoClient('mongodb://127.0.0.1:27017')
-
 
 client.connect()
     .then(connection => {
@@ -36,6 +32,7 @@ client.connect()
         server.post('/users', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
+
                 const { name, age, email, password } = user
 
                 registerUser(name, age, email, password)
@@ -49,6 +46,7 @@ client.connect()
         server.post('/users/auth', jsonBodyParser, (req, res) => {
             try {
                 const credentials = req.body
+
                 const { email, password } = credentials
 
                 authenticateUser(email, password)
@@ -71,7 +69,6 @@ client.connect()
             }
         })
 
-        
         server.delete('/users', jsonBodyParser, (req, res) => {
             try {
                 const userId = req.headers.authorization.slice(7)
@@ -88,15 +85,14 @@ client.connect()
         server.patch('/users/password', jsonBodyParser, (req, res) => {
             try {
                 const userId = req.headers.authorization.slice(7)
-                const { currentPassword, newPassword, newPasswordRepeat } = req.body
+                const { password, newPassword, newPasswordConfirm } = req.body
 
-                updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
                 res.status(500).json({ error: error.message })
             }
-
         })
 
         server.patch('/users/email', jsonBodyParser, (req, res) => {
@@ -105,6 +101,19 @@ client.connect()
                 const { newEmail, password } = req.body
 
                 updateUserEmail(userId, newEmail, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
+        })
+
+        server.delete('/users', jsonBodyParser, (req, res) => {
+            try {
+                const userId = req.headers.authorization.slice(7)
+                const { password } = req.body
+
+                unregisterUser(userId, password)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
@@ -122,10 +131,8 @@ client.connect()
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
                 res.status(500).json({ error: error.message })
-
             }
         })
-
 
         server.get('/stickies', (req, res) => {
             try {

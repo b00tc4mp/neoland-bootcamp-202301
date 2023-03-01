@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-
+const { validateUserId, validateStickyId } = require('com')
 /**
  * Toggles the likeability of a specific sticky
  * 
@@ -7,8 +7,8 @@ const { ObjectId } = require('mongodb')
  * @param {string} stickyId The sticky identifier
  */
 function toggleLikeSticky(userId, stickyId) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof stickyId !== 'string') throw new Error('stickyId is not a string')
+   validateStickyId(stickyId)
+   validateUserId(userId)
 
     const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')

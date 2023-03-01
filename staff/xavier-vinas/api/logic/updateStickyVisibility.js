@@ -1,11 +1,12 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validateStickyId, validateVisibility,} = require('com')
+
 
 function updateStickyVisibility(userId, stickyId, visibility) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof stickyId !== 'string') throw new Error('stickyId is not a string')
-    if (typeof visibility !== 'string') throw new Error('visibility is not a string')
-    if (visibility !== 'public' && visibility !== 'private') throw new Error('visibility is not valid')
-
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateVisibility(visibility)
+    
     const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')
 

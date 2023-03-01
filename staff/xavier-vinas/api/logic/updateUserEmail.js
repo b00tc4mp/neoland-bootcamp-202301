@@ -1,12 +1,10 @@
 const { ObjectId } = require('mongodb')
-const { isEmail , validatePassword} = require("com")
+const { validateUserId, validateNewEmail, validatePassword } = require("com")
 
 function updateUserEmail(userId, newEmail, password) {
-    if (typeof userId!== 'string') throw new Error('userId must be a string')
-    if (typeof newEmail !== 'string') throw new Error('New email must be a string')
-    isEmail(newEmail)
+    validateUserId(userId)
+    validateNewEmail(newEmail)
     validatePassword(password)
-    
 
     const users = process.db.collection('users')
 

@@ -21,7 +21,7 @@ function List({ listUpdateStamp }) {
                     return
                 }
 
-                setStickies(stickies.reverse())
+                setStickies(stickies)
             })
         } catch (error) {
             alert(error.message)

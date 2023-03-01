@@ -1,10 +1,13 @@
-import { validateCallback } from "com"
+const { validateUserId, validateCallback } = require('com')
+
 /**
+ * Retrieves the stickies that belong to the specified user (email)
+ * 
  * @param {string} userId The userId of the user to retrieve the stickies from
  * @param {function} callback The function to call back with the stickies (or an error)
- * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId, callback) {
+    validateUserId(userId)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
@@ -28,7 +31,7 @@ function retrieveMyStickies(userId, callback) {
 
         const stickies = JSON.parse(response)
 
-        callback(null, stickies)
+        callback(null, stickies.reverse())
     }
 
     xhr.open('GET', 'http://localhost:8080/stickies/user')

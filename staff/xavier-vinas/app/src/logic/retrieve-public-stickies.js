@@ -1,13 +1,14 @@
-import { validateCallback } from "com"
+const { validateUserId, validateCallback } = require('com')
+
 /**
  * Retrieves the public stickies from all users that publish them
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
- * @return {Array} The public stickies
  */
 function retrievePublicStickies(userId, callback) {
+  validateUserId(userId)
   validateCallback(callback)
-  
+
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
@@ -29,12 +30,11 @@ function retrievePublicStickies(userId, callback) {
 
     const stickies = JSON.parse(response)
 
-    callback(null, stickies)
+    callback(null, stickies.reverse())
   }
 
   xhr.open('GET', 'http://localhost:8080/stickies')
   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
-  
   xhr.send()
 }
 

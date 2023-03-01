@@ -1,9 +1,18 @@
-import { validateCallback,validatePassword } from "com"
+const { validateUserId, validatePassword, validateCallback } = require('com')
+
+/**
+ * Unregisters a user
+ * 
+ * @param {string} userId The userId address of the user
+ * @param {string} password The user password
+ * @param {callback} callback The function to call when the user is unregistered (or failed)
+ */
 function unregisterUser(userId, password, callback) {
-    validateCallback(callback)
+    validateUserId(userId)
     validatePassword(password)
-    
-    const xhr = new XMLHttpRequest
+    validateCallback(callback)
+
+    const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
         const { status } = xhr
@@ -11,9 +20,9 @@ function unregisterUser(userId, password, callback) {
         if (status === 500) {
             const { response } = xhr
 
-            const body = JSON.parse(response)
+            const payload = JSON.parse(response)
 
-            const { error } = body
+            const { error } = payload
 
             callback(new Error(error))
 
@@ -23,16 +32,14 @@ function unregisterUser(userId, password, callback) {
         callback(null)
     }
 
-    xhr.open("DELETE", "http://localhost:8080/users")
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.open('DELETE', 'http://localhost:8080/users')
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { password }
-    const json = JSON.stringify(user)
+    const payload = { password }
+    const json = JSON.stringify(payload)
 
     xhr.send(json)
-
 }
 
 export default unregisterUser
-

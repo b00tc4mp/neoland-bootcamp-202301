@@ -1,4 +1,6 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validateText, validateVisibility } = require('com')
+
 
 /**
  * Creates a new sticky in the database
@@ -9,10 +11,10 @@ const { ObjectId } = require('mongodb')
  */
 function createSticky(userId, text, visibility) {
     // TODO validate input arguments
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof text !== 'string') throw new Error('text is not a string')
-    if (typeof visibility !== 'string') throw new Error('visibility is not a string')
-    if (visibility !== 'public' && visibility !== 'private') throw new Error('visibility is not valid')
+    validateUserId(userId)
+    validateText(text)
+    validateVisibility(visibility)
+    
 
     // TODO validate user
     const users = process.db.collection('users')

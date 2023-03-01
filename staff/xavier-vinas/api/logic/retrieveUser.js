@@ -1,7 +1,8 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId } = require('com')
 
 function retrieveUser(userId) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    validateUserId(userId)
 
     const users = process.db.collection('users')
 
