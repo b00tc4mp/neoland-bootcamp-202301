@@ -14,12 +14,12 @@ function UpdateUserPassword() {
     const handleSubmit = event => {
         event.preventDefault()
 
-        const currentPassword = event.target.currentPassword.value
+        const password = event.target.password.value
         const newPassword = event.target.newPassword.value
         const newPasswordRepeat = event.target.newPasswordRepeat.value
 
         try {
-            updateUserPassword(sessionStorage.userId, currentPassword, newPassword, newPasswordRepeat, error => {
+            updateUserPassword(sessionStorage.userId, password, newPassword, newPasswordRepeat, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -49,7 +49,7 @@ function UpdateUserPassword() {
             <label className='mb-1 p-2'>Update your password</label>
             <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic outline-gray-500"
                 type="password"
-                name="currentPassword"
+                name="password"
                 placeholder="current password"
             />
             <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic outline-gray-500"

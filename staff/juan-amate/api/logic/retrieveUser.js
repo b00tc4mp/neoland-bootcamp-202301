@@ -1,6 +1,9 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId } = require('com')
 
 function retrieveUser(userId) {
+    validateUserId(userId)
+
     const users = process.db.collection('users')
 
     return users.findOne({ _id: new ObjectId(userId) })

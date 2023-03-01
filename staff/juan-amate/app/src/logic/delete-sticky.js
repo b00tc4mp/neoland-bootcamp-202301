@@ -1,3 +1,5 @@
+import { validateUserId, validateStickyId, validateCallback } from 'com'
+
 /**
  * Deletes the specified sticky by id that belongs to the specified user (by email)
  * 
@@ -6,6 +8,10 @@
  * @param {function} callback
  */
 function deleteSticky(userId, stickyId, callback) {
+  validateUserId(userId)
+  validateStickyId(stickyId)
+  validateCallback(callback)
+
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
@@ -27,7 +33,7 @@ function deleteSticky(userId, stickyId, callback) {
   }
 
   xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
-  xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
   xhr.send()
 }
 

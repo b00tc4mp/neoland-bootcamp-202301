@@ -1,3 +1,5 @@
+import { validateName, validateAge, validateEmail, validatePassword, validateCallback } from 'com'
+
 /**
  * Register a user in the database
  *
@@ -8,6 +10,12 @@
  * @param {function} callback The calllback
  */
 function registerUser(name, age, email, password, callback) {
+  validateName(name)
+  validateAge(age)
+  validateEmail(email)
+  validatePassword(password)
+  validateCallback(callback)
+
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import registerUser from '../logic/register-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import { isEmail } from 'com'
 
 function Register(props) {
     console.log('Register -> render')
@@ -12,7 +13,7 @@ function Register(props) {
         event.preventDefault()
 
         const name = event.target.name.value
-        const age = Number(event.target.age.value)
+        const age = parseInt(event.target.age.value)
         const email = event.target.email.value
         const password = event.target.password.value
 

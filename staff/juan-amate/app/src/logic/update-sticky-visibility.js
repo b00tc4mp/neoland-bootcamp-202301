@@ -1,4 +1,11 @@
+import { validateUserId, validateStickyId, validateVisibility, validateCallback } from 'com'
+
 function updateStickyVisibility(userId, stickyId, visibility, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateVisibility(visibility)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

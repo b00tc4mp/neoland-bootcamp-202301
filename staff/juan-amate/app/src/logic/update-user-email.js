@@ -1,3 +1,4 @@
+import { validateUserId, validateNewEmail, validatePassword, validateCallback } from 'com'
 /**
  * Updates the user email
  * 
@@ -7,6 +8,11 @@
  * @param {function} callback The callback
  */
 function updateUserEmail(userId, newEmail, password, callback) {
+    validateUserId(userId)
+    validateNewEmail(newEmail)
+    validatePassword(password)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

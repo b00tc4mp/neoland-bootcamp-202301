@@ -1,3 +1,6 @@
+const { ObjectId } = require('mongodb')
+const { validateUserId, validateText, validateVisibility } = require('com')
+
 /**
  * Creates a new sticky in the database
  *
@@ -6,17 +9,27 @@
  * @param {string} visibility The visibility of the sticky
  */
 function createSticky(userId, text, visibility) {
+  validateUserId(userId)
+  validateText(text)
+  validateVisibility(visibility)
 
-  const stickies = process.db.collection('stickies')
+  const users = process.db.collection('users')
 
-  const sticky = {
-    user: userId,
-    text,
-    visibility,
-    likes: []
-  }
+  return users.findOne({ _id: new ObjectId(userId) })
+    .then(user => {
+      if (!user) throw new Error(`user with id ${userId} not found`)
 
-  return stickies.insertOne(sticky)
+      const stickies = process.db.collection('stickies')
+
+      const sticky = {
+        user: userId,
+        text,
+        visibility,
+        likes: []
+      }
+
+      return stickies.insertOne(sticky)
+    })
 }
 
 module.exports = createSticky

@@ -1,11 +1,15 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordRepeat } = require('com')
 
-function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat) {
-    if (currentPassword === newPassword)
-        callback(new Error('current password and new password are equal'))
+function updateUserPassword(userId, password, newPassword, newPasswordRepeat) {
+    validateUserId(userId)
+    validatePassword(password)
+    validateNewPassword(newPassword)
+    validateNewPasswordRepeat(newPasswordRepeat)
 
-    if (newPassword !== newPasswordRepeat)
-        callback(new Error('new password and new password repeat do not match'))
+    if (password === newPassword) throw new Error('current password and new password are equal')
+
+    if (newPassword !== newPasswordRepeat) throw new Error('new password and new password repeat do not match')
 
     const users = process.db.collection('users')
 
@@ -15,7 +19,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
-            if (user.password !== currentPassword) throw new Error('wrong credentials')
+            if (user.password !== password) throw new Error('wrong credentials')
 
             return users.updateOne(filter, { $set: { password: newPassword } })
         })

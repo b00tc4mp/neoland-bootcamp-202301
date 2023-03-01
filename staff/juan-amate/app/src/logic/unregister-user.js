@@ -1,3 +1,4 @@
+import { validateUserId, validatePassword, validateCallback } from 'com'
 /**
  * Unregister a user and the stickies in the databases
  * 
@@ -6,6 +7,10 @@
  * @param {function} callback The funtcion to call when the user is unregistered (or falling)
  */
 function unregisterUser(userId, password, callback) {
+    validateUserId(userId)
+    validatePassword(password)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

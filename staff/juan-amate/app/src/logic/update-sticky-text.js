@@ -1,4 +1,11 @@
+import { validateUserId, validateStickyId, validateText, validateCallback } from 'com'
+
 function updateStickyText(userId, stickyId, text, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateText(text)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

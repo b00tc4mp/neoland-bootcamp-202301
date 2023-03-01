@@ -1,3 +1,5 @@
+import { validateUserId, validateText, validateVisibility, validateCallback } from 'com'
+
 /**
  * Creates a new sticky in the database
  *
@@ -7,6 +9,11 @@
  * @param {function} callback
  */
 function createSticky(userId, text, visibility, callback) {
+  validateUserId(userId)
+  validateText(text)
+  validateVisibility(visibility)
+  validateCallback(callback)
+
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {

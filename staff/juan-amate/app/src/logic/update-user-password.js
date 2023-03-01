@@ -1,3 +1,5 @@
+import { validateUserId, validatePassword, validateNewPassword, validateNewPasswordRepeat, validateCallback } from 'com'
+
 /**
  * Updates the user password
  * 
@@ -7,7 +9,13 @@
  * @param {string} newPasswordRepeat The confirmation of the new password
  * @param {function} callback The callback
  */
-function updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat, callback) {
+function updateUserPassword(userId, password, newPassword, newPasswordRepeat, callback) {
+    validateUserId(userId)
+    validatePassword(password)
+    validateNewPassword(newPassword)
+    validateNewPasswordRepeat(newPasswordRepeat)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -32,7 +40,7 @@ function updateUserPassword(userId, currentPassword, newPassword, newPasswordRep
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const payload = { currentPassword, newPassword, newPasswordRepeat }
+    const payload = { password, newPassword, newPasswordRepeat }
     const json = JSON.stringify(payload)
     xhr.send(json)
 }

@@ -1,9 +1,20 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validateStickyId, validateVisibility } = require('com')
 
 function updateStickyVisibility(userId, stickyId, visibility) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateVisibility(visibility)
+
+    const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')
 
-    return stickies.findOne({ '_id': new ObjectId(stickyId) })
+    return users.findOne({ '_id': new ObjectId(userId) })
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
+
+            return stickies.findOne({ '_id': new ObjectId(stickyId) })
+        })
         .then(sticky => {
             if (!sticky)
                 throw new Error(`sticky with id ${stickyId} not found`)

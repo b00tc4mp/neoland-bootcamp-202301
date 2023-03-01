@@ -1,9 +1,9 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validatePassword } = require('com')
 
 function unregisterUser(userId, password) {
-    if (typeof password !== 'string') throw new Error('password must be a string')
-    if (password.length < 8) throw new Error('password must be at least 8 characters')
-
+    validateUserId(userId)
+    validatePassword(password)
 
     const users = process.db.collection('users')
 

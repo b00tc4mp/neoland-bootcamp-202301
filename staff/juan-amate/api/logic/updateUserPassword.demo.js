@@ -8,6 +8,6 @@ client.connect()
         const db = connection.db('mydb')
         process.db = db
 
-        return updateUserPassword('63fe037a876dce58dd555203', '123123123', '234234234', '234234234')
+        return updateUserPassword('63fe30e9f98697157b129232', '123123123', '234234234', '234234234')
     })
     .then(result => console.log(result))

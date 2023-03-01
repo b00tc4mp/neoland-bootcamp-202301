@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validateStickyId } = require('com')
 
 /**
  * Deletes the specified sticky by id that belongs to the specified user (by userId)
@@ -7,15 +8,23 @@ const { ObjectId } = require('mongodb')
  * @param {string} stickyId The sticky id of the sticky
  */
 function deleteSticky(userId, stickyId) {
-  const stickies = process.db.collection('stickies')
+  validateUserId(userId)
+  validateStickyId(stickyId)
 
-  return stickies.findOne({ _id: new ObjectId(stickyId) })
+  const users = process.db.collection('users')
+
+  return users.findOne({ '_id': new ObjectId(userId) })
+    .then(user => {
+      if (!user) throw new Error(`user with id ${userId} not found`)
+
+      const stickies = process.db.collection('stickies')
+
+      return stickies.findOne({ _id: new ObjectId(stickyId) })
+    })
     .then(sticky => {
-      if (!sticky)
-        throw new Error('sticky with id ' + stickyId + ' not found')
+      if (!sticky) throw new Error('sticky with id ' + stickyId + ' not found')
 
-      if (sticky.user !== userId)
-        throw new Error('sticky with id ' + stickyId + ' does not belong to user with id ' + userId)
+      if (sticky.user !== userId) throw new Error('sticky with id ' + stickyId + ' does not belong to user with id ' + userId)
 
       return stickies.deleteOne({ _id: new ObjectId(stickyId) })
     })

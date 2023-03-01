@@ -1,3 +1,5 @@
+import { validateUserId, validateStickyId, validateCallback } from 'com'
+
 /**
  * Toggles the likeability of a specific sticky
  * 
@@ -6,6 +8,10 @@
  * @param{function} callback
  */
 function toggleLikeSticky(userId, stickyId, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
