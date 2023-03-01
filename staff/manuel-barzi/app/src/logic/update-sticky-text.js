@@ -1,3 +1,5 @@
+const { validateUserId, validateStickyId, validateText, validateCallback } = require('com')
+
 /**
  * Updates the sticky text
  * 
@@ -7,6 +9,11 @@
  * @param {function} callback The function to call when the update is complete (or failed)
  */
 function updateStickyText(userId, stickyId, text, callback) {    
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateText(text)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

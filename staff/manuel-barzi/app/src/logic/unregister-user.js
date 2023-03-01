@@ -1,3 +1,5 @@
+const { validateUserId, validatePassword, validateCallback } = require('com')
+
 /**
  * Unregisters a user
  * 
@@ -6,6 +8,10 @@
  * @param {callback} callback The function to call when the user is unregistered (or failed)
  */
 function unregisterUser(userId, password, callback) {
+    validateUserId(userId)
+    validatePassword(password)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

@@ -1,9 +1,14 @@
+const { validateUserId, validateCallback } = require('com')
+
 /**
  * Retrieves the public stickies from all users that publish them
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
  */
 function retrievePublicStickies(userId, callback) {
+    validateUserId(userId)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

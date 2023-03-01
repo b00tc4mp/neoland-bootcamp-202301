@@ -1,3 +1,5 @@
+const { validateUserId, validateNewEmail, validatePassword, validateCallback } = require('com')
+
 /**
  * Updates the user password
  * 
@@ -7,6 +9,11 @@
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 function updateUserEmail(userId, newEmail, password, callback) {
+    validateUserId(userId)
+    validateNewEmail(newEmail)
+    validatePassword(password)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {

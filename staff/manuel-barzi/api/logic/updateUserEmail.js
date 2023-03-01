@@ -1,12 +1,11 @@
 const { ObjectId } = require('mongodb')
 const { isEmail } = require('com')
+const { validateUserId, validateNewEmail, validatePassword } = require('com')
 
 function updateUserEmail(userId, newEmail, password) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof newEmail !== 'string') throw new Error('newEmail is not a string')
-    if (!isEmail(newEmail)) throw new Error('newEmail is not valid')
-    if (typeof password !== 'string') throw new Error('password is not a string')
-    if (password.length < 8) throw new Error('password is shorter than 8 characters')
+    validateUserId(userId)
+    validateNewEmail(newEmail)
+    validatePassword(password)
 
     const users = process.db.collection('users')
 

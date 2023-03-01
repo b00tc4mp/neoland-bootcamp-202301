@@ -1,9 +1,10 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validateStickyId, validateText } = require('com')
 
 function updateStickyText(userId, stickyId, text) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof stickyId !== 'string') throw new Error('stickyId is not a string')
-    if (typeof text !== 'string') throw new Error('text is not a string')
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateText(text)
 
     const users = process.db.collection('users')
     const stickies = process.db.collection('stickies')

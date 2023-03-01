@@ -1,3 +1,5 @@
+const { validateUserId, validateStickyId, validateCallback } = require('com')
+
 /**
  * Deletes the specified sticky by id that belongs to the specified user (by userId)
  * 
@@ -6,6 +8,10 @@
  * @param {callback} callback The function to call when the sticky is deleted (or failed)
  */
 function deleteSticky(userId, stickyId, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

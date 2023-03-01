@@ -1,17 +1,10 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId, validatePassword } = require('com')
 
 function unregisterUser(userId, password) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
-    if (typeof password !== 'string') throw new Error('password is not a string')
-    if (password.length < 8) throw new Error('password is shorter than 8 characters')
+    validateUserId(userId)
+    validatePassword(password)
 
-    // TODO
-    /*
-    1. read db by userId
-    2. check if user passed password
-    3. if not, then error
-    4. if yes, then delete user from db and its stickies
-    */
     const users = process.db.collection('users')
 
     const filter = { _id: new ObjectId(userId) }

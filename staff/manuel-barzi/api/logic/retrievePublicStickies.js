@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId } = require('com')
 
 /**
  * Retrieves the public stickies from all users that publish them
@@ -6,7 +7,7 @@ const { ObjectId } = require('mongodb')
  * @param {string} userId The user id that requests the public stickies
  */
 function retrievePublicStickies(userId) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    validateUserId(userId)
 
     const users = process.db.collection('users')
 

@@ -1,3 +1,5 @@
+const { validateUserId, validateStickyId, validateVisibility, validateCallback } = require('com')
+
 /**
  * Updates the sticky visibility
  * 
@@ -7,6 +9,11 @@
  * @param {function} callback The function to call when the update is complete (or failed)
  */
 function updateStickyVisibility(userId, stickyId, visibility, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateVisibility(visibility)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {

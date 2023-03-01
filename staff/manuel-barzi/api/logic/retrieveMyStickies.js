@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const { validateUserId } = require('com')
 
 /**
  * Retrieves the stickies that belong to the specified user (email)
@@ -8,7 +9,7 @@ const { ObjectId } = require('mongodb')
  * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    validateUserId(userId)
 
     const users = process.db.collection('users')
 

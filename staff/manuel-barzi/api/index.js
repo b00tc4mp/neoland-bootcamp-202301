@@ -84,9 +84,9 @@ client.connect()
         server.patch('/users/password', jsonBodyParser, (req, res) => {
             try {
                 const userId = req.headers.authorization.slice(7)
-                const { currentPassword, newPassword, newPasswordRepeat } = req.body
+                const { password, newPassword, newPasswordConfirm } = req.body
 
-                updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
+                updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {

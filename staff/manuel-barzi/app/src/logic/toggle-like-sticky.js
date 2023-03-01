@@ -1,3 +1,5 @@
+const { validateUserId, validateStickyId, validateCallback } = require('com')
+
 /**
  * Toggles the likeability of a specific sticky
  * 
@@ -6,6 +8,10 @@
  * @param {string} callback The function to call when the like is changed (or failed)
  */
 function toggleLikeSticky(userId, stickyId, callback) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
