@@ -115,7 +115,9 @@ client.connect()
         })
 
         server.get('/stickies', (req, res) => {
-            retrievePublicStickies()
+            const userId = req.headers.authorization.slice(7)
+
+            retrievePublicStickies(userId)
                 .then(stickies => res.status(200).json(stickies))
                 .catch(error => res.status(500).json({ error: error.message }))
         })

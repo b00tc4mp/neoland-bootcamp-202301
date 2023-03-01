@@ -3,7 +3,7 @@
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
  */
-function retrievePublicStickies(callback) {
+function retrievePublicStickies(userId, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -29,6 +29,7 @@ function retrievePublicStickies(callback) {
     }
 
     xhr.open('GET', 'http://localhost:8080/stickies')
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.send()
 }
 
