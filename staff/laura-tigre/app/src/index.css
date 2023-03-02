@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.background-yellow{
+    @apply bg-[#fef08a]
+}
+.background-red{
+    @apply bg-[#fbcfe8]
+}
+.background-blue{
+    @apply bg-[#bae6fd]
+}
+.background-green{
+    @apply bg-[#99f6e4]
+}

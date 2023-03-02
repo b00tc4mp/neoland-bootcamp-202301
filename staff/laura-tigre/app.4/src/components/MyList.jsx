@@ -7,13 +7,12 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 import Container from '../library/Container'
-import changeStickyColor from '../logic/change-sticky-color'
 
 function MyList({ listUpdateStamp }) {
-
+    
 
     const [stickies, setStickies] = useState([])
-    const loadlist = () => {
+    const loadlist = ()=>{
 
         try {
             retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
@@ -62,7 +61,7 @@ function MyList({ listUpdateStamp }) {
                     alert(error.message)
                     return
                 }
-                loadlist()
+               loadlist()
 
             })
 
@@ -77,7 +76,7 @@ function MyList({ listUpdateStamp }) {
                     alert(error.message)
                     return
                 }
-                loadlist()
+               loadlist()
 
             })
         } catch (error) {
@@ -99,55 +98,29 @@ function MyList({ listUpdateStamp }) {
 
         }
     }
-    const handleChangeColor= event=>{
 
-        try {
-          changeStickyColor(sessionStorage.userId, event.target.id,event.target.value, error=>{
-            if (error) {
-              alert(error.message)
-              return
-            }
-            // loadlist()
-            setStickies(prevStickies=>{
-              const copyOfStickies= [...prevStickies]
-              const index= copyOfStickies.findIndex(sticky => sticky._id === event.target.id)
-              copyOfStickies[index].color= event.target.value
-              return copyOfStickies
-            })
-          })
-        } catch (error) {
-          alert(error.message)
-        }
-    
-    }
 
     return <Container TagName="ul" className="gap-4 py-20 mb-10 ">
         {stickies.map(sticky =>
-            <li className={`background-${sticky.color}  w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]`} key={sticky._id}>
-                <div className="flex flex-row justify-end">
-                    <select defaultValue={sticky.color} id={sticky._id} name='colorToChange' onChange={handleChangeColor}>
-                        <option value="red">red</option>
-                        <option value="green">green</option>
-                        <option value="blue">blue</option>
-                        <option value="yellow">yellow</option>
-                    </select>
+            <li className="flex flex-col items-end bg-[#e5e7eb] w-[40ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] " key={sticky._id}>
+                <div className="flex">
                     {sticky.visibility === 'public' ?
-                        <button className=" border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button>
+                        <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🌍</button>
                         :
                         <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleUpdateVisibility} data-visibility={sticky.visibility}>🛑</button>
                     }
                     <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" id={sticky._id} onClick={handleDelete}>X</button>
                 </div>
-                <p className="w-[28ch] text-left" id={sticky._id} contentEditable onKeyUp={handleEditText} suppressContentEditableWarning={true}>{sticky.text}</p>
+                <p className="w-[35ch] text-left" id={sticky._id} contentEditable onKeyUp={handleEditText} suppressContentEditableWarning={true}>{sticky.text}</p>
 
 
-                <div className="flex flex-row justify-end">
+                <div className="flex">
                     <button className="h-5 w-5" onClick={handleLike} id={sticky._id} title={sticky.likes.join('\n')}>
                         {sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-5 w-5 text-red-500" /> : < HeartIconOutline className='h-5 w-5 text-black-500' />}
                     </button> <p>{sticky.likes.length}</p>
 
                 </div>
-                <p className="w-[28ch] text-right font-extrabold">{sticky.user}</p>
+                <strong>{sticky.user}</strong>
             </li>)}
 
     </Container>

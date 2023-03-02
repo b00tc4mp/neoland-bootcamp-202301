@@ -1,15 +1,15 @@
 const { connect, disconnect } = require('mongoose')
-const updateStickyVisibility= require('./updateStickyVisibility')
-
-
+const toggleLikeSticky= require('./toggleLikeSticky')
 
 
 
 connect('mongodb://127.0.0.1:27017/mydb')
-    .then(()=>{
+    .then(() =>{
        
 
-        return updateStickyVisibility('6400a7de48c755b7f3af4073', '6400a87d48c755b7f3af4085','private')
+        return toggleLikeSticky('6400a7f148c755b7f3af4076','6400b13bb7301abdce659b81')
+
+
 
     })
     .then(result => console.log(result))
