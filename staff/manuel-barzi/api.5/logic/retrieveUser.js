@@ -1,17 +1,18 @@
+const { ObjectId } = require('mongodb')
 const { validateUserId } = require('com')
-const { User } = require('../data/models')
 
 function retrieveUser(userId) {
     validateUserId(userId)
 
-    return User.findById(userId)
+    const users = process.db.collection('users')
+
+    return users.findOne({ _id: new ObjectId(userId) })
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
             // sanitization
-            delete user._doc._id
-            delete user._doc.password
-            delete user._doc.__v
+            delete user._id
+            delete user.password
 
             return user
         })

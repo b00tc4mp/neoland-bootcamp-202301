@@ -1,5 +1,4 @@
 const { validateEmail, validatePassword, validateName, validateAge } = require('com')
-const { User } = require('../data/models')
 
 function registerUser(name, age, email, password) {
     validateName(name)
@@ -7,13 +6,15 @@ function registerUser(name, age, email, password) {
     validateEmail(email)
     validatePassword(password)
 
-    return User.findOne({ email })
+    const users = process.db.collection('users')
+
+    return users.findOne({ email })
         .then(user => {
             if (user) throw new Error('user already registered')
 
-            user = new User({ name, age, email, password })
+            user = { name, age, email, password }
 
-            return user.save()
+            return users.insertOne(user)
         })
 }
 
