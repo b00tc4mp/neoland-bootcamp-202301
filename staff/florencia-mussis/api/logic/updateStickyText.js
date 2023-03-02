@@ -1,26 +1,25 @@
-const { ObjectId } = require('mongodb')
 const { validateUserId, validateStickyId, validateText } = require('com')
+const { User, Sticky } = require('../data/models')
 
 function updateStickyText(userId, stickyId, text) {
     validateUserId(userId)
     validateStickyId(stickyId)
     validateText(text)
 
-    const users = process.db.collection('users')
-    const stickies = process.db.collection('stickies')
-
-    return users.findOne({ _id: new ObjectId(userId)})
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new Error (`user with id ${userId} not found`)
 
-            return stickies.findOne({ _id: new ObjectId(stickyId) })
+            return Sticky.findById(stickyId)
         })
         .then(sticky => {
             if (!sticky)throw new Error(`sticky with id ${stickyId} not found`)
             
-            if (sticky.user !== userId) throw new Error(`sticky with id ${stickyId} does not belong to user  with id ${userId}`)
+            if (sticky.user.toString() !== userId) throw new Error(`sticky with id ${stickyId} does not belong to user  with id ${userId}`)
           
-            return stickies.updateOne({ '_id': new ObjectId(stickyId) }, { $set: { text } })
+            sticky.text = text
+
+            return sticky.save()
         })
     }
 

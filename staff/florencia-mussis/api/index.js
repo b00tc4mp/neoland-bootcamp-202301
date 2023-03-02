@@ -10,7 +10,7 @@ const updateUserEmail = require('./logic/updateUserEmail')
 
 
 const cors = require("cors")
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
@@ -21,13 +21,8 @@ const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
-
-client.connect()
-    .then(connection => {
-        const db = connection.db('mydb')
-        process.db = db
-
+connect('mongodb://127.0.0.1:27017/mydb')
+    .then(() => {
         const server = express() // construimos el servidor
         const jsonBodyParser = bodyParser.json() //trasforma la request (los objetos del body que enviamos)
 

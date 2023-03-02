@@ -1,5 +1,5 @@
-const { ObjectId } = require('mongodb')
 const { validateUserId, validateText, validateVisibility } = require('com')
+const { User, Sticky } = require('../data/models')
 
 /**
  * Creates a new sticky in the database
@@ -9,28 +9,21 @@ const { validateUserId, validateText, validateVisibility } = require('com')
  * @param {string} visibility The visibility of the sticky
  */
 function createSticky(userId, text, visibility){
-    // TODO validate input arguments
     validateUserId(userId)
     validateText(text)
     validateVisibility(visibility)
 
-    // TODO validate user
-    const users = process.db.collection('users')
-
-    return users.findOne({ _id: new ObjectId(userId) })
+    return User.findById(userId)
     .then(user => {
         if (!user) throw new Error(`user with id ${userId} not found`)
 
-        const stickies = process.db.collection('stickies')
-
-        const sticky = {
+        const sticky = new Sticky ({
             user: userId,
             text,
             visibility,
-            likes: []
-        }
+        })
 
-        return stickies.insertOne(sticky)
+        return sticky.save()
     })    
 }
 

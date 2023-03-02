@@ -1,13 +1,11 @@
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const authenticateUser = require('./authenticateUser')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+connect('mongodb://127.0.0.1:27017/mydb')
+    .then(() => {   
 
-client.connect()
-    .then(connection => {   
-        const db = connection.db('mydb')
-        process.db = db
-
-        return authenticateUser('pepito@grillo.com', '234234234')
+        return authenticateUser('pepito@grillo.com', '123123123')
     })
     .then(result => console.log(result))
+    .catch(error => console.error(error))
+    .finally(() => disconnect())

@@ -21,6 +21,6 @@
   "dependencies": {
     "com": "file:../com",
     "cors": "^2.8.5",
-    "mongodb": "^5.0.1"
+    "mongoose": "^7.0.0"
   }
 }

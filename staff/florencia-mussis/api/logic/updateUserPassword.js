@@ -1,5 +1,5 @@
-const {ObjectId} = require('mongodb')
 const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm } = require('com')
+const { User } = require('../data/models')
 
 function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
     validateUserId(userId)
@@ -11,17 +11,15 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
 
     if (newPassword !== newPasswordConfirm) throw new Error('new password and new password repeat do not match')
 
-    const users = process.db.collection('users')
-
-    const filter = { _id: new ObjectId(userId)}
-
-    return users.findOne(filter)
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
             
             if (user.password !== password) throw new Error ('wrong credentials')
 
-            return users.updateOne(filter, {$set: {password: newPassword}})
+            user.password = newPassword
+
+            return user.save()
         })
 }
 

@@ -1,13 +1,11 @@
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const updateStickyVisibility = require('./updateStickyVisibility')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+connect('mongodb://127.0.0.1:27017/mydb')
+    .then(() => {
 
-client.connect()
-    .then(connection => {
-        const db = connection.db('mydb')
-        process.db = db
-
-        return updateStickyVisibility('user-1676988822365', '63f756c4b3301540c3144fcb', 'private')
+        return updateStickyVisibility('64009221331c8171b5806079', '6400a7e45fd54be2b4000af4', 'public')
     })
     .then(result => console.log(result))
+    .catch(error => console.error(error))
+    .finally(() => disconnect())
