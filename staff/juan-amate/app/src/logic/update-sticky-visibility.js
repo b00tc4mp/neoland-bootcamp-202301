@@ -27,7 +27,7 @@ function updateStickyVisibility(userId, stickyId, visibility, callback) {
     }
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/visibility`)
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
     const sticky = { visibility }
     const json = JSON.stringify(sticky)

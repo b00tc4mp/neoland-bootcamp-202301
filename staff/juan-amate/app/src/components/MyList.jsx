@@ -7,6 +7,7 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 import Container from '../library/Container'
+import changeStickyColor from '../logic/change-sticky-color'
 
 function MyList({ listUpdateStamp }) {
 
@@ -92,8 +93,44 @@ function MyList({ listUpdateStamp }) {
         }
     }
 
+    const handleChangeColor = event => {
+        try {
+            changeStickyColor(sessionStorage.userId, event.target.id, event.target.value, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setStickies(prevStickies => {
+                    const copyOfStickies = [...prevStickies]
+
+                    const index = copyOfStickies.findIndex(sticky => sticky._id === event.target.id)
+
+                    copyOfStickies[index].color = event.target.value
+
+
+                    return copyOfStickies
+                })
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     return <Container TagName="ul">
-        {stickies.map(sticky => <li key={sticky._id} className='border rounded-md bg-white p-3 m-3 w-[40ch] text-right'>
+        {stickies.map(sticky => <li key={sticky._id} className={`background-${sticky.color} border rounded-md bg-white p-3 m-3 w-[40ch] text-right`}>
+            {console.log(sticky.color)}
+            <div className='text-right'>
+                {sticky.user === sessionStorage.userId &&
+                    <select defaultValue={sticky.color} id={sticky._id} name='color' onChange={handleChangeColor}>
+                        <option value='yellow'>yellow</option>
+                        <option value='red'>red</option>
+                        <option value='green'>green</option>
+                        <option value='blue'>blue</option>
+                    </select>}
+            </div>
+
             <div className='flex justify-end align-center'>
                 {sticky.visibility === 'private' ? <p>⛔️ private</p> : <p>👨‍👩‍👧‍👦 public</p>}
 

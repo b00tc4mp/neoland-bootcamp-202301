@@ -11,6 +11,7 @@ const validateStickyId = require('./validateStickyId')
 const validateNewEmail = require('./validateNewEmail')
 const validateNewPassword = require('./validateNewPassword')
 const validateNewPasswordRepeat = require('./validateNewPasswordRepeat')
+const validateColor = require('./validateColor')
 
 module.exports = {
     isEmail,
@@ -25,5 +26,6 @@ module.exports = {
     validateStickyId,
     validateNewEmail,
     validateNewPassword,
-    validateNewPasswordRepeat
+    validateNewPasswordRepeat,
+    validateColor
 }
