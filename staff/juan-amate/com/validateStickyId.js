@@ -1,5 +1,5 @@
 function validateStickyId(stickyId) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    if (typeof stickyId !== 'string') throw new Error('stickyId is not a string')
 }
 
 module.exports = validateStickyId

@@ -22,6 +22,6 @@
     "com": "file:../com",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mongodb": "^5.0.1"
+    "mongoose": "^7.0.0"
   }
 }

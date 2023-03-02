@@ -1,28 +1,23 @@
-const { ObjectId } = require('mongodb')
+const { Types: { ObjectId } } = require('mongoose')
 const { validateUserId, validatePassword } = require('com')
+const { User, Sticky } = require('../data/models')
 
 function unregisterUser(userId, password) {
     validateUserId(userId)
     validatePassword(password)
 
-    const users = process.db.collection('users')
-
-    const filter = { _id: new ObjectId(userId) }
-
-    return users.findOne(filter)
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new Error('user not found')
 
             if (user.password !== password) throw new Error('wrong credentials')
 
-            return users.deleteOne(filter)
+            return User.deleteOne({ _id: new ObjectId(userId) })
         })
         .then(() => {
-            const stickies = process.db.collection('stickies')
 
-            return stickies.deleteMany({ user: userId })
+            return Sticky.deleteMany({ user: userId })
         })
 }
-
 
 module.exports = unregisterUser

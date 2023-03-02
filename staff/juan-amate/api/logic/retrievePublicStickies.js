@@ -1,6 +1,5 @@
-const { ObjectId } = require('mongodb')
 const { validateUserId } = require('com')
-
+const { User, Sticky } = require('../data/models')
 /**
  * Retrieves the public stickies from all users that publish them
  * 
@@ -9,15 +8,11 @@ const { validateUserId } = require('com')
 function retrievePublicStickies(userId) {
     validateUserId(userId)
 
-    const users = process.db.collection('users')
-
-    return users.findOne({ _id: new ObjectId(userId) })
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
-            const stickies = process.db.collection('stickies')
-
-            return stickies.find({ visibility: 'public' }).toArray()
+            return Sticky.find({ visibility: 'public' })
         })
 }
 

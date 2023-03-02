@@ -31,9 +31,9 @@ Arroz.prototype.some = function (callback) {
     for (let i = 0; i < this.length; i++) {
         const element = this[i]
 
-        const matches = callback(element)
+        const result = callback(element)
 
-        if (matches) return true
+        if (result) return true
     }
 
     return false
@@ -43,16 +43,16 @@ Arroz.prototype.every = function (callback) {
     for (let i = 0; i < this.length; i++) {
         const element = this[i]
 
-        const allMatches = callback(element)
+        const result = callback(element)
 
-        if (!allMatches) return false
+        if (!result) return false
     }
 
     return true
 }
 
 Arroz.prototype.slice = function (start, end) {
-    const newArray = []
+    const result = new Arroz
 
     if (start < 0) { start = this.length + start }
     if (end < 0) { end = this.length + end }
@@ -61,19 +61,22 @@ Arroz.prototype.slice = function (start, end) {
     for (let i = start; i < (end || this.length); i++) {
         const element = this[i]
 
-        newArray[newArray.length] = element
+        result[result.length] = element
+        result.length++
     }
 
-    return newArray
+    return result
 }
 
 Arroz.prototype.reverse = function () {
-    const result = []
+    const limit = Math.floor(this.length / 2)
 
-    const start = this.length - 1
+    for (let i = 0; i < limit; i++) {
+        const element = this[i]
+        const elementBack = this[this.length - i - 1]
 
-    for (let i = start; i >= 0; i--) {
-        result[result.length] = this[i]
+        this[i] = elementBack
+        this[this.length - 1 - i] = element
     }
 
     return result
@@ -89,22 +92,22 @@ Arroz.prototype.indexOf = function (searchElement, fromIndex) {
     for (let i = start; i < this.length; i++) {
         const element = this[i]
 
-        if (element === searchElement) {
-            return i
-        }
+        if (element === searchElement) return i
     }
 }
 
 Arroz.prototype.map = function (callback) {
-    const newArray = []
+    const result = new Arroz
 
     for (let i = 0; i < this.length; i++) {
         const element = this[i]
 
-        newArray[i] = callback(element)
+        const elemmentMapped = callback(element)
+
+        this[i] = callback(element)
     }
 
-    return newArray
+    return result
 }
 
 Arroz.prototype.filter = function (callback) {
@@ -132,8 +135,15 @@ Arroz.prototype.find = function (callback) {
     }
 }
 
-Arroz.prototype.findIndex = function () {
-    // TODO
+Arroz.prototype.findIndex = function (callback) {
+    for (let i = 0; i < this.length; i++) {
+        const element = this[i]
+
+        if (callback(element)) {
+            return i
+        }
+
+    }
 }
 
 module.exports = Arroz
