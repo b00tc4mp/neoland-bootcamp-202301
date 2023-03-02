@@ -1,25 +1,20 @@
-const { ObjectId } = require('mongodb')
+const { Types: { ObjectId } } = require('mongoose')
 const { validateUserId } = require('com')
+const { User, Sticky } = require('../data/models')
 
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
  * @param {string} userId The userId of the user to retrieve the stickies from
- * 
- * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId) {
     validateUserId(userId)
 
-    const users = process.db.collection('users')
-
-    return users.findOne({ _id: new ObjectId(userId) })
+    return User.findById(userId)
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
-            const stickies = process.db.collection('stickies')
-
-            return stickies.find({ user: userId }).toArray()
+            return Sticky.find({ user: new ObjectId(userId) })
         })
 }
 
