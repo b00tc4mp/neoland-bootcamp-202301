@@ -1,15 +1,10 @@
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const deleteSticky = require('./deleteSticky')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
-
-client.connect()
-    .then(connection => {
-        const db = connection.db('mydb')
-        process.db = db
-
-        //return deleteSticky('user-1676975539753', '63f74ad11f44c4a9bff08b17')
-        return deleteSticky('user-1676970622765', '63f74926e10f32128288b692')
+connect('mongodb://127.0.0.1:27017/mydb')
+    .then(() => {
+        return deleteSticky('6400b46a537e25951ae65548', '6400b4903b98a4fa1c960f73')
     })
     .then(result => console.log(result))
-    .catch(error => console.error(error.message))
+    .catch(error => console.error(error))
+    .finally(() => disconnect())
