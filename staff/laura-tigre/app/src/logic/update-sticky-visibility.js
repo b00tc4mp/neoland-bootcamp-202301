@@ -1,4 +1,4 @@
-
+const { validateUserId, validateStickyId, validateVisibility, validateCallback } = require('com')
 /**
  * publica los stickies privados
  * 
@@ -7,7 +7,11 @@
 
     function updateStickyVisibility(userId, stickyId, visibility, callback) {
         
-        
+        validateUserId(userId)
+  validateStickyId(stickyId)
+  validateVisibility(visibility)
+  validateCallback(callback)
+
            
     const xhr = new XMLHttpRequest()
 

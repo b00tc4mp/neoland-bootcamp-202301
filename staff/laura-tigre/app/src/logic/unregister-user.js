@@ -1,4 +1,8 @@
+const { validateUserId, validatePassword, validateCallback } = require('com')
 function unregisterUser(userId, password, callback) {
+    validateUserId(userId)
+    validatePassword(password)
+    validateCallback(callback)
    
     const xhr = new XMLHttpRequest()
  

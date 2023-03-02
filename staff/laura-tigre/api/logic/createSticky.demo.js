@@ -1,14 +1,14 @@
-const{MongoClient}= require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const createSticky=require('./createSticky')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
 
-client.connect()
+connect('mongodb://127.0.0.1:27017/mydb')
 
-    .then(connection => {
-        const db= connection.db('mydb')
-        process.db=db
+    .then(() => {
+       
 
-        return createSticky('user-1676992518546','test 1', 'public')
+        return createSticky('6400a7f148c755b7f3af4076','test 1', 'public')
     })
     .then(result => console.log(result))
+    .catch(error=> console.error(error))
+    .finally(() => disconnect())

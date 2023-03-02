@@ -1,25 +1,29 @@
-const{ObjectId} = require ('mongodb')
-
-function toggleLikeSticky( userId, stickyId){
- 
-    const stickies = process.db.collection('stickies')
+const { validateUserId, validateStickyId } = require('com')
+const { User, Sticky } = require('../data/models')
+const { Types: { ObjectId } } = require('mongoose')
 
 
-    return stickies.findOne({_id: new ObjectId(stickyId)})
-    
-    .then( sticky => {
-        // array de likes mirar si esta el id
-        // si esta hay que quitarlo 
-        
-        // si no esta ponerlo
-        if(!sticky) throw new Error(`sticky with id '${stickyId}s' not found`)
-        const index= sticky.likes.indexOf(userId)
+function toggleLikeSticky(userId, stickyId) {
+    validateUserId(userId)
+    validateStickyId(stickyId)
 
-        index>-1 ? sticky.likes.splice(index,1): sticky.likes.push(userId)
+    return User.findById((userId))
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
-        return stickies.updateOne({_id: new ObjectId(stickyId)}, {$set:{likes:sticky.likes}})
 
-    } ) 
-   
+            return Sticky.findById((stickyId))
+        })
+        .then(sticky => {
+
+            if (!sticky) throw new Error(`sticky with id '${stickyId}s' not found`)
+            const index = sticky.likes.indexOf(userId)
+
+            index > -1 ? sticky.likes.splice(index, 1) : sticky.likes.push(userId)
+
+            return Sticky.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes: sticky.likes } })
+
+        })
+
 }
-module.exports= toggleLikeSticky
+module.exports = toggleLikeSticky

@@ -1,12 +1,21 @@
-
-
+const { validateUserId } = require('com')
+const { User, Sticky } = require('../data/models')
 /**
  *Retrieves the public stickies from all users that publish them
  * 
  * @return {array} The public stickies
  */
- function retrievePublicStickies() {
-    const stickies = process.db.collection('stickies')
-    return stickies.find({visibility: 'public'}).toArray()
+function retrievePublicStickies(userId) {
+  validateUserId(userId)
+
+
+  return User.findById((userId))
+    .then(user => {
+      if (!user) throw new Error(`user with id ${userId} not found`)
+
+
+
+      return Sticky.find({visibility: 'public'})
+    })
 }
 module.exports = retrievePublicStickies

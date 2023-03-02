@@ -1,3 +1,4 @@
+const { validateUserId, validateCallback } = require('com')
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
@@ -6,6 +7,8 @@
  * @return {Array} The stickies that belong to the specified user
  */
 function retrieveMyStickies(userId, callback) {
+    validateUserId(userId)
+    validateCallback(callback)
     const xhr = new XMLHttpRequest()
 
     xhr.onload=() => {

@@ -1,4 +1,4 @@
-
+const { validateUserId, validateStickyId, validateCallback } = require('com')
 /**
  * toggles the likeability of specific sticky
  * @param {string } userId the user email
@@ -6,6 +6,9 @@
  * @param {function} callback the callback
  */
 function toggleLikeSticky(userId, stickyId, callback){
+    validateUserId(userId)
+    validateStickyId(stickyId)
+validateCallback(callback)
     const xhr = new XMLHttpRequest()
 
     xhr.onload =()=> {

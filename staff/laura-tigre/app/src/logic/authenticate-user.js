@@ -1,3 +1,4 @@
+import { validateEmail, validatePassword, validateCallback } from 'com'
 /**
  * 
  * @param {string} email the user email that I registered
@@ -5,28 +6,32 @@
  * @param {function} callback the callback
  */
 function authenticateUser(email, password, callback) {
+    validateEmail(email)
+    validatePassword(password)
+    validateCallback(callback)
+
     const xhr = new XMLHttpRequest
-   
-    xhr.onload= () => {
-        const {status} = xhr
 
-        if(status === 500) {
-            const{response} =xhr
+    xhr.onload = () => {
+        const { status } = xhr
 
-            const body= JSON.parse(response)
+        if (status === 500) {
+            const { response } = xhr
 
-            const {error}= body
+            const body = JSON.parse(response)
+
+            const { error } = body
 
             callback(new Error(error))
 
             return
         }
 
-        const{response}= xhr
+        const { response } = xhr
 
-        const body= JSON.parse(response)
+        const body = JSON.parse(response)
 
-        const{userId}= body
+        const { userId } = body
 
         callback(null, userId)
     }

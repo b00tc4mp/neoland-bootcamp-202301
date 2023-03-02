@@ -1,8 +1,14 @@
+const { User, Sticky } = require('../data/models')
+const { validateUserId } = require('com')
+
 function retrieveMyStickies(userId) {
-    const stickies = process.db.collection('stickies')
+    validateUserId(userId)
 
+    return User.findById((userId))
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
-    return stickies.find({ user: userId }).toArray()
-    
+            return Sticky.find({ user: userId })
+        })
 }
 module.exports = retrieveMyStickies

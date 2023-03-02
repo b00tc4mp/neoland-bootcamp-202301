@@ -6,7 +6,7 @@ const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const cors = require('cors')
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
 const retrieveMyStickies = require('./logic/retrieveMyStickies')
@@ -16,99 +16,116 @@ const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
 
 
-client.connect()
 
-    .then(connection => {
-        const db = connection.db('mydb')
-        process.db = db
+connect('mongodb://127.0.0.1:27017/mydb')
 
+    .then(() => {
         const server = express()
         const jsonBodyParser = bodyParser.json()
         //transforma la request parqa el servidor
         server.use(cors())
 
         server.post('/users', jsonBodyParser, (req, res) => {
+            try {
 
             const user = req.body
             const { name, age, email, password } = user
 
+                registerUser(name, age, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
 
-            registerUser(name, age, email, password)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json({ error: error.message }))
-
-
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
 
         })
 
 
         server.post('/users/auth', jsonBodyParser, (req, res) => {
 
+            try {
             const credentials = req.body
 
             const { email, password } = credentials
 
-            authenticateUser(email, password)
-                .then(userId => res.status(200).json({ userId }))
-                .catch(error => res.status(500).json({ error: error.message }))
+                authenticateUser(email, password)
+                    .then(userId => res.status(200).json({ userId }))
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
 
         })
 
 
         server.get('/users', (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
-            
-            retrieveUser(userId)
+                retrieveUser(userId)
 
-            .then(user => res.json(user))
-            .catch(error => res.status(500).json({ error: error.message }))
-    
+                    .then(user => res.json(user))
+                    .catch(error => res.status(500).json({ error: error.message }))
+
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
+
         })
 
 
 
         server.delete('/users', jsonBodyParser, (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { password } = req.body
 
-            unregisterUser(userId, password)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+                unregisterUser(userId, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
         })
-        
-        
+
+
 
         server.patch('/users/updatePassword', jsonBodyParser, (req, res) => {
-            // TODO update user password
+           
+            try {
             const userId = req.headers.authorization.slice(7)
             const credentials = req.body
 
-            const { currentPassword, newPassword, newPasswordRepeat } = credentials
-
-
-
-            updateUserPassword(userId, currentPassword, newPassword, newPasswordRepeat)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            const { password, newPassword, newPasswordConfirm } = credentials
+                updateUserPassword(userId, password, newPassword, newPasswordConfirm)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+                
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
 
 
         })
 
         server.patch('/users/updateEmail', jsonBodyParser, (req, res) => {
-            // TODO update user password
+            try {
+           
             const userId = req.headers.authorization.slice(7)
             const credentials = req.body
 
-            const {password, newEmail} = credentials
+            const { password, newEmail } = credentials
 
+               updateUserEmail(userId, password, newEmail)
+                   .then(() => res.status(204).send())
+                   .catch(error => res.status(500).json({ error: error.message }))
 
-
-            updateUserEmail(userId,password,newEmail)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json({ error: error.message }))
+            
+           } catch (error) {
+            res.status(500).json({ error: error.message })
+           }    
 
 
         })
@@ -116,66 +133,99 @@ client.connect()
 
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { text, visibility } = req.body
-
-            createSticky(userId, text, visibility)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json(error.message))
+                createSticky(userId, text, visibility)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json(error.message))
+                
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
         })
 
         server.get('/stickies', (req, res) => {
-            retrievePublicStickies()
-                .then(stickies => res.status(200).json(stickies))
-                .catch(error => res.status(500).json(error.message))
+            try {
+            const userId = req.headers.authorization.slice(7)
+                
+                retrievePublicStickies(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => res.status(500).json(error.message))
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
         })
 
         server.get('/stickies/user', (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
-            retrieveMyStickies(userId)
-                .then(stickies => res.status(200).json(stickies))
-                .catch(error => res.status(500).json(error.message))
+                retrieveMyStickies(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => res.status(500).json(error.message))
+
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
         })
 
 
         server.patch('/stickies/:stickyId/text', jsonBodyParser, (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
             const { text } = req.body
-
-            updateStickyText(userId, stickyId, text)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json(error.message))
+                
+                updateStickyText(userId, stickyId, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json(error.message))
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
 
         })
 
         server.patch('/stickies/:stickyId/visibility', jsonBodyParser, (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
             const { visibility } = req.body
-
-            updateStickyVisibility(userId, stickyId, visibility)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json(error.message))
+                
+                updateStickyVisibility(userId, stickyId, visibility)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json(error.message))
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
 
         })
 
         server.patch('/stickies/:stickyId/likes', (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
-
-            toggleLikeSticky(userId, stickyId)
-                .then(() => res.status(201).send())
-                .catch(error => res.status(500).json(error.message))
+                
+                toggleLikeSticky(userId, stickyId)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(500).json(error.message))
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
 
         })
 
         server.delete('/stickies/:stickyId', (req, res) => {
+            try {
             const userId = req.headers.authorization.slice(7)
             const { stickyId } = req.params
-            deleteSticky(userId, stickyId)
-                .then(() => res.status(204).send())
-                .catch(error => res.status(500).json(error.message))
+
+                
+                deleteSticky(userId, stickyId)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json(error.message))
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
 
         })
 

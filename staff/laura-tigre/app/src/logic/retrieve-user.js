@@ -1,3 +1,4 @@
+const { validateUserId, validateCallback} = require('com')
 /**
  * Retrieves the user public information
  * 
@@ -5,6 +6,8 @@
  * @param {function} callback The function to call back with the user (or an error)
  */
 function retrieveUser(userId, callback){
+    validateUserId(userId)
+    validateCallback(callback)
     const xhr= new XMLHttpRequest()
 
     xhr.onload = () => {

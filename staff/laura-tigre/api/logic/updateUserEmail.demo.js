@@ -1,13 +1,14 @@
-const { MongoClient } = require('mongodb')
+const { connect, disconnect } = require('mongoose')
 const updateUserEmail = require('./updateUserEmail')
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
 
-client.connect()
-    .then(connection => {
-        const db = connection.db('mydb')
-        process.db = db
 
-        return updateUserEmail('63fcf90d17ce12484bdb5384','123123123','ltigre@gmail.com')
+connect('mongodb://127.0.0.1:27017/mydb')
+    .then(() => {
+        
+
+        return updateUserEmail('6400a7de48c755b7f3af4073','123123123','papa@noel.com')
     })
     .then(result => console.log(result))
+    .catch(error => console.error(error))
+    .finally(() => disconnect())

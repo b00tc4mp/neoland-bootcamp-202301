@@ -1,7 +1,10 @@
-
+const { validateUserId,validateStickyId, validateText, validateCallback} = require('com')
 
 function updateStickyText(userId, stickyId, text, callback) {
-   
+    validateUserId(userId)
+    validateStickyId(stickyId)
+    validateText(text)
+    validateCallback(callback)
     const xhr = new XMLHttpRequest()
 
     xhr.onload =()=> {

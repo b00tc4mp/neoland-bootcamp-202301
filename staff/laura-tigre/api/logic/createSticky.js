@@ -1,3 +1,8 @@
+const { validateUserId, validateText, validateVisibility } = require('com')
+const { User, Sticky } = require('../data/models')
+
+
+
 /**
  * Creates a new sticky in the database
  * 
@@ -6,17 +11,22 @@
  * @param {string} visibility The visibility of the sticky
  */
 function createSticky(userId, text, visibility) {
-    const stickies= process.db.collection('stickies')
-
-
-    const sticky = {
-        user: userId,
-        text,
-        visibility,
-        likes: []
-    }
+    validateUserId(userId)
+    validateText(text)
+    validateVisibility(visibility)
     
-    return stickies.insertOne(sticky)
+    return User.findById((userId))
+        .then(user => {
+            if (!user) throw new Error(`user with id ${userId} not found`)
 
+            const sticky =  new Sticky({
+                user: userId,
+                text,
+                visibility,
+                likes: []
+            })
+
+            return sticky.save()
+        })
 }
-module.exports=createSticky
+module.exports = createSticky
