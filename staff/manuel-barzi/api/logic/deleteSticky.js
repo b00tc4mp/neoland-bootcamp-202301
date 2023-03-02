@@ -12,12 +12,11 @@ function deleteSticky(userId, stickyId) {
     validateStickyId(stickyId)
 
     const users = process.db.collection('users')
+    const stickies = process.db.collection('stickies')
 
     return users.findOne({ _id: new ObjectId(userId) })
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
-
-            const stickies = process.db.collection('stickies')
 
             return stickies.findOne({ _id: new ObjectId(stickyId) })
         })
