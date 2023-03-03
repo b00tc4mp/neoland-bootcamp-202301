@@ -23,14 +23,16 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleUpdateVisibility = event => {
         try {
-            updateStickyVisibility(sessionStorage.userId, event.target.dataset.id, event.target.dataset.visibility === 'public' ? 'private' : 'public', error => {
+            const newVisibility = event.target.dataset.visibility === 'public' ? 'private' : 'public'
+
+            updateStickyVisibility(sessionStorage.userId, event.target.dataset.id, newVisibility, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onUpdateVisibility(event.target.dataset.id)
+                onUpdateVisibility(event.target.dataset.id, newVisibility)
             })
         } catch (error) {
             alert(error.message)

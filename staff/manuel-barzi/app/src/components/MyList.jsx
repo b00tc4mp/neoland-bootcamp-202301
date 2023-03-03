@@ -83,8 +83,25 @@ function MyList({ updateStamp }) {
         })
     }
 
+    const handleUpdateVisibility = (stickyId, visibility) => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+            stickyUpdated.visibility = visibility
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
+    }
+
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor} />)}
+        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor} />)}
     </Container>
 }
 
