@@ -19,11 +19,7 @@ const user = new Schema({
     password:{
         type:'string',
         required: true,
-    },
-    favs: [{
-        type: ObjectId,
-        ref: 'Sticky'
-    }]
+    }
 })
 
 const sticky= new Schema({

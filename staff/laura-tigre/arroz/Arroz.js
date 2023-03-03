@@ -51,7 +51,7 @@ Arroz.prototype.every = function (callback) {
 
 Arroz.prototype.slice = function (start, end) {
     //const newArray = []
-    const result= new Arroz
+    const result = new Arroz
     if (start < 0) {
         start = this.length + start
     }
@@ -71,7 +71,7 @@ Arroz.prototype.slice = function (start, end) {
 }
 
 Arroz.prototype.reverse = function () {
-    const result= new Arroz
+    const result = new Arroz
     const start = this.length - 1
 
     for (let i = start; i >= 0; i--) {
@@ -100,12 +100,12 @@ Arroz.prototype.map = function (callback) {
 }
 
 Arroz.prototype.filter = function (callback) {
-    result= new Arroz
-    for(let i=0; i<this.length; i++ ){
-        const element= this[i]
-        const matches= callback(element)
-        if (matches){
-            result[result.length]= elementMapped
+    result = new Arroz
+    for (let i = 0; i < this.length; i++) {
+        const element = this[i]
+        const matches = callback(element)
+        if (matches) {
+            result[result.length] = elementMapped
             result.length++
 
         }
@@ -115,32 +115,60 @@ Arroz.prototype.filter = function (callback) {
 
 }
 
-Arroz.prototype.find = function () {
-    // TODO
-}
+Arroz.prototype.find = function (callback) {
 
-Arroz.prototype.findIndex = function () {
-    // TODO
-}
-Arroz.prototype.push= function(){
-
-}
-Arroz.prototype.pop= function(){
+    for (let i = 0; i < this.length; i++) {
+        const element = this[i]
+        const find = callback(element)
+        if (find) return element
+    }
 
 }
-Arroz.prototype.shift= function(){
+
+Arroz.prototype.findIndex = function (callback) {
+
+    for (let i = 0; i < this.length; i++) {
+         const element= this[i]
+         const findIndex= callback(element)
+        if (element === findIndex) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+Arroz.prototype.push = function (newElement) {
+    result= new Arroz
+    for (let i = 0; i < this.length; i++) {
+        const element= this[i]
+        
+        result[result.length] = element
+        result.length++
+
+        const newLength= this[this.length+ 1]
+        
+        result[result.length] = newLength
+        
+        newElement[this.length+1]  
+    }
+    return result
+}
+Arroz.prototype.pop = function () {
 
 }
-Arroz.prototype.unshift= function(){
+Arroz.prototype.shift = function () {
 
 }
-Arroz.prototype.lastIndexOf= function(){
+Arroz.prototype.unshift = function () {
 
 }
-Arroz.prototype.concat= function(){
+Arroz.prototype.lastIndexOf = function () {
 
 }
-Arroz.prototype.join= function(){
+Arroz.prototype.concat = function () {
+
+}
+Arroz.prototype.join = function () {
 
 }
 
