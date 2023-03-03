@@ -30,7 +30,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     return
                 }
 
-                onUpdateVisibility(event.target.dataset.id)
+                onUpdateVisibility()
             })
         } catch (error) {
             alert(error.message)
@@ -39,16 +39,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleToggleLike = event => {
         try {
-            const stickyId = event.currentTarget.dataset.id
-
-            toggleLikeSticky(sessionStorage.userId, stickyId, error => {
+            toggleLikeSticky(sessionStorage.userId, event.currentTarget.dataset.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleLike(sessionStorage.userId, stickyId)
+                onToggleLike()
             })
         } catch (error) {
             alert(error.message)
@@ -64,7 +62,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     return
                 }
 
-                onDelete(event.target.dataset.id)
+                onDelete()
             })
         } catch (error) {
             alert(error.message)
@@ -80,7 +78,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     return
                 }
 
-                onUpdateColor(event.target.dataset.id, event.target.value)
+                onUpdateColor()
             })
         } catch (error) {
             alert(error.message)
