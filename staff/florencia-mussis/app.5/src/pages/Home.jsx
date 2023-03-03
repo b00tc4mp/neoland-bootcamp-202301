@@ -58,6 +58,7 @@ function Home(props) {
 
                     return
                 }
+
                 setUser(user)
             })
         } catch(error) {
@@ -80,7 +81,7 @@ function Home(props) {
         </header>
 
         <main className="py-20">
-            {view === 'list' && <List listUpdateStamp={listUpdateStamp} userFromHome={user} />}
+            {view === 'list' && <List listUpdateStamp={listUpdateStamp} />}
 
             {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
 

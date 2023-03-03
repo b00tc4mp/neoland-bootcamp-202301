@@ -5,16 +5,9 @@ import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 import changeStickyColor from '../logic/change-sticky-color'
-import toggleFavsSticky from '../logic/toggle-favs-sticky'
-import { useEffect, useState } from 'react'
 
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeColor, onToggleFavs, userFromHome }) {
-    const [user, setUser] = useState()
-
-    useEffect(()=>{
-        setUser(userFromHome)
-    }, [userFromHome])
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeColor }) {
 
     const handleUpdateText = event => {
         try {
@@ -93,22 +86,6 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeCol
         }
     }
 
-    const handleFavs = event => {
-        const stickyId = event.currentTarget.dataset.id
-        try {
-            toggleFavsSticky(sessionStorage.userId, stickyId, error => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-                onToggleFavs(sessionStorage.userId, stickyId)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }
-
     let bgColor
 
     switch (element.color) {
@@ -128,12 +105,6 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeCol
 
     return <li className={`${bgColor} p-4 w-[50ch] border-2 flex flex-col items-end rounded-lg border-solid`} key={element._id}>
         <div>
-            <div className="flex" >
-                <button className="h-5 w-5" onClick={handleFavs} data-id={element._id}>
-                    {user?.favs?.includes(element._id) ? "⭑" : "✩"}
-                </button>
-            </div>
-
             {element.user === sessionStorage.userId && <>
 
                 <select defaultValue={element.color} data-id={element._id} name='color2' onChange={handleChangeColor}>
