@@ -85,10 +85,26 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         }
     }
 
-    return <li className="bg-[gold] w-[40ch]" key={element._id}>
+    let bgColor
+
+    switch(element.color) {
+        case 'yellow': 
+            bgColor = 'bg-[gold]'
+            break
+        case 'red':
+            bgColor = 'bg-[tomato]'
+            break
+        case 'green':
+            bgColor = 'bg-[yellowgreen]'
+            break
+        case 'blue':
+            bgColor = 'bg-[dodgerblue]'
+    }
+
+    return <li className={`${bgColor} w-[40ch]`} key={element._id}>
         <div className="text-right">
             {element.user === sessionStorage.userId && <>
-                <select data-id={element._id} onChange={handleUpdateColor}>
+                <select data-id={element._id} onChange={handleUpdateColor} defaultValue={element.color}>
                     <option value="red">red</option>
                     <option value="green">green</option>
                     <option value="blue">blue</option>

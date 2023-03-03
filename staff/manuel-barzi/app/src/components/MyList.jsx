@@ -29,7 +29,7 @@ function MyList({ updateStamp }) {
     }, [updateStamp])
 
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item element={sticky} onUpdateVisibility={loadList} onDelete={loadList} onToggleLike={loadList} />)}
+        {stickies.map(sticky => <Item element={sticky} onUpdateVisibility={loadList} onDelete={loadList} onToggleLike={loadList} onUpdateColor={loadList} />)}
     </Container>
 }
 
