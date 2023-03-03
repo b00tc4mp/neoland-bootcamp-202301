@@ -1,45 +1,9 @@
-import { useState, useEffect } from 'react'
-import retrievePublicStickies from '../logic/retrieve-public-stickies'
 import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
-import Container from '../library/Container'
-
-function List({ updateStamp }) {
-    console.log('List -> render')
-
-    const [stickies, setStickies] = useState([])
-
-    const loadList = () => {
-        try {
-            retrievePublicStickies(sessionStorage.userId, (error, stickies) => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-
-                setStickies(stickies)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }
-
-    useEffect(() => {
-        loadList()
-    }, [updateStamp])
-
-    return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item element={sticky} onUpdateVisibility={loadList} onDelete={loadList} onToggleLike={loadList} />)}
-    </Container>
-}
-
-export default List
-
 
 function Item({ element, onUpdateVisibility, onToggleLike, onDelete }) {
     const handleUpdateText = event => {
@@ -120,3 +84,5 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete }) {
         </div>
     </li>
 }
+
+export default Item
