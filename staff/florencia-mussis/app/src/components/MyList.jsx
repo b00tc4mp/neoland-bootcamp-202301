@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react"
 import retrieveMyStickies from "../logic/retrieve-my-stickies"
-import updateStickyText from "../logic/update-sticky-text"
-import deleteSticky from "../logic/delete-sticky"
-import updateStickyVisibility from "../logic/update-sticky-visibility"
-import toggleLikeSticky from "../logic/toggle-like-sticky"
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 import Container from '../library/Container'
+import Item from './Item'
 
 function MyList({ listUpdateStamp }) {
 
@@ -32,84 +27,93 @@ function MyList({ listUpdateStamp }) {
     }, [listUpdateStamp])
 
 
-    const handleUpdateText = (event) => {
-        try {
-            updateStickyText(sessionStorage.userId, event.target.id, event.target.innerText, error => {
-                if (error) {
-                    alert(error.message)
-                    return
-                }
-            })
-        } catch (error) {
-            alert(error.message)
+    const handleChangeColor = (stickyId, color) => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky._id === stickyId)
 
-        }
+            const sticky = stickies[index]
+
+            // const stickyUpdated = {}
+            // stickyUpdated._id = sticky._id
+            // stickyUpdated.user = sticky.user
+            // stickyUpdated.text = sticky.text
+            // stickyUpdated.visibility = sticky.visibility
+            // stickyUpdated.color = color
+            // stickyUpdated.likes = sticky.likes
+            const stickyUpdated = { ...sticky }
+            stickyUpdated.color = color
+
+            //const stickiesUpdated = stickies.concat()
+            const stickiesUpdated = [...stickies]
+
+            //stickiesUpdated.splice(index, 1, stickyUpdated)
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
     }
 
-    const handleDeleteSticky = (event) => {
-        try {
-            deleteSticky(sessionStorage.userId, event.target.id, error => {
-                if (error) {
-                    alert(error.message)
+    const handleRemoveFromList = stickyId => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky._id === stickyId)
 
-                    return
-                }
-                loadList()
-            })
-        } catch (error) {
-            console.error(error.message)
-        }
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated.splice(index, 1)
+
+            return stickiesUpdated
+        })
     }
 
-    const handleUpdateVisibility = (event) => {
-        try {
-            updateStickyVisibility(sessionStorage.userId, event.target.id, event.target.dataset.visibility === 'public' ? 'private' : 'public', error => {
-                if (error) {
-                    alert(error.message)
 
-                    return
-                }
-                loadList()
-            })
-        } catch (error) {
-            alert(error.message)
-        }
+    const handleUpdateVisibility = (stickyId, visibility) => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+            stickyUpdated.visibility = visibility
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
     }
 
-    const handleLike = event => {
-        try {
-            toggleLikeSticky(sessionStorage.userId, event.currentTarget.id, error => {
-                if (error) {
-                    alert(error.message)
+    const handleLike = (userId, stickyId) => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky._id === stickyId)
 
-                    return
-                }
-                loadList()
-            })
-        } catch (error) {
-            alert(error.message)
-        }
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+            stickyUpdated.likes = [...sticky.likes]
+
+            const { likes } = stickyUpdated
+
+            const indexOfUser = likes.indexOf(userId)
+
+            if (indexOfUser < 0)
+                likes.push(userId)
+            else
+                likes.splice(indexOfUser, 1)
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
     }
 
 
     return <Container TagName="ul" className="gap-4 m-3">
-        {stickies.map(sticky =>
-            <li className="p-4 w-[50ch] border-2 flex flex-col items-end rounded-lg border-solid" key={sticky._id}>
-                <div>
-                    <button className={"text-white uppercase rounded-md border-white py-1 px-1 text-sm items-center" + (sticky.visibility === 'public' ? ' bg-green-500' : ' bg-red-500')} id={sticky._id} data-visibility={sticky.visibility} onClick={handleUpdateVisibility}>{sticky.visibility}</button>
-
-                    <button className="border-2 border-[black] w-7 h-7 text-center m-1 text-black uppercase rounded-md text-sm" id={sticky._id} onClick={handleDeleteSticky}>X</button>
-                </div>
-                <p className="w-[45ch] text-left" id={sticky._id} contentEditable={sticky.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{sticky.text}</p>
-
-                <div className="flex">
-                    <button className="h-5 w-5" onClick={handleLike} id={sticky._id} title={sticky.likes.join('\n')}>
-                        {sticky.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : < HeartIconOutline className="h-4 w-4 text-black-500" />}
-                    </button> <p>{sticky.likes.length}</p>
-                </div>
-                <strong className="text-xs">{sticky.user}</strong>
-            </li>)}
+        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleLike} onChangeColor={handleChangeColor} />)}
     </Container>
+
 }
 
 export default MyList

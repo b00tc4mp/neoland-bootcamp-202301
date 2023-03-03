@@ -36,12 +36,7 @@ const sticky = new Schema({
     likes: [{
         type: ObjectId,
         ref: 'User'
-    }],
-    color: {
-        type: 'string',
-        enum: ['yellow', 'green', 'red', 'purple'],
-        default: 'yellow'
-    }
+    }]
 })
 
 const User = model('User', user)
