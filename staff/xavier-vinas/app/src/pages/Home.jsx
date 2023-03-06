@@ -8,7 +8,7 @@ import Button from "../library/Button"
 
 
 function Home({ onLogout, onUnregisterUser }) {
-    console.log('Home -> render')
+
 
     const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
@@ -25,7 +25,6 @@ function Home({ onLogout, onUnregisterUser }) {
 
         setView('list')
     }
-
     const handleAdd = () => {
         try {
             createSticky(sessionStorage.userId, '', 'public', error => {
@@ -41,6 +40,7 @@ function Home({ onLogout, onUnregisterUser }) {
             alert(error.message)
         }
     }
+
 
     const handleLogout = () => {
         delete sessionStorage.userId
@@ -69,6 +69,22 @@ function Home({ onLogout, onUnregisterUser }) {
         }
     }, [])
 
+    const handleToggleFav = (userId, stickyId) => {
+        setUser(user => {
+            const newUser = { ...user }
+            const favs = [...user.favs]
+            newUser.favs = favs
+
+            const indexOfSticky = favs.indexOf(stickyId)
+
+            if (indexOfSticky < 0)
+                favs.push(stickyId)
+            else
+                favs.splice(indexOfSticky, 1)
+
+            return newUser
+        })
+    }
 
 
     return <div className="max-h-md" >
@@ -86,11 +102,11 @@ function Home({ onLogout, onUnregisterUser }) {
 
         <main className="flex flex-col items-center">
 
-            {view === "list" && <List listUpdateStamp={listUpdateStamp} />}
+            {view === "list" && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
             {view === "profile" && <Profile onUnregisterUser={onUnregisterUser} />}
 
-            {view === "my-list" && <MyList updateStamp={listUpdateStamp} />}
+            {view === "my-list" && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
         </main>
 
         <footer className=" border-double border-4 fixed bottom-0 left-0 flex justify-center bg-[#d1d5db] w-full  ">

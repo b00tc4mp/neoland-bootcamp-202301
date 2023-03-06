@@ -4,7 +4,7 @@ import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function MyList({ updateStamp }) {
+function MyList({ listUpdateStamp, user, onToggleFav }) {
 
 
     const [stickies, setStickies] = useState([])
@@ -27,11 +27,11 @@ function MyList({ updateStamp }) {
 
     useEffect(() => {
         loadList()
-    }, [updateStamp])
+    }, [listUpdateStamp])
 
     const handleUpdateColor = (stickyId, color) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -48,7 +48,7 @@ function MyList({ updateStamp }) {
 
     const handleRemoveFromList = stickyId => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const stickiesUpdated = [...stickies]
 
@@ -60,7 +60,7 @@ function MyList({ updateStamp }) {
 
     const handleToggleLike = (userId, stickyId) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -86,7 +86,7 @@ function MyList({ updateStamp }) {
 
     const handleUpdateVisibility = (stickyId, visibility) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -102,7 +102,7 @@ function MyList({ updateStamp }) {
     }
 
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor} user={user} onToggleFav={onToggleFav} />)}
     </Container>
 }
 

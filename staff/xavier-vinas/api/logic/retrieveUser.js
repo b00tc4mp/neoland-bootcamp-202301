@@ -5,15 +5,15 @@ const { User } = require("../data/models")
 function retrieveUser(userId) {
     validateUserId(userId)
 
-    return User.findById(userId)
+    return User.findById(userId).lean()
 
         .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
             // sanitization
-            delete user._doc._id
-            delete user._doc.password
-            delete user._doc.__v
+            delete user._id
+            delete user.password
+            delete user.__v
 
 
             return user

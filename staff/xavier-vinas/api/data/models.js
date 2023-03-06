@@ -20,7 +20,13 @@ const user = new Schema({
         type: 'string',
         required: true,
         // TODO validate password is greater than or equal to 8 characters
-    }
+    },
+    favs: [{
+        type: ObjectId,
+        ref: 'Sticky'
+    }]
+
+
 })
 
 const sticky = new Schema({

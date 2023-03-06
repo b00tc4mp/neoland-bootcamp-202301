@@ -4,8 +4,10 @@ import retrievePublicStickies from '../logic/retrieve-public-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function List({ updateStamp }) {
+function List({ listUpdateStamp, user, onToggleFav }) {
+
     const [stickies, setStickies] = useState([])
+
 
     const loadList = () => {
         try {
@@ -25,11 +27,12 @@ function List({ updateStamp }) {
 
     useEffect(() => {
         loadList()
-    }, [updateStamp])
+    }, [listUpdateStamp])
+
 
     const handleChangeColor = (stickyId, color) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -46,7 +49,7 @@ function List({ updateStamp }) {
 
     const handleRemoveFromList = stickyId => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const stickiesUpdated = [...stickies]
 
@@ -58,7 +61,7 @@ function List({ updateStamp }) {
 
     const handleToggleLike = (userId, stickyId) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -83,8 +86,8 @@ function List({ updateStamp }) {
     }
 
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleRemoveFromList}
-            onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleChangeColor} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleRemoveFromList}
+            onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />)}
     </Container>
 }
 

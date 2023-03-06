@@ -3,11 +3,14 @@ import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import changeStickyColor from '../logic/change-sticky-color'
+import toggleFavSticky from '../logic/toggle-fav-sticky'
 
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
+import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor }) {
+
+
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav, user }) {
     const handleUpdateText = event => {
         try {
             updateStickyText(sessionStorage.userId, event.target.dataset.id, event.target.innerText, error => {
@@ -57,6 +60,22 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             alert(error.message)
         }
     }
+    const handleToggleFav = event => {
+
+        const stickyId = event.currentTarget.dataset.id
+        try {
+            toggleFavSticky(sessionStorage.userId, stickyId, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                onToggleFav(sessionStorage.userId, stickyId)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
 
     const handleDelete = event => {
         try {
@@ -88,6 +107,9 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             alert(error.message)
         }
     }
+
+  
+
     let bgColor
 
     switch (element.color) {
@@ -103,31 +125,39 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         case 'blue':
             bgColor = 'bg-[dodgerblue]'
     }
-    return <li className={`${bgColor} w-[60ch] p-10 border-double  border-2`} key={element._id}>
-        <div className="text-right">
-            {element.user === sessionStorage.userId && <>
-                <select defaultValue={element.color} data-id={element._id} onChange={handleChangeColor}>
+    return <li className={`${bgColor} w-[60ch] p-10 border-double  border-2`} key={element.id}>
+        <div className="text-right  flex justify-end">
+            <button className="h-5 w-10 text-[#0a0802] m-1  flex " data-id={element.id} onClick={handleToggleFav}>{
+
+                user.favs?.includes(element.id) ?
+                    <StarIcon className="h-4 w-4 text-red-500" />
+                    :
+                    <StarIconOutline className="h-4 w-4 text-black-500" />}</button>
+
+            {element.user.id === sessionStorage.userId && <>
+                <select defaultValue={element.color} data-id={element.id} onChange={handleChangeColor}>
                     <option value="red">red</option>
                     <option value="green">green</option>
                     <option value="blue">blue</option>
                     <option value="yellow">yellow</option>
                 </select>
-                <button className="w-5 h-5  text-[#020200] m-1" data-id={element._id} data-visibility={element.visibility}
+                <button className="w-5 h-5  text-[#020200] m-1" data-id={element.id} data-visibility={element.visibility}
                     onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
 
             </>}
-            {element.user === sessionStorage.userId && <button className="w-5 h-5  text-[#030301] m-1"
-                data-id={element._id} onClick={handleDelete}>x</button>}
+            {element.user.id === sessionStorage.userId && <button className="w-5 h-5  text-[#030301] m-1"
+                data-id={element.id} onClick={handleDelete}>x</button>}
         </div>
 
-        <p className="p-2" data-id={element._id} contentEditable={element.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+        <p className="p-2" data-id={element.id} contentEditable={element.user.id === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
 
         <div className="flex flex-col items-end">
-            <button className="h-5 w-10 text-[#0a0802] m-1 flex justify-center" data-id={element._id}
+            <button className="h-5 w-10 text-[#0a0802] m-1 flex justify-center" data-id={element.id}
                 onClick={handleToggleLike} title={element.likes.join('\n')}
             >{element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
-            <strong>{element.user}</strong>
+            
+            <strong>{element.user.name}</strong>
         </div>
     </li>
 
