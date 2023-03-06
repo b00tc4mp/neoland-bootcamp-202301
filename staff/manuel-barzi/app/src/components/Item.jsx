@@ -124,34 +124,36 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             bgColor = 'bg-[dodgerblue]'
     }
 
-    return <li className={`${bgColor} w-[40ch]`} key={element._id}>
-        <div className="text-right">
-            {element.user === sessionStorage.userId && <>
-                <select data-id={element._id} onChange={handleUpdateColor} defaultValue={element.color}>
-                    <option value="red">red</option>
-                    <option value="green">green</option>
-                    <option value="blue">blue</option>
-                    <option value="yellow">yellow</option>
-                </select>
+    return <li className={`${bgColor} w-[40ch] p-2`} key={element.id}>
+        <div className="flex justify-between">
+            <strong className="text-left">{element.user.name}</strong>
+            <div>
+                {element.user.id === sessionStorage.userId && <>
+                    <select className="bg-[transparent]" data-id={element.id} onChange={handleUpdateColor} defaultValue={element.color}>
+                        <option value="red">red</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                        <option value="yellow">yellow</option>
+                    </select>
 
-                <button className="w-5 h-5 bg-black text-[gold] m-1" data-id={element._id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
-            </>}
+                    <button className="w-5 h-5" data-id={element.id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
+                </>}
 
-            {element.user === sessionStorage.userId && <button className="w-5 h-5 bg-black text-[gold] m-1" data-id={element._id} onClick={handleDelete}>x</button>}
+                {element.user.id === sessionStorage.userId && <button className="w-5 h-5" data-id={element.id} onClick={handleDelete}>x</button>}
+            </div>
         </div>
 
-        <p className="p-2" data-id={element._id} contentEditable={element.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+        <p className="p-2" data-id={element.id} contentEditable={element.user.id === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
 
-        <div className="flex flex-col items-end">
-            <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" data-id={element._id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
+        <div className="flex justify-end">
+            <button className="h-5 w-10 flex justify-center" data-id={element.id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
-            <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" data-id={element._id} onClick={handleToggleFav}>{
-                // user.favs && user.favs.includes(element._id) ?
-                user.favs?.includes(element._id) ?
-                    <StarIcon className="h-4 w-4 text-red-500" />
+            <button className="h-5 w-5 flex justify-center" data-id={element.id} onClick={handleToggleFav}>{
+                // user.favs && user.favs.includes(element.id) ?
+                user.favs?.includes(element.id) ?
+                    <StarIcon className="h-4 w-4 text-[black]" />
                     :
                     <StarIconOutline className="h-4 w-4 text-black-500" />}</button>
-            <strong>{element.user}</strong>
         </div>
     </li>
 }

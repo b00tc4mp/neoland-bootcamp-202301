@@ -30,12 +30,12 @@ function List({ updateStamp, user, onToggleFav }) {
 
     const handleUpdateColor = (stickyId, color) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
             // const stickyUpdated = {}
-            // stickyUpdated._id = sticky._id
+            // stickyUpdated.id = sticky.id
             // stickyUpdated.user = sticky.user
             // stickyUpdated.text = sticky.text
             // stickyUpdated.visibility = sticky.visibility
@@ -56,7 +56,7 @@ function List({ updateStamp, user, onToggleFav }) {
 
     const handleRemoveFromList = stickyId => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const stickiesUpdated = [...stickies]
 
@@ -68,7 +68,7 @@ function List({ updateStamp, user, onToggleFav }) {
 
     const handleToggleLike = (userId, stickyId) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -93,7 +93,7 @@ function List({ updateStamp, user, onToggleFav }) {
     }
 
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike}  onToggleFav={onToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike}  onToggleFav={onToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
     </Container>
 }
 
