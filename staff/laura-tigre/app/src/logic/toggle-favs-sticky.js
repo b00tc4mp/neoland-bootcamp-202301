@@ -1,11 +1,11 @@
 const { validateUserId, validateStickyId, validateCallback } = require('com')
 /**
- * toggles the likeability of specific sticky
+ * toggles the favorite of specific sticky
  * @param {string } userId the user email
  * @param {string} stickyId the sticky identifier
  * @param {function} callback the callback
  */
-function toggleLikeSticky(userId, stickyId, callback){
+function toggleFavsSticky(userId, stickyId, callback){
     validateUserId(userId)
     validateStickyId(stickyId)
     validateCallback(callback)
@@ -33,8 +33,6 @@ function toggleLikeSticky(userId, stickyId, callback){
   xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
   xhr.send()
 
-
-
    
 }
-export default toggleLikeSticky
+export default toggleFavsSticky

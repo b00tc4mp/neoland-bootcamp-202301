@@ -4,22 +4,18 @@ import updateStickyVisibility from '../logic/update-sticky-visibility'
 import changeStickyColor from '../logic/change-sticky-color'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import toggleFavsSticky from '../logic/toggle-favs-sticky'
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
-import { useEffect,useState } from 'react'
+import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
+import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
-function Item({ element, onUpdateVisibility, onDelete, onToggleLike, onChangeColor,onToggleFavs ,userFromHome}) {
 
-    const[user, setUser] = useState()
-    useEffect(() => {
-        setUser(userFromHome)
-      }, [userFromHome])
-    
+function Item({ element, onUpdateVisibility, onDelete, onToggleLike, onChangeColor, onToggleFavs, user }) {
+
+
 
     const handleLike = event => {
         try {
             const stickyId = event.currentTarget.dataset.id
-            toggleLikeSticky(sessionStorage.userId,stickyId, error => {
+            toggleLikeSticky(sessionStorage.userId, stickyId, error => {
                 if (error) {
                     alert(error.message)
 
@@ -35,8 +31,10 @@ function Item({ element, onUpdateVisibility, onDelete, onToggleLike, onChangeCol
 
     const handleFavs = event => {
         try {
+
             const stickyId = event.currentTarget.dataset.id
-            toggleFavsSticky(sessionStorage.userId,stickyId, error => {
+
+            toggleFavsSticky(sessionStorage.userId, stickyId, error => {
                 if (error) {
                     alert(error.message)
 
@@ -134,38 +132,44 @@ function Item({ element, onUpdateVisibility, onDelete, onToggleLike, onChangeCol
 
 
 
-    return <li className={`${bgColor}  w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]`} key={element._id}>
-        <div className="flex flex-row justify-end">
-        <button className="h-5 w-5" onClick={handleFavs} data-id={element._id} >
-                {user?.favs?.includes(element._id) ? '⭐️' : '✩'}</button>
-            {element.user === sessionStorage.userId &&
-                <select className="border-solid border-2 border-[#6b7280]" defaultValue={element.color} data-id={element._id} name='colorToChange' onChange={handleChangeColor}>
-                    <option value="red">red</option>
-                    <option value="green">green</option>
-                    <option value="blue">blue</option>
-                    <option value="yellow">yellow</option>
-                </select>
-            }
-            {element.user === sessionStorage.userId &&
+    return <li className={`${bgColor}  w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]`} key={element.id}>
+        <div className="flex justify-between">
+            <strong className="w-[28ch] text-left">{element.user.name}</strong>
+            
+
+                {element.user.id === sessionStorage.userId && <>
+                    <select className="border-solid border-2 bg-[transparent] border-[#6b7280]" defaultValue={element.color} data-id={element.id} name='colorToChange' onChange={handleChangeColor}>
+                        <option value="red">red</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                        <option value="yellow">yellow</option>
+                    </select>
+                    <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" data-id={element.id} onClick={handleUpdateVisibility} data-visibility={element.visibility}>{element.visibility === 'public' ? '🌍' : '🛑'}</button>
+                </>}
                 
-                <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1"  data-id={element._id} onClick={handleUpdateVisibility} data-visibility={element.visibility}>{element.visibility === 'public' ? '🌍': '🛑'}</button>
-            }
-                
-            {element.user === sessionStorage.userId &&
-                <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" data-id={element._id} onClick={handleDelete}>X</button>}
+                {element.user.id === sessionStorage.userId &&
+                    <button className="border-solid border-2 border-[#6b7280] w-6 h-6 text-center m-1" data-id={element.id} onClick={handleDelete}>X</button>}
+           
+            </div>
+
+            <p className="w-[28ch] text-left" data-id={element.id} contentEditable={element.user.id === sessionStorage.userId} onKeyUp={handleEditText} suppressContentEditableWarning={true}>{element.text}</p>
+
+
+            <div className="flex flex-row justify-end" >
+
+                <button className="h-5 w-5" onClick={handleLike} data-id={element.id} title={element.likes.join('\n')} >
+                    {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-5 w-5 text-red-500" /> : < HeartIconOutline className='h-5 w-5 text-black-500' />}</button>
+                <p>{element.likes.length}</p>
+
+
+            <button className="h-5 w-10 text-[gold] m-1 flex justify-center" data-id={element.id} onClick={handleFavs}>{
+                // user.favs && user.favs.includes(element.id) ?
+                user.favs?.includes(element.id) ?
+                    <StarIcon className="h-4 w-4 text-[gold]" />
+                    :
+                    <StarIconOutline className="h-4 w-4 text-black-500" />}</button>
+
         </div>
-        <p className="w-[28ch] text-left" data-id={element._id} contentEditable={element.user === sessionStorage.userId} onKeyUp={handleEditText} suppressContentEditableWarning={true}>
-            {element.text}
-        </p>
-
-
-        <div className="flex flex-row justify-end" >
-            <button className="h-5 w-5" onClick={handleLike} data-id={element._id} title={element.likes.join('\n')} >
-                {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-5 w-5 text-red-500" /> : < HeartIconOutline className='h-5 w-5 text-black-500' />}</button>
-            <p>{element.likes.length}</p>
-
-        </div>
-        <p className="w-[28ch] text-right font-extrabold">{element.user}</p>
     </li>
 }
 

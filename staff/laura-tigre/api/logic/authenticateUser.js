@@ -7,7 +7,7 @@ function authenticateUser(email, password){
 
 
 
-   return User.findOne({email})
+   return User.findOne({email}).lean()
    .then(user=>{
     if(!user) throw new Error('user not found')
 

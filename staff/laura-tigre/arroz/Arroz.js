@@ -130,7 +130,7 @@ Arroz.prototype.findIndex = function (callback) {
     for (let i = 0; i < this.length; i++) {
          const element= this[i]
          const findIndex= callback(element)
-        if (element === findIndex) {
+        if (findIndex){
             return i;
         }
     }
@@ -149,7 +149,7 @@ Arroz.prototype.push = function (newElement) {
         
         result[result.length] = newLength
         
-        newElement[this.length+1]  
+        newElement[newLength-1]= newElement  
     }
     return result
 }

@@ -3,9 +3,10 @@ import createSticky from '../logic/create-sticky'
 import List from '../components/List'
 import Profile from '../components/Profile'
 import MyList from '../components/MyList'
+import MyFavs from '../components/MyFavs'
 import retrieveUser from '../logic/retrieve-user'
 
-function Home(props) {
+function Home({onLogout, onUnregisterUser}) {
   // console.log( 'Home -> render')
   const [view, setView] = useState('list')
   const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
@@ -28,6 +29,11 @@ function Home(props) {
     setView('list')
   }
 
+  const handleShowMyFavs = event => {
+    event.preventDefault()
+    setView('my-favs')
+  }
+
   const handleAdd = () => {
 
 
@@ -44,10 +50,13 @@ function Home(props) {
     }
   }
 
+
+
   const handleLogout = () => {
     delete sessionStorage.userId
-    props.onLogout()
+    onLogout()
   }
+  
 
   useEffect(()=>{
     try {
@@ -64,6 +73,23 @@ function Home(props) {
     }
   },[])
 
+  const handleFavs = (userId, stickyId) => {
+    setUser(user => {
+      const newUser = { ...user }
+      const favs = [...user.favs]
+      newUser.favs = favs
+
+      const indexOfSticky = favs.indexOf(stickyId)
+
+      if (indexOfSticky < 0)
+          favs.push(stickyId)
+      else
+          favs.splice(indexOfSticky, 1)
+
+      return newUser
+  })
+  }
+
 
   return <div className="max-h-md font-['Montserrat']">
     <header className="flex justify-between items-center bg-[#d1d5db] fixed top-0 w-full">
@@ -73,17 +99,20 @@ function Home(props) {
       <nav>
         <a onClick={handleShowMyList} className="my-list-link m-3" href="">My stickies</a>
         <a onClick={handleShowProfile} className="profile-link m-3" href="">{user.name}</a>
+        < a onClick={handleShowMyFavs} className="logout-link m-3" href="">My favorits</a>
         <button onClick={handleLogout} className="bg-[#facc15] h-7 w-20 m-3">LOGOUT</button>
 
       </nav>
     </header>
 
     <main className="py-20 ">
-      {view === 'list' && <List listUpdateStamp={listUpdateStamp} userFromHome={user}/>}
+      {view === 'list' && <List listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
 
-      {view === 'profile' && <Profile onUnregisterUser={handleLogout}/>}
+      {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
 
-      {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
+      {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
+
+      {view ==='my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
 
     </main>
     <footer className="fixed bottom-0 left-0 flex justify-center bg-[#d1d5db] w-full" >

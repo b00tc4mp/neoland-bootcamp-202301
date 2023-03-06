@@ -17,6 +17,7 @@ const deleteSticky = require('./logic/deleteSticky')
 const updateUserEmail = require('./logic/updateUserEmail')
 const changeStickyColor= require('./logic/changeStickyColor')
 const toggleFavsSticky= require('./logic/toggleFavsSticky')
+const retrieveMyFavs= require('./logic/retrieveMyFavs')
 
 
 
@@ -131,7 +132,17 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
 
         })
+        server.get('/stickies/favs', (req, res) => {
+            try {
+            const userId = req.headers.authorization.slice(7)
+                retrieveMyFavs(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => res.status(500).json(error.message))
 
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
+        })
 
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
