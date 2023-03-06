@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Container from '../library/Container'
 import Button from '../library/Button'
 import authenticateUser from '../logic/authenticate-user'
+import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 
 function Login(props) {
     console.log('Login -> render')
@@ -38,7 +39,9 @@ function Login(props) {
 
     return <Container>
         <Container TagName='form' onSubmit={handleSubmit} className="my-20" >
-            <img src="images/mylogo.png" alt="logo" className="w-20 py-4" />
+
+            <SquaresPlusIcon className="h-16 text-blue-500" />
+
             <h1 className="text-blue-900 text-3xl py-4 font-quicksand">Welcome back!</h1>
             <div className="max-w-1/2 flex flex-col gap-3">
                 <label className="text-gray-500" htmlFor="email">E-mail</label>

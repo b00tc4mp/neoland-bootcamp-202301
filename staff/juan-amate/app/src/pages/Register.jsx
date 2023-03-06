@@ -2,7 +2,7 @@ import { useState } from 'react'
 import registerUser from '../logic/register-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
-import { isEmail } from 'com'
+import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 
 function Register(props) {
     console.log('Register -> render')
@@ -40,7 +40,7 @@ function Register(props) {
 
     return <Container>
         <Container TagName="form" onSubmit={handleSubmit} className="my-20 h-screen" >
-            <img src="images/mylogo.png" alt="logo" className="w-20 py-4" />
+            <SquaresPlusIcon className="h-16 text-blue-500" />
             <h1 className="text-blue-900 text-3xl py-4 font-quicksand">Register</h1>
             <div className="max-w-1/2 flex flex-col gap-3">
                 <label className="text-gray-500" htmlFor="name">Name</label>

@@ -1,0 +1,174 @@
+/* eslint-disable default-case */
+import updateStickyText from '../logic/update-sticky-text'
+import deleteSticky from '../logic/delete-sticky'
+import updateStickyVisibility from '../logic/update-sticky-visibility'
+import toggleLikeSticky from '../logic/toggle-like-sticky'
+import changeStickyColor from '../logic/change-sticky-color'
+import toggleFavsSticky from '../logic/toggle-favs-sticky'
+
+import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import { HeartIcon } from '@heroicons/react/24/solid'
+import { EyeIcon } from '@heroicons/react/24/outline'
+import { EyeSlashIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { BookmarkIcon } from '@heroicons/react/24/solid'
+import { BookmarkIcon as BookmarkIconOutline } from '@heroicons/react/24/outline'
+
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeColor, onToggleFavs, user }) {
+    const handleUpdateText = event => {
+        try {
+            updateStickyText(sessionStorage.userId, event.target.dataset.id, event.target.innerText, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleUpdateVisibility = event => {
+        try {
+            const newVisibility = event.target.dataset.visibility === 'public' ? 'private' : 'public'
+
+            updateStickyVisibility(sessionStorage.userId, event.target.dataset.id, newVisibility, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onUpdateVisibility(event.target.dataset.id, newVisibility)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleToggleLike = event => {
+        try {
+            const stickyId = event.currentTarget.dataset.id
+
+            toggleLikeSticky(sessionStorage.userId, stickyId, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onToggleLike(sessionStorage.userId, stickyId)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleDelete = event => {
+        try {
+            deleteSticky(sessionStorage.userId, event.target.dataset.id, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onDelete(event.target.dataset.id)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleChangeColor = event => {
+        try {
+            changeStickyColor(sessionStorage.userId, event.target.dataset.id, event.target.value, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onChangeColor(event.target.dataset.id, event.target.value)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleToggleFavs = event => {
+        try {
+            const stickyId = event.currentTarget.dataset.id
+
+            toggleFavsSticky(sessionStorage.userId, stickyId, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onToggleFavs(sessionStorage.userId, stickyId)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    let bgColor
+
+    switch (element.color) {
+        case 'yellow':
+            bgColor = 'bg-amber-200'
+            break
+        case 'red':
+            bgColor = 'bg-red-200'
+            break
+        case 'green':
+            bgColor = 'bg-lime-200'
+            break
+        case 'blue':
+            bgColor = 'bg-sky-200'
+            break
+    }
+
+    return <li key={element._id} className={`${bgColor} border rounded-md p-3 m-3 w-[40ch] text-right`}>
+        <div className='text-right'>
+            {element.user === sessionStorage.userId && <>
+                <select className='h-6 mx-2 border border-black' defaultValue={element.color} data-id={element._id} name='color' onChange={handleChangeColor}>
+                    <option value='yellow'>yellow</option>
+                    <option value='red'>red</option>
+                    <option value='green'>green</option>
+                    <option value='blue'>blue</option>
+                </select>
+
+                <button className='h-6 w-6 text-xl cursor-pointer' data-id={element._id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>
+                    {element.visibility === 'public' ? '🟢' : '🔴'}
+                </button>
+
+                <button className="h-6 w-6 text-xl cursor-pointer" data-id={element._id} onClick={handleDelete}>🗑️</ button>
+
+            </>
+            }
+        </div>
+
+        <p className="text-xl pt-5 text-left" data-id={element._id} contentEditable={element.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+
+        <div className={'flex justify-end gap-1'}>
+            <p className='text-standard' title={element.likes.join('\n')}>{element.likes.length}</p>
+            <button className="w-6 h-6 cursor-pointer" onClick={handleToggleLike} data-id={element._id}>
+                {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="text-red-500" /> : <HeartIconOutline className="text-black" />}
+            </button>
+
+            <button className='h-6 w-6 cursor-pointer' data-id={element._id} onClick={handleToggleFavs}>
+                {user.favs?.includes(element._id) ? <BookmarkIcon className='text-green-500' /> : <BookmarkIconOutline />}
+            </button>
+
+        </div>
+
+        <strong className="text-gray-500 p-1 font-spline">{element.user}</strong>
+    </li>
+}
+
+export default Item
+
