@@ -9,11 +9,11 @@ const { User, Sticky } = require('../data/models')
  * @returns 
  */
 
-function toggleFavsSticky(userId, stickyId) {
+function toggleFavSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
-    return Promise.all([User.findById(user.Id), Sticky.findById(stickyId)]) // array de promesas
+    return Promise.all([User.findById(userId), Sticky.findById(stickyId)]) // array de promesas
         .then(([user, sticky]) => { // destructuring array
             if (!user) throw new Error(`user with id ${userId} not found`)
 
@@ -32,4 +32,4 @@ function toggleFavsSticky(userId, stickyId) {
         })
 }
 
-module.exports = toggleFavsSticky
+module.exports = toggleFavSticky

@@ -3,7 +3,7 @@ import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function MyList({ listUpdateStamp, user, onToggleFavs }) {
+function MyList({ listUpdateStamp, user, onToggleFav }) {
     console.log('Mylist -> render')
 
     const [stickies, setStickies] = useState([])
@@ -101,7 +101,7 @@ function MyList({ listUpdateStamp, user, onToggleFavs }) {
     }
 
     return <Container TagName="ul">
-        {stickies.map(sticky => <Item element={sticky} key={sticky._id} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onChangeColor={handleChangeColor} onToggleFavs={onToggleFavs} user={user} />)}
+        {stickies.map(sticky => <Item element={sticky} key={sticky._id} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />)}
     </Container>
 }
 

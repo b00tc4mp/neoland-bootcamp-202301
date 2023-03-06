@@ -1,6 +1,6 @@
 const { validateUserId, validateStickyId, validateCallback } = require('com')
 
-function toggleFavsSticky(userId, stickyId, callback) {
+function toggleFavSticky(userId, stickyId, callback) {
     validateUserId(userId)
     validateStickyId(stickyId)
     validateCallback(callback)
@@ -30,4 +30,4 @@ function toggleFavsSticky(userId, stickyId, callback) {
     xhr.send()
 }
 
-export default toggleFavsSticky
+export default toggleFavSticky

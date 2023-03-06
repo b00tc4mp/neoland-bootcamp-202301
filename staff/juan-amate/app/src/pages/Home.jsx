@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
 import createSticky from '../logic/create-sticky'
 import List from '../components/List'
@@ -56,13 +57,7 @@ function Home({ onLogout, onUnregisterUser }) {
         setView('my-list')
     }
 
-    const handleShowMyFavs = event => {
-        event.preventDefault()
-
-        setView('my-favs')
-    }
-
-    const handleToggleFavs = (userId, stickyId) => {
+    const handleToggleFav = (userId, stickyId) => {
         setUser(user => {
             const newUser = { ...user }
             const favs = [...user.favs]
@@ -77,6 +72,12 @@ function Home({ onLogout, onUnregisterUser }) {
 
             return newUser
         })
+    }
+
+    const handleShowMyFavs = event => {
+        event.preventDefault()
+
+        setView('my-favs')
     }
 
     useEffect(() => {
@@ -111,11 +112,11 @@ function Home({ onLogout, onUnregisterUser }) {
         </header>
 
         <Container className="bg-blue-50 w-full py-20">
-            {view === 'list' && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFavs={handleToggleFavs} />}
+            {view === 'list' && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
             {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
 
-            {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFavs={handleToggleFavs} />}
+            {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
             {view === 'my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} />}
         </Container>

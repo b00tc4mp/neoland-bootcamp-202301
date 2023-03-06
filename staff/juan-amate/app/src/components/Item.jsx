@@ -1,10 +1,9 @@
-/* eslint-disable default-case */
 import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import changeStickyColor from '../logic/change-sticky-color'
-import toggleFavsSticky from '../logic/toggle-favs-sticky'
+import toggleFavSticky from '../logic/toggle-fav-sticky'
 
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 import { HeartIcon } from '@heroicons/react/24/solid'
@@ -14,7 +13,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { BookmarkIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon as BookmarkIconOutline } from '@heroicons/react/24/outline'
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeColor, onToggleFavs, user }) {
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeColor, onToggleFav, user }) {
     const handleUpdateText = event => {
         try {
             updateStickyText(sessionStorage.userId, event.target.dataset.id, event.target.innerText, error => {
@@ -97,18 +96,18 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeCol
         }
     }
 
-    const handleToggleFavs = event => {
+    const handleToggleFav = event => {
         try {
             const stickyId = event.currentTarget.dataset.id
 
-            toggleFavsSticky(sessionStorage.userId, stickyId, error => {
+            toggleFavSticky(sessionStorage.userId, stickyId, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleFavs(sessionStorage.userId, stickyId)
+                onToggleFav(sessionStorage.userId, stickyId)
             })
         } catch (error) {
             alert(error.message)
@@ -160,7 +159,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeCol
                 {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="text-red-500" /> : <HeartIconOutline className="text-black" />}
             </button>
 
-            <button className='h-6 w-6 cursor-pointer' data-id={element._id} onClick={handleToggleFavs}>
+            <button className='h-6 w-6 cursor-pointer' data-id={element._id} onClick={handleToggleFav}>
                 {user.favs?.includes(element._id) ? <BookmarkIcon className='text-green-500' /> : <BookmarkIconOutline />}
             </button>
 
