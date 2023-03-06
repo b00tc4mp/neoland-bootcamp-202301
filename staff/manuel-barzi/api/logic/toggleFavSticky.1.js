@@ -7,7 +7,7 @@ const { User, Sticky } = require('../data/models')
  * @param {string} userId The userId
  * @param {string} stickyId The sticky identifier
  */
-function toggleLikeSticky(userId, stickyId) {
+function toggleFavSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
@@ -33,4 +33,4 @@ function toggleLikeSticky(userId, stickyId) {
         })
 }
 
-module.exports = toggleLikeSticky
+module.exports = toggleFavSticky
