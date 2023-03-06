@@ -24,7 +24,7 @@ const user = new Schema({
     favs: [{
         type: ObjectId,
         ref: 'Sticky'
-    }],
+    }]
 })
 
 const sticky = new Schema({

@@ -11,10 +11,13 @@ function toggleLikeSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
-    return Promise.all([User.findById(userId), Sticky.findById(stickyId)])
-        .then(([user, sticky]) => {
+    return User.findById(userId)
+        .then(user => {
             if (!user) throw new Error(`user with id ${userId} not found`)
 
+            return Sticky.findById(stickyId)
+        })
+        .then(sticky => {
             if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
             const likes = sticky.likes

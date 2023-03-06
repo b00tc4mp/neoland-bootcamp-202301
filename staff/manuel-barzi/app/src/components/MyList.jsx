@@ -3,7 +3,7 @@ import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function MyList({ updateStamp }) {
+function MyList({ updateStamp, user, onToggleFav }) {
     console.log('MyList -> render')
 
     const [stickies, setStickies] = useState([])
@@ -101,7 +101,7 @@ function MyList({ updateStamp }) {
     }
 
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor} />)}
+        {stickies.map(sticky => <Item key={sticky._id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={onToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
     </Container>
 }
 

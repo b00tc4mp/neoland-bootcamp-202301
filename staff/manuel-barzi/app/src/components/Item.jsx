@@ -2,11 +2,12 @@ import updateStickyText from '../logic/update-sticky-text'
 import deleteSticky from '../logic/delete-sticky'
 import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
-import { HeartIcon } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
+import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import updateStickyColor from '../logic/update-sticky-color'
+import toggleFavSticky from '../logic/toggle-fav-sticky'
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor }) {
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav, user }) {
     const handleUpdateText = event => {
         try {
             updateStickyText(sessionStorage.userId, event.target.dataset.id, event.target.innerText, error => {
@@ -57,6 +58,24 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         }
     }
 
+    const handleToggleFav = event => {
+        try {
+            const stickyId = event.currentTarget.dataset.id
+
+            toggleFavSticky(sessionStorage.userId, stickyId, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                onToggleFav(sessionStorage.userId, stickyId)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     const handleDelete = event => {
         try {
             deleteSticky(sessionStorage.userId, event.target.dataset.id, error => {
@@ -91,8 +110,8 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     let bgColor
 
-    switch(element.color) {
-        case 'yellow': 
+    switch (element.color) {
+        case 'yellow':
             bgColor = 'bg-[gold]'
             break
         case 'red':
@@ -126,6 +145,12 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         <div className="flex flex-col items-end">
             <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" data-id={element._id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
+            <button className="h-5 w-10 bg-black text-[gold] m-1 flex justify-center" data-id={element._id} onClick={handleToggleFav}>{
+                // user.favs && user.favs.includes(element._id) ?
+                user.favs?.includes(element._id) ?
+                    <StarIcon className="h-4 w-4 text-red-500" />
+                    :
+                    <StarIconOutline className="h-4 w-4 text-black-500" />}</button>
             <strong>{element.user}</strong>
         </div>
     </li>

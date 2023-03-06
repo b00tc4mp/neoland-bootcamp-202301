@@ -16,6 +16,7 @@ const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const updateStickyColor = require('./logic/updateStickyColor')
+const toggleFavSticky = require('./logic/toggleFavSticky')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
@@ -221,18 +222,18 @@ connect('mongodb://127.0.0.1:27017/mydb')
             }
         })
 
-        // server.patch('/stickies/:stickyId/favs', (req, res) => {
-        //     try {
-        //         const userId = req.headers.authorization.slice(7)
-        //         const { stickyId } = req.params
+        server.patch('/stickies/:stickyId/favs', (req, res) => {
+            try {
+                const userId = req.headers.authorization.slice(7)
+                const { stickyId } = req.params
 
-        //         toggleFavSticky(userId, stickyId)
-        //             .then(() => res.status(204).send())
-        //             .catch(error => res.status(500).json({ error: error.message }))
-        //     } catch (error) {
-        //         res.status(500).json({ error: error.message })
-        //     }
-        // })
+                toggleFavSticky(userId, stickyId)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
+        })
 
         server.listen(8080, () => console.log('server running on port ' + 8080))
     })

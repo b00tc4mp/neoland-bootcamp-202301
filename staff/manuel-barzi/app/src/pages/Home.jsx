@@ -69,6 +69,23 @@ function Home({ onLogout, onUnregisterUser }) {
         }
     }, [])
 
+    const handleToggleFav = (userId, stickyId) => {
+        setUser(user => {
+            const newUser = { ...user }
+            const favs = [...user.favs]
+            newUser.favs = favs
+
+            const indexOfSticky = favs.indexOf(stickyId)
+
+            if (indexOfSticky < 0)
+                favs.push(stickyId)
+            else
+                favs.splice(indexOfSticky, 1)
+
+            return newUser
+        })
+    }
+
     return <div className="bg-black h-full">
         <header className="fixed top-0 w-full flex justify-between p-2 bg-[black]">
             <a onClick={handleShowList} className="logo-link" href=""><img className="w-10" src="images/logo.png" alt="Chachi Games" /></a>
@@ -81,11 +98,11 @@ function Home({ onLogout, onUnregisterUser }) {
             </nav>
         </header>
         <main className="py-16">
-            {view === 'list' && <List updateStamp={listUpdateStamp} />}
+            {view === 'list' && <List updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
             {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
 
-            {view === 'my-list' && <MyList updateStamp={listUpdateStamp} />}
+            {view === 'my-list' && <MyList updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
         </main>
         <footer className="fixed bottom-0 w-full flex justify-center bg-[black]">
             {/* <button onClick={handleAdd} className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">+</button> */}
