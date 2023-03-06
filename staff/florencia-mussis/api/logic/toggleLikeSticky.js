@@ -11,26 +11,23 @@ function toggleLikeSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
-    return User.findById(userId)
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+    return Promise.all([User.findById(userId), Sticky.findById(stickyId)])
+    .then(([user, sticky]) => {
+        if (!user) throw new Error(`user with id ${userId} not found`)
 
-            return Sticky.findById(stickyId)
-        })
-        .then(sticky => {
-            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
+        if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
-            const likes = sticky.likes
+        const likes = sticky.likes
 
-            const index = likes.indexOf(userId)
+        const index = likes.indexOf(userId)
 
-            if (index < 0)
-                likes.push(userId)
-            else
-                likes.splice(index, 1)
+        if (index < 0)
+            likes.push(userId)
+        else
+            likes.splice(index, 1)
 
-            return sticky.save()
-        })
+        return sticky.save()
+    })
 }
 
 module.exports = toggleLikeSticky

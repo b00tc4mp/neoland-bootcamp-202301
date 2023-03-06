@@ -2,23 +2,20 @@ const { validateUserId, validateStickyId } = require('com')
 const { User, Sticky } = require('../data/models')
 
 /**
- * Toggles the likeability of a specific sticky
+ * Toggles favorite on sticky
  * 
  * @param {string} userId The userId
  * @param {string} stickyId The sticky identifier
  */
-function toggleFavsSticky(userId, stickyId) {
+function toggleFavSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
-    return Sticky.findById(stickyId)
-        .then(sticky => {
-            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
-
-           return User.findById(userId)
-        })
-        .then(user => {
+    return Promise.all([User.findById(userId), Sticky.findById(stickyId)])
+        .then(([user, sticky]) => {
             if (!user) throw new Error(`user with id ${userId} not found`)
+
+            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
 
             const favs = user.favs
 
@@ -33,4 +30,4 @@ function toggleFavsSticky(userId, stickyId) {
         })
 }
 
-module.exports = toggleFavsSticky
+module.exports = toggleFavSticky

@@ -4,9 +4,10 @@ import List from '../components/List'
 import Profile from '../components/Profile'
 import MyList from "../components/MyList"
 import retrieveUser from "../logic/retrieve-user"
+import MyFavs from "../components/Myfavs"
 
 
-function Home(props) {
+function Home({onLogout, onUnregisterUser}) {
     console.log('Home -> render')
 
     const [view, setView] = useState('list')
@@ -22,6 +23,7 @@ function Home(props) {
         event.preventDefault()
         setView('list')
     }
+
 
     const handleAdd = () => {     
             try {
@@ -44,10 +46,15 @@ function Home(props) {
         setView('my-list')
     }
 
+    const handleShowMyFavs = event => {
+        event.preventDefault()
+        setView('my-favs')
+      }
+
     const handleLogout = () => {
         delete sessionStorage.userId
 
-        props.onLogout()
+        onLogout()
     }
 
     useEffect(() => {
@@ -65,6 +72,23 @@ function Home(props) {
         }
     }, [])
 
+    const handleFav = (userId, stickyId) => {
+        setUser(user => {
+            const newUser = { ...user }
+            const favs = [...user.favs]
+            newUser.favs = favs
+
+            const indexOfSticky = favs.indexOf(stickyId)
+
+            if (indexOfSticky < 0)
+                favs.push(stickyId)
+            else
+                favs.splice(indexOfSticky, 1)
+
+            return newUser
+        })
+    }
+
     return <div className="max-h-md font-['Montserrat']">
         <header className="fixed w-full flex justify-between p-2 bg-purple-300">
             <a onClick={handleShowList} className="w-16" href=""><img className="pluma"
@@ -74,17 +98,23 @@ function Home(props) {
 
             <nav className="flex items-center gap-5">
                 <a onClick={handleShowMyList} className="my-list-link font-montserrat" href="">My stickies</a>
+
                 <a onClick={handleShowProfile} className="profile-link font-montserrat" href="">{user.name}</a>
+
+                <a onClick={handleShowMyFavs} className="logout-link m-3" href="">My favorits</a>
+
                 <button onClick={handleLogout} className="bg-purple-300 border-2 rounded-md text-white w-20 drop-shadow-sm font-montserrat">Logout</button>
             </nav>
         </header>
 
         <main className="py-20">
-            {view === 'list' && <List listUpdateStamp={listUpdateStamp} userFromHome={user} />}
+            {view === 'list' && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />}
 
-            {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
+            {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
 
-            {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} />}
+            {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />}
+
+            {view ==='my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} handleToggleFav={handleFav} user={user}/>}
         </main>
 
         <footer className="fixed bottom-0 left-0 flex justify-center bg-purple-300 border-2 rounded-md text-white w-full" >

@@ -20,7 +20,8 @@ const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const changeStickyColor = require('./logic/changeStickyColor')
-const toggleFavsSticky = require('./logic/toggleFavsSticky')
+const toggleFavSticky = require('./logic/toggleFavSticky')
+const retrieveFavStickies = require('./logic/retrieveFavStickies')
 
 
 connect('mongodb://127.0.0.1:27017/mydb')
@@ -210,7 +211,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 const { stickyId } = req.params
 
                 changeStickyColor(userId, stickyId, color)
-                    .then(() => res.status(201).send())
+                    .then(() => res.status(204).send())
                     .catch(error => res.status(500).json(error.message))
             } catch (error) {
                 res.status(500).json({ error: error.message })
@@ -222,11 +223,23 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 const userId = req.headers.authorization.slice(7)
                 const { stickyId } = req.params
 
-                toggleFavsSticky(userId, stickyId)
+                toggleFavSticky(userId, stickyId)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
                 res.status(500).json({ error: error.message })
+            }
+        })
+
+        server.get('/stickies/favs', (req, res) => {
+            try {
+            const userId = req.headers.authorization.slice(7)
+                retrieveFavStickies(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => res.status(500).json(error.message))
+
+            } catch (error) {
+                res.status(500).json(error.message)
             }
         })
 

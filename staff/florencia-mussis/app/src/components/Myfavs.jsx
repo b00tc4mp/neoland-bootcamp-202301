@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react"
-import retrieveMyStickies from "../logic/retrieve-my-stickies"
-import Container from '../library/Container'
+import { useState, useEffect } from 'react'
+import retrieveFavStickies from '../logic/retrieve-fav-stickies'
 import Item from './Item'
+import Container from '../library/Container'
 
-function MyList({ listUpdateStamp, user, onToggleFav }) {
 
+function MyFavs({ listUpdateStamp, user, handleToggleFav }) {
     const [stickies, setStickies] = useState([])
 
-    const loadList = () => {
+    const loadlist = () => {
+
         try {
-            retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveFavStickies(sessionStorage.userId, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
@@ -17,36 +18,46 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
                 }
 
                 setStickies(stickies.reverse())
+
             })
+
         } catch (error) {
             alert(error.message)
         }
     }
+
     useEffect(() => {
-        loadList()
+        loadlist()
+       
+
     }, [listUpdateStamp])
 
-
     const handleChangeColor = (stickyId, color) => {
-        setStickies(stickies => {
+        setStickies(stickies => {// para que se actualice cuando se cambie el color del sticky
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
             const sticky = stickies[index]
 
-            // const stickyUpdated = {}
-            // stickyUpdated._id = sticky._id
-            // stickyUpdated.user = sticky.user
-            // stickyUpdated.text = sticky.text
-            // stickyUpdated.visibility = sticky.visibility
-            // stickyUpdated.color = color
-            // stickyUpdated.likes = sticky.likes
             const stickyUpdated = { ...sticky }
             stickyUpdated.color = color
 
-            //const stickiesUpdated = stickies.concat()
             const stickiesUpdated = [...stickies]
 
-            //stickiesUpdated.splice(index, 1, stickyUpdated)
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
+    }
+
+    const handleUpdateVisibility = (stickyId, visibility) => {
+        setStickies(stickies => {// para que se actualice cuando se cambie el color del sticky
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+            stickyUpdated.visibility = visibility
+
+            const stickiesUpdated = [...stickies]
+
             stickiesUpdated[index] = stickyUpdated
 
             return stickiesUpdated
@@ -65,41 +76,23 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
         })
     }
 
-
-    const handleUpdateVisibility = (stickyId, visibility) => {
-        setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
-            const sticky = stickies[index]
-
-            const stickyUpdated = { ...sticky }
-            stickyUpdated.visibility = visibility
-
-            const stickiesUpdated = [...stickies]
-
-            stickiesUpdated[index] = stickyUpdated
-
-            return stickiesUpdated
-        })
-    }
-
     const handleLike = (userId, stickyId) => {
         setStickies(stickies => {
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
             const sticky = stickies[index]
-
             const stickyUpdated = { ...sticky }
+
             stickyUpdated.likes = [...sticky.likes]
 
             const { likes } = stickyUpdated
 
             const indexOfUser = likes.indexOf(userId)
 
-            if (indexOfUser < 0)
+            if (indexOfUser < 0) {
                 likes.push(userId)
-            else
+            } else {
                 likes.splice(indexOfUser, 1)
+            }
 
             const stickiesUpdated = [...stickies]
 
@@ -109,11 +102,26 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
         })
     }
 
+    const onToggleFav = (userId, stickyId)=>{
+        setStickies(stickies => { //eliminar el sticky de favoritos
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
-    return <Container TagName="ul" className="gap-4 m-3">
-        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleLike} onToggleFav={onToggleFav} onChangeColor={handleChangeColor} user={user}/>)}
+            //TODO que pasa si no lo encuentra
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated.splice(index, 1)
+
+            return stickiesUpdated
+        })
+
+        handleToggleFav(userId, stickyId) //elimina el sticky del array de favoritos del usuario
+    }
+
+    return <Container TagName="ul" className="gap-4 py-10 ">
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />
+        )}
     </Container>
-
 }
 
-export default MyList
+export default MyFavs
