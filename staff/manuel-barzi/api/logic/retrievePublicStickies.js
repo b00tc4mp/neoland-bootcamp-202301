@@ -30,6 +30,8 @@ function retrievePublicStickies(userId) {
                     sticky.user.id = sticky.user._id.toString()
                     delete sticky.user._id
                 }
+
+                sticky.likes = sticky.likes.map(like => like.toString())
             })
 
             return stickies

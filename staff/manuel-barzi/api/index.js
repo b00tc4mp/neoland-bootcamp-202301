@@ -17,6 +17,7 @@ const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const updateStickyColor = require('./logic/updateStickyColor')
 const toggleFavSticky = require('./logic/toggleFavSticky')
+const retrieveFavStickies = require('./logic/retrieveFavStickies')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
@@ -229,6 +230,18 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 toggleFavSticky(userId, stickyId)
                     .then(() => res.status(204).send())
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
+            }
+        })
+
+        server.get('/stickies/favs', (req, res) => {
+            try {
+                const userId = req.headers.authorization.slice(7)
+
+                retrieveFavStickies(userId)
+                    .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
                 res.status(500).json({ error: error.message })

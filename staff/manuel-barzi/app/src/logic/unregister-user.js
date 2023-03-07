@@ -32,6 +32,8 @@ function unregisterUser(userId, password, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('DELETE', 'http://localhost:8080/users')
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')

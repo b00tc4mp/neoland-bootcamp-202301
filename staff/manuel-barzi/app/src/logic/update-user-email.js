@@ -34,6 +34,8 @@ function updateUserEmail(userId, newEmail, password, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', 'http://localhost:8080/users/email',)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')

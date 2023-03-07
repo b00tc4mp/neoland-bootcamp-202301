@@ -25,6 +25,8 @@ function deleteSticky(userId, stickyId) {
 
             return Sticky.deleteOne({ _id: new ObjectId(stickyId) })
         })
+
+        // TODO delete sticky id from user favs that may have it
 }
 
 module.exports = deleteSticky

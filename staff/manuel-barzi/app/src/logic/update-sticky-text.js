@@ -34,6 +34,8 @@ function updateStickyText(userId, stickyId, text, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')

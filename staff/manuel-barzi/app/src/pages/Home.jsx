@@ -5,6 +5,7 @@ import Profile from '../components/Profile'
 import MyList from '../components/MyList'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
+import Favs from '../components/Favs'
 
 function Home({ onLogout, onUnregisterUser }) {
     console.log('Home -> render')
@@ -86,12 +87,22 @@ function Home({ onLogout, onUnregisterUser }) {
         })
     }
 
+    const handleShowFavs = event => {
+        event.preventDefault()
+        
+        // TODO retrieve favs and render them
+        setView('favs')
+    }
+
     return <div className="bg-black h-full">
         <header className="fixed top-0 w-full flex justify-between p-2 bg-[black]">
             <a onClick={handleShowList} className="logo-link" href=""><img className="w-10" src="images/logo.png" alt="Chachi Games" /></a>
 
             <nav className="flex items-center gap-5">
                 <a onClick={handleShowMyList} className="text-[gold] font-odibee underline" href="">My stickies</a>
+
+                <a onClick={handleShowFavs} className="text-[gold] font-odibee underline" href="">FAVS</a>
+
                 <a onClick={handleShowProfile} className="text-[gold] font-odibee underline" href="">{user.name}</a>
                 {/* <button onClick={handleLogout} className="logout-button border-[2px] border-[gold] text-[gold] p-1 font-press">Logout</button> */}
                 <Button onClick={handleLogout}>Logout</Button>
@@ -103,6 +114,8 @@ function Home({ onLogout, onUnregisterUser }) {
             {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
 
             {view === 'my-list' && <MyList updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
+
+            {view === 'favs' && <Favs updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
         </main>
         <footer className="fixed bottom-0 w-full flex justify-center bg-[black]">
             {/* <button onClick={handleAdd} className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">+</button> */}

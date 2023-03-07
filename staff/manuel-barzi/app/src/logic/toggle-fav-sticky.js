@@ -32,6 +32,8 @@ function toggleFavSticky(userId, stickyId, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/favs`)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 

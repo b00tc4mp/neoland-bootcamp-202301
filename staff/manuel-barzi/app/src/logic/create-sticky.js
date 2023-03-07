@@ -33,6 +33,8 @@ function createSticky(userId, text, visibility, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('POST', 'http://localhost:8080/stickies')
     //xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
