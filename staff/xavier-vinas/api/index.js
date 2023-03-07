@@ -1,5 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+const { connect, disconnect } = require('mongoose')
+const { sign, verify } = require('jsonwebtoken')
+const JWT_SECRET ='atrikitawn tawn tawn 123' 
+
 const registerUser = require('./logic/registerUser')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
@@ -7,8 +12,8 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-const cors = require('cors')
-const { connect, disconnect } = require('mongoose')
+
+
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
 const retrieveMyStickies = require('./logic/retrieveMyStickies')
@@ -18,6 +23,7 @@ const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const changeStickyColor = require('./logic/changeStickyColor')
 const toggleFavSticky = require('./logic/toggleFavSticky')
+const retrieveFavStickies = require('./logic/retrieveFavStickies')
 
 
 
@@ -50,6 +56,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 const { email, password } = credentials
 
                 authenticateUser(email, password)
+                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
                     .then(userId => res.status(200).json({ userId }))
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
@@ -59,7 +66,11 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/users', (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
 
                 retrieveUser(userId)
                     .then(user => res.json(user))
@@ -71,7 +82,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/users', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { password } = req.body
 
                 unregisterUser(userId, password)
@@ -84,7 +100,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/users/password', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { password, newPassword, newPasswordConfirm } = req.body
 
                 updateUserPassword(userId, password, newPassword, newPasswordConfirm)
@@ -97,7 +118,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/users/email', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { newEmail, password } = req.body
 
                 updateUserEmail(userId, newEmail, password)
@@ -110,7 +136,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/users', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { password } = req.body
 
                 unregisterUser(userId, password)
@@ -123,7 +154,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { text, visibility } = req.body
 
                 createSticky(userId, text, visibility)
@@ -136,7 +172,11 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/stickies', (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
 
                 retrievePublicStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
@@ -148,7 +188,11 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/stickies/user', (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
 
                 retrieveMyStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
@@ -160,7 +204,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/text', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { stickyId } = req.params
                 const { text } = req.body
 
@@ -174,7 +223,11 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/visibility', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
                 const { stickyId } = req.params
                 const { visibility } = req.body
 
@@ -188,7 +241,11 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/likes', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
                 const { stickyId } = req.params
 
                 toggleLikeSticky(userId, stickyId)
@@ -201,7 +258,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/stickies/:stickyId', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { stickyId } = req.params
 
                 deleteSticky(userId, stickyId)
@@ -213,7 +275,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
         })
         server.patch('/stickies/:stickyId/color', jsonBodyParser, (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { stickyId } = req.params
                 const { color } = req.body
 
@@ -227,7 +294,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/favs', (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { stickyId } = req.params
 
                 toggleFavSticky(userId, stickyId)
@@ -237,6 +309,26 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 res.status(500).json({ error: error.message })
             }
         })
+
+        server.get('/stickies/favs', (req, res) => {
+            try {
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+                
+                retrieveFavStickies(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => res.status(500).json(error.message))
+
+            } catch (error) {
+                res.status(500).json(error.message)
+            }
+        })
+
+
+       
 
         server.listen(8080, () => console.log('server running on port ' + 8080))
     })
