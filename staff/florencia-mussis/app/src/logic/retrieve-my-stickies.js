@@ -1,14 +1,14 @@
-import { validateCallback, validateUserId } from 'com'
+import { validateCallback, validateToken} from 'com'
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
- * @param {string} userId The userId of the user to retrieve the stickies from
+ * @param {string} token The session token
  * @param {function} callback The function to call back with the stickies (or an error)
  * @return {Array} The stickies that belong to the specified user
  */
 
-function retrieveMyStickies(userId, callback) {
-    validateUserId(userId)
+function retrieveMyStickies(token, callback) {
+    validateToken(token)
     validateCallback(callback)
     
     const xhr = new XMLHttpRequest()
@@ -32,11 +32,12 @@ function retrieveMyStickies(userId, callback) {
 
         const stickies = JSON.parse(response)
 
-        callback(null, stickies)
+        callback(null, stickies.reverse())
     }
-
+    xhr.onerror = () => callback(new Error('network error'))
+    
     xhr.open('GET', 'http://localhost:8080/stickies/user')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 

@@ -1,13 +1,13 @@
-const { validateUserId, validateCallback } = require('com')
+const { validateToken, validateCallback } = require('com')
 /**
- * Retrieves the stickies that belong to the specified user (email)
+ * Retrieves the favorite stickies from user
  * 
- * @param {string} userId The userId of the user to retrieve the stickies from
+ * @param {string} token The token of the user to retrieve the stickies from
  * @param {function} callback The function to call back with the stickies (or an error)
  * @return {Array} The stickies that belong to the specified user
  */
-function retrieveFavStickies(userId, callback) {
-    validateUserId(userId)
+function retrieveFavStickies(token, callback) {
+    validateToken(token)
     validateCallback(callback)
     const xhr = new XMLHttpRequest()
 
@@ -31,11 +31,12 @@ function retrieveFavStickies(userId, callback) {
 
         const stickies = JSON.parse(response)
 
-        callback(null, stickies)
+        callback(null, stickies.reverse())
     }
-
+    xhr.onerror = () => callback(new Error('network error'))
+    
     xhr.open('GET', 'http://localhost:8080/stickies/favs')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 export default retrieveFavStickies

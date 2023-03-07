@@ -1,12 +1,12 @@
-import { validateCallback, validateUserId } from 'com'
+import { validateCallback, validateToken } from 'com'
 /**
  * Retrieves the user public information
  * 
- * @param {string} userId The userId of the user to retrieve
+ * @param {string} token The session token
  * @param {function} callback The function to call back with the user (or an error)
  */
-function retrieveUser(userId, callback){
-    validateUserId(userId)
+function retrieveUser(token, callback){
+    validateToken(token)
     validateCallback(callback)
     
     const xhr = new XMLHttpRequest()
@@ -32,9 +32,10 @@ function retrieveUser(userId, callback){
 
         callback(null, user)
     }
-
+    xhr.onerror = () => callback(new Error('network error'))
+    
     xhr.open('GET', 'http://localhost:8080/users')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 

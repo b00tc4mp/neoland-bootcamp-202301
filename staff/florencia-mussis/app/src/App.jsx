@@ -5,7 +5,7 @@ import Home from './pages/Home'
 
 function App() {
 
-    const [view, setView] = useState(sessionStorage.userId ? 'home' : 'login')
+    const [view, setView] = useState(sessionStorage.token ? 'home' : 'login')
 
     const handleShowRegister = () => {
         setView('register')

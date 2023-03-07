@@ -1,15 +1,13 @@
-import { validatePassword, validateCallback, validateUserId } from 'com'
+import { validatePassword, validateCallback, validateToken } from 'com'
 /**
- * Unregisters a user in the database
+ * Unregisters a user
  * 
- * @param {string} name The user full name
- * @param {number} age The user age
- * @param {string} email The user email
+ * @param {string} token The session token
  * @param {string} password The user password
- * @param {function} callback The callback
+ * @param {callback} callback The function to call when the user is unregistered (or failed)
  */
-function unregisterUser(userId, password, callback) {
-  validateUserId(userId)
+function unregisterUser(token, password, callback) {
+  validateToken(token)
   validatePassword(password)
   validateCallback(callback)
 
@@ -32,13 +30,14 @@ function unregisterUser(userId, password, callback) {
 
     callback(null)
   }
-
+  xhr.onerror = () => callback(new Error('network error'))
+  
   xhr.open('DELETE', 'http://localhost:8080/users')
-  xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
   xhr.setRequestHeader('Content-Type', 'application/json')
 
-  const user = { password }
-  const json = JSON.stringify(user)
+  const payload = { password }
+  const json = JSON.stringify(payload)
   xhr.send(json)
 }
 

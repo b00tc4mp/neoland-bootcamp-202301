@@ -19,7 +19,7 @@ function UpdateUserPassword() {
         const newPasswordRepeat = event.target.newPasswordRepeat.value
 
         try {
-            updateUserPassword(sessionStorage.userId, currentPassword, newPassword, newPasswordRepeat, error => {
+            updateUserPassword(sessionStorage.token, currentPassword, newPassword, newPasswordRepeat, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,

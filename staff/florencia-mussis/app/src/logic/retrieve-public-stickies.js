@@ -1,11 +1,11 @@
-import { validateCallback, validateUserId } from 'com'
+import { validateCallback, validateToken } from 'com'
 /**
  * Retrieves the public stickies from all users that publish them
  * 
  * @param {function} callback The function to call back with the stickies (or an error)
  */
-function retrievePublicStickies(userId, callback){
-    validateUserId(userId)
+function retrievePublicStickies(token, callback){
+    validateToken(token)
     validateCallback(callback)
     
     const xhr = new XMLHttpRequest()
@@ -32,9 +32,10 @@ function retrievePublicStickies(userId, callback){
         callback(null, stickies.reverse())
 
     }
-
+    xhr.onerror = () => callback(new Error('network error'))
+    
     xhr.open('GET', 'http://localhost:8080/stickies')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 

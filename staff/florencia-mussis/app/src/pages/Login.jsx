@@ -22,7 +22,7 @@ function Login(props) {
                     return
                 }
 
-                sessionStorage.userId = userId
+                sessionStorage.token = userId
 
                 props.onNavigateToHome()
             })

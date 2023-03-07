@@ -1,7 +1,7 @@
-import { validateCallback, validateStickyId, validateUserId } from 'com'
+import { validateCallback, validateStickyId, validateToken } from 'com'
 
-function deleteSticky(userId, stickyId, callback){
-    validateUserId(userId)
+function deleteSticky(token, stickyId, callback){
+    validateToken(token)
     validateStickyId(stickyId)
     validateCallback(callback)
 
@@ -24,15 +24,16 @@ function deleteSticky(userId, stickyId, callback){
         
         callback(null)
     }
-
+    xhr.onerror = () => callback(new Error('network error'))
+    
     xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 
 export default deleteSticky
 
-// function deleteSticky(userId, stickyId) {
+// function deleteSticky(token, stickyId) {
 //     var userExists = false; //primero valido que exista el usuario, parto de que no existe
   
 //     for (var i = 0; i < users.length && !userExists; i++) { //!userExists: NO existe

@@ -1,7 +1,7 @@
-import { validateCallback, validateStickyId, validateColor, validateUserId } from 'com'
+import { validateCallback, validateStickyId, validateColor, validateToken } from 'com'
 
-function changeStickyColor(userId, stickyId, color, callback) {
-  validateUserId(userId)
+function changeStickyColor(token, stickyId, color, callback) {
+  validateToken(token)
   validateStickyId(stickyId)
   validateColor(color)
   validateCallback(callback)
@@ -25,13 +25,14 @@ function changeStickyColor(userId, stickyId, color, callback) {
 
     callback(null)
   }
+  xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/color`)
-  xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
   xhr.setRequestHeader('Content-Type', 'application/json')
 
-  const sticky = { color }
-  const json = JSON.stringify(sticky)
+  const payload = { color }
+  const json = JSON.stringify(payload)
   xhr.send(json)
 }
 

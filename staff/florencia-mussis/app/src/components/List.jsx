@@ -3,14 +3,14 @@ import retrievePublicStickies from "../logic/retrieve-public-stickies"
 import Container from '../library/Container'
 import Item from './Item'
 
-function List({ listUpdateStamp, user, onToggleFav }) {
+function List({ listUpdateStamp, user, onToggleFav }) { //cuando recibe el user de home se pinta
     console.log('List ->render')
 
-    const [stickies, setStickies] = useState([])
+    const [stickies, setStickies] = useState([]) //la primera vez no pinta nada
 
-    const loadList = () => {
+    const loadList = () => { //pide los stickies para pintarlos
         try {
-            retrievePublicStickies(sessionStorage.userId, (error, stickies) => {
+            retrievePublicStickies(sessionStorage.token, (error, stickies) => { 
                 if (error) {
                     alert(error.message)
 

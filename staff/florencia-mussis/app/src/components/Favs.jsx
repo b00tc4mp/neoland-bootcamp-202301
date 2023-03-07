@@ -4,13 +4,13 @@ import Item from './Item'
 import Container from '../library/Container'
 
 
-function MyFavs({ listUpdateStamp, user, handleToggleFav }) {
+function Favs({ listUpdateStamp, user, onToggleFav }) {
     const [stickies, setStickies] = useState([])
 
     const loadlist = () => {
 
         try {
-            retrieveFavStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveFavStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
@@ -102,11 +102,9 @@ function MyFavs({ listUpdateStamp, user, handleToggleFav }) {
         })
     }
 
-    const onToggleFav = (userId, stickyId)=>{
-        setStickies(stickies => { //eliminar el sticky de favoritos
+    const handleToggleFav = (userId, stickyId)=>{
+        setStickies(stickies => { //elimina el sticky de favoritos del usuario
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
-            //TODO que pasa si no lo encuentra
 
             const stickiesUpdated = [...stickies]
 
@@ -115,13 +113,13 @@ function MyFavs({ listUpdateStamp, user, handleToggleFav }) {
             return stickiesUpdated
         })
 
-        handleToggleFav(userId, stickyId) //elimina el sticky del array de favoritos del usuario
+        onToggleFav(userId, stickyId) // llamo para que se refresque el favorito del usuario, esta prop viene de home y le dice que quite el usuario de favoritos, para que lo quite del array de favoritos
     }
 
     return <Container TagName="ul" className="gap-4 py-10 ">
-        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleLike} onChangeColor={handleChangeColor} onToggleFav={handleToggleFav} user={user} />
         )}
     </Container>
 }
 
-export default MyFavs
+export default Favs

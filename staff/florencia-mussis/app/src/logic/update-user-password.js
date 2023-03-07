@@ -1,16 +1,16 @@
-const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm, validateCallback } = require('com')
+const { validateToken, validatePassword, validateNewPassword, validateNewPasswordConfirm, validateCallback } = require('com')
 
 /**
  * Updates the user password
  * 
- * @param {string} userId The user id
+ * @param {string} token The session token
  * @param {string} password The user current password
  * @param {string} newPassword The user new password
  * @param {string} newPasswordConfirm The confirmation of the new password
  * @param {function} callback The callback
  */
-function updateUserPassword(userId, password, newPassword, newPasswordConfirm, callback) {
-    validateUserId(userId)
+function updateUserPassword(token, password, newPassword, newPasswordConfirm, callback) {
+    validateToken(token)
     validatePassword(password)
     validateNewPassword(newPassword)
     validateNewPasswordConfirm(newPasswordConfirm)
@@ -35,9 +35,10 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm, c
 
     callback(null)
    }
-
+   xhr.onerror = () => callback(new Error('network error'))
+   
    xhr.open('PATCH', 'http://localhost:8080/users/password') //patch actualizar
-   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+   xhr.setRequestHeader('Authorization', `Bearer ${token}`)
    xhr.setRequestHeader('Content-Type', 'application/json')
 
    const payload = { password, newPassword, newPasswordConfirm}

@@ -17,7 +17,7 @@ function UnregisterUser({ onUnregisterUser }) {
         const password = event.target.password.value
 
         try {
-            unregisterUser(sessionStorage.userId, password, error => {
+            unregisterUser(sessionStorage.token, password, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -29,7 +29,7 @@ function UnregisterUser({ onUnregisterUser }) {
 
                 event.target.reset()
 
-                delete sessionStorage.userId
+                delete sessionStorage.token
 
                 onUnregisterUser()
             })

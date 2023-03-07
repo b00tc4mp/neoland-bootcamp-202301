@@ -4,14 +4,14 @@ import List from '../components/List'
 import Profile from '../components/Profile'
 import MyList from "../components/MyList"
 import retrieveUser from "../logic/retrieve-user"
-import MyFavs from "../components/Myfavs"
+import Favs from "../components/Favs"
 
 
-function Home({onLogout, onUnregisterUser}) {
+function Home({ onLogout }) {
     console.log('Home -> render')
 
     const [view, setView] = useState('list')
-    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now()) //cuando necesitamos que se actualice y pinte, lo asociamos a date now
+    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
 
     const handleShowProfile = event => {
@@ -25,15 +25,15 @@ function Home({onLogout, onUnregisterUser}) {
     }
 
 
-    const handleAdd = () => {     
-            try {
-                createSticky(sessionStorage.userId, '', 'public', error => {
-                    if (error) {
-                        alert(error.message)
+    const handleAdd = () => {
+        try {
+            createSticky(sessionStorage.token, '', 'public', error => {
+                if (error) {
+                    alert(error.message)
 
-                        return
-                    }
-                    setListUpdateStamp(Date.now())
+                    return
+                }
+                setListUpdateStamp(Date.now())
             })
         } catch (error) {
             alert(error.message)
@@ -46,36 +46,36 @@ function Home({onLogout, onUnregisterUser}) {
         setView('my-list')
     }
 
-    const handleShowMyFavs = event => {
+    const handleShowFavs = event => {
         event.preventDefault()
-        setView('my-favs')
-      }
+        setView('favs')
+    }
 
     const handleLogout = () => {
-        delete sessionStorage.userId
+        delete sessionStorage.token
 
         onLogout()
     }
 
     useEffect(() => {
         try {
-            retrieveUser(sessionStorage.userId, (error, user) => {
+            retrieveUser(sessionStorage.token, (error, user) => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-                setUser(user)
+                setUser(user) //se llama a api y nos envia el usuario
             })
-        } catch(error) {
+        } catch (error) {
             alert(error.message)
         }
     }, [])
 
-    const handleFav = (userId, stickyId) => {
-        setUser(user => {
-            const newUser = { ...user }
-            const favs = [...user.favs]
+    const handleFav = (userId, stickyId) => { //callback que se envia por list a item, list no hace nada solo lo pasa a item que lo va a usar, aqui es una logica para ponerlo o quitarlo visualmente (no en la base de datos - api).
+        setUser(user => { //user es parametro, no funcion
+            const newUser = { ...user } //creo un nuevo objeto en memoria
+            const favs = [...user.favs] //creo un nuevo array con los favoritos del usuario
             newUser.favs = favs
 
             const indexOfSticky = favs.indexOf(stickyId)
@@ -101,7 +101,7 @@ function Home({onLogout, onUnregisterUser}) {
 
                 <a onClick={handleShowProfile} className="profile-link font-montserrat" href="">{user.name}</a>
 
-                <a onClick={handleShowMyFavs} className="logout-link m-3" href="">My favorits</a>
+                <a onClick={handleShowFavs} className="logout-link m-3" href="">Favs</a>
 
                 <button onClick={handleLogout} className="bg-purple-300 border-2 rounded-md text-white w-20 drop-shadow-sm font-montserrat">Logout</button>
             </nav>
@@ -110,17 +110,17 @@ function Home({onLogout, onUnregisterUser}) {
         <main className="py-20">
             {view === 'list' && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />}
 
-            {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
+            {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
 
             {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />}
 
-            {view ==='my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} handleToggleFav={handleFav} user={user}/>}
+            {view === 'favs' && <Favs listUpdateStamp={listUpdateStamp} onToggleFav={handleFav} user={user} />}
         </main>
 
         <footer className="fixed bottom-0 left-0 flex justify-center bg-purple-300 border-2 rounded-md text-white w-full" >
-            {view !== 'profile' && <button className="drop-shadow-sm text-5xl" onClick={handleAdd}>+</button>}
+            {view !== 'profile' && view !== 'favs' && <button className="drop-shadow-sm text-5xl" onClick={handleAdd}>+</button>}
         </footer>
     </div>
 }
 
- export default Home
+export default Home
