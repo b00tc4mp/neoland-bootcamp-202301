@@ -7,7 +7,7 @@ import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Favs from '../components/Favs'
 
-function Home({ onLogout, onUnregisterUser }) {
+function Home({ onLogout }) {
     console.log('Home -> render')
 
     const [view, setView] = useState('list')
@@ -28,7 +28,7 @@ function Home({ onLogout, onUnregisterUser }) {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.userId, '', 'public', error => {
+            createSticky(sessionStorage.token, '', 'public', error => {
                 if (error) {
                     alert(error.message)
 
@@ -43,7 +43,7 @@ function Home({ onLogout, onUnregisterUser }) {
     }
 
     const handleLogout = () => {
-        delete sessionStorage.userId
+        delete sessionStorage.token
 
         onLogout()
     }
@@ -56,7 +56,7 @@ function Home({ onLogout, onUnregisterUser }) {
 
     useEffect(() => {
         try {
-            retrieveUser(sessionStorage.userId, (error, user) => {
+            retrieveUser(sessionStorage.token, (error, user) => {
                 if (error) {
                     alert(error.message)
 
@@ -111,7 +111,7 @@ function Home({ onLogout, onUnregisterUser }) {
         <main className="py-16">
             {view === 'list' && <List updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
-            {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
+            {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
 
             {view === 'my-list' && <MyList updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 

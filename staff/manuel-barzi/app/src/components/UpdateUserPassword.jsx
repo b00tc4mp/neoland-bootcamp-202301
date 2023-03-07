@@ -19,7 +19,7 @@ function UpdateUserPassword() {
         const newPasswordConfirm = event.target.newPasswordConfirm.value
 
         try {
-            updateUserPassword(sessionStorage.userId, currentPassword, newPassword, newPasswordConfirm, error => {
+            updateUserPassword(sessionStorage.token, currentPassword, newPassword, newPasswordConfirm, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,

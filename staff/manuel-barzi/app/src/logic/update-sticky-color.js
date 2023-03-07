@@ -1,15 +1,15 @@
-const { validateUserId, validateStickyId, validateColor, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateColor, validateCallback } = require('com')
 
 /**
  * Updates the sticky color
  * 
- * @param {string} userId The user id
+ * @param {string} token The session token
  * @param {string} stickyId The sticky's id to update
  * @param {string} color The sticky color
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-function updateStickyColor(userId, stickyId, color, callback) {
-    validateUserId(userId)
+function updateStickyColor(token, stickyId, color, callback) {
+    validateToken(token)
     validateStickyId(stickyId)
     validateColor(color)
     validateCallback(callback)
@@ -37,7 +37,7 @@ function updateStickyColor(userId, stickyId, color, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/color`)
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { color }

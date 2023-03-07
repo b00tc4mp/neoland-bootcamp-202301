@@ -15,14 +15,14 @@ function Login(props) {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password, (error, userId) => {
+            authenticateUser(email, password, (error, token) => {
                 if (error) {
                     setFeedback(error.message)
 
                     return
                 }
 
-                sessionStorage.userId = userId
+                sessionStorage.token = token
 
                 props.onNavigateToHome()
             })

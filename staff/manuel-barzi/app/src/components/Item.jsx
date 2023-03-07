@@ -6,11 +6,14 @@ import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import updateStickyColor from '../logic/update-sticky-color'
 import toggleFavSticky from '../logic/toggle-fav-sticky'
+import extractUserId from '../utils/extractUserId'
 
 function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav, user }) {
+    const userId = extractUserId(sessionStorage.token)
+
     const handleUpdateText = event => {
         try {
-            updateStickyText(sessionStorage.userId, event.target.dataset.id, event.target.innerText, error => {
+            updateStickyText(sessionStorage.token, event.target.dataset.id, event.target.innerText, error => {
                 if (error) {
                     alert(error.message)
 
@@ -26,7 +29,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         try {
             const newVisibility = event.target.dataset.visibility === 'public' ? 'private' : 'public'
 
-            updateStickyVisibility(sessionStorage.userId, event.target.dataset.id, newVisibility, error => {
+            updateStickyVisibility(sessionStorage.token, event.target.dataset.id, newVisibility, error => {
                 if (error) {
                     alert(error.message)
 
@@ -44,14 +47,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         try {
             const stickyId = event.currentTarget.dataset.id
 
-            toggleLikeSticky(sessionStorage.userId, stickyId, error => {
+            toggleLikeSticky(sessionStorage.token, stickyId, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleLike(sessionStorage.userId, stickyId)
+                onToggleLike(userId, stickyId)
             })
         } catch (error) {
             alert(error.message)
@@ -62,14 +65,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         try {
             const stickyId = event.currentTarget.dataset.id
 
-            toggleFavSticky(sessionStorage.userId, stickyId, error => {
+            toggleFavSticky(sessionStorage.token, stickyId, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleFav(sessionStorage.userId, stickyId)
+                onToggleFav(userId, stickyId)
             })
         } catch (error) {
             alert(error.message)
@@ -78,7 +81,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleDelete = event => {
         try {
-            deleteSticky(sessionStorage.userId, event.target.dataset.id, error => {
+            deleteSticky(sessionStorage.token, event.target.dataset.id, error => {
                 if (error) {
                     alert(error.message)
 
@@ -94,7 +97,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleUpdateColor = event => {
         try {
-            updateStickyColor(sessionStorage.userId, event.target.dataset.id, event.target.value, error => {
+            updateStickyColor(sessionStorage.token, event.target.dataset.id, event.target.value, error => {
                 if (error) {
                     alert(error.message)
 
@@ -128,7 +131,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         <div className="flex justify-between">
             <strong className="text-left">{element.user.name}</strong>
             <div>
-                {element.user.id === sessionStorage.userId && <>
+                {element.user.id === userId && <>
                     <select className="bg-[transparent]" data-id={element.id} onChange={handleUpdateColor} defaultValue={element.color}>
                         <option value="red">red</option>
                         <option value="green">green</option>
@@ -139,14 +142,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     <button className="w-5 h-5" data-id={element.id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
                 </>}
 
-                {element.user.id === sessionStorage.userId && <button className="w-5 h-5" data-id={element.id} onClick={handleDelete}>x</button>}
+                {element.user.id === userId && <button className="w-5 h-5" data-id={element.id} onClick={handleDelete}>x</button>}
             </div>
         </div>
 
-        <p className="p-2" data-id={element.id} contentEditable={element.user.id === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+        <p className="p-2" data-id={element.id} contentEditable={element.user.id === userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
 
         <div className="flex justify-end">
-            <button className="h-5 w-10 flex justify-center" data-id={element.id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(sessionStorage.userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
+            <button className="h-5 w-10 flex justify-center" data-id={element.id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
             <button className="h-5 w-5 flex justify-center" data-id={element.id} onClick={handleToggleFav}>{
                 // user.favs && user.favs.includes(element.id) ?

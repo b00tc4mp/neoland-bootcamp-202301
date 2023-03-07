@@ -1,14 +1,14 @@
-const { validateUserId, validatePassword, validateCallback } = require('com')
+const { validateToken, validatePassword, validateCallback } = require('com')
 
 /**
  * Unregisters a user
  * 
- * @param {string} userId The userId address of the user
+ * @param {string} token The session token
  * @param {string} password The user password
  * @param {callback} callback The function to call when the user is unregistered (or failed)
  */
-function unregisterUser(userId, password, callback) {
-    validateUserId(userId)
+function unregisterUser(token, password, callback) {
+    validateToken(token)
     validatePassword(password)
     validateCallback(callback)
 
@@ -35,7 +35,7 @@ function unregisterUser(userId, password, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('DELETE', 'http://localhost:8080/users')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { password }

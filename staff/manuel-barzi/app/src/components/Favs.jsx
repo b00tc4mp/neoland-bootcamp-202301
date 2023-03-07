@@ -10,7 +10,7 @@ function Favs({ updateStamp, user, onToggleFav }) {
 
     const loadList = () => {
         try {
-            retrieveFavStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveFavStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 

@@ -33,9 +33,9 @@ function authenticateUser(email, password, callback) {
         
         const body = JSON.parse(response)
 
-        const { userId } = body
+        const { token } = body
         
-        callback(null, userId)
+        callback(null, token)
     }
 
     xhr.onerror = () => callback(new Error('network error'))

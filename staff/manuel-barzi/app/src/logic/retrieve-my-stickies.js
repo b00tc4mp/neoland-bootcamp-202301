@@ -1,13 +1,13 @@
-const { validateUserId, validateCallback } = require('com')
+const { validateToken, validateCallback } = require('com')
 
 /**
  * Retrieves the stickies that belong to the specified user (email)
  * 
- * @param {string} userId The userId of the user to retrieve the stickies from
+ * @param {string} token The session token
  * @param {function} callback The function to call back with the stickies (or an error)
  */
-function retrieveMyStickies(userId, callback) {
-    validateUserId(userId)
+function retrieveMyStickies(token, callback) {
+    validateToken(token)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
@@ -37,7 +37,7 @@ function retrieveMyStickies(userId, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('GET', 'http://localhost:8080/stickies/user')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 
