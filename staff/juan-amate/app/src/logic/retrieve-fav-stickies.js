@@ -1,12 +1,12 @@
-import { validateUserId, validateCallback } from 'com'
+import { validateToken, validateCallback } from 'com'
 
 /**
  * Retrieves the user´s stickies.
  * @param {string} userId The user id of the user to retrieve the stickies
  * @param {function} callback The function to call back with the stickies (or an error)
  */
-function retrieveFavStickies(userId, callback) {
-    validateUserId(userId)
+function retrieveFavStickies(token, callback) {
+    validateToken(token)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
@@ -36,7 +36,7 @@ function retrieveFavStickies(userId, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('GET', 'http://localhost:8080/stickies/favs')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 

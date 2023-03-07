@@ -1,7 +1,7 @@
-import { validateUserId, validateStickyId, validateText, validateCallback } from 'com'
+import { validateToken, validateStickyId, validateText, validateCallback } from 'com'
 
-function updateStickyText(userId, stickyId, text, callback) {
-    validateUserId(userId)
+function updateStickyText(token, stickyId, text, callback) {
+    validateToken(token)
     validateStickyId(stickyId)
     validateText(text)
     validateCallback(callback)
@@ -29,7 +29,7 @@ function updateStickyText(userId, stickyId, text, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const sticky = { text }

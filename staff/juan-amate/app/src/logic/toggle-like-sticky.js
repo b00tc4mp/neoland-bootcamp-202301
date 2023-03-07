@@ -1,4 +1,4 @@
-import { validateUserId, validateStickyId, validateCallback } from 'com'
+import { validateToken, validateStickyId, validateCallback } from 'com'
 
 /**
  * Toggles the likeability of a specific sticky
@@ -7,8 +7,8 @@ import { validateUserId, validateStickyId, validateCallback } from 'com'
  * @param{string} stickyId The sticky identifier
  * @param{function} callback
  */
-function toggleLikeSticky(userId, stickyId, callback) {
-    validateUserId(userId)
+function toggleLikeSticky(token, stickyId, callback) {
+    validateToken(token)
     validateStickyId(stickyId)
     validateCallback(callback)
 
@@ -35,7 +35,7 @@ function toggleLikeSticky(userId, stickyId, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/likes`)
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 

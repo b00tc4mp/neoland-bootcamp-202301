@@ -1,4 +1,4 @@
-import { validateUserId, validateNewEmail, validatePassword, validateCallback } from 'com'
+import { validateToken, validateNewEmail, validatePassword, validateCallback } from 'com'
 /**
  * Updates the user email
  * 
@@ -7,8 +7,8 @@ import { validateUserId, validateNewEmail, validatePassword, validateCallback } 
  * @param {string} password The user password
  * @param {function} callback The callback
  */
-function updateUserEmail(userId, newEmail, password, callback) {
-    validateUserId(userId)
+function updateUserEmail(token, newEmail, password, callback) {
+    validateToken(token)
     validateNewEmail(newEmail)
     validatePassword(password)
     validateCallback(callback)
@@ -36,7 +36,7 @@ function updateUserEmail(userId, newEmail, password, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/email')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { newEmail, password }

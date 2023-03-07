@@ -1,4 +1,4 @@
-import { validateUserId, validatePassword, validateCallback } from 'com'
+import { validateToken, validatePassword, validateCallback } from 'com'
 /**
  * Unregister a user and the stickies in the databases
  * 
@@ -6,8 +6,8 @@ import { validateUserId, validatePassword, validateCallback } from 'com'
  * @param {string} password The user password
  * @param {function} callback The funtcion to call when the user is unregistered (or falling)
  */
-function unregisterUser(userId, password, callback) {
-    validateUserId(userId)
+function unregisterUser(token, password, callback) {
+    validateToken(token)
     validatePassword(password)
     validateCallback(callback)
 
@@ -34,7 +34,7 @@ function unregisterUser(userId, password, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('DELETE', 'http://localhost:8080/users')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { password }

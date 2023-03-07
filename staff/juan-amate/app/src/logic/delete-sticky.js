@@ -1,4 +1,4 @@
-import { validateUserId, validateStickyId, validateCallback } from 'com'
+import { validateToken, validateStickyId, validateCallback } from 'com'
 
 /**
  * Deletes the specified sticky by id that belongs to the specified user (by email)
@@ -7,8 +7,8 @@ import { validateUserId, validateStickyId, validateCallback } from 'com'
  * @param {string} stickyId The sticky id of the sticky
  * @param {function} callback
  */
-function deleteSticky(userId, stickyId, callback) {
-  validateUserId(userId)
+function deleteSticky(token, stickyId, callback) {
+  validateToken(token)
   validateStickyId(stickyId)
   validateCallback(callback)
 
@@ -35,9 +35,9 @@ function deleteSticky(userId, stickyId, callback) {
   xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+
   xhr.send()
 }
-
 
 export default deleteSticky

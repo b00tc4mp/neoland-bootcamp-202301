@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import authenticateUser from '../logic/authenticate-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
-import authenticateUser from '../logic/authenticate-user'
 import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 
 function Login(props) {
@@ -16,16 +16,17 @@ function Login(props) {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password, (error, userId) => {
+            authenticateUser(email, password, (error, token) => {
                 if (error) {
                     setFeedback(error.message)
 
                     return
                 }
-                sessionStorage.userId = userId
+                sessionStorage.token = token
 
                 props.onNavigateToHome()
             })
+
         } catch (error) {
             setFeedback(error.message)
         }

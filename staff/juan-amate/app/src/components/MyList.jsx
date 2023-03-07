@@ -10,14 +10,14 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
 
     const loadList = () => {
         try {
-            retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveMyStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                setStickies(stickies.reverse())
+                setStickies(stickies)
             })
         } catch (error) {
             alert(error.message)
@@ -101,7 +101,7 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
     }
 
     return <Container TagName="ul">
-        {stickies.map(sticky => <Item element={sticky} key={sticky.id} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={onToggleFav} onChangeColor={handleChangeColor} user={user} />)}
     </Container>
 }
 
