@@ -36,6 +36,8 @@ function updateUserPassword(userId, password, newPassword, newPasswordRepeat, ca
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', 'http://localhost:8080/users/password')
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
@@ -44,5 +46,6 @@ function updateUserPassword(userId, password, newPassword, newPasswordRepeat, ca
     const json = JSON.stringify(payload)
     xhr.send(json)
 }
+
 
 export default updateUserPassword

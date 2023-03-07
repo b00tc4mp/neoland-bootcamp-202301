@@ -34,9 +34,12 @@ function retrieveUser(userId, callback) {
         callback(null, user)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('GET', 'http://localhost:8080/users')
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.send()
 }
+
 
 export default retrieveUser

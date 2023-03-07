@@ -36,6 +36,8 @@ function registerUser(name, age, email, password, callback) {
     callback(null)
   }
 
+  xhr.onerror = () => callback(new Error('network error'))
+
   xhr.open('POST', 'http://localhost:8080/users')
   xhr.setRequestHeader('Content-Type', 'application/json')
 
@@ -44,5 +46,6 @@ function registerUser(name, age, email, password, callback) {
 
   xhr.send(json)
 }
+
 
 export default registerUser

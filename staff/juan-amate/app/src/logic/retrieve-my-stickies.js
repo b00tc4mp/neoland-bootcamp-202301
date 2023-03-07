@@ -34,9 +34,12 @@ function retrieveMyStickies(userId, callback) {
         callback(null, stickies.reverse())
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('GET', 'http://localhost:8080/stickies/user')
     xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
     xhr.send()
 }
+
 
 export default retrieveMyStickies

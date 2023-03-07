@@ -26,11 +26,15 @@ function changeStickyColor(userId, stickyId, color, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/color`)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
+
     const payload = { color }
     const json = JSON.stringify(payload)
+
     xhr.send(json)
 }
 

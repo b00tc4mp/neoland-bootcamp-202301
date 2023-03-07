@@ -32,9 +32,12 @@ function deleteSticky(userId, stickyId, callback) {
     callback(null)
   }
 
+  xhr.onerror = () => callback(new Error('network error'))
+
   xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
   xhr.send()
 }
+
 
 export default deleteSticky

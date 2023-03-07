@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
 import createSticky from '../logic/create-sticky'
 import List from '../components/List'
@@ -7,7 +6,7 @@ import MyList from '../components/MyList'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
-import MyFavs from '../components/MyFavs'
+import Favs from '../components/Favs'
 import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 
 function Home({ onLogout, onUnregisterUser }) {
@@ -74,10 +73,10 @@ function Home({ onLogout, onUnregisterUser }) {
         })
     }
 
-    const handleShowMyFavs = event => {
+    const handleShowFavs = event => {
         event.preventDefault()
 
-        setView('my-favs')
+        setView('favs')
     }
 
     useEffect(() => {
@@ -103,7 +102,7 @@ function Home({ onLogout, onUnregisterUser }) {
             <nav className="flex items-center gap-2">
                 <a onClick={handleShowMyList} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href=''>.:My stickies:.</a>
 
-                <a onClick={handleShowMyFavs} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href=''>.:My favs:.</a>
+                <a onClick={handleShowFavs} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href=''>.:My favs:.</a>
 
                 <a onClick={handleShowProfile} className="text-gray-500 hover:underline cursor-pointer font-quicksand" href="">.:{user.name}:.</a>
 
@@ -118,7 +117,7 @@ function Home({ onLogout, onUnregisterUser }) {
 
             {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
 
-            {view === 'my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} />}
+            {view === 'favs' && <Favs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />}
         </Container>
 
         <footer className="bg-white flex justify-center items-center fixed h-14 bottom-0 left-0 w-full">

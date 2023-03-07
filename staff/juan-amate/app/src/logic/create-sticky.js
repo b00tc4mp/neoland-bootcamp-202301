@@ -34,12 +34,17 @@ function createSticky(userId, text, visibility, callback) {
     callback(null)
   }
 
+  xhr.onerror = () => callback(new Error('network error'))
+
   xhr.open('POST', 'http://localhost:8080/stickies')
   xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
   xhr.setRequestHeader('Content-Type', 'application/json')
+
   const sticky = { text, visibility }
   const json = JSON.stringify(sticky)
+
   xhr.send(json)
 }
+
 
 export default createSticky

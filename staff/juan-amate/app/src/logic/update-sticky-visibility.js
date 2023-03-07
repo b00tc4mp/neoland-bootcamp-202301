@@ -26,6 +26,8 @@ function updateStickyVisibility(userId, stickyId, visibility, callback) {
         callback(null)
     }
 
+    xhr.onerror = () => callback(new Error('network error'))
+
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/visibility`)
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
     xhr.setRequestHeader('Content-Type', 'application/json')

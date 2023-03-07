@@ -30,7 +30,7 @@ function List({ listUpdateStamp, user, onToggleFav }) {
 
     const handleChangeColor = (stickyId, color) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -47,7 +47,7 @@ function List({ listUpdateStamp, user, onToggleFav }) {
 
     const handleRemoveFromList = stickyId => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const stickiesUpdated = [...stickies]
 
@@ -59,7 +59,7 @@ function List({ listUpdateStamp, user, onToggleFav }) {
 
     const handleToggleLike = (userId, stickyId) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky._id === stickyId)
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
             const sticky = stickies[index]
 
@@ -84,7 +84,7 @@ function List({ listUpdateStamp, user, onToggleFav }) {
     }
 
     return <Container TagName='ul'>
-        {stickies.map(sticky => <Item element={sticky} key={sticky._id} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onChangeColor={handleChangeColor} onToggleFav={onToggleFav} user={user} />)}
     </Container>
 }
 

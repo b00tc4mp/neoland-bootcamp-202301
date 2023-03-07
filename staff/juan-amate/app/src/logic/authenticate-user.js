@@ -37,6 +37,7 @@ function authenticateUser(email, password, callback) {
 
     callback(null, userId)
   }
+  xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('POST', 'http://localhost:8080/users/auth')
   xhr.setRequestHeader('Content-Type', 'application/json')

@@ -128,45 +128,47 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onChangeCol
             break
         case 'blue':
             bgColor = 'bg-sky-200'
-            break
     }
 
-    return <li key={element._id} className={`${bgColor} border rounded-md p-3 m-3 w-[40ch] text-right`}>
-        <div className='text-right'>
-            {element.user === sessionStorage.userId && <>
-                <select className='h-6 mx-2 border border-black' defaultValue={element.color} data-id={element._id} name='color' onChange={handleChangeColor}>
-                    <option value='yellow'>yellow</option>
-                    <option value='red'>red</option>
-                    <option value='green'>green</option>
-                    <option value='blue'>blue</option>
-                </select>
+    return (
+        <li key={element.id} className={`${bgColor} border rounded-md p-3 m-3 w-[40ch] text-right`}>
+            <div className='flex justify-between'>
+                <strong className="text-gray-500 p-1 font-spline italic">{element.user.name}</strong>
+                <div>
+                    {element.user.id === sessionStorage.userId && <>
+                        <select className='h-6 mx-2 border border-black' defaultValue={element.color} data-id={element.id} name='color' onChange={handleChangeColor}>
+                            <option value='yellow'>yellow</option>
+                            <option value='red'>red</option>
+                            <option value='green'>green</option>
+                            <option value='blue'>blue</option>
+                        </select>
 
-                <button className='h-6 w-6 text-xl cursor-pointer' data-id={element._id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>
-                    {element.visibility === 'public' ? '🟢' : '🔴'}
+                        <button className='h-6 w-6 text-xl cursor-pointer' data-id={element.id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>
+                            {element.visibility === 'public' ? '🟢' : '🔴'}
+                        </button>
+
+                        <button className="h-6 w-6 text-xl cursor-pointer" data-id={element.id} onClick={handleDelete}>🗑️</ button>
+                    </>
+                    }
+                </div>
+            </div>
+
+            <p className="text-xl pt-5 text-left" data-id={element.id} contentEditable={element.user.id === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+
+            <div className={'flex justify-end gap-1'}>
+                <p className='text-standard' title={element.likes.join('\n')}>{element.likes.length}</p>
+                <button className="w-6 h-6 cursor-pointer" onClick={handleToggleLike} data-id={element.id}>
+                    {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="text-red-500" /> : <HeartIconOutline className="text-black" />}
                 </button>
 
-                <button className="h-6 w-6 text-xl cursor-pointer" data-id={element._id} onClick={handleDelete}>🗑️</ button>
+                <button className='h-6 w-6 cursor-pointer' data-id={element.id} onClick={handleToggleFav}>
+                    {user.favs?.includes(element.id) ? <BookmarkIcon className='text-green-500' /> : <BookmarkIconOutline />}
+                </button>
 
-            </>
-            }
-        </div>
+            </div>
 
-        <p className="text-xl pt-5 text-left" data-id={element._id} contentEditable={element.user === sessionStorage.userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
-
-        <div className={'flex justify-end gap-1'}>
-            <p className='text-standard' title={element.likes.join('\n')}>{element.likes.length}</p>
-            <button className="w-6 h-6 cursor-pointer" onClick={handleToggleLike} data-id={element._id}>
-                {element.likes.includes(sessionStorage.userId) ? <HeartIcon className="text-red-500" /> : <HeartIconOutline className="text-black" />}
-            </button>
-
-            <button className='h-6 w-6 cursor-pointer' data-id={element._id} onClick={handleToggleFav}>
-                {user.favs?.includes(element._id) ? <BookmarkIcon className='text-green-500' /> : <BookmarkIconOutline />}
-            </button>
-
-        </div>
-
-        <strong className="text-gray-500 p-1 font-spline">{element.user}</strong>
-    </li>
+        </li>
+    )
 }
 
 export default Item
