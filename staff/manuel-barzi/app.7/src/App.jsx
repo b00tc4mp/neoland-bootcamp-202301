@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
-import { Routes, Route } from 'react-router-dom'
 
 function App() {
     console.log('App -> render')
@@ -22,11 +21,11 @@ function App() {
     }
 
     return <div className="">
-        <Routes>
-            <Route index element={<Home onLogout={handleShowLogin} />} />
-            <Route path="/login" element={<Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />} />
-            <Route path="/register" element={<Register onNavigateToLogin={handleShowLogin} />} />
-        </Routes>
+        {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome} />}
+
+        {view === 'register' && <Register onNavigateToLogin={handleShowLogin} />}
+
+        {view === 'home' && <Home onLogout={handleShowLogin} />}
     </div>
 }
 
