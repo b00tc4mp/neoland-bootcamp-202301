@@ -20,7 +20,6 @@ const toggleFavSticky = require('./logic/toggleFavSticky')
 const retrieveFavStickies = require('./logic/retrieveFavStickies')
 const { sign, verify } = require('jsonwebtoken')
 const JWT_SECRET = 'juan tiene mucho pelo guapo'
-const { FormatError, MissingError, AuthError, ConflictError } = require('com')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
@@ -37,21 +36,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 registerUser(name, age, email, password)
                     .then(() => res.status(201).send())
-                    .catch(error => { // parte asincrona y viene del catch de las lógicas
-                        if (error instanceof ConflictError)
-                            res.status(409)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-            } catch (error) { // parte sincrona - viene de los validates y la parte sincrona de las logics
-                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                    .catch(error => res.status(500).json({ error: error.message }))
+            } catch (error) {
+                res.status(500).json({ error: error.message })
             }
         })
 
@@ -64,23 +51,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 authenticateUser(email, password)
                     .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
                     .then(token => res.status(200).json({ token }))
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
         })
 
@@ -94,21 +67,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 return retrieveUser(userId)
                     .then(user => res.json(user))
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof TypeError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
         })
 
@@ -124,23 +85,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof TypeError || error instanceof RangeError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
         })
 
@@ -156,23 +103,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserPassword(userId, password, newPassword, newPasswordRepeat)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof ConflictError || error instanceof RangeError || error instanceof TypeError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
 
         })
@@ -189,23 +122,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserEmail(userId, newEmail, password)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
         })
 

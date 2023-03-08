@@ -17,7 +17,6 @@ function App() {
   return <div>
     <Routes>
       <Route path='/*' element={sessionStorage.token ? <Home /> : <Navigate to='/login' />} />
-
       <Route path="/login" element={sessionStorage.token ? <Navigate to='/' /> : <Login />} />
       <Route path="/register" element={sessionStorage.token ? <Navigate to='/' /> : <Register />} />
     </Routes>
