@@ -6,28 +6,16 @@ import MyList from '../components/MyList'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Favs from '../components/Favs'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
 
 function Home() {
     console.log('Home -> render')
 
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
-
-    const handleShowProfile = event => {
-        event.preventDefault()
-
-        setView('profile')
-    }
-
-    const handleShowList = event => {
-        event.preventDefault()
-
-        setView('list')
-    }
 
     const handleAdd = () => {
         try {
@@ -49,12 +37,6 @@ function Home() {
         delete sessionStorage.token
 
         navigate('/login')
-    }
-
-    const handleShowMyList = event => {
-        event.preventDefault()
-
-        setView('my-list')
     }
 
     useEffect(() => {
@@ -90,39 +72,30 @@ function Home() {
         })
     }
 
-    const handleShowFavs = event => {
-        event.preventDefault()
-        
-        // TODO retrieve favs and render them
-        setView('favs')
-    }
-
     return <div className="bg-black h-full">
         <header className="fixed top-0 w-full flex justify-between p-2 bg-[black]">
-            <a onClick={handleShowList} className="logo-link" href=""><img className="w-10" src="images/logo.png" alt="Chachi Games" /></a>
+            <Link to="/" className="logo-link" href=""><img className="w-10" src="images/logo.png" alt="Chachi Games" /></Link>
 
             <nav className="flex items-center gap-5">
-                <a onClick={handleShowMyList} className="text-[gold] font-odibee underline" href="">My stickies</a>
+                <Link to="/my-list" className="text-[gold] font-odibee underline">My stickies</Link>
 
-                <a onClick={handleShowFavs} className="text-[gold] font-odibee underline" href="">FAVS</a>
+                <Link to="/favs" className="text-[gold] font-odibee underline">FAVS</Link>
 
-                <a onClick={handleShowProfile} className="text-[gold] font-odibee underline" href="">{user.name}</a>
-                {/* <button onClick={handleLogout} className="logout-button border-[2px] border-[gold] text-[gold] p-1 font-press">Logout</button> */}
+                <Link to="/profile" className="text-[gold] font-odibee underline">{user.name}</Link>
+
                 <Button onClick={handleLogout}>Logout</Button>
             </nav>
         </header>
         <main className="py-16">
-            {view === 'list' && <List updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
-
-            {view === 'profile' && <Profile onUnregisterUser={handleLogout} />}
-
-            {view === 'my-list' && <MyList updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
-
-            {view === 'favs' && <Favs updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
+            <Routes>
+                <Route path="/" element={<List updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}></Route>
+                <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
+                <Route path="/my-list" element={<MyList updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
+                <Route path="/favs" element={<Favs updateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
+            </Routes>
         </main>
         <footer className="fixed bottom-0 w-full flex justify-center bg-[black]">
-            {/* <button onClick={handleAdd} className="logout-button font-press border-[2px] border-[gold] text-[gold] p-1">+</button> */}
-            {view !== 'profile' && <Button onClick={handleAdd}>+</Button>}
+            {(location.pathname === '/' || location.pathname === '/my-list') && <Button onClick={handleAdd}>+</Button>}
         </footer>
     </div>
 }
