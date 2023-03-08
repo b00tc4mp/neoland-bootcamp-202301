@@ -1,158 +1,160 @@
-function Arroz() {
-    for (let i = 0; i < arguments.length; i++) {
-        const element = arguments[i]
+class Arroz {
+    constructor() {
+        for (let i = 0; i < arguments.length; i++) {
+            const element = arguments[i]
 
-        this[i] = element
+            this[i] = element
+        }
+
+        this.length = arguments.length
     }
 
-    this.length = arguments.length
-}
+    forEach(callback) {
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
 
-Arroz.prototype.forEach = function (callback) {
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        callback(element)
-    }
-}
-
-Arroz.prototype.includes = function (searchElement) {
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        if (element === searchElement) return true
-    }
-
-    return false
-}
-
-Arroz.prototype.some = function (callback) {
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        const result = callback(element)
-
-        if (result) return true
-    }
-
-    return false
-}
-
-Arroz.prototype.every = function (callback) {
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        const result = callback(element)
-
-        if (!result) return false
-    }
-
-    return true
-}
-
-Arroz.prototype.slice = function (start, end) {
-    const result = new Arroz
-
-    for (let i = start; i < end; i++) {
-        const element = this[i]
-
-        result[result.length] = element
-        result.length++
-    }
-
-    return result
-}
-
-Arroz.prototype.reverse = function () {
-    const limit = Math.floor(this.length / 2)
-
-    for (let i = 0; i < limit; i++) {
-        const element = this[i]
-        const elementBack = this[this.length - 1 - i]
-
-        this[i] = elementBack
-        this[this.length - 1 - i] = element
-    }
-
-    return this
-}
-
-Arroz.prototype.indexOf = function (searchElement) {
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        if (element === searchElement) return i
-    }
-
-    return -1
-}
-
-Arroz.prototype.map = function (callback) {
-    const result = new Arroz
-
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        const elementMapped = callback(element)
-
-        result[i] = elementMapped
-        result.length++
-    }
-
-    return result
-}
-
-Arroz.prototype.filter = function (callback) {
-    const result = new Arroz
-
-    for (let i = 0; i < this.length; i++) {
-        const element = this[i]
-
-        const matches = callback(element)
-
-        if (matches) {
-            result[result.length] = element
-            result.length++
+            callback(element)
         }
     }
 
-    return result
-}
+    includes(searchElement) {
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
 
-Arroz.prototype.find = function () {
-    // TODO
-}
+            if (element === searchElement) return true
+        }
 
-Arroz.prototype.findIndex = function () {
-    // TODO
-}
+        return false
+    }
 
-Arroz.prototype.push = function() {
-    // TODO
-}
+    some(callback) {
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
 
-Arroz.prototype.pop = function() {
-    // TODO
-}
+            const result = callback(element)
 
-Arroz.prototype.shift = function() {
-    // TODO
-}
+            if (result) return true
+        }
 
-Arroz.prototype.unshift = function() {
-    // TODO
-}
+        return false
+    }
 
-Arroz.prototype.lastIndexOf = function() {
-    // TODO
-}
+    every(callback) {
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
 
-Arroz.prototype.concat = function() {
-    // TODO
-}
+            const result = callback(element)
 
-Arroz.prototype.join = function() {
-    // TODO
+            if (!result) return false
+        }
+
+        return true
+    }
+
+    slice(start, end) {
+        const result = new Arroz
+
+        for (let i = start; i < end; i++) {
+            const element = this[i]
+
+            result[result.length] = element
+            result.length++
+        }
+
+        return result
+    }
+
+    reverse() {
+        const limit = Math.floor(this.length / 2)
+
+        for (let i = 0; i < limit; i++) {
+            const element = this[i]
+            const elementBack = this[this.length - 1 - i]
+
+            this[i] = elementBack
+            this[this.length - 1 - i] = element
+        }
+
+        return this
+    }
+
+    indexOf(searchElement) {
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
+
+            if (element === searchElement) return i
+        }
+
+        return -1
+    }
+
+    map(callback) {
+        const result = new Arroz
+
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
+
+            const elementMapped = callback(element)
+
+            result[i] = elementMapped
+            result.length++
+        }
+
+        return result
+    }
+
+    filter(callback) {
+        const result = new Arroz
+
+        for (let i = 0; i < this.length; i++) {
+            const element = this[i]
+
+            const matches = callback(element)
+
+            if (matches) {
+                result[result.length] = element
+                result.length++
+            }
+        }
+
+        return result
+    }
+
+    find() {
+        // TODO
+    }
+
+    findIndex() {
+        // TODO
+    }
+
+    push() {
+        // TODO
+    }
+
+    pop() {
+        // TODO
+    }
+
+    shift() {
+        // TODO
+    }
+
+    unshift() {
+        // TODO
+    }
+
+    lastIndexOf() {
+        // TODO
+    }
+
+    concat() {
+        // TODO
+    }
+
+    join() {
+        // TODO
+    }
 }
 
 module.exports = Arroz
