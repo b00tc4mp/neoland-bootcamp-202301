@@ -3,9 +3,12 @@ import registerUser from '../logic/register-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import { SquaresPlusIcon } from '@heroicons/react/24/solid'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Register(props) {
     console.log('Register -> render')
+
+    const navigate = useNavigate()
 
     const [feedback, setFeedback] = useState('')
 
@@ -25,17 +28,11 @@ function Register(props) {
                     return
                 }
 
-                props.onNavigateToLogin()
+                navigate('/login')
             })
         } catch (error) {
             setFeedback(error.message)
         }
-    }
-
-    const handleNavigateToLogin = event => {
-        event.preventDefault()
-
-        props.onNavigateToLogin()
     }
 
     return <Container>
@@ -57,7 +54,8 @@ function Register(props) {
             </div>
             <Button TagName="button" type="submit">Register</Button>
             <p className="text-red-500 p-3">{feedback}</p>
-            <a className="text-sm text-blue-900 hover:underline cursor-pointer" onClick={handleNavigateToLogin}>Do you have an account? Login</a>
+
+            <p className="text-sm text-blue-900 hover:underline cursor-pointer" ><Link to='/login'>Do you have an account? Login</Link></p>
         </Container>
     </Container>
 }

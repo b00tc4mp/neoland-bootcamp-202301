@@ -3,9 +3,12 @@ import authenticateUser from '../logic/authenticate-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
 import { SquaresPlusIcon } from '@heroicons/react/24/solid'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Login(props) {
     console.log('Login -> render')
+
+    const navigate = useNavigate()
 
     const [feedback, setFeedback] = useState('')
 
@@ -24,18 +27,12 @@ function Login(props) {
                 }
                 sessionStorage.token = token
 
-                props.onNavigateToHome()
+                navigate('/')
             })
 
         } catch (error) {
             setFeedback(error.message)
         }
-    }
-
-    const handleNavigateToRegister = event => {
-        event.preventDefault()
-
-        props.onNavigateToRegister()
     }
 
     return <Container>
@@ -53,7 +50,7 @@ function Login(props) {
             </div>
             <Button type="submit">Login</Button>
             <p className="text-red-500 p-3">{feedback}</p>
-            <a className="text-sm text-blue-900 hover:underline cursor-pointer" onClick={handleNavigateToRegister}>Not a member? Register</a>
+            <a className="text-sm text-blue-900 hover:underline cursor-pointer"><Link to='/register'>Not a member? Register</Link></a>
         </Container>
     </Container>
 }
