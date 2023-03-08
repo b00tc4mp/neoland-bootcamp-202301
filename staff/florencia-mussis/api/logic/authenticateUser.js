@@ -1,4 +1,4 @@
-const { validateEmail, validatePassword } = require('com')
+const { validateEmail, validatePassword, MissingError, AuthError } = require('com')
 const { User } = require('../data/models')
 
 function authenticateUser(email, password) {
@@ -7,9 +7,9 @@ function authenticateUser(email, password) {
 
   return User.findOne({email}).lean()
     .then(user => {
-        if (!user) throw new Error('user not found')
+        if (!user) throw new MissingError('user not found')
 
-        if (user.password !== password) throw new Error ('wrong credentials')
+        if (user.password !== password) throw new AuthError ('wrong credentials')
         
         return user._id.toString()
     })
