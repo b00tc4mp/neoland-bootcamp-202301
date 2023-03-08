@@ -20,7 +20,6 @@ const toggleFavSticky = require('./logic/toggleFavSticky')
 const retrieveFavStickies = require('./logic/retrieveFavStickies')
 const { sign, verify } = require('jsonwebtoken')
 const JWT_SECRET = 'juan tiene mucho pelo guapo'
-const { FormatError, MissingError, AuthError } = require('com')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
@@ -52,23 +51,9 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 authenticateUser(email, password)
                     .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
                     .then(token => res.status(200).json({ token }))
-                    .catch(error => {
-                        if (error instanceof MissingError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
+                    .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
-                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
+                res.status(500).json({ error: error.message })
             }
         })
 
@@ -185,7 +170,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 const payload = verify(token, JWT_SECRET)
 
                 const userId = payload.sub
-
+                
                 retrievePublicStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json({ error: error.message }))
