@@ -1,0 +1,12 @@
+title N-Tier Architecture
+
+User->Nav: interacts
+Nav->App: http:// Request
+App->API: http:// Request
+API->JSON: fs R/W files
+JSON->API: data
+API->Mongo: mongodb:// R/W data
+Mongo->API: data
+API->App: Response
+App->Nav: Response
+Nav->User: content

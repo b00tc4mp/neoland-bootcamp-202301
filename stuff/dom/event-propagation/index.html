@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul {
+            border: 1px solid red;
+            padding: 10px;
+        }
+
+        li {
+            border: 1px solid green;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        img {
+            border: 1px solid blue;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li data-id="1">
+            <h2>title 1</h2>
+            <img src="https://fakeimg.pl/200x100/ffff00/?text=1" alt="" disabled>
+        </li>
+        <li data-id="2">
+            <h2>title 2</h2>
+            <img src="https://fakeimg.pl/200x100/ffff00/?text=2" alt="">
+        </li>
+        <li data-id="3">
+            <h2>title 3</h2>
+            <img src="https://fakeimg.pl/200x100/ffff00/?text=3" alt="">
+        </li>
+    </ul>
+
+    <script>
+        document.addEventListener('click', event => {
+            event.stopPropagation()
+
+            console.log('document', event.currentTarget)
+        }, false)
+
+        const ul = document.querySelector('ul')
+
+        // ul.onclick = event => console.log('ul', event.target)
+        ul.addEventListener('click', event => {
+            // event.stopPropagation()
+
+            console.log('ul', event.currentTarget)
+        }, !false)
+
+        const [li1, li2, li3] = ul.querySelectorAll('li')
+
+        //li1.onclick = event => console.log('li', event.target, event.target.dataset.id)
+        li1.addEventListener('click', event => {
+            event.stopPropagation()
+
+            console.log('li', event.target, event.currentTarget.dataset.id)
+        }, !false)
+
+        const img1 = li1.querySelector('img')
+
+        img1.addEventListener('click', event => {
+            event.stopPropagation()
+
+            console.log('img', event.currentTarget)
+        }, !false)
+    </script>
+</body>
+</html>

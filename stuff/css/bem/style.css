@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+}
+
+.container {
+   margin: 10px;
+}
+
+.container--horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+.container--vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel {
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.panel--bordered {
+    border: 1px solid black;
+}
+
+.button {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+.button:hover {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.button--success {
+    background-color: yellowgreen;
+}
+
+.button--warning {
+    background-color: gold;
+    color: black;
+}
+
+.button--danger {
+    background-color: tomato;
+}
