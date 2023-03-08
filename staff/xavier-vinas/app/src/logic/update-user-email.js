@@ -1,15 +1,15 @@
-const { validateUserId, validateNewEmail, validatePassword, validateCallback } = require('com')
+const { validateToken, validateNewEmail, validatePassword, validateCallback } = require('com')
 
 /**
  * Updates the user password
  * 
- * @param {string} userId The userId
+ * @param {string} token The token
  * @param {string} newEmail The user new email
  * @param {string} password The user password
  * @param {function} callback The function to call when the update is complete (or fails)
  */
-function updateUserEmail(userId, newEmail, password, callback) {
-    validateUserId(userId)
+function updateUserEmail(token, newEmail, password, callback) {
+    validateToken(token)
     validateNewEmail(newEmail)
     validatePassword(password)
     validateCallback(callback)
@@ -36,7 +36,7 @@ function updateUserEmail(userId, newEmail, password, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/email',)
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { newEmail, password }

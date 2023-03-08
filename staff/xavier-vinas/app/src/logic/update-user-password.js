@@ -1,5 +1,5 @@
 const {
-    validateUserId,
+    validateToken,
     validatePassword,
     validateNewPassword,
     validateNewPasswordConfirm,
@@ -9,14 +9,14 @@ const {
 /**
  * Updates the user password
  * 
- * @param {string} userId The userId
+ * @param {string} token The token
  * @param {string} password The user current password
  * @param {string} newPassword The user new password
  * @param {string} newPasswordConfirm The confirmation of the new password
  * @param {function} callback The callback
  */
-function updateUserPassword(userId, password, newPassword, newPasswordConfirm, callback) {
-    validateUserId(userId)
+function updateUserPassword(token, password, newPassword, newPasswordConfirm, callback) {
+    validateToken(token)
     validatePassword(password)
     validateNewPassword(newPassword)
     validateNewPasswordConfirm(newPasswordConfirm)
@@ -44,7 +44,7 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm, c
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/password')
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = { password, newPassword, newPasswordConfirm }

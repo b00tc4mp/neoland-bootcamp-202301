@@ -10,7 +10,7 @@ function MyFavs({ listUpdateStamp, user, onToggleFav }) {
     const loadlist = () => {
 
         try {
-            retrieveFavStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveFavStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
@@ -68,7 +68,7 @@ function MyFavs({ listUpdateStamp, user, onToggleFav }) {
         setStickies(stickies => {
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
-            const stickiesUpdated = [...stickies]
+            const stickiesUpdated = [...stickies] 
 
             stickiesUpdated.splice(index, 1)
 
@@ -103,19 +103,8 @@ function MyFavs({ listUpdateStamp, user, onToggleFav }) {
     }
 
     const handleToggleFav = (userId, stickyId) => {
-        setStickies(stickies => { //eliminar el sticky de favoritos
-            const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
-            //TODO que pasa si no lo encuentra
-
-            const stickiesUpdated = [...stickies]
-
-            stickiesUpdated.splice(index, 1)
-
-            return stickiesUpdated
-        })
-
-       onToggleFav(userId, stickyId) //elimina el sticky del array de favoritos del usuario
+        handleRemoveFromList(stickyId)
+        onToggleFav(userId, stickyId) //elimina el sticky del array de favoritos del usuario
     }
 
     return <Container TagName="ul" className="gap-4 py-10 ">

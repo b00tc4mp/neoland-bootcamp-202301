@@ -1,7 +1,7 @@
-import { validateCallback, validateStickyId, validateUserId } from 'com'
+import { validateCallback, validateStickyId, validateToken } from 'com'
 
-function toggleFavSticky(userId, stickyId, callback) {
-    validateUserId(userId)
+function toggleFavSticky(token, stickyId, callback) {
+    validateToken(token)
     validateStickyId(stickyId)
     validateCallback(callback)
 
@@ -27,7 +27,7 @@ function toggleFavSticky(userId, stickyId, callback) {
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/favs`)
-    xhr.setRequestHeader('Authorization', 'Bearer ' + userId)
+    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.send()
 }
 

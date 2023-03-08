@@ -1,15 +1,15 @@
-const { validateUserId, validateStickyId, validateText, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateText, validateCallback } = require('com')
 
 /**
  * Updates the sticky text
  * 
- * @param {string} userId The user id
+ * @param {string} token The user id
  * @param {string} stickyId The sticky's id to update
  * @param {string} text The sticky text
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-function updateStickyText(userId, stickyId, text, callback) {
-  validateUserId(userId)
+function updateStickyText(token, stickyId, text, callback) {
+  validateToken(token)
   validateStickyId(stickyId)
   validateText(text)
   validateCallback(callback)
@@ -36,7 +36,7 @@ function updateStickyText(userId, stickyId, text, callback) {
   xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/text`)
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
   xhr.setRequestHeader('Content-Type', 'application/json')
 
   const payload = { text }

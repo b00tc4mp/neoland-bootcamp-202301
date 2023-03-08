@@ -11,7 +11,7 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
 
     const loadList = () => {
         try {
-            retrieveMyStickies(sessionStorage.userId, (error, stickies) => {
+            retrieveMyStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 

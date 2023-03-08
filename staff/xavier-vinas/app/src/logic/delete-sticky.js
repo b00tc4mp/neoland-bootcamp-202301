@@ -1,14 +1,14 @@
-const { validateUserId, validateStickyId, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateCallback } = require('com')
 
 /**
- * Deletes the specified sticky by id that belongs to the specified user (by userId)
+ * Deletes the specified sticky by id that belongs to the specified user (by token)
  * 
- * @param {string} userId The userId address of the user
+ * @param {string} token The token address of the user
  * @param {string} stickyId The sticky id of the sticky
  * @param {callback} callback The function to call when the sticky is deleted (or failed)
  */
-function deleteSticky(userId, stickyId, callback) {
-  validateUserId(userId)
+function deleteSticky(token, stickyId, callback) {
+  validateToken(token)
   validateStickyId(stickyId)
   validateCallback(callback)
 
@@ -34,7 +34,7 @@ function deleteSticky(userId, stickyId, callback) {
   xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('DELETE', `http://localhost:8080/stickies/${stickyId}`)
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

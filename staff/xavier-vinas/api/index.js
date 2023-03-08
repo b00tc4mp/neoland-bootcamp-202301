@@ -57,7 +57,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 authenticateUser(email, password)
                     .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
-                    .then(userId => res.status(200).json({ userId }))
+                    .then(token => res.status(200).json({ token }))
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
                 res.status(500).json({ error: error.message })

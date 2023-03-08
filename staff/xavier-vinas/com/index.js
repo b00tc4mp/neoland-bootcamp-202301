@@ -12,6 +12,7 @@ const validateNewEmail = require('./validateNewEmail')
 const validateNewPassword = require('./validateNewPassword')
 const validateNewPasswordConfirm = require('./validateNewPasswordConfirm')
 const validateColor = require('./validateColor')
+const validateToken = require('./validateToken')
 
 module.exports = {
     isEmail,
@@ -27,5 +28,6 @@ module.exports = {
     validateNewEmail,
     validateNewPassword,
     validateNewPasswordConfirm,
-    validateColor
+    validateColor,
+    validateToken
 }

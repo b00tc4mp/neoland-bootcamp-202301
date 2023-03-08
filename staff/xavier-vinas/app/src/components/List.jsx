@@ -11,7 +11,7 @@ function List({ listUpdateStamp, user, onToggleFav }) {
 
     const loadList = () => {
         try {
-            retrievePublicStickies(sessionStorage.userId, (error, stickies) => {
+            retrievePublicStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
