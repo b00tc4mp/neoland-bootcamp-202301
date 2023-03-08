@@ -6,9 +6,12 @@ import MyList from '../components/MyList'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Favs from '../components/Favs'
+import { useNavigate } from 'react-router-dom'
 
-function Home({ onLogout }) {
+function Home() {
     console.log('Home -> render')
+
+    const navigate = useNavigate()
 
     const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
@@ -45,7 +48,7 @@ function Home({ onLogout }) {
     const handleLogout = () => {
         delete sessionStorage.token
 
-        onLogout()
+        navigate('/login')
     }
 
     const handleShowMyList = event => {

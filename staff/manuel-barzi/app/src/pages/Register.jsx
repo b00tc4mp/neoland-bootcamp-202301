@@ -2,9 +2,12 @@ import { useState } from 'react'
 import registerUser from '../logic/register-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import { Link, useNavigate } from 'react-router-dom'
 
-function Register(props) {
+function Register() {
     console.log('Register -> render')
+
+    const navigate = useNavigate()
 
     const [feedback, setFeedback] = useState('')
 
@@ -24,17 +27,11 @@ function Register(props) {
                     return
                 }
 
-                props.onNavigateToLogin()
+                navigate('/login')
             })
         } catch (error) {
             setFeedback(error.message)
         }
-    }
-
-    const handleNavigateToLogin = event => {
-        event.preventDefault()
-
-        props.onNavigateToLogin()
     }
 
     return <Container TagName="main" className="justify-center bg-black h-screen">
@@ -45,12 +42,11 @@ function Register(props) {
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="email" placeholder="e-mail" name="email" />
                 <input className="text-[gold] placeholder-[gold] font-odibee bg-[transparent] border-2 border-[gold] focus:outline-none p-1" type="password" placeholder="password" name="password" />
 
-                {/* <button className="font-press border-[2px] border-[gold] text-[gold] p-1" type="submit">Register</button> */}
                 <Button type="submit">Register</Button>
             </Container>
-            
+
             <p className="text-[red] font-odibee">{feedback}</p>
-            <p className="text-[gold] font-odibee">or <a className="underline" href="" onClick={handleNavigateToLogin}>Login</a></p>
+            <p className="text-[gold] font-odibee">or <Link to="/login" className="underline">Login</Link></p>
         </Container>
     </Container>
 }
