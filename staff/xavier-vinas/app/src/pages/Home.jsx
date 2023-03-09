@@ -3,6 +3,7 @@ import createSticky from "../logic/create-sticky"
 import List from "../components/List"
 import Profile from "../components/Profile"
 import MyList from "../components/MyList"
+import UserProfile from "../components/UserProfile"
 import retrieveUser from "../logic/retrieve-user"
 import Button from "../library/Button"
 import MyFavs from "../components/MyFavs"
@@ -97,6 +98,9 @@ function Home() {
                 <Route path="/my-list" element={<MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
 
                 <Route path="/my-favs" element={<MyFavs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
+
+                <Route path="/users/:userProfileId" element={<UserProfile listUpdateStamp={listUpdateStamp} />} />
+
 
             </Routes>
         </main>

@@ -1,4 +1,4 @@
-const { validateUserId, validateStickyId } = require('com')
+const { validateUserId, validateStickyId, ExistenceError } = require('com')
 const { User, Sticky } = require('../data/models')
 
 /**
@@ -13,12 +13,12 @@ function toggleLikeSticky(userId, stickyId) {
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
             return Sticky.findById(stickyId)
         })
         .then(sticky => {
-            if (!sticky) throw new Error(`sticky with id ${stickyId} not found`)
+            if (!sticky) throw new ExistenceError(`sticky with id ${stickyId} not found`)
 
             const likes = sticky.likes
 

@@ -3,13 +3,17 @@ const {
     validatePassword,
     validateNewPassword,
     validateNewPasswordConfirm,
-    validateCallback
+    validateCallback,
+    ClientError,
+    ServerError,
+    ExistenceError,
+    AuthError,
 } = require('com')
 
 /**
  * Updates the user password
  * 
- * @param {string} token The token
+ * @param {string} token The session token
  * @param {string} password The user current password
  * @param {string} newPassword The user new password
  * @param {string} newPasswordConfirm The confirmation of the new password
@@ -25,25 +29,29 @@ function updateUserPassword(token, password, newPassword, newPasswordConfirm, ca
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
-        const { status } = xhr
+        const { status, response } = xhr
 
-        if (status === 500) {
-            const { response } = xhr
-
+        if (status === 204) {
+            callback(null)
+        } else {
             const body = JSON.parse(response)
 
             const { error } = body
 
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 401)
+                callback(new AuthError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-
-        callback(null)
     }
+
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', 'http://localhost:8080/users/password')
+    xhr.open('PATCH', 'http://localhost:8080/users/password',)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

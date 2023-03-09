@@ -8,7 +8,6 @@ function MyFavs({ listUpdateStamp, user, onToggleFav }) {
     const [stickies, setStickies] = useState([])
 
     const loadlist = () => {
-
         try {
             retrieveFavStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
@@ -68,7 +67,7 @@ function MyFavs({ listUpdateStamp, user, onToggleFav }) {
         setStickies(stickies => {
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
-            const stickiesUpdated = [...stickies] 
+            const stickiesUpdated = [...stickies]
 
             stickiesUpdated.splice(index, 1)
 

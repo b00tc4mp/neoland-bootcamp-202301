@@ -1,13 +1,14 @@
-const { validateToken, validateCallback, ClientError, ServerError , ExistenceError } = require('com')
+const { validateToken, validateCallback , ExistenceError, ServerError , ClientError, validateUserProfileId } = require('com')
 
 /**
- * Retrieves the stickies that belong to the specified user (email)
+ * Retrieves the user public information
  * 
- * @param {string} token The token of the user to retrieve the stickies from
- * @param {function} callback The function to call back with the stickies (or an error)
+ * @param {string} token The token of the user to retrieve
+ * @param {function} callback The function to call back with the user (or an error)
  */
-function retrieveMyStickies(token, callback) {
+function retrieveUserProfile(token, userProfileId, callback) {
     validateToken(token)
+    validateUserProfileId(userProfileId)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
@@ -18,7 +19,7 @@ function retrieveMyStickies(token, callback) {
         const body = JSON.parse(response)
 
         if (status === 200) {
-            callback(null, body.reverse())
+            callback(null, body)
         } else {
             const { error } = body
 
@@ -30,12 +31,12 @@ function retrieveMyStickies(token, callback) {
                 callback(new ServerError(error))
         }
     }
-
+    
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('GET', 'http://localhost:8080/stickies/user')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
+    xhr.open('GET', `http://localhost:8080/users/${userProfileId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 
-export default retrieveMyStickies
+export default retrieveUserProfile

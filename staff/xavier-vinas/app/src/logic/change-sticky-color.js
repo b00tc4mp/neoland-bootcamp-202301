@@ -1,14 +1,14 @@
-const { validateToken, validateStickyId, validateColor, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateColor, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError  } = require('com')
 
 /**
  * Updates the sticky color
  * 
- * @param {string} token The user id
+ * @param {string} token The session token
  * @param {string} stickyId The sticky's id to update
  * @param {string} color The sticky color
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-function changeStickyColor(token, stickyId, color, callback) {
+function ChangetickyColor(token, stickyId, color, callback) {
     validateToken(token)
     validateStickyId(stickyId)
     validateColor(color)
@@ -17,22 +17,26 @@ function changeStickyColor(token, stickyId, color, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
-        const { status } = xhr
+        const { status, response } = xhr
 
-        if (status === 500) {
-            const { response } = xhr
+        if (status === 204) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-            const payload = JSON.parse(response)
+            const { error } = body
 
-            const { error } = payload
-
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-
-        callback(null)
     }
+
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/color`)
@@ -45,4 +49,4 @@ function changeStickyColor(token, stickyId, color, callback) {
     xhr.send(json)
 }
 
-export default changeStickyColor
+export default ChangetickyColor

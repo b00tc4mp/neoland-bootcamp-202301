@@ -1,4 +1,4 @@
-const { validateUserId } = require('com')
+const { validateUserId, ExistenceError } = require('com')
 const { User, Sticky } = require('../data/models')
 
 /**
@@ -11,7 +11,7 @@ function retrievePublicStickies(userId) {
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
             return Sticky.find({ visibility: 'public' }).populate({ path: 'user', select: 'name' }).lean()
         })
@@ -30,7 +30,11 @@ function retrievePublicStickies(userId) {
                     sticky.user.id = sticky.user._id.toString()
                     delete sticky.user._id
                 }
+
                 sticky.likes = sticky.likes.map(like => like.toString())
+
+                // TODO improve api to provide fav info in each sticky
+                // sticky.isFav = user.favs.includes(sticky.id)
             })
 
             return stickies

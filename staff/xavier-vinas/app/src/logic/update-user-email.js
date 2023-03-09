@@ -1,9 +1,9 @@
-const { validateToken, validateNewEmail, validatePassword, validateCallback } = require('com')
+const { validateToken, validateNewEmail, validatePassword, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
 
 /**
  * Updates the user password
  * 
- * @param {string} token The token
+ * @param {string} token The session token
  * @param {string} newEmail The user new email
  * @param {string} password The user password
  * @param {function} callback The function to call when the update is complete (or fails)
@@ -17,22 +17,26 @@ function updateUserEmail(token, newEmail, password, callback) {
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
-        const { status } = xhr
+        const { status, response } = xhr
 
-        if (status === 500) {
-            const { response } = xhr
-
+        if (status === 204) {
+            callback(null)
+        } else {
             const body = JSON.parse(response)
 
             const { error } = body
 
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 401)
+                callback(new AuthError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-
-        callback(null)
     }
+
     xhr.onerror = () => callback(new Error('network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/email',)

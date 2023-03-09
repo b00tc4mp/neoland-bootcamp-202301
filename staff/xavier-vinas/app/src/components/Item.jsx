@@ -8,6 +8,7 @@ import extractUserId from  '../utils/extractUserId'
 
 import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
 
 
 
@@ -160,7 +161,9 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             >{element.likes.includes(userId) ? <HeartIcon className="h-4 w-4 text-red-500" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
 
-            <strong>{element.user.name}</strong>
+            <Link to={`/users/${element.user.id}`}>
+                <strong>{element.user.name}</strong>
+            </Link>
         </div>
     </li>
 

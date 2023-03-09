@@ -1,8 +1,9 @@
-const { validateToken, validateCallback } = require('com')
+const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
 
 /**
  * Retrieves the public stickies from all users that publish them
  * 
+ * @param {string} token The session token
  * @param {function} callback The function to call back with the stickies (or an error)
  */
 function retrievePublicStickies(token, callback) {
@@ -12,26 +13,24 @@ function retrievePublicStickies(token, callback) {
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
-    const { status } = xhr
+    const { status, response } = xhr
 
-    if (status === 500) {
-      const { response } = xhr
+    const body = JSON.parse(response)
 
-      const body = JSON.parse(response)
-
+    if (status === 200) {
+      callback(null, body.reverse())
+    } else {
       const { error } = body
 
-      callback(new Error(error))
-
-      return
+      if (status === 400)
+        callback(new ClientError(error))
+      else if (status === 404)
+        callback(new ExistenceError(error))
+      else if (status === 500)
+        callback(new ServerError(error))
     }
-
-    const { response } = xhr
-
-    const stickies = JSON.parse(response)
-
-    callback(null, stickies.reverse())
   }
+
   xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('GET', 'http://localhost:8080/stickies')
