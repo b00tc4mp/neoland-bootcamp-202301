@@ -20,6 +20,8 @@ const ExistenceError = require('./errors/ExistenceError')
 const AuthError = require('./errors/AuthError')
 const CoherenceError = require('./errors/CoherenceError')
 const ValueError = require('./errors/ValueError')
+const ClientError = require('./errors/ClientError')
+const ServerError = require('./errors/ServerError')
 
 module.exports = {
     isEmail,
@@ -43,5 +45,7 @@ module.exports = {
     ExistenceError,
     AuthError,
     CoherenceError,
-    ValueError
+    ValueError,
+    ClientError,
+    ServerError
 }
