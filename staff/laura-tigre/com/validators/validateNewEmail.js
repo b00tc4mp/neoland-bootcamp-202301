@@ -1,5 +1,5 @@
 const isEmail = require('../checkers/isEmail')
-const FormatError = require('../errors/FormatError')
+const {FormatError} = require('../errors/FormatError')
 
 function validateNewEmail(newEmail){
 

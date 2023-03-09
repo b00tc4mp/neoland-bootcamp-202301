@@ -1,6 +1,6 @@
 const { User} = require('../data/models')
 
-const { validateUserId,validatePassword, validateNewEmail ,MissingError, AuthError} = require('com')
+const { validateUserId,validatePassword, validateNewEmail ,ExistenceError, AuthError} = require('com')
 
 
 function updateUserEmail(userId, password, newEmail) {
@@ -12,7 +12,7 @@ function updateUserEmail(userId, password, newEmail) {
 
        return User.findById((userId) )
               .then(user => {
-                     if (!user) throw new MissingError('user not found')
+                     if (!user) throw new ExistenceError('user not found')
                      if (user.password !== password) throw new AuthError('wrong credentials')
                      user.email = newEmail
                      return user.save()

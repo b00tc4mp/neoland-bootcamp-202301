@@ -16,9 +16,10 @@ const validateToken= require('./validators/validateToken')
 
 
 const AuthError= require('./errors/AuthError') 
-const ConflictError= require('./errors/ConflictError') 
+const CoherenceError= require('./errors/CoherenceError') 
 const FormatError= require('./errors/FormatError') 
-const MissingError= require('./errors/MissingError') 
+const ExistenceError= require('./errors/ExistenceError') 
+const ValueError = require('./errors/ValueError') 
 
 
 module.exports={
@@ -41,9 +42,10 @@ module.exports={
     validateToken,
 
     AuthError,
-    ConflictError,
+    CoherenceError,
     FormatError,
-    MissingError
+    ExistenceError,
+    ValueError
 
 
 
