@@ -1,6 +1,6 @@
 // TODOconst { Types: { ObjectId } } = require('mongoose')
-const { validateUserId } = require('com')
-const { User, Sticky } = require('../data/models')
+const { validateUserId, ExistenceError } = require('com')
+const { User } = require('../data/models')
 
 /**
  * Retrieves the favorites stickies from user
@@ -12,7 +12,7 @@ function retrieveFavStickies(userId) {
 
     return User.findById(userId).populate({ path: 'favs', select: '-__v', populate: { path: 'user', select: 'name' } }).lean()
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
             const stickies = user.favs
 
