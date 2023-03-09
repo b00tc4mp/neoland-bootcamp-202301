@@ -362,9 +362,21 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 toggleLikeSticky(userId, stickyId)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
