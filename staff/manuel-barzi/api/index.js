@@ -20,7 +20,7 @@ const toggleFavSticky = require('./logic/toggleFavSticky')
 const retrieveFavStickies = require('./logic/retrieveFavStickies')
 const { sign, verify } = require('jsonwebtoken')
 const JWT_SECRET = 'juan tiene mucho pelo guapo'
-const { FormatError, MissingError, AuthError } = require('com')
+const { FormatError, ExistenceError, AuthError, ValueError, CoherenceError } = require('com')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
@@ -37,9 +37,21 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 registerUser(name, age, email, password)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -53,7 +65,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
                     .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
                     .then(token => res.status(200).json({ token }))
                     .catch(error => {
-                        if (error instanceof MissingError)
+                        if (error instanceof ExistenceError)
                             res.status(404)
                         else if (error instanceof AuthError)
                             res.status(401)
@@ -82,9 +94,21 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 return retrieveUser(userId)
                     .then(user => res.json(user))
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -100,9 +124,23 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -118,9 +156,23 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -136,9 +188,23 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserEmail(userId, newEmail, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -172,9 +238,21 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 createSticky(userId, text, visibility)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof ValueError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 

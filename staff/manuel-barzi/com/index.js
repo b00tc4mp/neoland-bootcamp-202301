@@ -16,9 +16,10 @@ const validateColor = require('./validators/validateColor')
 const validateToken = require('./validators/validateToken')
 
 const FormatError = require('./errors/FormatError')
-const MissingError = require('./errors/MissingError')
+const ExistenceError = require('./errors/ExistenceError')
 const AuthError = require('./errors/AuthError')
-const ConflictError = require('./errors/AuthError')
+const CoherenceError = require('./errors/CoherenceError')
+const ValueError = require('./errors/ValueError')
 
 module.exports = {
     isEmail,
@@ -39,7 +40,8 @@ module.exports = {
     validateToken,
 
     FormatError,
-    MissingError,
+    ExistenceError,
     AuthError,
-    ConflictError
+    CoherenceError,
+    ValueError
 }

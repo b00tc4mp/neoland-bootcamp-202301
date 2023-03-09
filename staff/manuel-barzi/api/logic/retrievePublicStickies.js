@@ -32,6 +32,9 @@ function retrievePublicStickies(userId) {
                 }
 
                 sticky.likes = sticky.likes.map(like => like.toString())
+
+                // TODO improve api to provide fav info in each sticky
+                // sticky.isFav = user.favs.includes(sticky.id)
             })
 
             return stickies
