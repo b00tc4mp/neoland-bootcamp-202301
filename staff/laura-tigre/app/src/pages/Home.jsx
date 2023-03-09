@@ -5,40 +5,24 @@ import Profile from '../components/Profile'
 import MyList from '../components/MyList'
 import MyFavs from '../components/MyFavs'
 import retrieveUser from '../logic/retrieve-user'
+import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
 
-function Home({onLogout, onUnregisterUser}) {
-  // console.log( 'Home -> render')
-  const [view, setView] = useState('list')
+function Home() {
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
   const [user, setUser] = useState({})
 
 
-  const handleShowProfile = event => {
-    event.preventDefault()
 
-    setView('profile')
-  }
-  const handleShowMyList = event => {
-    event.preventDefault()
-
-    setView('my-list')
-  }
-
-  const handleShowList = event => {
-    event.preventDefault()
-    setView('list')
-  }
-
-  const handleShowMyFavs = event => {
-    event.preventDefault()
-    setView('my-favs')
-  }
 
   const handleAdd = () => {
 
 
     try {
-      createSticky(sessionStorage.userId, '', 'public', error => {
+      createSticky(sessionStorage.token, '', 'public', error => {
         if (error) {
           alert(error.message)
           return
@@ -53,27 +37,27 @@ function Home({onLogout, onUnregisterUser}) {
 
 
   const handleLogout = () => {
-    delete sessionStorage.userId
-    onLogout()
+    delete sessionStorage.token
+    navigate('/login')
   }
-  
 
-  useEffect(()=>{
+
+  useEffect(() => {
     try {
-      retrieveUser(sessionStorage.userId, (error, user)=>{
-        if(error){
+      retrieveUser(sessionStorage.token, (error, user) => {
+        if (error) {
           alert(error.message)
           return
         }
         setUser(user)
       })
-      
+
     } catch (error) {
       alert(error.message)
     }
-  },[])
+  }, [])
 
-  const handleFavs = (userId, stickyId) => {
+  const handleToggleFav = (userId, stickyId) => {
     setUser(user => {
       const newUser = { ...user }
       const favs = [...user.favs]
@@ -82,41 +66,51 @@ function Home({onLogout, onUnregisterUser}) {
       const indexOfSticky = favs.indexOf(stickyId)
 
       if (indexOfSticky < 0)
-          favs.push(stickyId)
+        favs.push(stickyId)
       else
-          favs.splice(indexOfSticky, 1)
+        favs.splice(indexOfSticky, 1)
 
       return newUser
-  })
+    })
   }
 
 
   return <div className="max-h-md font-['Montserrat']">
     <header className="flex justify-between items-center bg-[#d1d5db] fixed top-0 w-full">
-      <a onClick={handleShowList} href="">
+      <Link to="/">
         <img className="w-20" src="images/hello!.png" alt="logo" />
-      </a>
+      </Link>
       <nav>
-        <a onClick={handleShowMyList} className="my-list-link m-3" href="">My stickies</a>
-        <a onClick={handleShowProfile} className="profile-link m-3" href="">{user.name}</a>
-        < a onClick={handleShowMyFavs} className="logout-link m-3" href="">My favorits</a>
+        <Link to="/my-list" className="my-list-link m-3" >My stickies</Link>
+
+        <Link to="/profile" className="profile-link m-3">{user.name}</Link>
+
+        <Link to="my-favs" className="logout-link m-3" >My favorits</Link>
+
+
         <button onClick={handleLogout} className="bg-[#facc15] h-7 w-20 m-3">LOGOUT</button>
 
       </nav>
     </header>
 
     <main className="py-20 ">
-      {view === 'list' && <List listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
 
-      {view === 'profile' && <Profile onUnregisterUser={onUnregisterUser} />}
+      <Routes>
 
-      {view === 'my-list' && <MyList listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
+        <Route path="/" element={<List listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
 
-      {view ==='my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} onToggleFavs={handleFavs} user={user}/>}
+        <Route path="profile" element={<Profile onUnregisterUser={handleLogout} />} />
 
+        <Route path="my-list" element={< MyList listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
+
+
+        <Route path="my-favs" element={< MyFavs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
+
+
+      </Routes>
     </main>
     <footer className="fixed bottom-0 left-0 flex justify-center bg-[#d1d5db] w-full" >
-      <button onClick={handleAdd} className="text-5xl" >+</button>
+      {(location.pathname === '/' || location.pathname === '/my-list') && <button onClick={handleAdd} className="text-5xl" >+</button>}
     </footer>
   </div>
 

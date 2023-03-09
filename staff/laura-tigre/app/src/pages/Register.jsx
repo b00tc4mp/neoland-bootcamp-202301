@@ -2,9 +2,12 @@ import{ useState} from 'react'
 import registerUser from '../logic/register-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Register(props) {
     console.log('Register -> render')
+
+    const navigate = useNavigate()
     const [feedBack, setFeedback]= useState('')
     const handleSubmit = (event) =>{
      event.preventDefault()
@@ -21,7 +24,7 @@ function Register(props) {
             return
           }
 
-          props.onNavigateToLogin()
+          navigate('/login')
         })
        
        } catch (error) {
@@ -30,10 +33,6 @@ function Register(props) {
       }
     }
 
-    const handleNavigateToLogin= event =>{
-      event.preventDefault()
-      props.onNavigateToLogin()
-    }
 
 
 
@@ -66,7 +65,7 @@ function Register(props) {
       <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedBack}</p>
       <p className= "flex items-center justify-center gap-2">
         or
-        <a className="text-2xl" href=""onClick={handleNavigateToLogin}>Login</a>
+        <Link to="/login" className="text-2xl" >Login</Link>
       </p>
     </main>
   </Container>

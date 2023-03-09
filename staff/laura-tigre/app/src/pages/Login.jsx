@@ -2,10 +2,14 @@ import{useState} from 'react'
 import authenticateUser from '../logic/authenticate-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import {Link, useNavigate} from 'react-router-dom'
 
-function Login(props) {
+function Login() {
     console.log('Login -> render')
+
+    const navigate = useNavigate()
     const[feedBack, setFeedback]=useState('')
+
     const handleSubmit = (event) =>{
         event.preventDefault()
 
@@ -13,14 +17,14 @@ function Login(props) {
         const password= event.target.password.value
 
         try {
-            authenticateUser(email, password,(error, userId)=>{
+            authenticateUser(email, password,(error, token)=>{
                 if (error) {
                     setFeedback(error.message)
 
                     return
                 }
-                sessionStorage.userId= userId
-                props.onNavigateToHome()
+                sessionStorage.token= token
+                navigate('/')
             })
             
             
@@ -30,10 +34,6 @@ function Login(props) {
 
     }
 
-    const handleNavigateToRegister= event => {
-        event.preventDefault()
-        props.onNavigateToRegister()
-    }
 
 
     return <Container className="justify-center font-['Montserrat']">
@@ -55,13 +55,13 @@ function Login(props) {
                  </Container>
 
                  <div>
-                    {/* <button className=" bg-[#facc15] h-7 w-20" type="submit">login</button> */}
+                   
                     <Button type= "submit">login</Button>
                 </div>
             </Container>
             <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedBack}</p>
             <p className="flex items-center justify-center gap-2" >
-                or  <a className="text-2xl" href="" onClick={handleNavigateToRegister}>Register</a>
+                or  <Link to="/register" className="text-2xl" >Register</Link>
             </p>
         </main>
     </Container>

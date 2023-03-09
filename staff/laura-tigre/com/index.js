@@ -1,21 +1,30 @@
-const isEmail = require('./isEmail')
-const validateName = require('./validateName')
-const validateAge = require('./validateAge')
-const validateEmail= require('./validateEmail')
-const validatePassword= require('./validatePassword')
-const validateCallback = require('./validateCallback')
-const validateUserId= require('./validateUserId')
-const validateText= require('./validateText')
-const validateVisibility= require('./validateVisibility')
-const validateStickyId= require('./validateStickyId')
-const validateNewEmail = require('./validateNewEmail')
-const validateNewPassword= require('./validateNewPassword')
-const validateNewPasswordConfirm= require('./validateNewPasswordConfirm')
-const validateColor = require('./validateColor')
+const isEmail = require('./checkers/isEmail')
+const validateName = require('./validators/validateName')
+const validateAge = require('./validators/validateAge')
+const validateEmail= require('./validators/validateEmail')
+const validatePassword= require('./validators/validatePassword')
+const validateCallback = require('./validators/validateCallback')
+const validateUserId= require('./validators/validateUserId')
+const validateText= require('./validators/validateText')
+const validateVisibility= require('./validators/validateVisibility')
+const validateStickyId= require('./validators/validateStickyId')
+const validateNewEmail = require('./validators/validateNewEmail')
+const validateNewPassword= require('./validators/validateNewPassword')
+const validateNewPasswordConfirm= require('./validators/validateNewPasswordConfirm')
+const validateColor = require('./validators/validateColor')
+const validateToken= require('./validators/validateToken')
+
+
+const AuthError= require('./errors/AuthError') 
+const ConflictError= require('./errors/ConflictError') 
+const FormatError= require('./errors/FormatError') 
+const MissingError= require('./errors/MissingError') 
 
 
 module.exports={
     isEmail,
+
+
     validateName,
     validateAge,
     validateEmail,
@@ -28,6 +37,14 @@ module.exports={
     validateNewEmail,
     validateNewPassword,
     validateNewPasswordConfirm,
-    validateColor
+    validateColor,
+    validateToken,
+
+    AuthError,
+    ConflictError,
+    FormatError,
+    MissingError
+
+
 
 }

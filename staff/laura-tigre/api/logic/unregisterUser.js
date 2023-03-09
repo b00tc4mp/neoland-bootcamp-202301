@@ -1,5 +1,5 @@
 
-const { validateUserId, validatePassword } = require('com')
+const { validateUserId, validatePassword,MissingError, AuthError } = require('com')
 const { User, Sticky } = require('../data/models')
 const {Types: {ObjectId}}= require('mongoose')
 
@@ -11,8 +11,8 @@ function unregisterUser(userId, password) {
     
    return User.findById(userId)
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
-            if (user.password !== password) throw new Error('wrong credentials')
+            if (!user) throw new MissingError(`user with id ${userId} not found`)
+            if (user.password !== password) throw new AuthError('wrong credentials')
             
             return Sticky.deleteMany({ 'user': userId })
                

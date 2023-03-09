@@ -1,4 +1,4 @@
-const {validateEmail,validatePassword,validateAge, validateName} = require('com')
+const {validateEmail,validatePassword,validateAge, validateName, ConflictError} = require('com')
 const{User}= require('../data/models')
 
 
@@ -12,7 +12,7 @@ function registerUser(name, age, email, password) {
 
     return User.findOne({ email })
         .then(user => {
-            if (user) throw new Error('user already registerd')
+            if (user) throw new ConflictError('user already registerd')
             user = new User({
                 name,
                 age,

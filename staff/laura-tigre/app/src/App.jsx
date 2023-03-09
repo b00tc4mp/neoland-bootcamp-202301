@@ -1,32 +1,31 @@
-import{useState} from 'react'
+import{useState, useEffect} from 'react'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import { Routes, Route , Navigate, useLocation } from 'react-router-dom'
 
 
 function App(){
-  const [view,setView]=useState(sessionStorage.userId ? 'home':'login')
+  const location = useLocation()
+  const [timestamp, setTimestamp] = useState(Date.now())
 
-  const handleShowRegister=()=> {
-      setView('register')
+  useEffect(() => {
+    setTimestamp(Date.now())
+  }, [location])
 
-  }
+  return (
+    <div className="">
+      <Routes>
+        <Route path="/*" element={sessionStorage.token ? <Home/>: <Navigate to="/login"/>} />
 
-  const handleShowLogin = () => {
+        <Route path="/login" element={sessionStorage.token ? <Navigate to="/"/> : <Login/>}/>
 
-      setView('login')
-  }
 
-  const handleShowHome = ()=> {
-      setView('home')
-  }
-
-  return <div>
-      {view === 'register'&& <Register onNavigateToLogin={handleShowLogin}/>}
-      {view === 'login' && <Login onNavigateToRegister={handleShowRegister} onNavigateToHome={handleShowHome}/>}
-      {view === 'home' && <Home onLogout={handleShowLogin} />} 
-       
-  </div>
+        <Route path="/register" element={sessionStorage.token ? <Navigate to="/"/> : <Register/>}/>
+      </Routes>
+    </div>
+  )
+  
 }
 
 export default App

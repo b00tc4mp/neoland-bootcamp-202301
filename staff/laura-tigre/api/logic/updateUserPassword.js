@@ -1,6 +1,6 @@
 const { User} = require('../data/models')
-const {Types: {ObjectId}}= require('mongoose')
-const { validateUserId,validatePassword, validateNewPassword,validateNewPasswordConfirm } = require('com')
+
+const { validateUserId,validatePassword, validateNewPassword,validateNewPasswordConfirm, ConflictError ,MissingError,AuthError} = require('com')
 
 
 function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
@@ -10,16 +10,16 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
     validateNewPasswordConfirm(newPasswordConfirm)
 
      if (password === newPassword)
-        throw new Error('current password and new password are equal')
+        throw new ConflictError('current password and new password are equal')
     if (newPassword !== newPasswordConfirm)
-        throw new Error('new password and new password repeat do not match')
+        throw new ConflictError('new password and new password repeat do not match')
 
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new MissingError(`user with id ${userId} not found`)
 
-            if (user.password !== password) throw new Error('wrong credentials')
+            if (user.password !== password) throw new AuthError('wrong credentials')
 
             user.password= newPassword
 

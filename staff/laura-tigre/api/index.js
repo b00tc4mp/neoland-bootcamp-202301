@@ -15,9 +15,13 @@ const updateStickyVisibility = require('./logic/updateStickyVisibility')
 const toggleLikeSticky = require('./logic/toggleLikeSticky')
 const deleteSticky = require('./logic/deleteSticky')
 const updateUserEmail = require('./logic/updateUserEmail')
-const changeStickyColor= require('./logic/changeStickyColor')
-const toggleFavsSticky= require('./logic/toggleFavsSticky')
-const retrieveMyFavs= require('./logic/retrieveMyFavs')
+const changeStickyColor = require('./logic/changeStickyColor')
+const toggleFavSticky = require('./logic/toggleFavSticky')
+const retrieveFavStickies = require('./logic/retrieveFavStickies')
+const { sign, verify } = require('jsonwebtoken')
+const JWT_SECRET = 'lalaland'
+
+const { FormatError, MissingError, AuthError, ConflictError } = require('com')
 
 
 
@@ -33,15 +37,22 @@ connect('mongodb://127.0.0.1:27017/mydb')
         server.post('/users', jsonBodyParser, (req, res) => {
             try {
 
-            const user = req.body
-            const { name, age, email, password } = user
+                const user = req.body
+                const { name, age, email, password } = user
 
                 registerUser(name, age, email, password)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ConflictError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
 
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
             }
 
         })
@@ -50,15 +61,27 @@ connect('mongodb://127.0.0.1:27017/mydb')
         server.post('/users/auth', jsonBodyParser, (req, res) => {
 
             try {
-            const credentials = req.body
+                const credentials = req.body
 
-            const { email, password } = credentials
+                const { email, password } = credentials
 
                 authenticateUser(email, password)
-                    .then(userId => res.status(200).json({ userId }))
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
+                    .then(token => res.status(200).json({ token }))
+
+                    .catch(error => {
+                        if (error instanceof MissingError) res.status(404)
+                        else if (error instanceof AuthError) res.status(401)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
@@ -66,14 +89,28 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/users', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 retrieveUser(userId)
 
                     .then(user => res.json(user))
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof MissingError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
 
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
@@ -82,32 +119,64 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/users', jsonBodyParser, (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { password } = req.body
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { password } = req.body
 
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof MissingError) res.status(404)
+                        else if (error instanceof AuthError) res.status(401)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
             }
         })
 
 
 
         server.patch('/users/updatePassword', jsonBodyParser, (req, res) => {
-           
-            try {
-            const userId = req.headers.authorization.slice(7)
-            const credentials = req.body
 
-            const { password, newPassword, newPasswordConfirm } = credentials
+            try {
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const credentials = req.body
+
+                const { password, newPassword, newPasswordConfirm } = credentials
                 updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
-                
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                    else if (error instanceof MissingError) res.status(404)
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
+
             } catch (error) {
-                res.status(500).json({ error: error.message })
+
+                if (error instanceof TypeError || error instanceof RangeError|| error instanceof ConflictError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+                
             }
 
 
@@ -115,27 +184,46 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/users/updateEmail', jsonBodyParser, (req, res) => {
             try {
-           
-            const userId = req.headers.authorization.slice(7)
-            const credentials = req.body
 
-            const { password, newEmail } = credentials
+                const token = req.headers.authorization.slice(7)
 
-               updateUserEmail(userId, password, newEmail)
-                   .then(() => res.status(204).send())
-                   .catch(error => res.status(500).json({ error: error.message }))
+                const payload = verify(token, JWT_SECRET)
 
-            
-           } catch (error) {
-            res.status(500).json({ error: error.message })
-           }    
+                const userId = payload.sub
+
+                const credentials = req.body
+
+                const { password, newEmail } = credentials
+
+                updateUserEmail(userId, password, newEmail)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                    else if (error instanceof MissingError) res.status(404)
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError|| error instanceof ConflictError|| error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
 
 
         })
         server.get('/stickies/favs', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-                retrieveMyFavs(userId)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                retrieveFavStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json(error.message))
 
@@ -147,12 +235,17 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { text, visibility } = req.body
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { text, visibility } = req.body
                 createSticky(userId, text, visibility)
                     .then(() => res.status(201).send())
                     .catch(error => res.status(500).json(error.message))
-                
+
             } catch (error) {
                 res.status(500).json(error.message)
             }
@@ -160,8 +253,13 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/stickies', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-                
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+
                 retrievePublicStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json(error.message))
@@ -172,7 +270,12 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/stickies/user', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 retrieveMyStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json(error.message))
@@ -185,10 +288,15 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/text', jsonBodyParser, (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { stickyId } = req.params
-            const { text } = req.body
-                
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { stickyId } = req.params
+                const { text } = req.body
+
                 updateStickyText(userId, stickyId, text)
                     .then(() => res.status(201).send())
                     .catch(error => res.status(500).json(error.message))
@@ -200,10 +308,15 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/visibility', jsonBodyParser, (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { stickyId } = req.params
-            const { visibility } = req.body
-                
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { stickyId } = req.params
+                const { visibility } = req.body
+
                 updateStickyVisibility(userId, stickyId, visibility)
                     .then(() => res.status(201).send())
                     .catch(error => res.status(500).json(error.message))
@@ -215,9 +328,14 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/likes', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { stickyId } = req.params
-                
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { stickyId } = req.params
+
                 toggleLikeSticky(userId, stickyId)
                     .then(() => res.status(201).send())
                     .catch(error => res.status(500).json(error.message))
@@ -229,10 +347,15 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/stickies/:stickyId', (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { stickyId } = req.params
+                const token = req.headers.authorization.slice(7)
 
-                
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { stickyId } = req.params
+
+
                 deleteSticky(userId, stickyId)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json(error.message))
@@ -244,11 +367,16 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/color', jsonBodyParser, (req, res) => {
             try {
-            const userId = req.headers.authorization.slice(7)
-            const { stickyId } = req.params
-            const { color } = req.body
-                
-                changeStickyColor(userId, stickyId,color)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
+                const { stickyId } = req.params
+                const { color } = req.body
+
+                changeStickyColor(userId, stickyId, color)
                     .then(() => res.status(201).send())
                     .catch(error => res.status(500).json(error.message))
             } catch (error) {
@@ -259,10 +387,15 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.patch('/stickies/:stickyId/favs', (req, res) => {
             try {
-                const userId = req.headers.authorization.slice(7)
+                const token = req.headers.authorization.slice(7)
+
+                const payload = verify(token, JWT_SECRET)
+
+                const userId = payload.sub
+
                 const { stickyId } = req.params
 
-                toggleFavsSticky(userId, stickyId)
+                toggleFavSticky(userId, stickyId)
                     .then(() => res.status(204).send())
                     .catch(error => res.status(500).json({ error: error.message }))
             } catch (error) {
