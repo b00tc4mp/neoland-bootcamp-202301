@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const { connect, disconnect } = require('mongoose')
 const { sign, verify } = require('jsonwebtoken')
-const JWT_SECRET ='atrikitawn tawn tawn 123' 
+const JWT_SECRET = 'atrikitawn tawn tawn 123'
 
 const registerUser = require('./logic/registerUser')
 const authenticateUser = require('./logic/authenticateUser')
@@ -12,7 +12,7 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-
+const { FormatError, ExistenceError, AuthError, CoherenceError , ValueError } = require('com')
 
 const createSticky = require('./logic/createSticky')
 const retrievePublicStickies = require('./logic/retrievePublicStickies')
@@ -43,9 +43,24 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 registerUser(name, age, email, password)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    // asincrono
+                    .catch(error => {
+                        if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                // sincrono
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -58,9 +73,23 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 authenticateUser(email, password)
                     .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
                     .then(token => res.status(200).json({ token }))
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -74,9 +103,22 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 retrieveUser(userId)
                     .then(user => res.json(user))
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
             }
         })
 
@@ -92,13 +134,29 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if
+                            (error instanceof AuthError)
+                            res.status(409)
+                        else 
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
             }
         })
 
-        server.patch('/users/password', jsonBodyParser, (req, res) => {
+        server.patch('/users/password', jsonBodyParser, (req, res) => { //patch es actualizar
             try {
                 const token = req.headers.authorization.slice(7)
 
@@ -110,11 +168,25 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserPassword(userId, password, newPassword, newPasswordConfirm)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof CoherenceError || error instanceof TypeError || error instanceof RangeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
             }
         })
+
 
         server.patch('/users/email', jsonBodyParser, (req, res) => {
             try {
@@ -128,13 +200,26 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 updateUserEmail(userId, newEmail, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
             }
         })
 
-        server.delete('/users', jsonBodyParser, (req, res) => {
+        server.delete('/users', jsonBodyParser, (req, res) => { // jsonBodyParser traduce los datos q le enviamos
             try {
                 const token = req.headers.authorization.slice(7)
 
@@ -142,15 +227,29 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 const userId = payload.sub
 
-                const { password } = req.body
-
+                const { password } = req.body //para extraer la propiedad password de body
+                // const password = req.body.password
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof RangeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
             }
         })
+
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
             try {
@@ -164,9 +263,21 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
                 createSticky(userId, text, visibility)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError || error instanceof ValueError )
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
@@ -317,7 +428,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
                 const payload = verify(token, JWT_SECRET)
 
                 const userId = payload.sub
-                
+
                 retrieveFavStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => res.status(500).json(error.message))
@@ -328,7 +439,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
         })
 
 
-       
+
 
         server.listen(8080, () => console.log('server running on port ' + 8080))
     })

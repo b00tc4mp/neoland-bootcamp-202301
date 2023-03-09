@@ -2,8 +2,11 @@ import { useState } from "react"
 import Container from "../library/Container"
 import authenticateUser from "../logic/authenticate-user"
 import Button from "../library/Button"
+import { Link, useNavigate } from 'react-router-dom'
 
-function Login(props) {
+function Login() {
+    const navigate = useNavigate()
+
     const [feedback, setFeedback] = useState("")
 
     const handleSubmit = event => {
@@ -22,7 +25,7 @@ function Login(props) {
                 }
                 sessionStorage.token = token
 
-                props.onNavigateToHome()
+                navigate("/")
             })
 
         } catch (error) {
@@ -30,10 +33,6 @@ function Login(props) {
 
         }
 
-    }
-    const handleNavigateToRegister = event => {
-        event.preventDefault()
-        props.onNavigateToRegister()
     }
 
     return <Container TagName="main">
@@ -53,7 +52,7 @@ function Login(props) {
                 <Button type="submit">Login</Button>
 
                 <p className="flex items-center justify-center gap-2"> {feedback}</p>
-                <p className="flex items-center justify-center gap-2">or <a href="" onClick={handleNavigateToRegister}>Register</a></p>
+                <p className="flex items-center justify-center gap-2">or <Link to ="/register">Register</Link></p>
             </Container>
 
         </Container>

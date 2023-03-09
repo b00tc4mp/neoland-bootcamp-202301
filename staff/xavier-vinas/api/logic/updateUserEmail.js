@@ -1,5 +1,5 @@
-const { Types: { ObjectId } } = require('mongoose')
-const { validateUserId, validateNewEmail, validatePassword } = require('com')
+
+const { validateUserId, validateNewEmail, validatePassword, MissingError, AuthError } = require('com')
 const { User } = require('../data/models')
 
 function updateUserEmail(userId, newEmail, password) {
@@ -9,9 +9,9 @@ function updateUserEmail(userId, newEmail, password) {
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new MissingError(`user with id ${userId} not found`)
 
-            if (user.password !== password) throw new Error('wrong credentials')
+            if (user.password !== password) throw new AuthError('wrong credentials')
 
             user.email = newEmail
 

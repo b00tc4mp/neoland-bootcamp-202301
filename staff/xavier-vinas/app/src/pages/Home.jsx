@@ -6,42 +6,17 @@ import MyList from "../components/MyList"
 import retrieveUser from "../logic/retrieve-user"
 import Button from "../library/Button"
 import MyFavs from "../components/MyFavs"
+import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
 
 
-function Home({ onLogout }) {
+function Home() {
+    const navigate = useNavigate()
+    const location = useLocation()
 
 
-    const [view, setView] = useState('list')
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
 
-    const handleShowProfile = event => {
-        event.preventDefault()
-
-        setView('profile')
-    }
-
-    const handleShowList = event => {
-        event.preventDefault()
-
-        setView('list')
-    }
-
-    const handleShowMyFavs = event => {
-        event.preventDefault()
-        setView('my-favs')
-    }
-
-    const handleShowMyList = event => {
-        event.preventDefault()
-
-        setView('my-list')
-    }
-
-    const handleLogout = () => {
-        delete sessionStorage.token
-        onLogout()
-    }
 
     const handleAdd = () => {
         try {
@@ -57,6 +32,12 @@ function Home({ onLogout }) {
         } catch (error) {
             alert(error.message)
         }
+    }
+
+    const handleLogout = () => {
+        delete sessionStorage.token
+
+        navigate('/login')
     }
 
     useEffect(() => {
@@ -97,10 +78,10 @@ function Home({ onLogout }) {
         <header className="" >
 
             <nav className="flex justify-between items-center " >
-                <a onClick={handleShowList} className="logo-link" href=""><img className="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png" alt=""></img></a>
-                <a onClick={handleShowMyList} className="text-2xl font-black  underline" href="">My Stickies</a>
-                <a onClick={handleShowMyFavs} className="text-2xl font-black  underline" href="">My favorits</a>
-                <a onClick={handleShowProfile} className="text-2xl font-black  underline" href="">{user.name}</a>
+                <Link to="/" className="logo-link"><img className="logo" src="https://cdn-icons-png.flaticon.com/128/431/431249.png"></img></Link>
+                <Link to="/my-list" className="text-2xl font-black  underline">My Stickies</Link>
+                <Link to="/my-favs" className="text-2xl font-black  underline">My favorits</Link>
+                <Link to="/profile" className="text-2xl font-black  underline">{user.name}</Link>
                 <Button onClick={handleLogout}>Logout</Button>
 
             </nav>
@@ -108,19 +89,21 @@ function Home({ onLogout }) {
         </header>
 
         <main className="flex flex-col items-center">
+            <Routes>
+                <Route path="/" element={<List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
 
-            {view === "list" && <List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
+                <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
 
-            {view === "profile" && <Profile onUnregisterUser={handleLogout} />}
+                <Route path="/my-list" element={<MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
 
-            {view === "my-list" && <MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />}
+                <Route path="/my-favs" element={<MyFavs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
 
-            {view === 'my-favs' && <MyFavs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />}
+            </Routes>
         </main>
 
         <footer className=" border-double border-4 fixed bottom-0 left-0 flex justify-center bg-[#d1d5db] w-full  ">
 
-            {view !== 'profile' && <Button onClick={handleAdd}>+</Button>}
+            {(location.pathname === '/' || location.pathname === '/my-list') && <Button onClick={handleAdd}>+</Button>}
         </footer>
 
     </div>
