@@ -1,27 +1,22 @@
-const { Types: { ObjectId } } = require('mongoose')
 const { validateUserId, ExistenceError } = require('com')
 const { User, Sticky } = require('../data/models')
 
 /**
- * Retrieves the stickies that belong to the specified user (email)
+ * Retrieves the public stickies from all users that publish them
  * 
- * @param {string} userId The userId of the user to retrieve the stickies from
+ * @param {string} userId The user id that requests the public stickies
  */
-function retrieveMyStickies(userId) {
+function retrievePublicStickies(userId) {
     validateUserId(userId)
 
-    return Promise.all([
-        User.findById(userId).lean(),
-        Sticky.find({ user: new ObjectId(userId) }).populate({ path: 'user', select: 'name' }).lean()
-    ])
-        .then(([user, stickies]) => {
+    return User.findById(userId)
+        .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
+            return Sticky.find({ visibility: 'public' }).populate({ path: 'user', select: 'name' }).lean()
+        })
+        .then(stickies => {
             stickies.forEach(sticky => {
-                // agregate
-
-                sticky.fav = user.favs.some(stickyId => stickyId.toString() === sticky._id.toString())
-
                 // sanitize
 
                 if (sticky._id) {
@@ -37,10 +32,13 @@ function retrieveMyStickies(userId) {
                 }
 
                 sticky.likes = sticky.likes.map(like => like.toString())
+
+                // TODO improve api to provide fav info in each sticky
+                // sticky.isFav = user.favs.includes(sticky.id)
             })
 
             return stickies
         })
 }
 
-module.exports = retrieveMyStickies
+module.exports = retrievePublicStickies

@@ -1,6 +1,6 @@
 // TODOconst { Types: { ObjectId } } = require('mongoose')
 const { validateUserId, ExistenceError } = require('com')
-const { User, Sticky } = require('../data/models')
+const { User } = require('../data/models')
 
 /**
  * Retrieves the favorites stickies from user
@@ -17,6 +17,10 @@ function retrieveFavStickies(userId) {
             const stickies = user.favs
 
             stickies.forEach(sticky => {
+                // agregate
+
+                sticky.fav = true
+
                 // sanitize
 
                 if (sticky._id) {
