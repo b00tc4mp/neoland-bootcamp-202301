@@ -17,10 +17,6 @@ function retrieveFavStickies(userId) {
             const stickies = user.favs
 
             stickies.forEach(sticky => {
-                // agregate
-
-                sticky.fav = true
-
                 // sanitize
 
                 if (sticky._id) {

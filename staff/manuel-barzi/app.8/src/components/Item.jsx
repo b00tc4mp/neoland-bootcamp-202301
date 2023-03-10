@@ -72,7 +72,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     return
                 }
 
-                onToggleFav(stickyId)
+                onToggleFav(userId, stickyId)
             })
         } catch (error) {
             alert(error.message)
@@ -152,7 +152,8 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             <button className="h-5 w-10 flex justify-center" data-id={element.id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
             <button className="h-5 w-5 flex justify-center" data-id={element.id} onClick={handleToggleFav}>{
-                element.fav ?
+                // user.favs && user.favs.includes(element.id) ?
+                user.favs?.includes(element.id) ?
                     <StarIcon className="h-4 w-4 text-[black]" />
                     :
                     <StarIconOutline className="h-4 w-4 text-black-500" />}</button>

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
-import retrieveMyStickies from '../logic/retrieve-my-stickies'
+import retrievePublicStickies from '../logic/retrieve-public-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function MyList({ updateStamp, user }) {
-    console.log('MyList -> render')
+function List({ updateStamp, user, onToggleFav }) {
+    console.log('List -> render')
 
     const [stickies, setStickies] = useState([])
 
     const loadList = () => {
         try {
-            retrieveMyStickies(sessionStorage.token, (error, stickies) => {
+            retrievePublicStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
@@ -34,11 +34,20 @@ function MyList({ updateStamp, user }) {
 
             const sticky = stickies[index]
 
+            // const stickyUpdated = {}
+            // stickyUpdated.id = sticky.id
+            // stickyUpdated.user = sticky.user
+            // stickyUpdated.text = sticky.text
+            // stickyUpdated.visibility = sticky.visibility
+            // stickyUpdated.color = color
+            // stickyUpdated.likes = sticky.likes
             const stickyUpdated = { ...sticky }
             stickyUpdated.color = color
 
+            //const stickiesUpdated = stickies.concat()
             const stickiesUpdated = [...stickies]
 
+            //stickiesUpdated.splice(index, 1, stickyUpdated)
             stickiesUpdated[index] = stickyUpdated
 
             return stickiesUpdated
@@ -83,44 +92,9 @@ function MyList({ updateStamp, user }) {
         })
     }
 
-    const handleUpdateVisibility = (stickyId, visibility) => {
-        setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
-            const sticky = stickies[index]
-
-            const stickyUpdated = { ...sticky }
-            stickyUpdated.visibility = visibility
-
-            const stickiesUpdated = [...stickies]
-
-            stickiesUpdated[index] = stickyUpdated
-
-            return stickiesUpdated
-        })
-    }
-
-    const handleToggleFav = stickyId => {
-        setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky.id === stickyId)
-
-            const sticky = stickies[index]
-
-            const stickyUpdated = { ...sticky }
-            
-            stickyUpdated.fav = !stickyUpdated.fav
-
-            const stickiesUpdated = [...stickies]
-
-            stickiesUpdated[index] = stickyUpdated
-
-            return stickiesUpdated
-        })
-    }
-
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={handleToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleRemoveFromList} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike}  onToggleFav={onToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
     </Container>
 }
 
-export default MyList
+export default List

@@ -3,7 +3,7 @@ import retrieveFavStickies from '../logic/retrieve-fav-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function Favs({ updateStamp, user, onToggleFav }) {
+function Favs({ updateStamp, user }) {
     console.log('Favs -> render')
 
     const [stickies, setStickies] = useState([])
@@ -100,22 +100,8 @@ function Favs({ updateStamp, user, onToggleFav }) {
         })
     }
 
-    const handleToggleFav = (userId, stickyId) => {
-        setStickies(stickies => {
-            const newStickies = [...stickies]
-
-            const index = newStickies.findIndex(sticky => sticky.id === stickyId)
-            
-            newStickies.splice(index, 1)
-
-            return newStickies
-        })
-
-        onToggleFav(userId, stickyId)
-    }
-
     return <Container TagName="ul" className="gap-5">
-        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={handleToggleFav} onUpdateColor={handleUpdateColor} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={handleRemoveFromList} onUpdateColor={handleUpdateColor} user={user} />)}
     </Container>
 }
 

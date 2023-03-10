@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
-import retrieveMyStickies from '../logic/retrieve-my-stickies'
+import retrieveFavStickies from '../logic/retrieve-fav-stickies'
 import Container from '../library/Container'
 import Item from './Item'
 
-function MyList({ updateStamp, user }) {
-    console.log('MyList -> render')
+function Favs({ updateStamp, user, onToggleFav }) {
+    console.log('Favs -> render')
 
     const [stickies, setStickies] = useState([])
 
     const loadList = () => {
         try {
-            retrieveMyStickies(sessionStorage.token, (error, stickies) => {
+            retrieveFavStickies(sessionStorage.token, (error, stickies) => {
                 if (error) {
                     alert(error.message)
 
@@ -100,22 +100,18 @@ function MyList({ updateStamp, user }) {
         })
     }
 
-    const handleToggleFav = stickyId => {
+    const handleToggleFav = (userId, stickyId) => {
         setStickies(stickies => {
-            const index = stickies.findIndex(sticky => sticky.id === stickyId)
+            const newStickies = [...stickies]
 
-            const sticky = stickies[index]
-
-            const stickyUpdated = { ...sticky }
+            const index = newStickies.findIndex(sticky => sticky.id === stickyId)
             
-            stickyUpdated.fav = !stickyUpdated.fav
+            newStickies.splice(index, 1)
 
-            const stickiesUpdated = [...stickies]
-
-            stickiesUpdated[index] = stickyUpdated
-
-            return stickiesUpdated
+            return newStickies
         })
+
+        onToggleFav(userId, stickyId)
     }
 
     return <Container TagName="ul" className="gap-5">
@@ -123,4 +119,4 @@ function MyList({ updateStamp, user }) {
     </Container>
 }
 
-export default MyList
+export default Favs

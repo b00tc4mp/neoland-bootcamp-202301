@@ -13,7 +13,6 @@ function retrieveUser(userId) {
             delete user._id
             delete user.password
             delete user.__v
-            delete user.favs
 
             // TODO improve logic to return user info (not favs, neither other things)
             // delete user.favs
