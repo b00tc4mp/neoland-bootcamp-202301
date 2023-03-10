@@ -8,12 +8,12 @@ import updateStickyColor from '../logic/update-sticky-color'
 import toggleFavSticky from '../logic/toggle-fav-sticky'
 import extractUserId from '../utils/extractUserId'
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav, user }) {
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav }) {
     const userId = extractUserId(sessionStorage.token)
 
     const handleUpdateText = event => {
         try {
-            updateStickyText(sessionStorage.token, event.target.dataset.id, event.target.innerText, error => {
+            updateStickyText(sessionStorage.token, element.id, event.target.innerText, error => {
                 if (error) {
                     alert(error.message)
 
@@ -27,16 +27,16 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleUpdateVisibility = event => {
         try {
-            const newVisibility = event.target.dataset.visibility === 'public' ? 'private' : 'public'
+            const newVisibility = element.visibility === 'public' ? 'private' : 'public'
 
-            updateStickyVisibility(sessionStorage.token, event.target.dataset.id, newVisibility, error => {
+            updateStickyVisibility(sessionStorage.token, element.id, newVisibility, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onUpdateVisibility(event.target.dataset.id, newVisibility)
+                onUpdateVisibility(element.id, newVisibility)
             })
         } catch (error) {
             alert(error.message)
@@ -45,16 +45,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleToggleLike = event => {
         try {
-            const stickyId = event.currentTarget.dataset.id
-
-            toggleLikeSticky(sessionStorage.token, stickyId, error => {
+            toggleLikeSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleLike(userId, stickyId)
+                onToggleLike(userId, element.id)
             })
         } catch (error) {
             alert(error.message)
@@ -63,16 +61,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleToggleFav = event => {
         try {
-            const stickyId = event.currentTarget.dataset.id
-
-            toggleFavSticky(sessionStorage.token, stickyId, error => {
+            toggleFavSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleFav(stickyId)
+                onToggleFav(element.id)
             })
         } catch (error) {
             alert(error.message)
@@ -81,14 +77,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleDelete = event => {
         try {
-            deleteSticky(sessionStorage.token, event.target.dataset.id, error => {
+            deleteSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onDelete(event.target.dataset.id)
+                onDelete(element.id)
             })
         } catch (error) {
             alert(error.message)
@@ -97,14 +93,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleUpdateColor = event => {
         try {
-            updateStickyColor(sessionStorage.token, event.target.dataset.id, event.target.value, error => {
+            updateStickyColor(sessionStorage.token, element.id, event.target.value, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onUpdateColor(event.target.dataset.id, event.target.value)
+                onUpdateColor(element.id, event.target.value)
             })
         } catch (error) {
             alert(error.message)
@@ -132,26 +128,26 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
             <strong className="text-left">{element.user.name}</strong>
             <div>
                 {element.user.id === userId && <>
-                    <select className="bg-[transparent]" data-id={element.id} onChange={handleUpdateColor} defaultValue={element.color}>
+                    <select className="bg-[transparent]" onChange={handleUpdateColor} defaultValue={element.color}>
                         <option value="red">red</option>
                         <option value="green">green</option>
                         <option value="blue">blue</option>
                         <option value="yellow">yellow</option>
                     </select>
 
-                    <button className="w-5 h-5" data-id={element.id} data-visibility={element.visibility} onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
+                    <button className="w-5 h-5" onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
                 </>}
 
-                {element.user.id === userId && <button className="w-5 h-5" data-id={element.id} onClick={handleDelete}>x</button>}
+                {element.user.id === userId && <button className="w-5 h-5" onClick={handleDelete}>x</button>}
             </div>
         </div>
 
-        <p className="p-2" data-id={element.id} contentEditable={element.user.id === userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
+        <p className="p-2" contentEditable={element.user.id === userId} onKeyUp={handleUpdateText} suppressContentEditableWarning={true}>{element.text}</p>
 
         <div className="flex justify-end">
-            <button className="h-5 w-10 flex justify-center" data-id={element.id} onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
+            <button className="h-5 w-10 flex justify-center" onClick={handleToggleLike} title={element.likes.join('\n')}>{element.likes.includes(userId) ? <HeartIcon className="h-4 w-4 text-[black]" /> : <HeartIconOutline className="h-4 w-4 text-black-500" />} <span className="color-[white]">{element.likes.length}</span></button>
 
-            <button className="h-5 w-5 flex justify-center" data-id={element.id} onClick={handleToggleFav}>{
+            <button className="h-5 w-5 flex justify-center" onClick={handleToggleFav}>{
                 element.fav ?
                     <StarIcon className="h-4 w-4 text-[black]" />
                     :
