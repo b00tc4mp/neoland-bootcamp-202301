@@ -1,6 +1,8 @@
+const {ValueError} = require('../errors/ValueError')
+
 function validateVisibility(visibility){
-    if (typeof visibility !== 'string') throw new Error('visibility is not a string')
-    if (visibility !== 'public' && visibility !== 'private') throw new Error('visibility value is invalid')
+    if (typeof visibility !== 'string') throw new TypeError('visibility is not a string')
+    if (visibility !== 'public' && visibility !== 'private') throw new ValueError('visibility value is invalid')
 
 }
 

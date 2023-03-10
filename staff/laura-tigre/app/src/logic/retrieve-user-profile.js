@@ -1,17 +1,19 @@
-const { validateToken, validateCallback, ClientError, ServerError, ExistenceError} = require('com')
+const { validateToken, validateCallback,validateUserProfileId, ClientError, ServerError, ExistenceError} = require('com')
 /**
  * Retrieves the user public information
  * 
  * @param {string} token The token of the user to retrieve
  * @param {function} callback The function to call back with the user (or an error)
  */
-function retrieveUser(token, callback){
+function retrieveUserProfile(token, userProfileId,callback){
     validateToken(token)
+    validateUserProfileId(userProfileId)
     validateCallback(callback)
     const xhr= new XMLHttpRequest()
 
     xhr.onload = () => {
         const { status, response } = xhr
+        
 
         const body = JSON.parse(response)
 
@@ -30,9 +32,9 @@ function retrieveUser(token, callback){
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('GET', 'http://localhost:8080/users')
+    xhr.open('GET', `http://localhost:8080/users/${userProfileId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
 
-export default retrieveUser
+export default retrieveUserProfile

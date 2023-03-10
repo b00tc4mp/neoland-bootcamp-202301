@@ -1,4 +1,4 @@
-import{validateName, validateAge, validateEmail,validatePassword,validateCallback} from 'com'
+import{validateName, validateAge, validateEmail,validatePassword,validateCallback,  ClientError, ServerError, CoherenceError} from 'com'
 /**
  * Registers a user in the database
  * 
@@ -18,20 +18,22 @@ function registerUser(name, age, email, password, callback) {
     const xhr = new XMLHttpRequest
    
     xhr.onload= () => {
-        const {status} = xhr
+        const { status, response } = xhr
 
-        if(status === 500) {
-            const{response} =xhr
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-            const body= JSON.parse(response)
+            const { error } = body
 
-            const {error}= body
-
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-        callback(null)
     }
     xhr.onerror = () => callback(new Error('network error'))
 

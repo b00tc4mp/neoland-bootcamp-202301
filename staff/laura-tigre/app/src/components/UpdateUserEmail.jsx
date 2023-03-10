@@ -1,14 +1,12 @@
 import { useState } from "react"
-import updateUserEmail from "../logic/update-user-Email"
+import updateUserEmail from "../logic/update-user-email"
 import Button from "../library/Button"
 import Container from "../library/Container"
+import Feedback from "./Feedback"
 
 function UpdateUserEmail() {
     console.log('UpdateUserEmail -> render')
-    const [feedback, setFeedback] = useState({
-        message: '',
-        type: ''
-    })
+    const [feedback, setFeedback] = useState()
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -21,7 +19,7 @@ function UpdateUserEmail() {
                 if (error) {
                     setFeedback({
                         message: error.message,
-                        type: 'error'
+                        level: 'error'
                     })
                     return
                 }
@@ -29,13 +27,13 @@ function UpdateUserEmail() {
 
                 setFeedback({
                     message: 'email updated successfully',
-                    type: 'success'
+                    level: 'success'
                 })
             })
         } catch (error) {
             setFeedback({
                 message: error.message,
-                type: 'error'
+                level: 'error'
             })
         }
     }
@@ -59,7 +57,7 @@ function UpdateUserEmail() {
             <Button type ="submit">New Email</Button>
 
         </Container>
-            <p className={`font-odibee ${feedback.type === 'success' ? "text-[#4ae84a]" : "text-[tomato]"}`}>{feedback.message}</p>
+        {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>
 
 }

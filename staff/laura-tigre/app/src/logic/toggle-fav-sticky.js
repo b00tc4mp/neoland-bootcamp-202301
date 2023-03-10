@@ -1,4 +1,4 @@
-const { validateToken, validateStickyId, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateCallback,ClientError, ServerError, ExistenceError  } = require('com')
 /**
  * toggles the favorite of specific sticky
  * @param {string } token the user email
@@ -12,21 +12,22 @@ function toggleFavSticky(token, stickyId, callback){
     const xhr = new XMLHttpRequest()
 
     xhr.onload =()=> {
-     const {status}= xhr
- 
-     if (status === 500) {
-         const { response } = xhr
- 
-         const body = JSON.parse(response)
- 
-         const { error } = body
- 
-         callback(new Error(error))
- 
-         return
-     }
+        const { status, response } = xhr
 
-     callback(null)
+        if (status === 204) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
  }
 
  xhr.onerror = () => callback(new Error('network error'))

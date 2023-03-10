@@ -1,4 +1,4 @@
-const { validateUserId, validateStickyId, validateColor, validateCallback } = require('com')
+const { validateUserId, validateStickyId, validateColor, validateCallback,ClientError, ServerError, ExistenceError, CoherenceError } = require('com')
 /**
  * publica los stickies privados
  * 
@@ -16,21 +16,24 @@ function changeStickyColor(userId, stickyId, color, callback) {
   const xhr = new XMLHttpRequest()
 
   xhr.onload = () => {
-    const { status } = xhr
+    const { status, response } = xhr
 
-    if (status === 500) {
-      const { response } = xhr
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-      const body = JSON.parse(response)
+            const { error } = body
 
-      const { error } = body
-
-      callback(new Error(error))
-
-      return
-    }
-
-    callback(null)
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
   }
   xhr.onerror = () => callback(new Error('network error'))
   xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/color`)

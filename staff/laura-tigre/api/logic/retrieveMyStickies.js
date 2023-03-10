@@ -1,18 +1,23 @@
+
 const { User, Sticky } = require('../data/models')
-const { validateUserId } = require('com')
+const { validateUserId, ExistenceError } = require('com')
 
 function retrieveMyStickies(userId) {
     validateUserId(userId)
 
-    return User.findById((userId))
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+    return Promise.all([ User.findById(userId).lean(),
+      Sticky.find({ user: userId }).populate({path:'user', select: 'name'}).lean()
+    ])
+        .then(([user, stickies]) => {
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            return Sticky.find({ user: userId }).populate({path:'user', select: 'name'}).lean()
-        })
-        .then(stickies => {
+            
             stickies.forEach(sticky => {
-      
+              //agregate
+
+              sticky.fav = user.favs.some(stickyId => stickyId.toString() === sticky._id.toString())
+
+              //sanitize 
               if(sticky._id){
                 sticky.id= sticky._id.toString()
                 delete sticky._id
@@ -26,5 +31,7 @@ function retrieveMyStickies(userId) {
             })
             return stickies
         })
+        
+        
 }
 module.exports = retrieveMyStickies

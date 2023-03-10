@@ -1,4 +1,4 @@
-const { validateToken, validateText, validateVisibility } = require('com')
+const { validateToken, validateText, validateVisibility, ClientError, ServerError, ExistenceError } = require('com')
 
 /**
  * Creates a new sticky in the database
@@ -17,23 +17,27 @@ function createSticky(token, text, visibility, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload =()=> {
-     const {status}= xhr
- 
-     if (status === 500) {
-         const { response } = xhr
- 
-         const body = JSON.parse(response)
- 
-         const { error } = body
- 
-         callback(new Error(error))
- 
-         return
+        const { status, response } = xhr
+
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
      }
 
  
-     callback(null)
- }
+    
+ 
  xhr.onerror = () => callback(new Error('network error'))
  
   xhr.open('POST', 'http://localhost:8080/stickies')

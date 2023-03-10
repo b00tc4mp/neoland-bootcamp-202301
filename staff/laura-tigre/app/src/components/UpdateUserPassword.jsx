@@ -2,14 +2,12 @@ import{useState} from 'react'
 import updateUserPassword from '../logic/update-user-password'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import Feedback from './Feedback'
 
 function UpdateUserPassword(){
 console.log('UpdateUserPassword -> render')
 
-const [feedback, setFeedback] = useState({
-    message: '',
-    type: ''
-  })
+const [feedback, setFeedback] = useState()
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -22,7 +20,7 @@ const [feedback, setFeedback] = useState({
         if (error) {
           setFeedback({
             message: error.message,
-            type: 'error'
+            level: 'error'
           })
 
           return
@@ -30,7 +28,7 @@ const [feedback, setFeedback] = useState({
         event.target.reset()
         setFeedback({
           message: 'password update successfully',
-          type: 'success'
+          level: 'success'
         })
 
       })
@@ -40,7 +38,7 @@ const [feedback, setFeedback] = useState({
 
       setFeedback({
         message: error.message,
-        type: 'error'
+        level: 'error'
       })
     }
   }
@@ -69,7 +67,7 @@ const [feedback, setFeedback] = useState({
       {/* <button className=" bg-[#facc15] h-7 w-40" type="submit">Update password</button> */}
       <Button type= "submit">Update password</Button>
     </Container>
-    <p className={`${feedback.type === 'success'? "text-[#4ae84a]" : "text-[tomato]"}`}>{feedback.message}</p>
+    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
 
   </Container>

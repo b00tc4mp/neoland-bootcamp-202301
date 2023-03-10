@@ -1,5 +1,5 @@
 const { User} = require('../data/models')
-const { validateUserId } = require('com')
+const { validateUserId, ExistenceError } = require('com')
 
 function retrieveFavStickies(userId) {
     validateUserId(userId)
@@ -14,11 +14,14 @@ function retrieveFavStickies(userId) {
         }
     }).lean()
         .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
            
             const stickies = user.favs
 
             stickies.forEach(sticky => {
+                //agregate
+
+                sticky.fav = true
                 // sanitize
 
                 if (sticky._id) {
@@ -35,7 +38,7 @@ function retrieveFavStickies(userId) {
             })
 
 
-            return user.favs
+            return stickies
         })
         
 

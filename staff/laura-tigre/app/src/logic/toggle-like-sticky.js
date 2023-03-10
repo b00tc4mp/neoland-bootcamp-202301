@@ -1,41 +1,44 @@
-const { validateToken, validateStickyId, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
 /**
  * toggles the likeability of specific sticky
  * @param {string } token the user email
  * @param {string} stickyId the sticky identifier
  * @param {function} callback the callback
  */
-function toggleLikeSticky(token, stickyId, callback){
+function toggleLikeSticky(token, stickyId, callback) {
     validateToken(token)
     validateStickyId(stickyId)
-validateCallback(callback)
+    validateCallback(callback)
     const xhr = new XMLHttpRequest()
 
-    xhr.onload =()=> {
-     const {status}= xhr
- 
-     if (status === 500) {
-         const { response } = xhr
- 
-         const body = JSON.parse(response)
- 
-         const { error } = body
- 
-         callback(new Error(error))
- 
-         return
-     }
+    xhr.onload = () => {
+        const { status, response } = xhr
 
-     callback(null)
- }
- xhr.onerror = () => callback(new Error('network error'))
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-  xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/likes`)
-  xhr.setRequestHeader('Authorization', 'Bearer ' + token)
-  xhr.send()
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+
+            else if (status === 404)
+                callback(new ExistenceError(error))
+
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
+    }
+    xhr.onerror = () => callback(new Error('network error'))
+
+    xhr.open('PATCH', `http://localhost:8080/stickies/${stickyId}/likes`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+    xhr.send()
 
 
 
-   
+
 }
 export default toggleLikeSticky

@@ -1,4 +1,14 @@
-const { validateToken, validatePassword, validateCallback } = require('com')
+const { validateToken, validatePassword, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
+
+/**
+ * Unregisters a user
+ * 
+ * @param {string} token The session token
+ * @param {string} password The user password
+ * @param {callback} callback The function to call when the user is unregistered (or failed)
+ */
+
+
 function unregisterUser(token, password, callback) {
     validateToken(token)
     validatePassword(password)
@@ -7,21 +17,24 @@ function unregisterUser(token, password, callback) {
     const xhr = new XMLHttpRequest()
  
      xhr.onload =()=> {
-      const {status}= xhr
-  
-      if (status === 500) {
-          const { response } = xhr
-  
-          const body = JSON.parse(response)
-  
-          const { error } = body
-  
-          callback(new Error(error))
-  
-          return
-      }
- 
-      callback(null)
+        const { status, response } = xhr
+
+        if (status === 204) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 401)
+                callback(new AuthError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
   }
 
   xhr.onerror = () => callback(new Error('network error'))

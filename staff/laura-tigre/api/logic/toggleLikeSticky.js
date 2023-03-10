@@ -1,27 +1,28 @@
-const { validateUserId, validateStickyId } = require('com')
+const { validateUserId, validateStickyId , ExistenceError} = require('com')
 const { User, Sticky } = require('../data/models')
-const { Types: { ObjectId } } = require('mongoose')
+
 
 
 function toggleLikeSticky(userId, stickyId) {
     validateUserId(userId)
     validateStickyId(stickyId)
 
-    return User.findById((userId))
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+    return Promise.all([User.findById(userId), Sticky.findById(stickyId)])
+    .then(([user, sticky]) => {
+        if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
+        if (!sticky) throw new ExistenceError(`sticky with id ${stickyId} not found`)
 
-            return Sticky.findById((stickyId))
-        })
-        .then(sticky => {
+        const likes = sticky.likes
 
-            if (!sticky) throw new Error(`sticky with id '${stickyId}s' not found`)
-            const index = sticky.likes.indexOf(userId)
+        const index = likes.indexOf(userId)
 
-            index > -1 ? sticky.likes.splice(index, 1) : sticky.likes.push(userId)
+        if (index < 0)
+            likes.push(userId)
+        else
+            likes.splice(index, 1)
 
-            return Sticky.updateOne({ _id: new ObjectId(stickyId) }, { $set: { likes: sticky.likes } })
+        return sticky.save()
 
         })
 

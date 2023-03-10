@@ -1,4 +1,4 @@
-const { validateToken,validateStickyId, validateText, validateCallback} = require('com')
+const { validateToken,validateStickyId, validateText, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError} = require('com')
 
 function updateStickyText(token, stickyId, text, callback) {
     validateToken(token)
@@ -8,21 +8,24 @@ function updateStickyText(token, stickyId, text, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload =()=> {
-     const {status}= xhr
- 
-     if (status === 500) {
-         const { response } = xhr
- 
-         const body = JSON.parse(response)
- 
-         const { error } = body
- 
-         callback(new Error(error))
- 
-         return
-     }
+        const { status, response } = xhr
 
-     callback(null)
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
+
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
  }
 
  xhr.onerror = () => callback(new Error('network error'))

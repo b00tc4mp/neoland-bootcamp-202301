@@ -13,13 +13,16 @@ const validateNewPassword= require('./validators/validateNewPassword')
 const validateNewPasswordConfirm= require('./validators/validateNewPasswordConfirm')
 const validateColor = require('./validators/validateColor')
 const validateToken= require('./validators/validateToken')
+const validateUserProfileId = require('./validators/validateUserProfileId')
 
 
 const AuthError= require('./errors/AuthError') 
 const CoherenceError= require('./errors/CoherenceError') 
 const FormatError= require('./errors/FormatError') 
 const ExistenceError= require('./errors/ExistenceError') 
-const ValueError = require('./errors/ValueError') 
+const ValueError = require('./errors/ValueError')
+const ClientError = require('./errors/ClientError')
+const ServerError = require('./errors/ServerError')
 
 
 module.exports={
@@ -40,12 +43,15 @@ module.exports={
     validateNewPasswordConfirm,
     validateColor,
     validateToken,
+    validateUserProfileId,
 
     AuthError,
     CoherenceError,
     FormatError,
     ExistenceError,
-    ValueError
+    ValueError,
+    ClientError,
+    ServerError
 
 
 

@@ -18,7 +18,10 @@ const updateUserEmail = require('./logic/updateUserEmail')
 const changeStickyColor = require('./logic/changeStickyColor')
 const toggleFavSticky = require('./logic/toggleFavSticky')
 const retrieveFavStickies = require('./logic/retrieveFavStickies')
-const { sign, verify } = require('jsonwebtoken')
+const retrieveUserProfile = require('./logic/retrieveUserProfile')
+const { sign } = require('jsonwebtoken')
+const verifyToken = require('./utils/verifyToken')
+
 const JWT_SECRET = 'lalaland'
 
 const { FormatError, ExistenceError, AuthError, CoherenceError } = require('com')
@@ -89,11 +92,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/users', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 retrieveUser(userId)
 
@@ -119,11 +118,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.delete('/users', jsonBodyParser, (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { password } = req.body
 
@@ -154,11 +149,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
         server.patch('/users/updatePassword', jsonBodyParser, (req, res) => {
 
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const credentials = req.body
 
@@ -188,11 +179,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
         server.patch('/users/updateEmail', jsonBodyParser, (req, res) => {
             try {
 
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const credentials = req.body
 
@@ -218,31 +205,60 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
 
         })
+
+        server.get('/users/:userProfileId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { userProfileId } = req.params
+
+                retrieveUserProfile(userId, userProfileId)
+
+                    .then(userProfile => res.json(userProfile))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
+
         server.get('/stickies/favs', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 retrieveFavStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                    
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
 
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+                
             }
         })
 
 
         server.post('/stickies', jsonBodyParser, (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { text, visibility } = req.body
                 createSticky(userId, text, visibility)
@@ -266,153 +282,206 @@ connect('mongodb://127.0.0.1:27017/mydb')
 
         server.get('/stickies', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
 
                 retrievePublicStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        
+                        else res.status(500)
+
+                        res.json({ error: error.message })})
+
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError ) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
         server.get('/stickies/user', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 retrieveMyStickies(userId)
                     .then(stickies => res.status(200).json(stickies))
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        
+                        else res.status(500)
+
+                        res.json({ error: error.message })})
 
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
+
+        
 
 
         server.patch('/stickies/:stickyId/text', jsonBodyParser, (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
                 const { text } = req.body
 
                 updateStickyText(userId, stickyId, text)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                    else if (error instanceof CoherenceError) res.status(409)
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
             } catch (error) {
-                res.status(500).json(error.message)
+                if ( error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
 
         server.patch('/stickies/:stickyId/visibility', jsonBodyParser, (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
                 const { visibility } = req.body
 
                 updateStickyVisibility(userId, stickyId, visibility)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                    else if (error instanceof CoherenceError) res.status(409)
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError || error instanceof ValueError ) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
 
         server.patch('/stickies/:stickyId/likes', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
 
                 toggleLikeSticky(userId, stickyId)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        
+                        else res.status(500)
+
+                        res.json({ error: error.message })})
             } catch (error) {
-                res.status(500).json(error.message)
+                if ( error instanceof TypeError ) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
 
         server.delete('/stickies/:stickyId', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
 
 
                 deleteSticky(userId, stickyId)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })})
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
 
         })
 
         server.patch('/stickies/:stickyId/color', jsonBodyParser, (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
                 const { color } = req.body
 
                 changeStickyColor(userId, stickyId, color)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json(error.message))
+                    .catch(error => { if (error instanceof ExistenceError)
+                        res.status(404)
+                    else if (error instanceof CoherenceError)
+                        res.status(409)
+                    else
+                        res.status(500)
+
+                    res.json({ error: error.message })
+                })
             } catch (error) {
-                res.status(500).json(error.message)
+                if (error instanceof TypeError)
+                res.status(400)
+            else
+                res.status(500)
+
+            res.json({ error: error.message })
             }
 
         })
 
         server.patch('/stickies/:stickyId/favs', (req, res) => {
             try {
-                const token = req.headers.authorization.slice(7)
-
-                const payload = verify(token, JWT_SECRET)
-
-                const userId = payload.sub
+                const userId = verifyToken(req)
 
                 const { stickyId } = req.params
 
                 toggleFavSticky(userId, stickyId)
                     .then(() => res.status(204).send())
-                    .catch(error => res.status(500).json({ error: error.message }))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })})
             } catch (error) {
-                res.status(500).json({ error: error.message })
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
             }
         })
 
