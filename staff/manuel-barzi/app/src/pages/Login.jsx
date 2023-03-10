@@ -3,13 +3,14 @@ import authenticateUser from '../logic/authenticate-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import { Link, useNavigate } from 'react-router-dom'
+import Feedback from '../components/Feedback'
 
 function Login() {
     console.log('Login -> render')
 
     const navigate = useNavigate()
 
-    const [feedback, setFeedback] = useState('')
+    const [feedback, setFeedback] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -20,7 +21,10 @@ function Login() {
         try {
             authenticateUser(email, password, (error, token) => {
                 if (error) {
-                    setFeedback(error.message)
+                    setFeedback({
+                        message: error.message,
+                        level: 'error'
+                    })
 
                     return
                 }
@@ -31,7 +35,10 @@ function Login() {
             })
 
         } catch (error) {
-            setFeedback(error.message)
+            setFeedback({
+                message: error.message,
+                level: 'error'
+            })
         }
     }
 
@@ -43,7 +50,9 @@ function Login() {
 
                 <Button type="submit">Login</Button>
             </Container>
-            <p className="text-[red] font-odibee">{feedback}</p>
+
+            {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+
             <p className="text-[gold] font-odibee">or <Link to="/register" className="underline">Register</Link></p>
         </Container>
     </Container>

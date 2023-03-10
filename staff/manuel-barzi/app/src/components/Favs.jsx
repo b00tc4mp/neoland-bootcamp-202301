@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import retrieveFavStickies from '../logic/retrieve-fav-stickies'
 import Container from '../library/Container'
 import Item from './Item'
+import Context from '../Context'
 
 function Favs({ updateStamp }) {
     console.log('Favs -> render')
+
+    const { alert } = useContext(Context)
 
     const [stickies, setStickies] = useState([])
 

@@ -7,8 +7,14 @@ import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@her
 import updateStickyColor from '../logic/update-sticky-color'
 import toggleFavSticky from '../logic/toggle-fav-sticky'
 import extractUserId from '../utils/extractUserId'
+import Context from '../Context'
+import { useContext } from 'react'
 
 function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav }) {
+    console.log('Item -> render')
+
+    const { alert } = useContext(Context)
+
     const userId = extractUserId(sessionStorage.token)
 
     const handleUpdateText = event => {

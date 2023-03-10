@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
+import Context from '../Context'
 
 function MyList({ updateStamp }) {
     console.log('MyList -> render')
+
+    const { alert } = useContext(Context)
 
     const [stickies, setStickies] = useState([])
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import createSticky from '../logic/create-sticky'
 import List from '../components/List'
 import Profile from '../components/Profile'
@@ -7,9 +7,12 @@ import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Favs from '../components/Favs'
 import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
+import Context from '../Context'
 
 function Home() {
     console.log('Home -> render')
+
+    const { alert } = useContext(Context)
 
     const navigate = useNavigate()
     const location = useLocation()
