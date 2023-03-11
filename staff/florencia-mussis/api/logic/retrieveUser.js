@@ -1,4 +1,4 @@
-const { validateUserId, MissingError } = require('com')
+const { validateUserId, ExistenceError } = require('com')
 const { User } = require('../data/models')
 
 
@@ -7,13 +7,14 @@ function retrieveUser(userId) {
 
     return User.findById(userId).lean()
         .then(user => {
-            if (!user) throw new MissingError(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
             
             //sanitization
             delete user._id
             delete user.password
             delete user.__v
-
+            delete user.favs
+            
             return user
         })
 }

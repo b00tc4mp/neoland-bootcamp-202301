@@ -1,5 +1,5 @@
 const { Types: { ObjectId } } = require('mongoose')
-const { validateUserId } = require('com')
+const { validateUserId, ExistenceError } = require('com')
 const { User, Sticky } = require('../data/models')
 /**
  * Retrieves the stickies that belong to the specified user (email)
@@ -11,14 +11,18 @@ const { User, Sticky } = require('../data/models')
 function retrieveMyStickies(userId) {
     validateUserId(userId)
 
-    return User.findById(userId)
-        .then(user => {
-            if (!user) throw new Error(`user with id ${userId} not found`)
+    return Promise.all([
+        User.findById(userId).lean(),
+        Sticky.find({ user: new ObjectId(userId) }).populate({ path: 'user', select: 'name' }).lean()
+    ])
+        .then(([user, stickies]) => {
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            return Sticky.find({ user: new ObjectId(userId) }).populate({ path: 'user', select: 'name' }).lean()
-        })
-        .then(stickies => {
             stickies.forEach(sticky => {
+                // agregate
+
+                sticky.fav = user.favs.some(stickyId => stickyId.toString() === sticky._id.toString())
+
                 // sanitize
 
                 if (sticky._id) {
@@ -32,6 +36,7 @@ function retrieveMyStickies(userId) {
                     sticky.user.id = sticky.user._id.toString()
                     delete sticky.user._id
                 }
+
                 sticky.likes = sticky.likes.map(like => like.toString())
             })
 
