@@ -6,9 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'quicksand': ['"Quicksand"'],
-        'spline': ['"Spline Sans"'],
-      }
+        'roboto': ['Roboto', 'sans-serif']
+      },
     },
   },
   plugins: [],

@@ -4,8 +4,9 @@ import Context from '../Context'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
-import { Bars3Icon } from '@heroicons/react/24/solid'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import Header from '../components/Header'
+import Profile from '../components/Profile'
+
 
 function Home() {
     console.log('Home -> render')
@@ -17,12 +18,6 @@ function Home() {
 
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
-
-    const handleLogout = () => {
-        delete sessionStorage.token
-
-        navigate('/login')
-    }
 
     useEffect(() => {
         try {
@@ -41,16 +36,13 @@ function Home() {
     }, [])
 
     return <Container className="h-screen">
-        <header className="flex justify-between px-2 pt-6 bg-white fixed top-0 left-0 w-full">
-            <div className='flex p-2'>
-                <Link to='/'><Bars3Icon className="h-8 mt-2 mr-3 cursor-pointer" /></Link>
-                <img src='../../images/logo-web.png' />
-            </div>
-
-            <Link to='/'><MagnifyingGlassIcon className='h-8 mt-4 mr-2 cursor-pointer' /></Link>
+        <header>
+            <Header />
         </header>
+
         <main>
-            <Button onClick={handleLogout} >Logout</Button>
+            <Profile />
+
             <Container>
 
                 <Routes>
@@ -68,7 +60,7 @@ function Home() {
             </Container>
         </main>
         <footer className="bg-trasnparent flex justify-end items-center m-4 fixed h-14 bottom-0 right-0 w-full">
-            <Button>+</Button>
+            {/* <Button>+</Button> */}
         </footer>
     </Container>
 }

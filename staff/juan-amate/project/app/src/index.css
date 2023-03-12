@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet');
 
 /* Change the white to any color */
 input:-webkit-autofill,
