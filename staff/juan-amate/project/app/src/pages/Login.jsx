@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import authenticateUser from '../logic/authenticate-user'
-import Container from '../library/Container'
-import Button from '../library/Button'
-import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 import { Link, useNavigate } from 'react-router-dom'
+import Feedback from '../components/Feedback'
+import authenticateUser from '../logic/authenticate-user'
+import Container from "../library/Container"
+import Button from '../library/Button'
 
-function Login(props) {
+function Login() {
     console.log('Login -> render')
 
     const navigate = useNavigate()
-
     const [feedback, setFeedback] = useState('')
 
     const handleSubmit = event => {
@@ -25,33 +24,39 @@ function Login(props) {
 
                     return
                 }
-                sessionStorage.token = token
 
+                sessionStorage.token = token
                 navigate('/')
             })
 
         } catch (error) {
-            setFeedback(error.message)
+            setFeedback({
+                message: error.message,
+                level: 'error'
+            })
+
         }
     }
 
-    return <Container>
-        <Container TagName='form' onSubmit={handleSubmit} className="my-20" >
+    return <Container className='justify-center'>
+        <main>
+            <Container className='w-screen flex justify-center items-center bg-yellow-600 h-80'>
+                <img src='../../images/logo-white.png' />
+            </Container>
 
-            <SquaresPlusIcon className="h-16 text-blue-500" />
+            <Container TagName='form' onSubmit={handleSubmit} className='flex flex-col items-center w-screen'>
 
-            <h1 className="text-blue-900 text-3xl py-4 font-quicksand">Welcome back!</h1>
-            <div className="max-w-1/2 flex flex-col gap-3">
-                <label className="text-gray-500" htmlFor="email">E-mail</label>
-                <input className="bg-sky-100 border border-black mb-3 p-1 rounded-md text-gray-500 text-sm italic" type="email" id="email" placeholder="Input your e-mail" />
+                <div className='flex flex-col items-center'>
+                    <input type='email' id='email' placeholder='Email' className='w-4/5 max-w-4/5 px-4 py-2 mt-32 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-quicksand' />
+                    <input type='password' id='password' placeholder='Password' className='w-4/5 max-w-4/5 px-4 py-2 m-12 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-quicksand ' />
+                </div>
+                <Button type='submit' className='px-10 py-21'>Access</Button>
 
-                <label className="text-gray-500" htmlFor="password">Password</label>
-                <input className="bg-sky-100 border border-black mb-4 p-1 rounded-md text-gray-500 text-sm italic" type="password" id="password" placeholder="Input your password" />
-            </div>
-            <Button type="submit">Login</Button>
-            <p className="text-red-500 p-3">{feedback}</p>
-            <a className="text-sm text-blue-900 hover:underline cursor-pointer"><Link to='/register'>Not a member? Register</Link></a>
-        </Container>
+                {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+
+                <Link to='/register' className='mt-3 text-neutral-500 text-base font-quicksand cursor-pointer'>Create new account</Link>
+            </Container>
+        </main>
     </Container>
 }
 

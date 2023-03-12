@@ -1,15 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
-import createSticky from '../logic/create-sticky'
-import List from '../components/List'
-import Profile from '../components/Profile'
-import MyList from '../components/MyList'
+import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
+import Context from '../Context'
 import retrieveUser from '../logic/retrieve-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
-import Favs from '../components/Favs'
-import { SquaresPlusIcon } from '@heroicons/react/24/solid'
-import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
-import Context from '../Context'
+import { Bars3Icon } from '@heroicons/react/24/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
 function Home() {
     console.log('Home -> render')
@@ -21,22 +17,6 @@ function Home() {
 
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
-
-    const handleAdd = () => {
-        try {
-            createSticky(sessionStorage.token, '', 'public', error => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-
-                setListUpdateStamp(Date.now())
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }
 
     const handleLogout = () => {
         delete sessionStorage.token
@@ -60,32 +40,35 @@ function Home() {
         }
     }, [])
 
-    return <Container className="h-screen bg-blue-50">
-        <header className="flex justify-between p-2 bg-white fixed top-0 left-0 w-full">
-            <Link to='/'><SquaresPlusIcon className="h-16 text-blue-500 cursor-pointer" /></Link>
+    return <Container className="h-screen">
+        <header className="flex justify-between px-2 pt-6 bg-white fixed top-0 left-0 w-full">
+            <div className='flex p-2'>
+                <Link to='/'><Bars3Icon className="h-8 mt-2 mr-3 cursor-pointer" /></Link>
+                <img src='../../images/logo-web.png' />
+            </div>
 
-            <nav className="flex items-center gap-2">
-                <Link to='/my-list' className="text-gray-500 hover:underline cursor-pointer font-quicksand">.:My stickies:.</Link>
-
-                <Link to='/favs' className="text-gray-500 hover:underline cursor-pointer font-quicksand" href=''>.:My favs:.</Link>
-
-                <Link to='/profile' className="text-gray-500 hover:underline cursor-pointer font-quicksand">.:{user.name}:.</Link>
-
-                <Button onClick={handleLogout} >Logout</Button>
-            </nav>
+            <Link to='/'><MagnifyingGlassIcon className='h-8 mt-4 mr-2 cursor-pointer' /></Link>
         </header>
         <main>
-            <Container className="bg-blue-50 w-full py-20">
+            <Button onClick={handleLogout} >Logout</Button>
+            <Container>
+
                 <Routes>
-                    <Route path='/' element={<List listUpdateStamp={listUpdateStamp} />} />
+
+                    {/* <Route path='/' element={<List listUpdateStamp={listUpdateStamp} />} />
+
                     <Route path='profile' element={<Profile onUnregisterUser={handleLogout} />} />
+
                     <Route path='/my-list' element={<MyList listUpdateStamp={listUpdateStamp} />} />
-                    <Route path='/favs' element={<Favs listUpdateStamp={listUpdateStamp} />} />
+
+                    <Route path='/favs' element={<Favs listUpdateStamp={listUpdateStamp} />} /> */}
+
                 </Routes>
+
             </Container>
         </main>
-        <footer className="bg-white flex justify-center items-center fixed h-14 bottom-0 left-0 w-full">
-            {(location.pathname === '/' || location.pathname === '/my-list') && <Button onClick={handleAdd}>+</Button>}
+        <footer className="bg-trasnparent flex justify-end items-center m-4 fixed h-14 bottom-0 right-0 w-full">
+            <Button>+</Button>
         </footer>
     </Container>
 }

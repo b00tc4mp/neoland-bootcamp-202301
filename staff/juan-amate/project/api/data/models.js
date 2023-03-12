@@ -3,31 +3,31 @@ const { Schema, model, Types: { ObjectId } } = require('mongoose')
 const user = new Schema({
     businessName: {
         type: 'string',
-        required: true
+        required: false
     },
     nif: {
         type: 'string',
-        required: true
+        required: false
     },
     address: {
         type: 'string',
-        required: true
+        required: false
     },
     zipCode: {
         type: 'number',
-        required: true
+        required: false
     },
     city: {
         type: 'string',
-        required: true
+        required: false
     },
     region: {
         type: 'string',
-        required: true
+        required: false
     },
     email: {
         type: 'string',
-        required: true,
+        required: false,
         unique: true
     },
     password: {
@@ -36,7 +36,7 @@ const user = new Schema({
     },
     phone: {
         type: 'number',
-        required: true
+        required: false
     }
 })
 
