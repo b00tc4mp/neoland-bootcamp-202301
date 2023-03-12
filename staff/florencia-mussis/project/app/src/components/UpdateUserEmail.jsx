@@ -41,14 +41,12 @@ function UpdateUserEmail() {
         }
     }
 
-    return <Container className="justify-center gap-8 font-['Montserrat']r">
+    return <Container className="justify-center gap-8 font-['Montserrat']">
         <Container TagName="form" onSubmit={handleSubmit} className="justify-center gap-6">
             <Container>
-                <label htmlFor="New email">New email</label>
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="email" name="newEmail" />
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="email" name="newEmail" placeholder="New e-mail" />
 
-                <label htmlFor="password">Password</label>
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" />
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" placeholder="Password"/>
             </Container>
             <Button type="submit">Update email</Button>
         </Container>

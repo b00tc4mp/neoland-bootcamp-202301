@@ -12,7 +12,6 @@ const validateNewEmail = require('./validators/validateNewEmail')
 const validateNewPassword = require('./validators/validateNewPassword')
 const validateNewPasswordConfirm = require('./validators/validateNewPasswordConfirm')
 const validateToken = require('./validators/validateToken')
-const validateUserProfileId = require('./validators/validateUserProfileId')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -39,7 +38,6 @@ module.exports = {
     validateNewPassword,
     validateNewPasswordConfirm,
     validateToken,
-    validateUserProfileId,
 
     FormatError,
     ExistenceError,

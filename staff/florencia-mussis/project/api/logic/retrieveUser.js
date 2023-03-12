@@ -1,7 +1,6 @@
 const { validateUserId, ExistenceError } = require('com')
 const { User } = require('../data/models')
 
-
 function retrieveUser(userId) {
     validateUserId(userId)
 

@@ -12,7 +12,6 @@ function Register() {
 
   const [feedback, setFeedback] = useState()
 
-
   const handleSubmit = event => {
     event.preventDefault()
 
@@ -29,7 +28,6 @@ function Register() {
             level: 'error'
         })
 
-
           return
         }
 
@@ -39,38 +37,33 @@ function Register() {
       setFeedback({
         message: error.message,
         level: 'error'
-    })
+      })
 
     }
   }
 
   return <Container TagName="main" className="h-screen font-['Montserrat'] justify-center">
-    <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded-xl border border-slate-300 gap-8 drop-shadow-md" onSubmit={handleSubmit}>
+    <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded border border-slate-300 gap-8 drop-shadow-md" onSubmit={handleSubmit}>
 
-      <h1>MY LISTS</h1>
+      <h1 className="font-['Kalam'] text-3xl">MY LISTS</h1>
 
       <div className="form-inner flex flex-col justify-center gap-4">
        
-        <input type="name" id="name" placeholder="Name" className="border-2 rounded-md w-56 focus:outline-sky-500" required />
+        <input type="name" id="name" placeholder="Name" className="border-2 rounded w-56 focus:outline-cyan-500" required />
 
-        <input type="number" id="age" placeholder="Age" className="border-2 rounded-md w-56 focus:outline-sky-500" required />
+        <input type="number" id="age" placeholder="Age" className="border-2 rounded w-56 focus:outline-cyan-500" required />
 
-        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded-md w-56 focus:outline-sky-500" required />
+        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded w-56 focus:outline-cyan-500" required />
 
-        <input type="password" id="password" placeholder="Password" className="border-2 rounded-md w-56 focus:outline-sky-500" required />
-
-        <div className="checkbox pt-4">
-          <input type="checkbox" id="conditions" />
-          <label htmlFor="conditions" className="text-xs"> Acepto los términos y condiciones</label>
-        </div>
+        <input type="password" id="password" placeholder="Password" className="border-2 rounded w-56 focus:outline-cyan-500" required />
       </div>
 
-      <Button className="border-2 rounded-md w-40" type="submit">CREATE ACCOUNT</Button>
+      <Button className="border-2 w-40 text-sm h-7 rounded-md" type="submit">CREATE ACCOUNT</Button>
     </Container>
-    <p className="feedback">{feedback}</p>
-    <div className="pt-4 text-sm">
-      <p className="question">¿Tienes una cuenta?<Link to="/login"> Login</Link></p>
-    </div>
+
+    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+
+    <p className="pt-4 text-sm">¿Tienes una cuenta?<Link to="/login" className=" text-cyan-500"> Login</Link></p>
   </Container>
 }
 

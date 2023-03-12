@@ -7,10 +7,7 @@ function Home() {
 
     const { alert } = useContext(Context)
     
-
-    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [user, setUser] = useState({})
-
 
     useEffect(() => {
         try {
@@ -20,14 +17,14 @@ function Home() {
 
                     return
                 }
-                setUser(user) //se llama a api y nos envia el usuario
+                setUser(user) 
             })
         } catch (error) {
             alert(error.message)
         }
     }, [])
 
-    return <div className="max-h-md font-['Montserrat']">
+    return  <div className="max-h-md font-['Montserrat']">
     <strong className="text-xs text-left">{user.name}</strong>
     </div>
 }

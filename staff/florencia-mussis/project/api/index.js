@@ -7,7 +7,6 @@ const retrieveUser = require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
-const retrieveUserProfile = require('./logic/retrieveUserProfile')
 
 const cors = require("cors")
 const { connect, disconnect } = require('mongoose')
@@ -41,7 +40,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                         res.json({ error: error.message })
                     })
             } catch (error) { 
-                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
+                if (error instanceof TypeError || error instanceof RangeError || error  instanceof FormatError)
                     res.status(400)
                 else
                     res.status(500)
@@ -179,32 +178,6 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                 res.json({ error: error.message })
             }
         })
-       
-        server.get('/users/:userProfileId', (req, res) =>{
-            try{
-                const userId = verifyToken(req)
-                const { userProfileId } = req.params
-
-                retrieveUserProfile(userId, userProfileId)
-                    .then(userProfile => res.status(200).json(userProfile))
-                    .catch(error =>{
-                        if (error instanceof ExistenceError)
-                            res.status(404)
-                        else    
-                            res.status(500) 
-
-                        res.json({ error: error.message})     
-                    })
-            }catch (error) {
-                if (error instanceof TypeError)
-                    res.status(400)
-                else
-                    res.status(500)
-                    
-                res.json({ error: error.message})    
-            }
-        })
 
         server.listen(8080, () => console.log('server running on port' + 8080))
-
     })    

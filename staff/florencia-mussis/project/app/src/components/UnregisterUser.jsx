@@ -4,7 +4,7 @@ import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
 
-function UnregisterUser({ onUnregisterUser }) {
+function UnregisterUser() {
     console.log('unregisterUser -> render')
 
     const [feedback, setFeedback] = useState()
@@ -28,8 +28,6 @@ function UnregisterUser({ onUnregisterUser }) {
                 event.target.reset()
 
                 delete sessionStorage.token
-
-                onUnregisterUser()
             })
         } catch (error) {
             setFeedback({
@@ -42,8 +40,7 @@ function UnregisterUser({ onUnregisterUser }) {
     return <Container>
         <Container TagName="form"  onSubmit={handleSubmit} className="justify-center gap-6">
              <Container>
-                <label htmlFor="password">Password</label>
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" />
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" placeholder="Password"/>
             </Container>
             <Button type="submit">Unregister</Button>
         </Container>
