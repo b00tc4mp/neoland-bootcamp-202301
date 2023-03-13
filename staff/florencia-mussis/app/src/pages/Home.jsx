@@ -1,15 +1,19 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import createSticky from "../logic/create-sticky"
 import List from '../components/List'
 import Profile from '../components/Profile'
 import MyList from "../components/MyList"
+import UserProfile from "../components/UserProfile"
 import retrieveUser from "../logic/retrieve-user"
 import Favs from "../components/Favs"
 import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
+import Context from '../Context'
 
-function Home({ onLogout }) {
+function Home() {
     console.log('Home -> render')
 
+    const { alert } = useContext(Context)
+    
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -53,23 +57,6 @@ function Home({ onLogout }) {
         }
     }, [])
 
-    const handleFav = (userId, stickyId) => { //callback que se envia por list a item, list no hace nada solo lo pasa a item que lo va a usar, aqui es una logica para ponerlo o quitarlo visualmente (no en la base de datos - api).
-        setUser(user => { //user es parametro, no funcion
-            const newUser = { ...user } //creo un nuevo objeto en memoria
-            const favs = [...user.favs] //creo un nuevo array con los favoritos del usuario
-            newUser.favs = favs
-
-            const indexOfSticky = favs.indexOf(stickyId)
-
-            if (indexOfSticky < 0)
-                favs.push(stickyId)
-            else
-                favs.splice(indexOfSticky, 1)
-
-            return newUser
-        })
-    }
-
     return <div className="max-h-md font-['Montserrat']">
         <header className="fixed w-full flex justify-between p-2 bg-purple-300">
             <Link to="/" className="w-16" href=""><img className="pluma"
@@ -90,14 +77,16 @@ function Home({ onLogout }) {
 
         <main className="py-20">
             <Routes>
-            <Route path="/" element=
-            {<List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />}></Route>
+                <Route path="/" element=
+                    {<List listUpdateStamp={listUpdateStamp}/>}></Route>
 
-            <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
+                <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
 
-            <Route path="/my-list" element={<MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleFav} />} />
+                <Route path="/my-list" element={<MyList listUpdateStamp={listUpdateStamp} />} />
 
-            <Route path="/favs" element={<Favs listUpdateStamp={listUpdateStamp} onToggleFav={handleFav} user={user} />} />
+                <Route path="/favs" element={<Favs listUpdateStamp={listUpdateStamp} />} />
+
+                <Route path="/users/:userProfileId" element={<UserProfile listUpdateStamp={listUpdateStamp} />} />
             </Routes>
         </main>
 

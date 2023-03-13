@@ -1,3 +1,4 @@
+const FormatError = require ('../errors/FormatError')
 const isEmail = require('../checkers/isEmail')
 
 function validateNewEmail(newEmail) {

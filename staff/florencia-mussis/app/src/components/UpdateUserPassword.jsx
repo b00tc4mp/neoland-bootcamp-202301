@@ -2,14 +2,12 @@ import { useState } from 'react'
 import updateUserPassword from '../logic/update-user-password'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import Feedback from './Feedback'
 
 function UpdateUserPassword() {
     console.log('UpdateUserPassword -> render')
 
-    const [feedback, setFeedback] = useState({
-        message: '',
-        type: ''
-    })
+    const [feedback, setFeedback] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -23,7 +21,7 @@ function UpdateUserPassword() {
                 if (error) {
                     setFeedback({
                         message: error.message,
-                        type: 'error'
+                        level: 'error'
                     })
 
                     return
@@ -33,13 +31,13 @@ function UpdateUserPassword() {
 
                 setFeedback({
                     message: '✅ Password updated successfully',
-                    type: 'success'
+                    level: 'success'
                 })
             })
         } catch (error) {
             setFeedback({
                 message: '❌ ' + error.message,
-                type: 'error'
+                level: 'error'
             })
         }
     }
@@ -59,7 +57,7 @@ function UpdateUserPassword() {
             </Container>
             <Button type="submit">Update password</Button>
         </Container>
-        <p className={"feedback feedback-" + feedback.type} > {feedback.message}</p> {/* pq se pone dos veces feedback? */}
+        {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>
 }
 
