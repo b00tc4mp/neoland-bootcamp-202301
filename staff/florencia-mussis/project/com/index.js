@@ -6,13 +6,13 @@ const validateAge = require('./validators/validateAge')
 const validateCallback = require('./validators/validateCallback')
 const validateUserId = require('./validators/validateUserId')
 const validateText = require('./validators/validateText')
-const validateVisibility = require('./validators/validateVisibility')
 const validateNewEmail = require('./validators/validateNewEmail')
 const validateNewPassword = require('./validators/validateNewPassword')
 const validateNewPasswordConfirm = require('./validators/validateNewPasswordConfirm')
 const validateToken = require('./validators/validateToken')
 const validateTitle = require('./validators/validateTitle')
 const validateListId = require('./validators/validateListId')
+const validateArchived = require('./validators/validateArchived')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -33,13 +33,13 @@ module.exports = {
     validateCallback,
     validateUserId,
     validateText,
-    validateVisibility,
     validateNewEmail,
     validateNewPassword,
     validateNewPasswordConfirm,
     validateToken,
     validateTitle,
     validateListId,
+    validateArchived,
 
     FormatError,
     ExistenceError,

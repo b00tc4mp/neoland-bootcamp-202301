@@ -4,8 +4,8 @@ const { Types: { ObjectId }} = require('mongoose')
 /**
  * Deletes the specified list by id that belongs to the specified user (by userId)
  * 
- * @param {string} userId The userId address of the user
- * @param {string} listId The list id of the list
+ * @param {string} userId The userId of the user 
+ * @param {string} listId The listId of the list
  */
 function deleteList(userId, listId) {
     validateUserId(userId)

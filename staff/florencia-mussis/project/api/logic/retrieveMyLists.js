@@ -4,7 +4,7 @@ const { User, List } = require('../data/models')
 /**
  * Retrieves the lists that belong to the specified user (email)
  * 
- * @param {string} userId The userId of the user to retrieve the lists from
+ * @param {string} userId The userId of the user to retrieve the lists 
  * 
  * @return {Array} The lists that belong to the specified user
  */

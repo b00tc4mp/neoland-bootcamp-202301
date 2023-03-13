@@ -8,6 +8,12 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
+const createList = require('./logic/createList')
+const deleteList = require('./logic/deleteList')
+const retrieveMyLists = require('./logic/retrieveMyLists')
+const archiveList = require('./logic/archiveList')
+const retrieveArchivedLists = require('./logic/retrieveArchivedLists')
+
 const cors = require("cors")
 const { connect, disconnect } = require('mongoose')
 const { sign } = require('jsonwebtoken')
@@ -179,5 +185,131 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
+
+        server.post('/lists', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { title } = req.body
+
+                createList(userId, title)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/lists/user', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveMyLists(userId)
+                    .then(lists => res.status(200).json(lists))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.delete('/lists/:listId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                deleteList(userId, listId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+        
+        server.patch('/lists/:listId', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                const { archived } = req.body
+
+                archiveList(userId, listId, archived)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)   
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError )
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/lists', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveArchivedLists(userId)
+                    .then(lists => res.status(200).json(lists))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        
         server.listen(8080, () => console.log('server running on port' + 8080))
     })    
