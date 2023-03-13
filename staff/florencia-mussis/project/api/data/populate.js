@@ -1,5 +1,5 @@
 const { connect, disconnect } = require('mongoose')
-const { User, List } = require('./models')
+const { User, List, Item } = require('./models')
 
 
 connect('mongodb://127.0.0.1:27017/mylistsdb') 
@@ -15,14 +15,25 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
     }) .then(user => {
         const list = new List({
             user: user.id,
-            title: 'Supermarket',
-            items: [ {text:'bread', checked: true}, {text:'wine', checked: false}, {text:'water', checked: true} ]
+            title: 'Supermarket'
         })
+        
+        const item = new Item({ text: 'bread', checked: true })
+        const item2 = new Item({ text: 'wine', checked: false })
+        const item3 = new Item({ text: 'water', checked: false })
+
+        list.items.push(item, item2, item3)
+
         const list2 = new List({
             user: user.id,
-            title: '30th birthday',
-            items: [ {text:'cake', checked: false}, {text:'soda', checked: true} ]
+            title: '30th birthday'
         })
+
+        const item4 = new Item({ text: 'cake', checked: false })
+        const item5 = new Item({ text: 'soda', checked: false })
+    
+        list2.items.push(item4, item5)
+
 
         return Promise.all([list.save(), list2.save()])
     })

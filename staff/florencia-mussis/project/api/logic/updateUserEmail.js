@@ -8,9 +8,9 @@ function  updateUserEmail(userId, newEmail, password,) {
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`User with id ${userId} not found`)
             
-            if (user.password !== password) throw new AuthError ('wrong credentials')
+            if (user.password !== password) throw new AuthError ('Wrong credentials')
 
             user.email = newEmail
 

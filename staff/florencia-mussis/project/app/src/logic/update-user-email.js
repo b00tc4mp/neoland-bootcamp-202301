@@ -35,7 +35,7 @@ function updateUserEmail(token, newEmail, password, callback) {
                 callback(new ServerError(error))
         }
     }
-    xhr.onerror = () => callback(new Error('network error'))
+    xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/email') //patch actualizar
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)

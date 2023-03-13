@@ -45,7 +45,7 @@ function Register() {
   return <Container TagName="main" className="h-screen font-['Montserrat'] justify-center">
     <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded border border-slate-300 gap-8 drop-shadow-md" onSubmit={handleSubmit}>
 
-      <h1 className="font-['Kalam'] text-3xl">MY LISTS</h1>
+      <h1 className="font-['Kalam'] text-3xl">MIND FREE</h1>
 
       <div className="form-inner flex flex-col justify-center gap-4">
        

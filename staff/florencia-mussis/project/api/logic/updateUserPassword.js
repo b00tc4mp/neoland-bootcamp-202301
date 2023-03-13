@@ -7,15 +7,15 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
     validateNewPassword(newPassword)
     validateNewPasswordConfirm(newPasswordConfirm)
    
-    if (password === newPassword) throw new CoherenceError('current password and new password are equal')
+    if (password === newPassword) throw new CoherenceError('Current password and new password are equal')
 
-    if (newPassword !== newPasswordConfirm) throw new CoherenceError('new password and new password repeat do not match')
+    if (newPassword !== newPasswordConfirm) throw new CoherenceError('New password and new password repeat do not match')
 
     return User.findById(userId)
         .then(user => {
-            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`User with id ${userId} not found`)
             
-            if (user.password !== password) throw new AuthError ('wrong credentials')
+            if (user.password !== password) throw new AuthError ('Wrong credentials')
 
             user.password = newPassword
 

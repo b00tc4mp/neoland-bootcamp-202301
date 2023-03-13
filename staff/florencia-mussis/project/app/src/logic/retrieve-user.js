@@ -30,7 +30,7 @@ function retrieveUser(token, callback) {
         }
     }
     
-    xhr.onerror = () => callback(new Error('network error'))
+    xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('GET', 'http://localhost:8080/users')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)

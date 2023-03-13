@@ -44,7 +44,7 @@ function Login() {
     return <Container TagName="main" className="h-screen justify-center font-['Montserrat']">
 
         <Container TagName="form" className="w-1/5 h-1/2 justify-center rounded border border-slate-300 gap-8 drop-shadow-md" onSubmit={handleSubmit}>
-            <h1 className="font-['Kalam'] text-3xl">MY LISTS</h1>
+            <h1 className="font-['Kalam'] text-3xl">MIND FREE</h1>
             <Container className="gap-4">
                 <input type="email" id="email" name="E-mail" placeholder="E-mail" className="border-2 rounded w-48 focus:outline-cyan-500" required />
 

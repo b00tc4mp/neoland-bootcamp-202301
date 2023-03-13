@@ -20,35 +20,46 @@ const user = new Schema({
     }
 })
 
+const item = new Schema({
+    text: {
+        type: 'string',
+        default: '',
+        required: true
+    },
+    checked: {
+        type: 'boolean',
+        default: false,
+        required: true
+    },  
+})
+
 const list = new Schema({
     user: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     title: {
         type: 'string',
-        default: ''
+        default: '',
+        required: true
     },
-    items: [{
-        text: {
-            type: 'string',
-            default: ''
-        },
-        checked: {
-            type: 'boolean',
-            default: false
-        },  
-    }],
+    items: [item],
     archived: {
         type: 'boolean',
         default: false,
+        required: true
     }
 })
 
+
+
 const User = model('User', user)
 const List = model('List', list)
+const Item = model('Item', item)
 
 module.exports ={
     User,
-    List
+    List,
+    Item
 }

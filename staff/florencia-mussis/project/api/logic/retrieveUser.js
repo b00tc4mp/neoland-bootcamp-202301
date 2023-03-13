@@ -6,7 +6,7 @@ function retrieveUser(userId) {
 
     return User.findById(userId).lean()
         .then(user => {
-            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+            if (!user) throw new ExistenceError(`User with id ${userId} not found`)
            
             delete user._id
             delete user.password
