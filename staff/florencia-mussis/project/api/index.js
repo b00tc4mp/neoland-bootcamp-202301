@@ -13,6 +13,7 @@ const deleteList = require('./logic/deleteList')
 const retrieveMyLists = require('./logic/retrieveMyLists')
 const archiveList = require('./logic/archiveList')
 const retrieveArchivedLists = require('./logic/retrieveArchivedLists')
+const updateListTitle = require('./logic/updateListTitle')
 
 const cors = require("cors")
 const { connect, disconnect } = require('mongoose')
@@ -260,7 +261,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
         
-        server.patch('/lists/:listId', jsonBodyParser, (req, res) => {
+        server.patch('/lists/:listId/archived', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -288,7 +289,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.get('/lists', (req, res) => {
+        server.get('/lists/archived', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -297,6 +298,34 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                     .catch(error => {
                         if (error instanceof ExistenceError)
                             res.status(404)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.patch('/lists/:listId/title', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { title } = req.body
+
+                const { listId } = req.params
+
+                updateListTitle(userId, listId, title)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)   
                         else
                             res.status(500)
                         res.json({ error: error.message })
