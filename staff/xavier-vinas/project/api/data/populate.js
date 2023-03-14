@@ -5,21 +5,23 @@ const { User, Auction, Bid , CreditCard } = require('./models')
 connect('mongodb://127.0.0.1:27017/subastadb')
     .then(() => {
         const creditCard = new CreditCard({
-            number: '4111111111111111',
+            name:'xavier viñas malet',
+            number: '4111111111211111',
             cvv: '123',
             expirationDate : new Date (2025-8-20)
         })
         const user = new User({
+            role : "admin",
             name: 'xavier viñas',
             age: 36,
-            email: 'xavier@viñas.com',
+            email: 'xavier@vinas.com',
             password: '123123123',
             creditCard: creditCard
         })
 
 
         const auction = new Auction({
-            name: 'car2',
+            title: 'car2',
             description: 'new car2',
             price: 1000,
             photo: 'https://motor.elpais.com/wp-content/uploads/2019/09/0506d357-bugatti-chiron-super-sport-300-2-1440x740.jpg',

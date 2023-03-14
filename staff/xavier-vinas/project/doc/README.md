@@ -36,7 +36,7 @@ Mobile
 
 User 
 - id
-- role (string, enum [ client ] required)
+- role (string, enum [ 'client', 'ádmin' ], required)
 - name (string, required)
 - age (number, optional)
 - email (string, required, unique)

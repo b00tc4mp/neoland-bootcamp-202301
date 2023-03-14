@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { connect, disconnect } = require('mongoose')
-const { sign } = require ('jsonwebtoken');
+const { sign } = require('jsonwebtoken');
 const JWT_SECRET = 'kepim kepam'
 const verifyToken = require('./utils/verifyToken')
 
@@ -13,7 +13,9 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-const { FormatError, ExistenceError, AuthError, CoherenceError } = require('../../com')
+const { FormatError, ExistenceError, AuthError, CoherenceError} = require('../../com');
+
+const createAuction = require('./logic/createAuction');
 
 
 
@@ -30,7 +32,7 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             try {
                 const user = req.body
 
-                const { name, age, email, password , creditCard } = user
+                const { name, age, email, password, creditCard } = user
 
                 registerUser(name, age, email, password, creditCard)
                     .then(() => res.status(201).send())
@@ -193,6 +195,42 @@ connect('mongodb://127.0.0.1:27017/subastadb')
                 res.json({ error: error.message })
             }
         })
+
+        server.post('/auctions', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                
+                
+
+                const { title, description, price, photo, bidRate, startDate, endDate } = req.body
+
+                const startDate1 = new Date(startDate)
+                const endDate1 = new Date(endDate) 
+
+                createAuction(userId, title, description, price, photo, bidRate, startDate1, endDate1)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof TypeError)
+                            res.status(400)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
+
 
 
         server.listen(8080, () => console.log('server running on port ' + 8080))

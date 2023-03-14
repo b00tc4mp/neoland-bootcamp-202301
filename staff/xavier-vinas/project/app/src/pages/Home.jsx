@@ -5,6 +5,8 @@
 function Home() {
     
 
-    return <h1> Hello world </h1>
+    return 
+
+    
 }
 export default Home

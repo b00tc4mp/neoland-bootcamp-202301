@@ -1,6 +1,11 @@
 const { Schema, model, Types: { ObjectId } } = require('mongoose')
 
 const creditCard = new Schema({
+    name: {
+        type: 'string',
+        required: true,
+
+    },
     number: {
         type: 'string',
         required: true,
@@ -17,11 +22,16 @@ const creditCard = new Schema({
     expirationDate: {
         type: Date,
         required: true,
-        u
+
     }
 })
 
 const user = new Schema({
+    role: {
+        type: String,
+        enum: ['client', 'admin'],
+        required: true
+    },
     name: {
         type: 'string',
         required: true
@@ -46,7 +56,7 @@ const user = new Schema({
 })
 
 const auction = new Schema({
-    name: {
+    title: {
         type: 'string',
         required: true
     },
@@ -100,7 +110,7 @@ const bid = new Schema({
 const User = model('User', user)
 const Auction = model('Auction', auction)
 const Bid = model('Bid', bid)
-const CreditCard = model('CreditCard', creditCard)  
+const CreditCard = model('CreditCard', creditCard)
 
 
 module.exports = {
