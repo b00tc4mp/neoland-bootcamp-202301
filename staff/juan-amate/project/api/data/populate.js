@@ -1,51 +1,112 @@
 const { connect, disconnect } = require('mongoose')
-const { User, Client } = require('./models')
+const { User, Contract, Place } = require('./models')
 
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {
         const user = new User({
-            businessName: 'Juan Amate',
-            nif: '12345678A',
+            name: 'Juan Amate',
+            nationalId: '12345678A',
+            role: 'admin',
             address: 'Avenida 123',
             zipCode: 12345,
             city: 'Mostoles',
-            region: 'Madrid',
+            province: 'Madrid',
+            phone: '666777888',
             email: 'juan@amate.com',
             password: '123123123',
-            phone: '666777888'
         })
 
-        return user.save()
-    })
-    .then(() => {
-        const client = new Client({
-            name: 'Wendy',
-            surname: 'Darling',
-            phone: '666777888',
-            email: 'wendy@darling.com',
-            nif: '12345678A',
+        const user1 = new User({
+            name: 'María Jiménez Gómez',
+            nationalId: '23456789A',
+            role: 'client',
             address: 'Avenida 123',
             zipCode: 12345,
-            city: 'Baeza',
-            region: 'Jaén',
-            gettingReadyAddress: 'Avenida 123',
-            gettingReadyCity: 'Baeza',
+            city: 'Marbella',
+            province: 'Málaga',
+            phone: '666777888',
+            email: 'maria@jimenez.com',
             password: '123123123',
-            eventDate: '2024-01-01',
-            ceremony: 'Iglesia de San Juan',
-            ceremonyHour: '2024-01-26T12:00:00.417',
-            sessionPlace: 'Jardines Entrehiedra',
-            celebration: 'Cortijo el Brujuelo',
-            coupleName: 'Peter Pan',
-            coupleSurname: 'Pan',
-            couplePhone: '666777888',
-            coupleEmail: 'peter@pan.com',
-            coupleNif: '12345678A',
-            coupleGettingReadyAddress: 'Avenida 123',
-            coupleGettingReadyCity: 'Ubeda'
         })
 
-        return client.save()
+        const user2 = new User({
+            name: 'Rocío García Montes',
+            nationalId: '34567890A',
+            role: 'client',
+            address: 'Avenida 123',
+            zipCode: 12345,
+            city: 'Granada',
+            province: 'Granada',
+            phone: '666777888',
+            email: 'rocio@garcia.com',
+            password: '123123123',
+        })
+
+        return Promise.all([
+            user.save(),
+            user1.save(),
+            user2.save()
+        ])
+    })
+    .then(([user, user1, user2]) => {
+        const preparationPlace = new Place({
+            description: 'Hotel Alfonso XIII',
+            address: 'Avenida 123',
+            zipCode: '12345',
+            city: 'Sevilla',
+            province: 'Sevilla'
+        })
+
+        const ceremonyPlace = new Place({
+            description: 'Catedral de Sevilla',
+            address: 'Avenida 123',
+            zipCode: '12345',
+            city: 'Sevilla',
+            province: 'Sevilla'
+        })
+
+        const sessionPlace = new Place({
+            description: 'Plaza de España',
+            address: '',
+            zipCode: '',
+            city: 'Granada',
+            province: ''
+        })
+
+        const couplePreparationPlace = new Place({
+            description: 'Hotel Renacimiento',
+            address: 'Avenida 123',
+            zipCode: '12345',
+            city: 'Sevilla',
+            province: 'Sevilla'
+        })
+
+        const celebrationPlace = new Place({
+            description: 'Cortijo el Brujuelo',
+            address: '',
+            zipCode: '',
+            city: 'Sevilla',
+            province: ''
+        })
+
+        const contract = new Contract({
+            user: user1.id,
+            date: new Date,
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
+            price: 2500,
+            eventDate: new Date('2024-01-26T11:00:00.417Z'),
+            ceremonyPlace: ceremonyPlace,
+            sessionPlace: sessionPlace,
+            celebrationPlace: celebrationPlace,
+            preparationPlace: preparationPlace,
+            coupleName: 'Peter Pan',
+            coupleId: '45678901A',
+            couplePhone: '666777888',
+            coupleEmail: 'peter@pan.com',
+            couplePreparationPlace: couplePreparationPlace,
+        })
+
+        return contract.save()
     })
     .then(() => disconnect())
     .catch(error => console.error(error))

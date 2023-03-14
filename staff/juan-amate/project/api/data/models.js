@@ -1,56 +1,37 @@
 const { Schema, model, Types: { ObjectId } } = require('mongoose')
 
 const user = new Schema({
-    businessName: {
-        type: 'string',
-        required: false
-    },
-    nif: {
-        type: 'string',
-        required: false
-    },
-    address: {
-        type: 'string',
-        required: false
-    },
-    zipCode: {
-        type: 'number',
-        required: false
-    },
-    city: {
-        type: 'string',
-        required: false
-    },
-    region: {
-        type: 'string',
-        required: false
-    },
-    email: {
-        type: 'string',
-        required: false,
-        unique: true
-    },
-    password: {
-        type: 'string',
-        required: true
-    },
-    phone: {
-        type: 'number',
-        required: false
-    }
-})
-
-const client = new Schema({
     name: {
         type: 'string',
         required: true
     },
-    surname: {
+    nationalId: {
+        type: 'string',
+        required: true
+    },
+    role: {
+        type: 'string',
+        enum: ['admin', 'client'],
+        required: true
+    },
+    address: {
+        type: 'string',
+        required: true
+    },
+    zipCode: {
+        type: 'string',
+        required: true
+    },
+    city: {
+        type: 'string',
+        required: true
+    },
+    province: {
         type: 'string',
         required: true
     },
     phone: {
-        type: 'number',
+        type: 'string',
         required: true
     },
     email: {
@@ -58,68 +39,84 @@ const client = new Schema({
         required: true,
         unique: true
     },
-    nif: {
+    password: {
+        type: 'string',
+        required: true
+    }
+})
+
+const place = new Schema({
+
+    description: {
         type: 'string',
         required: true
     },
     address: {
         type: 'string',
-        required: true
+        required: false
     },
     zipCode: {
-        type: 'number',
-        required: true
+        type: 'string',
+        required: false
     },
     city: {
         type: 'string',
         required: true
     },
-    region: {
+    province: {
+        type: 'string',
+        required: false
+    }
+})
+
+const contract = new Schema({
+    user: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    description: {
         type: 'string',
         required: true
     },
-    password: {
-        type: 'string',
+    price: {
+        type: 'number',
         required: true
     },
     eventDate: {
-        type: 'date',
+        type: Date,
         required: true
     },
-    ceremony: {
-        type: 'string',
-        required: true
-    },
-    ceremonyHour: {
-        type: 'date',
+    ceremonyPlace: {
+        type: place,
         required: true
     },
     sessionPlace: {
-        type: 'string',
+        type: place,
         required: false
     },
-    celebration: {
-        type: 'string',
-        required: true
+    celebrationPlace: {
+        type: place,
+        required: false
     },
-    gettingReadyAddress: {
-        type: 'string',
-        required: true
-    },
-    gettingReadyCity: {
-        type: 'string',
-        required: true
+    preparationPlace: {
+        type: place,
+        required: false
     },
     coupleName: {
         type: 'string',
         required: true
     },
-    coupleSurname: {
+    coupleId: {
         type: 'string',
         required: true
     },
     couplePhone: {
-        type: 'number',
+        type: 'string',
         required: true
     },
     coupleEmail: {
@@ -127,24 +124,23 @@ const client = new Schema({
         required: true,
         unique: true
     },
-    coupleNif: {
-        type: 'string',
+    couplePreparationPlace: {
+        type: place,
         required: true
     },
-    coupleGettingReadyAddress: {
-        type: 'string',
-        required: true
-    },
-    coupleGettingReadyCity: {
-        type: 'string',
-        required: true
+    signed: {
+        type: 'boolean',
+        required: true,
+        default: false
     }
 })
 
 const User = model('User', user)
-const Client = model('Client', client)
+const Contract = model('Contract', contract)
+const Place = model('Place', place)
 
 module.exports = {
     User,
-    Client
+    Contract,
+    Place
 }

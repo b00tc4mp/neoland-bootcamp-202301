@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import updateUserPassword from '../logic/update-user-password'
+import updateUserPassword from '../logic/update-user-password'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'

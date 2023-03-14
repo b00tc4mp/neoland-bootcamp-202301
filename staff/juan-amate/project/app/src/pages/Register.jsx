@@ -4,6 +4,7 @@ import Feedback from '../components/Feedback'
 import registerUser from '../logic/register-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
+import Input from '../library/Input'
 
 function Register() {
     console.log('Register -> render')
@@ -15,23 +16,41 @@ function Register() {
     const handleSubmit = event => {
         event.preventDefault()
 
+        const name = event.target.name.value
+        const nationalId = event.target.nationalId.value
+        const role = event.target.role.value
+        const address = event.target.address.value
+        const zipCode = event.target.zipCode.value
+        const city = event.target.city.value
+        const province = event.target.province.value
+        const phone = event.target.phone.value
         const email = event.target.email.value
         const password = event.target.password.value
-        const passwordConfirm = event.target.passwordConfirm.value
 
         try {
-            registerUser(email, password, passwordConfirm, error => {
-                if (error) {
-                    setFeedback({
-                        message: error.message,
-                        level: 'error'
-                    })
+            registerUser(
+                name,
+                nationalId,
+                role,
+                address,
+                zipCode,
+                city,
+                province,
+                phone,
+                email,
+                password,
+                error => {
+                    if (error) {
+                        setFeedback({
+                            message: error.message,
+                            level: 'error'
+                        })
 
-                    return
-                }
+                        return
+                    }
 
-                navigate('/login')
-            })
+                    navigate('/login')
+                })
 
         } catch (error) {
             setFeedback({
@@ -43,16 +62,23 @@ function Register() {
 
     return <Container className='justify-center'>
         <main>
-            <Container className='w-screen flex justify-center items-center bg-yellow-600 h-72'>
-                <img src='../../images/logo-white.png' />
+            <Container className='w-screen flex justify-center items-center bg-yellow-600 h-36 mb-5'>
+                <img src='../../images/logo-white.png' alt='logo' />
             </Container>
 
             <Container TagName='form' onSubmit={handleSubmit} className='flex flex-col items-center'>
-
+                <h1>REGISTER</h1>
                 <div className='flex flex-col items-center w-screen'>
-                    <input type='email' id='email' placeholder='Email' className='w-2/3 max-w-4/5 px-4 py-2 mt-28 mb-5 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
-                    <input type='password' id='password' placeholder='Password' className='w-2/3 max-w-4/5 px-4 py-2 m-5 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
-                    <input type='password' id='passwordConfirm' placeholder='Password confirm' className='w-2/3 max-w-4/5 px-4 py-2 mt-5 mb-10 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+                    <Input TagName='input' type='text' id='name' placeholder='Name & Surname' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='nationalId' placeholder='National Id' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='role' placeholder='Client or Admin' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='address' placeholder='Address' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='zipCode' placeholder='Zip Code' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='city' placeholder='City' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='province' placeholder='Province' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='text' id='phone' placeholder='Phone number' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='email' id='email' placeholder='Email' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='password' id='password' placeholder='Password' className={'w-2/3 max-w-4/5'} ></Input>
                 </div>
                 <Button type='submit' className='px-10 py-21 gap-5'>Create new account</Button>
 

@@ -1,16 +1,58 @@
-import { validateEmail, validatePassword, validatePasswordConfirm, validateCallback, CoherenceError, ClientError, ServerError } from 'com'
+import {
+    validateName,
+    validateNationalId,
+    validateRole,
+    validateAddress,
+    validateZipCode,
+    validateCity,
+    validateProvince,
+    validatePhone,
+    validateEmail,
+    validatePassword,
+    validateCallback,
+    CoherenceError,
+    ClientError,
+    ServerError
+} from 'com'
 
 /**
+ * Registers a user in the database
  * 
- * @param {string} email The user´s email address
- * @param {string} password The user´s password
- * @param {string} passwordConfirm Repeat the password
- * @param {function} callback The callback function
+ * @param {string} name 
+ * @param {string} nationalId 
+ * @param {string} role 
+ * @param {string} address 
+ * @param {string} zipCode 
+ * @param {stting} city 
+ * @param {string} province 
+ * @param {string} phone 
+ * @param {string} email 
+ * @param {string} password 
+ * @param {string} callback 
  */
-function registerUser(email, password, passwordConfirm, callback) {
+function registerUser(
+    name,
+    nationalId,
+    role,
+    address,
+    zipCode,
+    city,
+    province,
+    phone,
+    email,
+    password,
+    callback
+) {
+    validateName(name)
+    validateNationalId(nationalId)
+    validateRole(role)
+    validateAddress(address)
+    validateZipCode(zipCode)
+    validateCity(city)
+    validateProvince(province)
+    validatePhone(phone)
     validateEmail(email)
     validatePassword(password)
-    validatePasswordConfirm(passwordConfirm)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest
@@ -39,7 +81,18 @@ function registerUser(email, password, passwordConfirm, callback) {
     xhr.open('POST', 'http://localhost:8080/users')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { email, password, passwordConfirm }
+    const user = {
+        name,
+        nationalId,
+        role,
+        address,
+        zipCode,
+        city,
+        province,
+        phone,
+        email,
+        password
+    }
     const json = JSON.stringify(user)
     xhr.send(json)
 }
