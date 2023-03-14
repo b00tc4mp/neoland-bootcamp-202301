@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.background-yellow{
+    @apply bg-yellow-400
+}
+.background-orange{
+    @apply bg-orange-500
+}
+.background-blue {
+    @apply bg-blue-600
+}
+
+.background-red {
+    @apply bg-red-500
+}
+.background-purple {
+    @apply bg-purple-500
+}
+
+.background-green {
+    @apply bg-green-500
+}
