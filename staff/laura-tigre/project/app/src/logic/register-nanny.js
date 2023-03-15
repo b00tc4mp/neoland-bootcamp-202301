@@ -1,20 +1,20 @@
-const { validateName, validateCity, validateEmail, validatePassword, validateRole, validateCallback, ClientError, ServerError, CoherenceError } = require('com')
+const { validateName, validateCity,validateExperience,validateEmail, validatePassword, validateRole, validateCallback, ClientError, ServerError, CoherenceError } = require('com')
 
 /**
  * Registers a user in the database
  * 
  * @param {string} name The user full name
- * @param {string} city The user city
  * @param {string} email The user email
  * @param {string} role The user role
  * @param {string} password The user password
  * @param {function} callback The callback
  */
 
-function registerUser(name, city, email, password, role, callback) {
+function registerNanny(name,city,experience,email, password, role, callback) {
 
     validateName(name)
     validateCity(city)
+    validateExperience(experience)
     validateEmail(email)
     validatePassword(password)
     validateRole(role)
@@ -42,10 +42,10 @@ function registerUser(name, city, email, password, role, callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/users')
+    xhr.open('POST', 'http://localhost:8080/users/nanny')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { name, city, email, password, role }
+    const user = { name,city,experience,email, password, role }
     const json = JSON.stringify(user)
 
     xhr.send(json)
@@ -53,6 +53,6 @@ function registerUser(name, city, email, password, role, callback) {
 
 
 }
-export default registerUser
+export default registerNanny
 
 

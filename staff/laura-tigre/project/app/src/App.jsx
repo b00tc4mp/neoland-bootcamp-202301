@@ -1,6 +1,7 @@
 import{useState, useEffect} from 'react'
 import Login from './pages/Login'
-import Register from './pages/Register'
+import RegisterParent from './pages/RegisterParent'
+import RegisterNanny from './pages/RegisterNanny'
 import Home from './pages/Home'
 import { Routes, Route , Navigate, useLocation } from 'react-router-dom'
 import Context  from './Context'
@@ -32,7 +33,9 @@ const handleAcceptFeedback = () => setFeedback()
         <Route path="/login" element={sessionStorage.token ? <Navigate to="/"/> : <Login/>}/>
 
 
-        <Route path="/register" element={sessionStorage.token ? <Navigate to="/"/> : <Register/>}/>
+        <Route path="/parent" element={sessionStorage.token ? <Navigate to="/"/> : <RegisterParent/>}/>
+
+        <Route path="/nanny" element={sessionStorage.token ? <Navigate to="/"/> : <RegisterNanny/>}/>
       </Routes>
     </div>
 

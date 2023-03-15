@@ -1,4 +1,4 @@
 function validateExperience(experience){
-    if (typeof expe !== 'string') throw new TypeError('expe is not a string')
+    if (typeof experience !== 'string') throw new TypeError('experience is not a string')
 }
 module.exports= validateExperience

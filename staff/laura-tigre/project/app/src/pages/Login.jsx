@@ -33,7 +33,7 @@ function Login() {
 
     }
 
-    return <Container className="justify-center mt-10 font-['Poppins']]">
+    return <Container className="justify-center font-['Poppins']]  h-screen bg-slate-100">
         {/* <img className=''src='images/familia1-png.png' alt='familia' /> */}
         <main className='h-max'>
             <h2 className="text-center text-2xl font-bold text-[#fb923c] m-10">FAMILIES KANGAROO</h2>
@@ -61,8 +61,13 @@ function Login() {
            </Container>
            <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedback}</p>
            <p className="flex items-center justify-center gap-2" >
-               or  <Link to="/register" className="text-2xl" >Register</Link>
+               or  <Link to="/parent" className="text-2xl" >Register parents</Link>
+
+               or <Link to="/nanny" className="text-2xl" >Register nanny</Link>
            </p>
+
+           
+
         </main>
 
     </Container>

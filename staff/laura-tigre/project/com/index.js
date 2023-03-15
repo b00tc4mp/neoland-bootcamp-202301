@@ -1,6 +1,6 @@
 const isEmail = require('./checkers/isEmail')
 const validateName = require('./validators/validateName')
-const validateAge = require('./validators/validateAge')
+const validateDateOfBith = require('./validators/validateDateOfBith')
 const validateEmail= require('./validators/validateEmail')
 const validatePassword= require('./validators/validatePassword')
 const validateCallback = require('./validators/validateCallback')
@@ -19,10 +19,11 @@ const validatePresentation = require('./validators/validatePresentation')
 const validateExperience = require('./validators/validateExperience')
 const validateExtras= require('./validators/validateExtras')
 const validatePrice = require('./validators/validatePrice')
-const validateDisponibility = require('./validators/validateDisponibility')
+const validateAvailabilities = require('./validators/validateAvailabilities')
 const validateDescription = require('./validators/validateDescription')
 const validateKids= require('./validators/validateKids')
 const validateRole = require('./validators/validateRole')
+const validateParentId = require('./validators/validateParentId')
 
 
 const AuthError= require('./errors/AuthError') 
@@ -39,7 +40,7 @@ module.exports={
 
 
     validateName,
-    validateAge,
+    validateDateOfBith,
     validateEmail,
     validatePassword,
     validateCallback,
@@ -58,10 +59,11 @@ module.exports={
     validateExperience,
     validateExtras,
     validatePrice,
-    validateDisponibility,
+    validateAvailabilities,
     validateDescription,
     validateKids,
     validateRole,
+    validateParentId,
 
     AuthError,
     CoherenceError,

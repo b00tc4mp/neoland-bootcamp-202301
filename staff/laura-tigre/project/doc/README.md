@@ -34,7 +34,9 @@ Mobile
 
 ![](./images/figma.png)
 
-### Technical
+## Technical
+
+### Data Model
 
 User
 - id
@@ -83,8 +85,9 @@ Message
 - message (string, required)
 - date (date, required)
 
+### Sequences
 
-
+![](./images/Nanny-authentication.png)
 
 
 

@@ -7,10 +7,7 @@ const user = new Schema({
         type: String,
         required: true
     },
-    city: {
-        type: String,
-        required: true
-    },
+   
 
     email: {
         type: String,
@@ -59,15 +56,20 @@ const parent = new Schema({
         ref: 'User',
 
     },
-    description: {
+    city: {
         type: String,
         required: true
+    },
+  
+    description: {
+        type: String,
+        required: false
     },
     kids: [kid],
     availabilities: [availability],
     extras: {
         type: String,
-        required: true
+        required: false
     }
 })
 
@@ -78,9 +80,14 @@ const nanny = new Schema({
         ref: 'User',
 
     },
-    description: {
+    city: {
         type: String,
         required: true
+    },
+  
+    description: {
+        type: String,
+        required: false
     },
 
     experience: {
@@ -90,19 +97,19 @@ const nanny = new Schema({
 
     dateOfBith: {
         type: Date,
-        required: true
+        required: false
     },
 
     price: {
         type: Number,
-        required: true
+        required:false
     },
 
     availabilities: [availability],
 
     extras: {
         type: String,
-        required: false
+        required:false
     },
 })
 

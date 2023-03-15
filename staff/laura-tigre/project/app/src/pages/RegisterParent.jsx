@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import registerUser from '../logic/register-user'
+import registerParent from '../logic/register-parent'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import { Link, useNavigate } from 'react-router-dom'
 
-function Register(props) {
+function Parents(props) {
     console.log('Register -> render')
 
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ function Register(props) {
         const role = event.target.role.value
 
         try {
-            registerUser(name, city, email, password, role, error => {
+            registerParent(name, city,email, password, role, error => {
                 if (error) {
                     setFeedback(error.message)
                     return
@@ -32,7 +32,7 @@ function Register(props) {
             setFeedback(error.message)
         }
     }
-    return <Container className="justify-center mt-10 font-['Poppins'] h-max">
+    return <Container className="justify-center font-['Poppins'] h-screen bg-slate-100">
         <main className='h-max'  >
             <h2 className="text-center text-2xl font-bold text-[#fb923c]">FAMILIES KANGAROO</h2>
 
@@ -42,16 +42,16 @@ function Register(props) {
                 <Container className="justify-center gap-2">
                    
                     <input className="bg-[transparent] text-center focus:outline-none " type="text" id="name" placeholder="Your name" required />
-                   
+
                     <input className="bg-[transparent] text-center focus:outline-none " type="text" id="city" placeholder="Your city" required />
                     
                     <input className="bg-[transparent] text-center focus:outline-none " type="email" id="email" placeholder="Your email" required />
                    
                     <input className=" bg-[transparent] text-center focus:outline-none " type="password" id="password" placeholder="Your password" required />
                     <select className='bg-[transparent] text-[grey] text-center' name="role">
-                        <option value="parent">Family</option>
-                        <option value="nanny">Nanny</option>
-                    </select>
+                        <option value="parent">Family</option> */
+                        
+                     </select>
                 </Container>
                 <div>
                     <Button type='submit'>REGISTER</Button>
@@ -67,4 +67,4 @@ function Register(props) {
     </Container>
 
 }
-export default Register
+export default Parents

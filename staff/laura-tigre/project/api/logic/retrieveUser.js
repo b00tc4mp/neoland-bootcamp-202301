@@ -1,5 +1,5 @@
 const { validateUserId, ExistenceError } = require('com')
-const { User } = require('../data/models')
+const { User, Parent, Nanny } = require('../data/models')
 
 function retrieveUser(userId) {
     validateUserId(userId)
@@ -9,14 +9,30 @@ function retrieveUser(userId) {
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            delete user._id
-            delete user.password
-            delete user.__v
+            if (user.role === 'parent')
+                return Parent.findOne({ user: userId }).lean()
+                    .then(parent => {
+                        user.city = parent.city
 
-            return user
+                        // sanitize
+                        delete user._id
+                        delete user.password
+                        delete user.__v
+                        
+                        return user
+                    })
+            else
+                return Nanny.findOne({ user: userId }).lean()
+                    .then(nanny => {
+                        user.city = nanny.city
 
+                        // sanitize
+                        delete user._id
+                        delete user.password
+                        delete user.__v
 
-
+                        return user
+                    })
         })
 }
 

@@ -4,12 +4,15 @@ const cors = require('cors')
 const { connect, disconnect } = require('mongoose')
 const { sign } = require('jsonwebtoken')
 const verifyToken = require('./utils/verifyToken')
-const registerUser = require('./logic/registerUser')
+const registerParent = require('./logic/registerParent')
+const registerNanny = require('./logic/registerNanny')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser= require('./logic/retrieveUser')
 const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
+const retrieveParents = require('./logic/retrieveParents')
+const retrieveNannies = require('./logic/retrieveNannies')
 
 const JWT_SECRET = 'lalaland'
 
@@ -22,12 +25,34 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         server.use(cors())
         const jsonBodyParser = bodyParser.json()
 
-        server.post('/users', jsonBodyParser, (req, res) => {
+        server.post('/users/parent', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
-                const { name, city, email, password, role } = user
+                const { name,city ,email, password, role } = user
 
-                registerUser(name, city, email, password, role)
+                registerParent(name, city,email, password, role)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+        server.post('/users/nanny', jsonBodyParser, (req, res) => {
+            try {
+                const user = req.body
+                const { name,city,experience,email, password, role } = user
+
+                registerNanny(name, city,experience,email, password, role)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)
@@ -181,6 +206,56 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
 
         })
+        server.get('/users/parents', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                
+
+                retrieveParents(userId)
+
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
+        server.get('/users/nannies', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                
+
+                retrieveNannies(userId)
+
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
 
 
 

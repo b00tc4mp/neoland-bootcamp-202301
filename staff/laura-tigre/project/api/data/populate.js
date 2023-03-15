@@ -4,17 +4,15 @@ const { User, Availability, Kid, Parent, Nanny, Chat, Message } = require('./mod
 connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
         const userParent = new User({
-            name: 'Macarena Garcia',
-            city: 'Sao Paulo',
-            email: 'macarena@garcia.com',
+            name: 'Maria Fernandez Cobo',
+            email: 'maria@fernandez.com',
             password: '123123123',
             role: 'parent'
         })
 
         const userNanny = new User({
-            name: 'Sonia Ferrer',
-            city: 'Sao Paulo',
-            email: 'sonia@ferrer.com',
+            name: 'Patri Gonzalez',
+            email: 'patri@gonzalez.com',
             password: '123123123',
             role: 'nanny'
         })
@@ -28,6 +26,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         const parent = new Parent({
             user: userParent.id,
             description: 'Im a parent who needs a very kid nanny',
+            city: 'Barcelona',
             extras: 'we need a nanny with car and who speaks spanish'
         })
 
@@ -52,6 +51,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         const nanny = new Nanny({
             user: userNanny.id,
+            city: 'Barcelona',
             description: 'I am a very kynd nanny with reference',
             experience:'5 years',
             dateOfBith: new Date(1995, 2, 20),

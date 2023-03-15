@@ -1,11 +1,11 @@
 const{User}=require('../data/models')
-const {validateName, validateCity,validateEmail, validatePassword,validateRole, CoherenceError}= require('com')
+const {validateName,validateEmail, validatePassword,validateRole, CoherenceError}= require('com')
 
 
-function registerUser(name,city, email,password, role){
+function registerUser(name,email,password, role){
 
     validateName(name)
-    validateCity(city)
+
     validateEmail(email)
     validatePassword(password)
     validateRole(role)
@@ -17,7 +17,6 @@ function registerUser(name,city, email,password, role){
 
             user= new User({
                 name,
-                city,
                 email,
                 password,
                 role
