@@ -1,44 +1,60 @@
-import UpdateUserPassword from './UpdateUserPassword'
-import { PencilIcon } from '@heroicons/react/24/solid'
-import Button from '../library/Button'
+import { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import Context from '../Context'
+import retrieveUser from '../logic/retrieve-user'
+import Container from "../library/Container"
 
-// TODO 
-const handleChangePassword = event => {
-    event.preventDefault()
+function DataUser({ updateStamp }) {
+    console.log('Item -> render')
 
-    try {
-        // TODO mostrar el panel UpdateUserPassword
-    } catch (error) {
-        alert(error.message)
+    const { alert } = useContext(Context)
+
+    const [user, setUser] = useState([])
+
+    const loadUser = () => {
+        try {
+            retrieveUser(sessionStorage.token, (error, user) => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setUser(user)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
     }
-}
 
-function DataUser() {
-    <section className='w-screen mt-44 flex flex-col'>
-        <div className='w-4/5 mx-4 items-start'>
-            <h2 className='m-1 text-xl font-roboto'>Your data access</h2>
-            <div className='flex'>
-                <p className='m-2 text-base'>juan@amate.com</p>
-                <a className='cursor-pointer'><PencilIcon className='h-4 w-4 mt-3' /></a>
-            </div>
-            <Button onClick="handleChangePassword">Change password</Button>
-        </div>
-        <div className='m-6'></div>
-        <div className='w-4/5 mx-4 items-start'>
-            <h2 className='m-1 text-xl font-roboto'>Your data</h2>
-            <form>
-                <input type='text' id='businessName' placeholder='Business name' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='text' id='nif' placeholder='CIF/NIF' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='text' id='addres' placeholder='Address' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='number' id='zipCode' placeholder='Postal code' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='text' id='city' placeholder='City' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='text' id='region' placeholder='Region' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <input type='number' id='phone' placeholder='Phone' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' required />
-                <button type='submit' className='px-4 py-2 m-3 bg-yellow-600 text-white rounded-3xl text-sm font-roboto font-semibold cursor-pointer'>Save</button>
-            </form>
-        </div>
-    </section >
+    useEffect(() => {
+        loadUser()
+    }, [updateStamp])
+
+    return <Container>
+        <Link to='/profile' className={'flex flex-col w-80 justify-start gap-1 m-10 p-5 border border-neutral-500 rounded-3xl cursor-pointer'}>
+            <p className='text-xs uppercase font-bold' >Name:</p>
+            <p>{user.name}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >National id:</p>
+            <p>{user.nationalId}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >Address:</p>
+            <p>{user.address}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >Zip code:</p>
+            <p>{user.zipCode}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >City:</p>
+            <p>{user.city}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >Province:</p>
+            <p>{user.province}</p>
+            <br></br>
+            <p className='text-xs uppercase font-bold' >Phone number:</p>
+            <p>{user.phone}</p>
+        </Link>
+    </Container>
 }
 
 export default DataUser
-

@@ -11,8 +11,10 @@ const registerUser = require('./logic/registerUser')
 const retrieveUser = require('./logic/retrieveUser')
 const updateUserEmail = require('./logic/updateUserEmail')
 const updateUserPassword = require('./logic/updateUserPassword')
+const updateUserData = require('./logic/updateUserData')
 const unregisterUser = require('./logic/unregisterUser')
 const createContract = require('./logic/createContract')
+const retrieveMyContracts = require('./logic/retrieveMyContracts')
 
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {
@@ -206,6 +208,34 @@ connect('mongodb://127.0.0.1:27017/projectdb')
             }
         })
 
+        server.patch('/users/data', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { name, nationalId, address, zipCode, city, province, phone } = req.body
+
+                updateUserData(userId, name, nationalId, address, zipCode, city, province, phone)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof AuthError)
+                            res.status(401)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
         server.post('/contracts', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
@@ -300,5 +330,30 @@ connect('mongodb://127.0.0.1:27017/projectdb')
             }
         })
 
+        server.get('/contracts', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveMyContracts(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
         server.listen(8080, () => console.log(`server running on port ${8080}`))
     })
+

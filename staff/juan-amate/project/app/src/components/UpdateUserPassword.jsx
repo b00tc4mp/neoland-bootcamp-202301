@@ -7,6 +7,7 @@ import Feedback from './Feedback'
 function UpdateUserPassword() {
     console.log('UpdateUserPassword -> render')
 
+
     const [feedback, setFeedback] = useState()
 
     const handleSubmit = event => {
@@ -17,7 +18,7 @@ function UpdateUserPassword() {
         const newPasswordRepeat = event.target.newPasswordRepeat.value
 
         try {
-            updateUserPassword(sessionStorage.userId, password, newPassword, newPasswordRepeat, error => {
+            updateUserPassword(sessionStorage.token, password, newPassword, newPasswordRepeat, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -42,29 +43,17 @@ function UpdateUserPassword() {
         }
     }
 
-    return <Container>
-        <Container TagName='form' onSubmit={handleSubmit}>
-            <label className='mb-1 p-2'>Update your password</label>
-            <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic outline-gray-500"
-                type="password"
-                name="password"
-                placeholder="current password"
-            />
-            <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic outline-gray-500"
-                type="password"
-                name="newPassword"
-                placeholder="new password"
-            />
-            <input className="bg-white border border-black mb-1 p-2 rounded-md text-gray-500 text-sm italic outline-gray-500"
-                type="password"
-                name="newPasswordRepeat"
-                placeholder="confirm new password"
-            />
-            <Button type="submit">Update password</Button>
-        </Container>
+    return <Container TagName='form' onSubmit={handleSubmit} className='m-56'>
+        <h2 className='m-1 text-xl font-roboto'>Update your password</h2>
+
+        <input type='password' id='password' placeholder='Actual password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+        <input type='password' id='newPassword' placeholder='New password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+        <input type='password' id='newPasswordRepeat' placeholder='Repeat new password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+
+        <Button className='p-8' type='submit'>Change password</Button>
 
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
-    </Container>
+    </Container >
 }
 
 export default UpdateUserPassword

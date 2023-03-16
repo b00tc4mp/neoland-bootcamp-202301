@@ -4,7 +4,7 @@ const createContract = require('./createContract')
 connect('mongodb://127.0.0.1:27017/projectdb')
   .then(() => {
     return createContract(
-      '64104acac07dfdf7e74607c4',
+      '641089dfdec56944ce04f875',
       new Date(),
       'Full wedding coverage',
       2500,

@@ -121,8 +121,7 @@ const contract = new Schema({
     },
     coupleEmail: {
         type: 'string',
-        required: true,
-        unique: true
+        required: true
     },
     couplePreparationPlace: {
         type: place,
