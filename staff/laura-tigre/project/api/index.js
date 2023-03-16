@@ -13,6 +13,8 @@ const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 const retrieveParents = require('./logic/retrieveParents')
 const retrieveNannies = require('./logic/retrieveNannies')
+const retrieveNannyProfile = require('./logic/retrieveNannyProfile')
+const retrieveParentProfile = require('./logic/retrieveParentProfile')
 
 const JWT_SECRET = 'lalaland'
 
@@ -255,6 +257,55 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
+        server.get('/nannies/:nannyId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { nannyId } = req.params
+
+                retrieveNannyProfile(userId, nannyId)
+
+                    .then(nanny => res.json(nanny))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/parents/:parentId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { parentId } = req.params
+
+                retrieveParentProfile(userId, parentId)
+
+                    .then(parent => res.json(parent))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
 
 
 

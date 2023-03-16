@@ -5,6 +5,8 @@ import Context from '../Context'
 import Container from '../library/Container'
 import ParentsList from '../components/ParentsList'
 import NanniesList from '../components/NanniesList'
+import NannyProfile from '../components/NannyProfile'
+import ParentProfile from '../components/ParentProfile'
 
 function Home() {
   console.log('Home ->render')
@@ -48,6 +50,7 @@ function Home() {
         <Routes>
 
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} />} />
+          <Route path="/parents/:parentId" element={< ParentProfile />} />
         </Routes>
 
 
@@ -77,6 +80,9 @@ function Home() {
         <Routes>
 
           <Route path="/" element={<NanniesList listUpdateStamp={listUpdateStamp} />} />
+          
+          <Route path="/nannies/:nannyId" element={< NannyProfile />} />
+        
         </Routes>
 
       </main>

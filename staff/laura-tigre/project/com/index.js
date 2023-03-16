@@ -1,6 +1,6 @@
 const isEmail = require('./checkers/isEmail')
 const validateName = require('./validators/validateName')
-const validateDateOfBith = require('./validators/validateDateOfBith')
+const validatedateOfBirth = require('./validators/validateDateOfBirth')
 const validateEmail= require('./validators/validateEmail')
 const validatePassword= require('./validators/validatePassword')
 const validateCallback = require('./validators/validateCallback')
@@ -23,7 +23,7 @@ const validateAvailabilities = require('./validators/validateAvailabilities')
 const validateDescription = require('./validators/validateDescription')
 const validateKids= require('./validators/validateKids')
 const validateRole = require('./validators/validateRole')
-const validateParentId = require('./validators/validateParentId')
+const validateUserParentId = require('./validators/validateUserParentId')
 
 
 const AuthError= require('./errors/AuthError') 
@@ -40,7 +40,7 @@ module.exports={
 
 
     validateName,
-    validateDateOfBith,
+    validatedateOfBirth,
     validateEmail,
     validatePassword,
     validateCallback,
@@ -63,7 +63,8 @@ module.exports={
     validateDescription,
     validateKids,
     validateRole,
-    validateParentId,
+    validateUserParentId,
+   
 
     AuthError,
     CoherenceError,

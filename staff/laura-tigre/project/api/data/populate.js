@@ -32,7 +32,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         const kid = new Kid({
             name: 'Pepe',
-            dateOfBith: new Date(2016, 2, 20),
+            dateOfBirth: new Date(2016, 2, 20),
         })
 
         parent.kids.push(kid)
@@ -54,7 +54,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             city: 'Barcelona',
             description: 'I am a very kynd nanny with reference',
             experience:'5 years',
-            dateOfBith: new Date(1995, 2, 20),
+            dateOfBirth: new Date(1995, 2, 20),
             price: 15,
             extras: 'we need a nanny with car and who speaks spanish'
         })

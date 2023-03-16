@@ -44,7 +44,7 @@ const kid = new Schema({
         type: String,
         required: true
     },
-    dateOfBith: {
+    dateOfBirth: {
         type: Date,
         required: true
     }
@@ -95,7 +95,7 @@ const nanny = new Schema({
         required: true
     },
 
-    dateOfBith: {
+    dateOfBirth: {
         type: Date,
         required: false
     },
