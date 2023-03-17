@@ -1,4 +1,4 @@
-const express = require('express') 
+const express = require('express')
 const bodyParser = require('body-parser')
 
 const registerUser = require('./logic/registerUser')
@@ -14,6 +14,8 @@ const retrieveMyLists = require('./logic/retrieveMyLists')
 const archiveList = require('./logic/archiveList')
 const retrieveArchivedLists = require('./logic/retrieveArchivedLists')
 const updateListTitle = require('./logic/updateListTitle')
+const retrieveList = require('./logic/retrieveList')
+const createItem = require('./logic/createItem')
 
 const cors = require("cors")
 const { connect, disconnect } = require('mongoose')
@@ -21,20 +23,24 @@ const { sign } = require('jsonwebtoken')
 const JWT_SECRET = 'juan tiene mucho pelo guapo'
 const { FormatError, ExistenceError, AuthError, CoherenceError, ValueError } = require('com')
 const verifyToken = require('./utils/verifyToken')
+const updateItemCheck = require('./logic/updateItemCheck')
+const updateItemText = require('./logic/updateItemText')
+const deleteItem = require('./logic/deleteItem')
+const updateListShared = require('./logic/updateListShared')
 
 
 connect('mongodb://127.0.0.1:27017/mylistsdb')
     .then(() => {
-        const server = express() 
+        const server = express()
         const jsonBodyParser = bodyParser.json()
 
         server.use(cors())
 
-        server.post('/users', jsonBodyParser, (req, res) => { 
+        server.post('/users', jsonBodyParser, (req, res) => {
             try {
-                const user = req.body 
+                const user = req.body
 
-                const { name, age, email, password } = user 
+                const { name, age, email, password } = user
 
                 registerUser(name, age, email, password)
                     .then(() => res.status(201).send())
@@ -46,8 +52,8 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
 
                         res.json({ error: error.message })
                     })
-            } catch (error) { 
-                if (error instanceof TypeError || error instanceof RangeError || error  instanceof FormatError)
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
                     res.status(400)
                 else
                     res.status(500)
@@ -55,14 +61,14 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.post('/users/auth', jsonBodyParser, (req, res) => { 
+        server.post('/users/auth', jsonBodyParser, (req, res) => {
             try {
                 const credentials = req.body
 
                 const { email, password } = credentials
 
                 authenticateUser(email, password)
-                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
+                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '2h' }))
                     .then(token => res.status(200).json({ token }))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -106,11 +112,11 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.delete('/users', jsonBodyParser, (req, res) => { 
+        server.delete('/users', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
 
-                const { password } = req.body 
+                const { password } = req.body
                 unregisterUser(userId, password)
                     .then(() => res.status(204).send())
                     .catch(error => {
@@ -132,7 +138,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.patch('/users/password', jsonBodyParser, (req, res) => { 
+        server.patch('/users/password', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -187,13 +193,11 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
         })
 
 
-        server.post('/lists', jsonBodyParser, (req, res) => {
+        server.post('/lists', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
-                const { title } = req.body
-
-                createList(userId, title)
+                createList(userId)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -260,7 +264,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                 res.json({ error: error.message })
             }
         })
-        
+
         server.patch('/lists/:listId/archived', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
@@ -275,13 +279,13 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                         if (error instanceof ExistenceError)
                             res.status(404)
                         else if (error instanceof CoherenceError)
-                            res.status(409)   
+                            res.status(409)
                         else
                             res.status(500)
                         res.json({ error: error.message })
                     })
             } catch (error) {
-                if (error instanceof TypeError )
+                if (error instanceof TypeError)
                     res.status(400)
                 else
                     res.status(500)
@@ -325,7 +329,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                         if (error instanceof ExistenceError)
                             res.status(404)
                         else if (error instanceof CoherenceError)
-                            res.status(409)   
+                            res.status(409)
                         else
                             res.status(500)
                         res.json({ error: error.message })
@@ -339,6 +343,169 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        
+        server.get('/lists/:listId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                retrieveList(userId, listId)
+                    .then(list => res.status(200).json(list))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+
+        server.post('/lists/:listId/items', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                const { text, checked } = req.body
+
+                createItem(userId, listId, text, checked)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.patch('/lists/:listId/items/:itemId/checked', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { checked } = req.body
+
+                const { listId, itemId } = req.params
+
+                updateItemCheck(userId, listId, itemId, checked)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.patch('/lists/:listId/items/:itemId/text', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { text } = req.body
+
+                const { listId, itemId } = req.params
+
+                updateItemText(userId, listId, itemId, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.delete('/lists/:listId/items/:itemId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId, itemId } = req.params
+
+                deleteItem(userId, listId, itemId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.patch('/lists/:listId/shared', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                const { shared } = req.body
+
+                updateListShared(userId, listId, shared)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
         server.listen(8080, () => console.log('server running on port' + 8080))
     })    

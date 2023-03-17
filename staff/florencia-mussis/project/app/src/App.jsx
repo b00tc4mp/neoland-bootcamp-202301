@@ -22,8 +22,7 @@ function App() {
 
    const handleAcceptFeedback = () => setFeedback()
 
-    return <Context.Provider value={{ alert }}>
-     {feedback && <Alert message={feedback.message} level={feedback.level} onAccept={handleAcceptFeedback} />} 
+    return <Context.Provider value={{ alert }}> 
     
     <div>
         <Routes>
@@ -34,6 +33,7 @@ function App() {
             <Route path="/register" element={sessionStorage.token ? <Navigate to="/"/> : <Register/>} />
         </Routes>
     </div>
+    {feedback && <Alert message={feedback.message} level={feedback.level} onAccept={handleAcceptFeedback} />}
     </Context.Provider>
 }
 

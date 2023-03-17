@@ -1,10 +1,10 @@
 const { connect, disconnect } = require('mongoose')
-const retrieveList = require('./retrieveList')
+const updateItemText = require('./updateItemText')
 
 connect('mongodb://127.0.0.1:27017/mylistsdb')
     .then(() => {
 
-        return retrieveList('6413309401d0709e95c0e0d5', '6413309401d0709e95c0e0df')
+        return updateItemText('640f075a659f1454f3310073', '640f108d22b63fb6080d27b0', '6411e12e9194441fb0c0cc94', "perro" )
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

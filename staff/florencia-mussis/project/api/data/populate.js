@@ -7,7 +7,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
         const user = new User({
             name: 'Florencia Mussis',
             age: 30,
-            email: 'florenciamussis@gmail.com',
+            email: 'flor@gmail.com',
             password: '123123123'
         })
 
@@ -15,7 +15,8 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
     }) .then(user => {
         const list = new List({
             user: user.id,
-            title: 'Supermarket'
+            title: 'Supermarket',
+            shared: true
         })
         
         const item = new Item({ text: 'bread', checked: true })
@@ -26,7 +27,8 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
 
         const list2 = new List({
             user: user.id,
-            title: '30th birthday'
+            title: '30th birthday',
+            shared: false
         })
 
         const item4 = new Item({ text: 'cake', checked: false })

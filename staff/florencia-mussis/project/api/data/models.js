@@ -41,18 +41,20 @@ const list = new Schema({
     },
     title: {
         type: 'string',
-        default: '',
-        required: true
+        default: 'New list',
     },
     items: [item],
     archived: {
         type: 'boolean',
         default: false,
         required: true
-    }
+    },
+    shared: {
+        type: 'boolean',
+        default: false,
+        required: true
+    },
 })
-
-
 
 const User = model('User', user)
 const List = model('List', list)

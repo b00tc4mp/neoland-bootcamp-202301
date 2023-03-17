@@ -13,6 +13,9 @@ const validateToken = require('./validators/validateToken')
 const validateTitle = require('./validators/validateTitle')
 const validateListId = require('./validators/validateListId')
 const validateArchived = require('./validators/validateArchived')
+const validateChecked = require('./validators/validateChecked')
+const validateItemId = require('./validators/validateItemId')
+const validateShared = require('./validators/validateShared')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -40,6 +43,9 @@ module.exports = {
     validateTitle,
     validateListId,
     validateArchived,
+    validateChecked,
+    validateItemId,
+    validateShared,
 
     FormatError,
     ExistenceError,
