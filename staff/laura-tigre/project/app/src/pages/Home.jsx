@@ -7,6 +7,7 @@ import ParentsList from '../components/ParentsList'
 import NanniesList from '../components/NanniesList'
 import NannyProfile from '../components/NannyProfile'
 import ParentProfile from '../components/ParentProfile'
+import SearchNannies from '../components/SearchNannies'
 
 function Home() {
   console.log('Home ->render')
@@ -80,6 +81,8 @@ function Home() {
         <Routes>
 
           <Route path="/" element={<NanniesList listUpdateStamp={listUpdateStamp} />} />
+
+          <Route path="/search/nannies" element={<SearchNannies listUpdateStamp={listUpdateStamp} />} />
           
           <Route path="/nannies/:nannyId" element={< NannyProfile />} />
         
@@ -88,7 +91,7 @@ function Home() {
       </main>
       <footer className="position fixed bottom-0 bg-[#fb923c]">
         <nav>
-          <Link to="/search" className="m-3" >Search</Link>
+          <Link to="/search/nannies" className="m-3" >Search</Link>
 
           <Link to="/profile" className=" m-3">{user.name}</Link>
 

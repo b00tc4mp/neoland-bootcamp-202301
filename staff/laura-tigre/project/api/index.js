@@ -15,6 +15,7 @@ const retrieveParents = require('./logic/retrieveParents')
 const retrieveNannies = require('./logic/retrieveNannies')
 const retrieveNannyProfile = require('./logic/retrieveNannyProfile')
 const retrieveParentProfile = require('./logic/retrieveParentProfile')
+const searchNannies = require('./logic/searchNannies')
 
 const JWT_SECRET = 'lalaland'
 
@@ -78,7 +79,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const { email, password } = credentials
 
                 authenticateUser(email, password)
-                .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
+                .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '4h' }))
                 .then(token => res.status(200).json({ token }))
 
                 .catch(error => {

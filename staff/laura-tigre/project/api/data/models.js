@@ -91,7 +91,7 @@ const nanny = new Schema({
     },
 
     experience: {
-        type: String,
+        type: Number,
         required: true
     },
 

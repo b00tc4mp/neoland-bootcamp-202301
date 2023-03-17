@@ -24,6 +24,31 @@ const validateDescription = require('./validators/validateDescription')
 const validateKids= require('./validators/validateKids')
 const validateRole = require('./validators/validateRole')
 const validateUserParentId = require('./validators/validateUserParentId')
+const validateMondayMorningSelected = require('./validators/validateMondayMorningSelected')
+const validateMondayAfternoonSelected = require('./validators/validateMondayAfternoonSelected')
+const validateMondayEveningSelected = require('./validators/validateMondayEveningSelected')
+const validateTuesdayMorningSelected = require('./validators/validateTuesdayMorningSelected')
+const validateTuesdayAfternoonSelected = require('./validators/validateTuesdayAfternoonSelected')
+const validateTuesdayEveningSelected = require('./validators/validateTuesdayEveningSelected')
+const validateWendsdayMorningSelected = require('./validators/validateWendsdayMorningSelected')
+const validateWendsdayAfternoonSelected = require('./validators/validateWendsdayAfternoonSelected')
+const validateWendsdayEveningSelected = require('./validators/validateWendsdayEveningSelected')
+const validateThursdayMorningSelected = require('./validators/validateThursdayMorningSelected')
+const validateThursdayAfternoonSelected = require('./validators/validateThursdayAfternoonSelected')
+const validateThursdayEveningSelected = require('./validators/validateThursdayEveningSelected')
+const validateFridayMorningSelected = require('./validators/validateFridayMorningSelected')
+const validateFridayAfternoonSelected = require('./validators/validateFridayAfternoonSelected')
+const validateFridayEveningSelected = require('./validators/validateFridayEveningSelected')
+const validateSaturdayMorningSelected = require('./validators/validateSaturdayMorningSelected')
+const validateSaturdayAfternoonSelected = require('./validators/validateSaturdayAfternoonSelected')
+const validateSaturdayEveningSelected = require('./validators/validateSaturdayEveningSelected')
+const validateSundayAfternoonSelected = require('./validators/validateSundayAfternoonSelected')
+const validateSundayMorningSelected = require('./validators/validateSundayMorningSelected')
+const validateSundayEveningSelected = require('./validators/validateSundayEveningSelected')
+const validatePriceFrom = require('./validators/validatePriceFrom')
+const validatePriceTo = require('./validators/validatePriceTo')
+const validateYearsOfExperienceFrom = require('./validators/validateYearsOfExperienceFrom')
+const validateYearsOfExperienceTo = require('./validators/validateYearsOfExperienceTo')
 
 
 const AuthError= require('./errors/AuthError') 
@@ -64,6 +89,33 @@ module.exports={
     validateKids,
     validateRole,
     validateUserParentId,
+    validateMondayMorningSelected,
+    validateMondayAfternoonSelected,
+    validateMondayEveningSelected,
+    validateTuesdayMorningSelected,
+    validateTuesdayAfternoonSelected,
+    validateTuesdayEveningSelected,
+    validateWendsdayMorningSelected,
+    validateWendsdayAfternoonSelected,
+    validateWendsdayEveningSelected,
+    validateThursdayMorningSelected,
+    validateThursdayAfternoonSelected,
+    validateThursdayEveningSelected,
+    validateFridayMorningSelected,
+    validateFridayAfternoonSelected,
+    validateFridayEveningSelected,
+    validateSaturdayMorningSelected,
+    validateSaturdayAfternoonSelected,
+    validateSaturdayEveningSelected,
+    validateSundayMorningSelected,
+    validateSundayAfternoonSelected,
+    validateSundayEveningSelected,
+    validatePriceFrom,
+    validatePriceTo,
+    validateYearsOfExperienceFrom,
+    validateYearsOfExperienceTo,
+
+
    
 
     AuthError,
