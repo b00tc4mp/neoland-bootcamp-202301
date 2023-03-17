@@ -1,4 +1,4 @@
-const { validateName, validateAge, validateEmail, validatePassword, ConflictError } = require('com');
+const { validateName, validateAge, validateEmail, validatePassword, CoherenceError } = require('com');
 const { User } = require('../data/models')
 
 function registerUser(name, age, email, password) {
@@ -9,7 +9,7 @@ function registerUser(name, age, email, password) {
 
     return User.findOne({ email })
         .then(user => {
-            if (user) throw new ConflictError('user already registered')
+            if (user) throw new CoherenceError('user already registered')
 
             user = new User({ name, age, email, password })
 

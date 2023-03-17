@@ -2,14 +2,12 @@ import { useState } from 'react'
 import unregisterUser from '../logic/unregister-user'
 import Button from '../library/Button'
 import Container from '../library/Container'
+import Feedback from './Feedback'
 
 function UnregisterUser({ onUnregisterUser }) {
     console.log('UnregisterUser -> render')
 
-    const [feedback, setFeedback] = useState({
-        message: '',
-        type: ''
-    })
+    const [feedback, setFeedback] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -21,7 +19,7 @@ function UnregisterUser({ onUnregisterUser }) {
                 if (error) {
                     setFeedback({
                         message: error.message,
-                        type: 'error'
+                        level: 'error'
                     })
 
                     return
@@ -36,7 +34,7 @@ function UnregisterUser({ onUnregisterUser }) {
         } catch (error) {
             setFeedback({
                 message: error.message,
-                type: 'error'
+                level: 'error'
             })
         }
     }
@@ -50,8 +48,8 @@ function UnregisterUser({ onUnregisterUser }) {
                 placeholder="password"
             />
             <Button type="submit">Unregister</Button>
-            <p className={`p-3 ${feedback.type === 'success' ? "text-[greenyellow]" : "text-[tomato]"}`}>{feedback.message}</p>
         </Container>
+        {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>
 }
 

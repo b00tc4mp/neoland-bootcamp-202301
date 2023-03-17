@@ -1,4 +1,4 @@
-const { validateToken, validateStickyId, validateCallback } = require('com')
+const { validateToken, validateStickyId, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
 
 function toggleFavSticky(token, stickyId, callback) {
     validateToken(token)
@@ -8,21 +8,22 @@ function toggleFavSticky(token, stickyId, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
-        const { status } = xhr
+        const { status, response } = xhr
 
-        if (status === 500) {
-            const { response } = xhr
-
+        if (status === 204) {
+            callback(null)
+        } else {
             const body = JSON.parse(response)
 
             const { error } = body
 
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-
-        callback(null)
     }
     xhr.onerror = () => callback(new Error('network error'))
 

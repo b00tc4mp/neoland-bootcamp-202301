@@ -1,4 +1,4 @@
-import { validateEmail, validatePassword, validateCallback } from 'com'
+import { validateEmail, validatePassword, validateCallback, ClientError, ServerError, AuthError, ExistenceError } from 'com'
 
 /**
  * Authenticates a user against database
@@ -15,28 +15,28 @@ function authenticateUser(email, password, callback) {
   const xhr = new XMLHttpRequest
 
   xhr.onload = () => {
-    const { status } = xhr
-
-    if (status === 500) {
-      const { response } = xhr
-
-      const body = JSON.parse(response)
-
-      const { error } = body
-
-      callback(new Error(error))
-
-      return
-    }
-
-    const { response } = xhr
+    const { status, response } = xhr
 
     const body = JSON.parse(response)
 
-    const { token } = body
+    if (status === 200) {
+      const { token } = body
 
-    callback(null, token)
+      callback(null, token)
+    } else {
+      const { error } = body
+
+      if (status === 400)
+        callback(new ClientError(error))
+      else if (status === 401)
+        callback(new AuthError(error))
+      else if (status === 404)
+        callback(new ExistenceError(error))
+      else if (status === 500)
+        callback(new ServerError(error))
+    }
   }
+
   xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('POST', 'http://localhost:8080/users/auth')

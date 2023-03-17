@@ -1,5 +1,4 @@
-const { Types: { ObjectId } } = require('mongoose')
-const { validateUserId, validateText, validateVisibility } = require('com')
+const { validateUserId, validateText, validateVisibility, ExistenceError } = require('com')
 const { User, Sticky } = require('../data/models')
 
 /**
@@ -16,7 +15,7 @@ function createSticky(userId, text, visibility) {
 
   return User.findById(userId)
     .then(user => {
-      if (!user) throw new Error(`user with id ${userId} not found`)
+      if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
       const sticky = new Sticky({
         user: userId,

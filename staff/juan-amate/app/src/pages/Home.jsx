@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import createSticky from '../logic/create-sticky'
 import List from '../components/List'
 import Profile from '../components/Profile'
@@ -9,9 +9,12 @@ import Container from '../library/Container'
 import Favs from '../components/Favs'
 import { SquaresPlusIcon } from '@heroicons/react/24/solid'
 import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom'
+import Context from '../Context'
 
 function Home() {
     console.log('Home -> render')
+
+    const { alert } = useContext(Context)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -39,23 +42,6 @@ function Home() {
         delete sessionStorage.token
 
         navigate('/login')
-    }
-
-    const handleToggleFav = (userId, stickyId) => {
-        setUser(user => {
-            const newUser = { ...user }
-            const favs = [...user.favs]
-            newUser.favs = favs
-
-            const indexOfSticky = favs.indexOf(stickyId)
-
-            if (indexOfSticky < 0)
-                favs.push(stickyId)
-            else
-                favs.splice(indexOfSticky, 1)
-
-            return newUser
-        })
     }
 
     useEffect(() => {
@@ -88,16 +74,16 @@ function Home() {
                 <Button onClick={handleLogout} >Logout</Button>
             </nav>
         </header>
-
-        <Container className="bg-blue-50 w-full py-20">
-            <Routes>
-                <Route path='/' element={<List listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
-                <Route path='profile' element={<Profile onUnregisterUser={handleLogout} />} />
-                <Route path='/my-list' element={<MyList listUpdateStamp={listUpdateStamp} user={user} onToggleFav={handleToggleFav} />} />
-                <Route path='/favs' element={<Favs listUpdateStamp={listUpdateStamp} onToggleFav={handleToggleFav} user={user} />} />
-            </Routes>
-        </Container>
-
+        <main>
+            <Container className="bg-blue-50 w-full py-20">
+                <Routes>
+                    <Route path='/' element={<List listUpdateStamp={listUpdateStamp} />} />
+                    <Route path='profile' element={<Profile onUnregisterUser={handleLogout} />} />
+                    <Route path='/my-list' element={<MyList listUpdateStamp={listUpdateStamp} />} />
+                    <Route path='/favs' element={<Favs listUpdateStamp={listUpdateStamp} />} />
+                </Routes>
+            </Container>
+        </main>
         <footer className="bg-white flex justify-center items-center fixed h-14 bottom-0 left-0 w-full">
             {(location.pathname === '/' || location.pathname === '/my-list') && <Button onClick={handleAdd}>+</Button>}
         </footer>

@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
+import Context from '../Context'
 
-function MyList({ listUpdateStamp, user, onToggleFav }) {
+function MyList({ listUpdateStamp }) {
     console.log('Mylist -> render')
+
+    const { alert } = useContext(Context)
 
     const [stickies, setStickies] = useState([])
 
@@ -45,7 +48,7 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
         })
     }
 
-    const handleRemoveFromList = (stickyId) => {
+    const handleRemoveFromList = stickyId => {
         setStickies(stickies => {
             const index = stickies.findIndex(sticky => sticky.id === stickyId)
 
@@ -100,8 +103,26 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
         })
     }
 
+    const handleToggleFav = stickyId => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
+
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+
+            stickyUpdated.fav = !stickyUpdated.fav
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
+    }
+
     return <Container TagName="ul">
-        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={onToggleFav} onChangeColor={handleChangeColor} user={user} />)}
+        {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility} onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onToggleFav={handleToggleFav} onChangeColor={handleChangeColor} />)}
     </Container>
 }
 

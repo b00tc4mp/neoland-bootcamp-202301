@@ -1,4 +1,4 @@
-import { validateToken, validateStickyId, validateColor, validateCallback } from 'com'
+import { validateToken, validateStickyId, validateColor, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
 
 function changeStickyColor(token, stickyId, color, callback) {
     validateToken(token)
@@ -9,21 +9,24 @@ function changeStickyColor(token, stickyId, color, callback) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
-        const { status } = xhr
+        const { status, response } = xhr
 
-        if (status === 500) {
-            const { response } = xhr
+        if (status === 204) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-            const payload = JSON.parse(response)
+            const { error } = body
 
-            const { error } = payload
-
-            callback(new Error(error))
-
-            return
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
         }
-
-        callback(null)
     }
 
     xhr.onerror = () => callback(new Error('network error'))

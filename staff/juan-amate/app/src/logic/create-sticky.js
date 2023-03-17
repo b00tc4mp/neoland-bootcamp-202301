@@ -1,4 +1,4 @@
-import { validateToken, validateText, validateVisibility, validateCallback } from 'com'
+import { validateToken, validateText, validateVisibility, validateCallback, ClientError, ServerError, ExistenceError } from 'com'
 
 /**
  * Creates a new sticky in the database
@@ -14,24 +14,26 @@ function createSticky(token, text, visibility, callback) {
   validateVisibility(visibility)
   validateCallback(callback)
 
-  const xhr = new XMLHttpRequest()
+  const xhr = new XMLHttpRequest
 
   xhr.onload = () => {
-    const { status } = xhr
+    const { status, response } = xhr
 
-    if (status === 500) {
-      const { response } = xhr
+    if (status === 201) {
+      callback(null)
 
-      const payload = JSON.parse(response)
+    } else {
+      const body = JSON.parse(response)
 
-      const { error } = payload
+      const { error } = body
 
-      callback(new Error(error))
-
-      return
+      if (status === 400)
+        callback(new ClientError(error))
+      else if (status === 404)
+        callback(new ExistenceError(error))
+      else if (status === 500)
+        callback(new ServerError(error))
     }
-
-    callback(null)
   }
 
   xhr.onerror = () => callback(new Error('network error'))
@@ -45,6 +47,5 @@ function createSticky(token, text, visibility, callback) {
 
   xhr.send(json)
 }
-
 
 export default createSticky
