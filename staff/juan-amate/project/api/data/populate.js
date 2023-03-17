@@ -92,8 +92,6 @@ connect('mongodb://127.0.0.1:27017/projectdb')
         const contract = new Contract({
             user: user1.id,
             date: new Date,
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            price: 2500,
             eventDate: new Date('2024-01-26T11:00:00.417Z'),
             ceremonyPlace: ceremonyPlace,
             sessionPlace: sessionPlace,

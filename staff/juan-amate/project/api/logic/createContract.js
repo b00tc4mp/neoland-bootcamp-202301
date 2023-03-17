@@ -1,9 +1,7 @@
-const { User, Contract, Place } = require('../data/models')
+const { User, Contract, Place, Service } = require('../data/models')
 const {
   validateUserId,
   validateDate,
-  validateDescription,
-  validatePrice,
   validateEventDate,
   validateCeremonyPlaceAddress,
   validateCeremonyPlaceCity,
@@ -34,14 +32,20 @@ const {
   validateCouplePreparationPlaceDescription,
   validateCouplePreparationPlaceProvince,
   validateCouplePreparationPlaceZipCode,
+  validatePreWeddingServiceSelected,
+  validatePostWeddingServiceSelected,
+  validateExpressDeliveryServiceSelected,
+  validateExtraPhotographerServiceSelected,
+  validateBookServiceSelected,
+  validateAlbumServiceSelected,
+  validateMiniAlbumsServiceSelected,
+  validateWoodBoxAlbumServiceSelected,
   ExistenceError,
 } = require('com')
 /**
  * 
  * @param {string} userId The id of the user
  * @param {Date} date Contract creation date
- * @param {string} description The contracted service description
- * @param {number} price Total price of the contracted service
  * @param {Date} eventDate Date and time of the event
  * @param {string} ceremonyPlaceDescription The description of the ceremony place of the event
  * @param {string} ceremonyPlaceAddres The address of the ceremony place of the event
@@ -73,8 +77,6 @@ const {
 function createContract(
   userId,
   date,
-  description,
-  price,
   eventDate,
   ceremonyPlaceDescription,
   ceremonyPlaceAddress,
@@ -104,12 +106,18 @@ function createContract(
   couplePreparationPlaceAddress,
   couplePreparationPlaceZipCode,
   couplePreparationPlaceCity,
-  couplePreparationPlaceProvince
+  couplePreparationPlaceProvince,
+  preWeddingServiceSelected,
+  postWeddingServiceSelected,
+  expressDeliveryServiceSelected,
+  extraPhotographerServiceSelected,
+  bookServiceSelected,
+  albumServiceSelected,
+  miniAlbumsServiceSelected,
+  woodBoxAlbumServiceSelected
 ) {
   validateUserId(userId)
   validateDate(date)
-  validateDescription(description)
-  validatePrice(price)
   validateEventDate(eventDate)
   validateCeremonyPlaceAddress(ceremonyPlaceAddress)
   validateCeremonyPlaceCity(celebrationPlaceCity)
@@ -140,6 +148,14 @@ function createContract(
   validateCouplePreparationPlaceDescription(couplePreparationPlaceDescription)
   validateCouplePreparationPlaceProvince(couplePreparationPlaceProvince)
   validateCouplePreparationPlaceZipCode(couplePreparationPlaceZipCode)
+  validatePreWeddingServiceSelected(preWeddingServiceSelected)
+  validatePostWeddingServiceSelected(postWeddingServiceSelected)
+  validateExpressDeliveryServiceSelected(expressDeliveryServiceSelected)
+  validateExtraPhotographerServiceSelected(extraPhotographerServiceSelected)
+  validateBookServiceSelected(bookServiceSelected)
+  validateAlbumServiceSelected(albumServiceSelected)
+  validateMiniAlbumsServiceSelected(miniAlbumsServiceSelected)
+  validateWoodBoxAlbumServiceSelected(woodBoxAlbumServiceSelected)
 
   return User.findById(userId)
     .then(user => {
@@ -188,8 +204,6 @@ function createContract(
       const contract = new Contract({
         user: userId,
         date,
-        description,
-        price,
         eventDate,
         ceremonyPlace,
         sessionPlace,
@@ -201,6 +215,85 @@ function createContract(
         coupleEmail,
         couplePreparationPlace
       })
+
+      const coverageService = new Service({
+        name: 'Coverage Service',
+        price: 1800
+      })
+
+      contract.services.push(coverageService)
+
+      if (preWeddingServiceSelected) {
+        const preWeddingService = new Service({
+          name: 'Prewedding Service',
+          price: 250
+        })
+
+        contract.services.push(preWeddingService)
+      }
+
+      if (postWeddingServiceSelected) {
+        const postWeddingService = new Service({
+          name: 'Postwedding Service',
+          price: 350
+        })
+
+        contract.services.push(postWeddingService)
+      }
+
+      if (expressDeliveryServiceSelected) {
+        const expressDeliveryService = new Service({
+          name: 'Express Delivery Service',
+          price: 300
+        })
+
+        contract.services.push(expressDeliveryService)
+      }
+
+      if (extraPhotographerServiceSelected) {
+        const extraPhotographerService = new Service({
+          name: 'Extra Photographer Service',
+          price: 400
+        })
+
+        contract.services.push(extraPhotographerService)
+      }
+
+      if (bookServiceSelected) {
+        const bookService = new Service({
+          name: 'Book Service',
+          price: 300
+        })
+
+        contract.services.push(bookService)
+      }
+
+      if (albumServiceSelected) {
+        const albumService = new Service({
+          name: 'Album Service',
+          price: 450
+        })
+
+        contract.services.push(albumService)
+      }
+
+      if (miniAlbumsServiceSelected) {
+        const miniAlbumsService = new Service({
+          name: 'Mini Albums Service',
+          price: 300
+        })
+
+        contract.services.push(miniAlbumsService)
+      }
+
+      if (woodBoxAlbumServiceSelected) {
+        const woodBoxAlbumService = new Service({
+          name: 'Wood Box Album Service',
+          price: 100
+        })
+
+        contract.services.push(woodBoxAlbumService)
+      }
 
       return contract.save()
     })

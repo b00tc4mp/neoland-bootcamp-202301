@@ -69,6 +69,17 @@ const place = new Schema({
     }
 })
 
+const service = new Schema({
+    name: {
+        type: 'string',
+        required: true,
+    },
+    price: {
+        type: 'number',
+        required: true
+    }
+})
+
 const contract = new Schema({
     user: {
         type: ObjectId,
@@ -77,14 +88,6 @@ const contract = new Schema({
     },
     date: {
         type: Date,
-        required: true
-    },
-    description: {
-        type: 'string',
-        required: true
-    },
-    price: {
-        type: 'number',
         required: true
     },
     eventDate: {
@@ -131,15 +134,18 @@ const contract = new Schema({
         type: 'boolean',
         required: true,
         default: false
-    }
+    },
+    services: [service]
 })
 
 const User = model('User', user)
 const Contract = model('Contract', contract)
 const Place = model('Place', place)
+const Service = model('Service', service)
 
 module.exports = {
     User,
     Contract,
-    Place
+    Place,
+    Service
 }

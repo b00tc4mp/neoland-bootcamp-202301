@@ -1,8 +1,6 @@
 import {
     validateToken,
     validateDate,
-    validateDescription,
-    validatePrice,
     validateEventDate,
     validateCeremonyPlaceAddress,
     validateCeremonyPlaceCity,
@@ -33,6 +31,14 @@ import {
     validateCouplePreparationPlaceDescription,
     validateCouplePreparationPlaceProvince,
     validateCouplePreparationPlaceZipCode,
+    validatePreWeddingServiceSelected,
+    validatePostWeddingServiceSelected,
+    validateExpressDeliveryServiceSelected,
+    validateExtraPhotographerServiceSelected,
+    validateBookServiceSelected,
+    validateAlbumServiceSelected,
+    validateMiniAlbumsServiceSelected,
+    validateWoodBoxAlbumServiceSelected,
     validateCallback,
     ClientError,
     ServerError,
@@ -42,8 +48,6 @@ import {
 function createContract(
     token,
     date,
-    description,
-    price,
     eventDate,
     ceremonyPlaceDescription,
     ceremonyPlaceAddress,
@@ -74,12 +78,18 @@ function createContract(
     couplePreparationPlaceZipCode,
     couplePreparationPlaceCity,
     couplePreparationPlaceProvince,
+    preWeddingServiceSelected,
+    postWeddingServiceSelected,
+    expressDeliveryServiceSelected,
+    extraPhotographerServiceSelected,
+    bookServiceSelected,
+    albumServiceSelected,
+    miniAlbumsServiceSelected,
+    woodBoxAlbumServiceSelected,
     callback
 ) {
     validateToken(token)
     validateDate(date)
-    validateDescription(description)
-    validatePrice(price)
     validateEventDate(eventDate)
     validateCeremonyPlaceAddress(ceremonyPlaceAddress)
     validateCeremonyPlaceCity(celebrationPlaceCity)
@@ -110,6 +120,14 @@ function createContract(
     validateCouplePreparationPlaceDescription(couplePreparationPlaceDescription)
     validateCouplePreparationPlaceProvince(couplePreparationPlaceProvince)
     validateCouplePreparationPlaceZipCode(couplePreparationPlaceZipCode)
+    validatePreWeddingServiceSelected(preWeddingServiceSelected)
+    validatePostWeddingServiceSelected(postWeddingServiceSelected)
+    validateExpressDeliveryServiceSelected(expressDeliveryServiceSelected)
+    validateExtraPhotographerServiceSelected(extraPhotographerServiceSelected)
+    validateBookServiceSelected(bookServiceSelected)
+    validateAlbumServiceSelected(albumServiceSelected)
+    validateMiniAlbumsServiceSelected(miniAlbumsServiceSelected)
+    validateWoodBoxAlbumServiceSelected(woodBoxAlbumServiceSelected)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest
@@ -135,14 +153,12 @@ function createContract(
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/constracts')
+    xhr.open('POST', 'http://localhost:8080/contracts')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'aplication/json')
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
     const payload = {
         date,
-        description,
-        price,
         eventDate,
         ceremonyPlaceDescription,
         ceremonyPlaceAddress,
@@ -172,7 +188,16 @@ function createContract(
         couplePreparationPlaceAddress,
         couplePreparationPlaceZipCode,
         couplePreparationPlaceCity,
-        couplePreparationPlaceProvince
+        couplePreparationPlaceProvince,
+        preWeddingServiceSelected,
+        postWeddingServiceSelected,
+        expressDeliveryServiceSelected,
+        extraPhotographerServiceSelected,
+        bookServiceSelected,
+        albumServiceSelected,
+        miniAlbumsServiceSelected,
+        woodBoxAlbumServiceSelected
+
     }
     const json = JSON.stringify(payload)
 

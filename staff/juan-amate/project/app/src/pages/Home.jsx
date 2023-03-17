@@ -13,6 +13,7 @@ import UpdateUserPassword from '../components/UpdateUserPassword'
 import UpdateUserEmail from '../components/UpdateUserEmail'
 import retrieveUser from '../logic/retrieve-user'
 import createContract from '../logic/create-contract'
+import FormContract from '../components/FormContract'
 
 function Home() {
     console.log('Home -> render')
@@ -33,34 +34,7 @@ function Home() {
 
 
     const handleAdd = () => {
-        try {
-            createContract(
-                sessionStorage.token,
-                new Date(),
-                '',
-                '',
-                new Date(),
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                error => {
-                    if (error) {
-                        alert(error.message)
 
-                        return
-                    }
-
-                    setListUpdateStamp(Date.now())
-                })
-        } catch (error) {
-            alert(error.message)
-        }
     }
 
     useEffect(() => {
@@ -96,9 +70,10 @@ function Home() {
                         <ul className={`${showNav ? 'left-0' : '-left-full'} flex flex-col justify-center items-center bg-yellow-600 fixed top-0 text-white text-xl font-quicksand h-full w-80 gap-y-8 duration-200 transition-all`}>
 
                             <Link to='/' className='cursor-pointer'>Home</Link>
-                            <Link to='/clients' className='cursor-pointer'>Clients</Link>
+                            <Link to='/form-contract' className='cursor-pointer'>New contract</Link>
                             <Link to='/contracts' className='cursor-pointer'>Contracts</Link>
                             <Link to='/profile' className='cursor-pointer'>Profile</Link>
+
                             <a onClick={handleLogout} className='cursor-pointer'>Logout</a>
                         </ul>
                         <div onClick={handleClick} className='mx-3 cursor-pointer'>
@@ -113,13 +88,9 @@ function Home() {
                     <Routes>
                         <Route path='/' element={<List listUpdateStamp={listUpdateStamp} />}></Route>
                         <Route path='/profile' element={<Profile />} />
-
                         <Route path='/update-user-password' element={<UpdateUserPassword listUpdateStamp={listUpdateStamp} />} />
-
                         <Route path='/update-user-email' element={<UpdateUserEmail listUpdateStamp={listUpdateStamp} />} />
-
-                        {/* <Route path='/favs' element={<Favs listUpdateStamp={listUpdateStamp} />} /> */}
-
+                        <Route path='/form-contract' element={<FormContract listUpdateStamp={listUpdateStamp} />} />
                     </Routes>
 
                 </Container>

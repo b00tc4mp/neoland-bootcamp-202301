@@ -241,8 +241,6 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                 const userId = verifyToken(req)
 
                 const {
-                    description,
-                    price,
                     eventDate,
                     ceremonyPlaceDescription,
                     ceremonyPlaceAddress,
@@ -272,14 +270,20 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                     couplePreparationPlaceAddress,
                     couplePreparationPlaceZipCode,
                     couplePreparationPlaceCity,
-                    couplePreparationPlaceProvince
+                    couplePreparationPlaceProvince,
+                    preWeddingServiceSelected,
+                    postWeddingServiceSelected,
+                    expressDeliveryServiceSelected,
+                    extraPhotographerServiceSelected,
+                    bookServiceSelected,
+                    albumServiceSelected,
+                    miniAlbumsServiceSelected,
+                    woodBoxAlbumServiceSelected
                 } = req.body
 
                 createContract(
                     userId,
                     new Date(),
-                    description,
-                    price,
                     new Date(eventDate),
                     ceremonyPlaceDescription,
                     ceremonyPlaceAddress,
@@ -309,7 +313,15 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                     couplePreparationPlaceAddress,
                     couplePreparationPlaceZipCode,
                     couplePreparationPlaceCity,
-                    couplePreparationPlaceProvince
+                    couplePreparationPlaceProvince,
+                    preWeddingServiceSelected,
+                    postWeddingServiceSelected,
+                    expressDeliveryServiceSelected,
+                    extraPhotographerServiceSelected,
+                    bookServiceSelected,
+                    albumServiceSelected,
+                    miniAlbumsServiceSelected,
+                    woodBoxAlbumServiceSelected
                 )
                     .then(() => res.status(201).send())
                     .catch(error => {
