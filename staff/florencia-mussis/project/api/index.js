@@ -11,7 +11,7 @@ const updateUserEmail = require('./logic/updateUserEmail')
 const createList = require('./logic/createList')
 const deleteList = require('./logic/deleteList')
 const retrieveMyLists = require('./logic/retrieveMyLists')
-const archiveList = require('./logic/archiveList')
+const updateListArchived = require('./logic/updateListArchived')
 const retrieveArchivedLists = require('./logic/retrieveArchivedLists')
 const updateListTitle = require('./logic/updateListTitle')
 const retrieveList = require('./logic/retrieveList')
@@ -27,6 +27,7 @@ const updateItemCheck = require('./logic/updateItemCheck')
 const updateItemText = require('./logic/updateItemText')
 const deleteItem = require('./logic/deleteItem')
 const updateListShared = require('./logic/updateListShared')
+const searchList = require('./logic/searchList')
 
 
 connect('mongodb://127.0.0.1:27017/mylistsdb')
@@ -273,7 +274,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
 
                 const { archived } = req.body
 
-                archiveList(userId, listId, archived)
+                updateListArchived(userId, listId, archived)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -330,6 +331,30 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                             res.status(404)
                         else if (error instanceof CoherenceError)
                             res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/lists/search', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const {q : title} = req.query
+
+                searchList(userId, title)
+                    .then(lists => res.status(200).json(lists))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
                         else
                             res.status(500)
                         res.json({ error: error.message })
@@ -506,6 +531,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                 res.json({ error: error.message })
             }
         })
+
 
         server.listen(8080, () => console.log('server running on port' + 8080))
     })    

@@ -1,7 +1,7 @@
 const { User, List } = require('../data/models')
 const { validateUserId, validateListId, validateArchived, ExistenceError, CoherenceError } = require('com')
 
-function archiveList(userId, listId, archived) {
+function updateListArchived(userId, listId, archived) {
     validateUserId(userId)
     validateListId(listId)
     validateArchived(archived)
@@ -24,4 +24,4 @@ function archiveList(userId, listId, archived) {
 
 }
 
-module.exports = archiveList
+module.exports = updateListArchived

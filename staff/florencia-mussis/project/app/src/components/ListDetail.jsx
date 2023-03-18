@@ -114,18 +114,20 @@ function ListDetail() {
     }
 
     const handleUpdateShare = (listId, shared) => {
-        try{ 
+        try {
             updateListShared(sessionStorage.token, listId, !shared, error => {
-                if (error){
+                if (error) {
                     alert(error.message)
+
+                    return
                 }
-                return
+                loadList()
             })
-            loadList()
-        }catch(error){
+
+        } catch (error) {
             alert(error.message)
         }
-   }
+    }
 
     return <Container className="flex flex-col justify-center text-left border-2 rounded-md w-12/12">
 
@@ -133,8 +135,8 @@ function ListDetail() {
             <p className="w-[45ch] text-left" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>
 
             <div className="flex justify-end" >
-                <button className="w-7 flex justify-center" onClick={()=> handleUpdateShare (list.id, list.shared)}>
-                    {list.shared ? <UserPlusIcon/> : <UserPlusIconOutline/>}
+                <button className="w-7 flex justify-center" onClick={() => handleUpdateShare(list.id, list.shared)}>
+                    {list.shared ? <UserPlusIcon /> : <UserPlusIconOutline />}
                 </button>
             </div>
 
