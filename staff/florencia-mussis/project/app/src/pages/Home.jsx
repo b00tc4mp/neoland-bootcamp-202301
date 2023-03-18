@@ -5,16 +5,20 @@ import createList from "../logic/create-list"
 import Context from '../Context'
 import Container from "../library/Container"
 import List from "../components/List"
-import { Routes, Route, useLocation, useSearchParams} from 'react-router-dom'
+import { Routes, Route, useLocation, useSearchParams, Link, useNavigate } from 'react-router-dom'
 import ListDetail from "../components/ListDetail"
 import searchList from "../logic/search-list"
+import icono from "../img/icono.png"
+import Button from "../library/Button"
+import Profile from "../components/Profile"
 
 function Home() {
     console.log('Home -> render')
-    
+
     let [searchParams, setSearchParams] = useSearchParams();
 
-    
+    const navigate = useNavigate()
+
     const { alert } = useContext(Context)
 
     const [user, setUser] = useState({})
@@ -39,12 +43,12 @@ function Home() {
         handlerRetrieveMyLists()
     }, [])
 
-    useEffect(()=>{
-        if(searchParams.get('q')) {
+    useEffect(() => {
+        if (searchParams.get('q')) {
 
             handlerRetrieveSearchedList()
         }
-    },[searchParams])
+    }, [searchParams])
 
     const loadLists = () => {
         try {
@@ -65,7 +69,7 @@ function Home() {
         loadLists()
     }
 
-    const loadSearchedList = () =>{
+    const loadSearchedList = () => {
         try {
             searchList(sessionStorage.token, searchParams.get('q'), (error, lists) => {
                 if (error) {
@@ -81,7 +85,7 @@ function Home() {
         }
     }
 
-    const handlerRetrieveSearchedList = ()=>{
+    const handlerRetrieveSearchedList = () => {
         loadSearchedList()
     }
 
@@ -117,34 +121,59 @@ function Home() {
     const handleSearchList = event => {
         event.preventDefault()
 
-        setSearchParams({q: event.target.search.value})
+        setSearchParams({ q: event.target.search.value })
     }
 
-    return <Container>
+    const handleLogout = () => {
+        delete sessionStorage.token
 
-        <Container TagName="form" onSubmit={handleSearchList} className="justify-center gap-6">
-            <input className="border-2 rounded-md w-56 drop-shadow-sm" type="search" name="search" placeholder="Search list" />
-          <button type="submit" className="drop-shadow-sm text-3xl">🔍</button>
-        </Container>
+        navigate('/login')
+    }
 
-        {(location.pathname === '/') && <div className="flex justify-center border-2 rounded-md w-2/12">
-            <button className="drop-shadow-sm text-4xl" onClick={handleAdd}>+</button>
-        </div>}
 
-        <Routes>
-            <Route path="/"
+    return <div className="h-full">
+   
+        <header className="fixed top-0 w-full flex justify-between p-2 shadow-md">
+            <Link to="/" className="w-16" href=""><img src={icono} />
+            </Link>
+
+            <nav className="flex items-center gap-5">
+                <Link to="/profile" className="profile-link font-montserrat" href="">{user.name}</Link>
+
+                <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md" type="submit">Logout</Button>
+            </nav>
+        </header>
+
+        <main className="py-20">
+            <div>
+                {(location.pathname === '/') &&
+                    <form onSubmit={handleSearchList}  className="flex justify-center pt-6 gap-2">
+                        <input className="border-2 h-11 rounded-md w-2/5 px-2 drop-shadow-sm text-xl focus:outline-teal-500" type="search" name="search" placeholder=" Search list" />
+                        <button type="submit" className="drop-shadow-sm text-3xl">🔍</button>
+                    </form> 
+                }
+            </div>
+
+            {(location.pathname === '/') &&
+             <div className="flex rounded-md pt-4">
+                <button className="drop-shadow-sm text-4xl flex m-auto " onClick={handleAdd}>+</button>
+            </div>}
+
+            <Routes>
+                <Route path="/" 
                 element={<Container TagName="ul" className="gap-4 m-3">
-                    {lists.map(list => <List onDeleteList={handleDeleteList} key={list.id} element={list} />)}
-                </Container>}>
-            </Route>
+                        {lists.map(list => <List onDeleteList={handleDeleteList} key={list.id} element={list}/>)}</Container>}>
+                </Route>
 
+                <Route path="/lists/:listId"
+                    element={<ListDetail />}>
+                </Route>
 
-            <Route path="/lists/:listId"
-                element={<ListDetail />}>
-            </Route>
-        </Routes>
+                <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
 
-    </Container>
+            </Routes>
+        </main>
+    </div>
 }
 
 export default Home

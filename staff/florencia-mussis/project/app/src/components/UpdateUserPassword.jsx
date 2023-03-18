@@ -45,7 +45,7 @@ function UpdateUserPassword() {
 
     return <Container className="justify-center gap-8 font-['Montserrat']">
         <Container TagName="form" onSubmit={handleSubmit} className="justify-center gap-6">
-            <Container>
+            <Container className="gap-3">
                 
                 <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="currentPassword" placeholder ="Current password"/>
 
@@ -53,7 +53,7 @@ function UpdateUserPassword() {
 
                 <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="newPasswordRepeat"  placeholder ="Confirm new password" />
             </Container>
-            <Button type="submit">Update password</Button>
+            <Button type="submit" className="w-40">Update password</Button>
         </Container>
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>

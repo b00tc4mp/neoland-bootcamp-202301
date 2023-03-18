@@ -1,9 +1,10 @@
-import { useState  } from "react"
+import { useState } from "react"
 import registerUser from "../logic/register-user"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import { Link, useNavigate } from 'react-router-dom'
 import Feedback from '../components/Feedback'
+import logo from '../img/logo.png'
 
 function Register() {
   console.log('Register -> render')
@@ -26,7 +27,7 @@ function Register() {
           setFeedback({
             message: error.message,
             level: 'error'
-        })
+          })
 
           return
         }
@@ -45,17 +46,17 @@ function Register() {
   return <Container TagName="main" className="h-screen font-['Montserrat'] justify-center">
     <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded border border-slate-300 gap-8 drop-shadow-md" onSubmit={handleSubmit}>
 
-      <h1 className="font-['Kalam'] text-3xl">MIND FREE</h1>
+      <img src={logo} />
 
       <div className="form-inner flex flex-col justify-center gap-4">
-       
-        <input type="name" id="name" placeholder="Name" className="border-2 rounded w-56 focus:outline-cyan-500" required />
 
-        <input type="number" id="age" placeholder="Age" className="border-2 rounded w-56 focus:outline-cyan-500" required />
+        <input type="name" id="name" placeholder="Name" className="border-2 rounded w-60 focus:outline-teal-500" required />
 
-        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded w-56 focus:outline-cyan-500" required />
+        <input type="number" id="age" placeholder="Age" className="border-2 rounded w-60 focus:outline-teal-500" required />
 
-        <input type="password" id="password" placeholder="Password" className="border-2 rounded w-56 focus:outline-cyan-500" required />
+        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded w-60 focus:outline-teal-500" required />
+
+        <input type="password" id="password" placeholder="Password" className="border-2 rounded w-60 focus:outline-teal-500" required />
       </div>
 
       <Button className="border-2 w-40 text-sm h-7 rounded-md" type="submit">CREATE ACCOUNT</Button>
@@ -63,7 +64,7 @@ function Register() {
 
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
-    <p className="pt-4 text-sm">¿Tienes una cuenta?<Link to="/login" className=" text-cyan-500"> Login</Link></p>
+    <p className="pt-4 text-sm">¿Tienes una cuenta?<Link to="/login" className=" text-teal-500"> Login</Link></p>
   </Container>
 }
 

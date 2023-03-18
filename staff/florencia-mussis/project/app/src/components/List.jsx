@@ -23,16 +23,23 @@ function List({ element, onDeleteList }) {
     }
 
     return <Container TagName="li" className="gap-4 m-3">
-        <div className=" p-4 w-[50ch] border-2 rounded-lg border-solid" key={element.id}>
+
+        <div className="p-4 w-[50ch] border-2 rounded-lg border-solid" key={element.id}>
+             <div className='text-right'>
+             <button className="border-2 px-2 py-1 text-black rounded text-md " onClick={() => handleDeleteList(element.id)}>X</button>
+             </div>
+
+            <div className='gap-2'>
             <Link to={`/lists/${element.id}`}>
-                <p className="text-2xl text-left">{element.title ? element.title : 'New list'}</p>
+                <p className="text-xl">{element.title ? element.title : 'New list'}</p>
             </Link>
 
-            <p className="w-7">{element.itemsTotalChecked}/{element.itemsTotalCount}</p>
+            <p className="text-lg font-light">{element.itemsTotalChecked}/{element.itemsTotalCount}</p>
+            </div>
 
-            <button className="border-2 w-6 text-center m-1 text-black rounded text-xs" onClick={() => handleDeleteList(element.id)}>X</button>
-
-            <button>{element.archived ? <BookmarkIcon className="h-4 w-4" /> : <BookmarkIconOutline className="h-4 w-4" />}</button>
+            <div className='text-right'>
+            <button>{element.archived ? <BookmarkIcon className="h-6 w-6" /> : <BookmarkIconOutline className="h-6 w-6" />}</button>
+            </div>
         </div>
     </Container>
 }

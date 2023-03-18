@@ -47,6 +47,7 @@ function ListDetail() {
 
                     return
                 }
+                
             })
         } catch (error) {
             alert(error.message)
@@ -129,39 +130,41 @@ function ListDetail() {
         }
     }
 
-    return <Container className="flex flex-col justify-center text-left border-2 rounded-md w-12/12">
+    return <Container className="pt-6">
 
-        {list && <>
-            <p className="w-[45ch] text-left" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>
+        <div className="px-4 pt-4 w-1/3 border-2 rounded-lg border-solid">
 
-            <div className="flex justify-end" >
-                <button className="w-7 flex justify-center" onClick={() => handleUpdateShare(list.id, list.shared)}>
-                    {list.shared ? <UserPlusIcon /> : <UserPlusIconOutline />}
-                </button>
-            </div>
+            {list && <>
+                <div className="text-right px-2" >
+                    <button className="w-7" onClick={() => handleUpdateShare(list.id, list.shared)}>
+                        {list.shared ? <UserPlusIcon /> : <UserPlusIconOutline />}
+                    </button>
+                </div>
 
-            <p>{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
+                <p className="w-auto text-xl" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>
 
-            <Container TagName="form" onSubmit={handleAddItem} className="justify-center gap-6">
-                <button type="submit" className="drop-shadow-sm text-3xl">+</button>
+                <p className="text-lg font-light">{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
 
-                <input className="border-2 rounded-md w-56 drop-shadow-sm" type="item" name="item" placeholder="Add element" />
+                <div>
+                <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
+                    <input className="px-1 border-2 rounded-md w-3/5 h-10 drop-shadow-sm focus:outline-teal-500" type="item" name="item" placeholder=" Add element" />
+                    <button type="submit" className=" drop-shadow-sm text-3xl flex">+</button>
+                    </form>
+                </div>
 
-            </Container>
+                <Container TagName="ul" className="py-8 justify-items-start ">
+                    {list.items.map(item =>
+                        <li className="flex gap-2" key={item.id}>
+                            <input type="checkbox" id="checked" defaultChecked={item.checked} className="w-7"
+                                onChange={event => handleUpdateItemCheck(event, item.id)} />
 
-            <Container TagName="ul" className="gap-3 justify-items-start ">
-                {list.items.map(item =>
-                    <li className="flex" key={item.id}>
-                        <input type="checkbox" id="checked" defaultChecked={item.checked} className=""
-                            onChange={event => handleUpdateItemCheck(event, item.id)} />
+                            <label htmlFor="checked"></label><p className="w-60 text-left focus:outline-teal-500" id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 
-                        <label htmlFor="checked"></label><p className="w-[45ch] text-left" id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
-
-                        <button className="border-2 w-6 text-center m-1 text-black rounded text-xs" onClick={() => handleDeleteItem(item.id)}>✖️</button>
-                    </li>)}
-            </Container>
-        </>}
-
+                            <button className="w-6 text-center text-black  text-xs" onClick={() => handleDeleteItem(item.id)}>  X</button>
+                        </li>)}
+                </Container>
+            </>}
+        </div>
     </Container>
 }
 

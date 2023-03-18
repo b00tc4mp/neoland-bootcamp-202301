@@ -29,7 +29,7 @@ function UpdateUserEmail() {
                 event.target.reset()
 
                 setFeedback({
-                    message: 'email updated successfully',
+                    message: '✅ E-mail updated successfully',
                     level: 'success'
                 })
             })
@@ -43,12 +43,12 @@ function UpdateUserEmail() {
 
     return <Container className="justify-center gap-8 font-['Montserrat']">
         <Container TagName="form" onSubmit={handleSubmit} className="justify-center gap-6">
-            <Container>
+            <Container className="gap-3">
                 <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="email" name="newEmail" placeholder="New e-mail" />
 
                 <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" placeholder="Password"/>
             </Container>
-            <Button type="submit">Update email</Button>
+            <Button type="submit" className="w-40">Update email</Button>
         </Container>
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>

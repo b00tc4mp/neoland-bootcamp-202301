@@ -23,8 +23,7 @@ const user = new Schema({
 const item = new Schema({
     text: {
         type: 'string',
-        default: '',
-        required: true
+        required: false
     },
     checked: {
         type: 'boolean',

@@ -42,7 +42,7 @@ function UnregisterUser() {
              <Container>
                 <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="password" placeholder="Password"/>
             </Container>
-            <Button type="submit">Unregister</Button>
+            <Button type="submit" className="w-40">Unregister</Button>
         </Container>
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>
