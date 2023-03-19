@@ -49,7 +49,7 @@ function Login() {
 
             <Container TagName="form" onSubmit={handleSubmit}>
 
-                <Container className={"p-1  border-double border-4  border-black"}>
+                <Container className={"  border-double border-4  border-black"}>
                     <img src="./logo.png"></img>
                 </Container>
 

@@ -28,6 +28,9 @@ function createAuction(userId, title, description, price, photo, bidRate, startD
             })
             return auction.save()
         })
+        .then(auction => {
+        console.log(auction)
+    })
 }
 
 

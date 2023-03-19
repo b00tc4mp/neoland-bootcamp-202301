@@ -28,7 +28,7 @@ const creditCard = new Schema({
 
 const user = new Schema({
     role: {
-        type: String,
+        type: 'string',
         enum: ['client', 'admin'],
         required: true
     },

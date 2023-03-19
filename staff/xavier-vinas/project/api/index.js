@@ -16,6 +16,7 @@ const updateUserEmail = require('./logic/updateUserEmail')
 const { FormatError, ExistenceError, AuthError, CoherenceError} = require('../../com');
 
 const createAuction = require('./logic/createAuction');
+const retrieveAuctions = require('./logic/retrieveAuctions');
 
 
 
@@ -200,8 +201,6 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             try {
                 const userId = verifyToken(req)
                 
-                
-
                 const { title, description, price, photo, bidRate, startDate, endDate } = req.body
 
                 const startDate1 = new Date(startDate)
@@ -230,6 +229,31 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             }
         })
 
+
+        server.get('/allAuctions', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveAuctions(userId)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+        })
 
 
 
