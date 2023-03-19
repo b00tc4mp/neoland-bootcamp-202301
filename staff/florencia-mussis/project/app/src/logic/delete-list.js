@@ -27,7 +27,7 @@ function deleteList(token, listId, callback){
                 callback(new ServerError(error))
         }
     }
-    xhr.onerror = () => callback(new Error('network error'))
+    xhr.onerror = () => callback(new Error('Network error'))
     
     xhr.open('DELETE', `http://localhost:8080/lists/${listId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)

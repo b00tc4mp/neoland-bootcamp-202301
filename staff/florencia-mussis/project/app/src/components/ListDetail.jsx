@@ -35,6 +35,7 @@ function ListDetail() {
             alert(error.message)
         }
     }
+    
     useEffect(() => {
         loadList()
     }, [])

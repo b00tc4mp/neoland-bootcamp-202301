@@ -3,9 +3,14 @@ import { BookmarkIcon as BookmarkIconOutline } from '@heroicons/react/24/outline
 import Container from "../library/Container"
 import { Link } from "react-router-dom"
 import deleteList from '../logic/delete-list'
+import updateListArchived from '../logic/update-list-archived'
+import Context from '../Context'
+import { useContext } from "react"
 
-function List({ element, onDeleteList }) {
+function List({ element, onDeleteList,  onUpdateArchived }) {
     console.log('Item -> render')
+
+    const { alert } = useContext(Context)
 
     const handleDeleteList = elementId => {
         try {
@@ -21,6 +26,21 @@ function List({ element, onDeleteList }) {
             alert(error.message)
         }
     }
+
+   const handleUpdateArchived = (elementId, archived) => {
+        try{
+            updateListArchived(sessionStorage.token, elementId, !archived, error =>{
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                onUpdateArchived(element.id, archived)
+            })
+        } catch (error) {
+            alert(error.message)
+   }
+}
 
     return <Container TagName="li" className="gap-4 m-3">
 
@@ -38,7 +58,7 @@ function List({ element, onDeleteList }) {
             </div>
 
             <div className='text-right'>
-            <button>{element.archived ? <BookmarkIcon className="h-6 w-6" /> : <BookmarkIconOutline className="h-6 w-6" />}</button>
+            <button onClick={() => handleUpdateArchived(element.id, element.archived)}>{element.archived ? <BookmarkIcon className="h-6 w-6" /> : <BookmarkIconOutline className="h-6 w-6" />}</button>
             </div>
         </div>
     </Container>

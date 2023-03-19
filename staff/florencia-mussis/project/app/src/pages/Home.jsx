@@ -10,22 +10,25 @@ import ListDetail from "../components/ListDetail"
 import searchList from "../logic/search-list"
 import icono from "../img/icono.png"
 import Button from "../library/Button"
+import Archived from "../components/Archived"
 import Profile from "../components/Profile"
+import { BookmarkIcon } from '@heroicons/react/24/solid'
 
 function Home() {
     console.log('Home -> render')
 
+    const { alert } = useContext(Context)
+
     let [searchParams, setSearchParams] = useSearchParams();
 
     const navigate = useNavigate()
-
-    const { alert } = useContext(Context)
+    const location = useLocation()
 
     const [user, setUser] = useState({})
 
     const [lists, setLists] = useState([])
 
-    const location = useLocation()
+    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
 
     useEffect(() => {
         try {
@@ -138,6 +141,8 @@ function Home() {
             </Link>
 
             <nav className="flex items-center gap-5">
+                 <Link to="/archived" className="logout-link m-3" href=""><BookmarkIcon className="h-8 w-8"/></Link>
+
                 <Link to="/profile" className="profile-link font-montserrat" href="">{user.name}</Link>
 
                 <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md" type="submit">Logout</Button>
@@ -161,12 +166,13 @@ function Home() {
 
             <Routes>
                 <Route path="/" 
-                element={<Container TagName="ul" className="gap-4 m-3">
-                        {lists.map(list => <List onDeleteList={handleDeleteList} key={list.id} element={list}/>)}</Container>}>
+                element={<Container TagName="ul" className="gap-4 m-3">{lists.map(list => <List listUpdateStamp={listUpdateStamp} onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list}/>)}</Container>}>
                 </Route>
 
+                <Route path="/archived" element={<Archived listUpdateStamp={listUpdateStamp} />} />
+
                 <Route path="/lists/:listId"
-                    element={<ListDetail />}>
+                    element={<ListDetail listUpdateStamp={listUpdateStamp}/>}>
                 </Route>
 
                 <Route path="/profile" element={<Profile onUnregisterUser={handleLogout} />} />
