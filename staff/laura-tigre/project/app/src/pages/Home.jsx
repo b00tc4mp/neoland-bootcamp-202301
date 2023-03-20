@@ -4,10 +4,15 @@ import { useNavigate, Routes, Route, Link } from 'react-router-dom'
 import Context from '../Context'
 import Container from '../library/Container'
 import ParentsList from '../components/ParentsList'
+import FavoritsNannies from '../components/FavoritsNannies'
 import NanniesList from '../components/NanniesList'
 import NannyProfile from '../components/NannyProfile'
 import ParentProfile from '../components/ParentProfile'
+import ProfileUserNanny from '../components/ProfileUserNanny'
 import SearchNannies from '../components/SearchNannies'
+import {MagnifyingGlassIcon , HeartIcon, UserCircleIcon, HomeIcon} from '@heroicons/react/24/outline'
+
+
 
 function Home() {
   console.log('Home ->render')
@@ -40,7 +45,7 @@ function Home() {
 
 
 
-  return <Container className="font-['Poppins'] h-screen bg-slate-100">
+  return <Container className="font-['Poppins'] h-full bg-[#f5f5f4]">
     {user.role === 'nanny' && <><header className='flex flex-row'>
       <Link to="/">
         <img src="images/kangaroo.png" alt="kangaroo" className="w-14 h-14 bg-[#fb923c] rounded-full p-1 m-2" />
@@ -52,17 +57,21 @@ function Home() {
 
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} />} />
           <Route path="/parents/:parentId" element={< ParentProfile />} />
+          <Route path="/nannyProfile" element={<ProfileUserNanny />} />
         </Routes>
 
 
       </main>
-      <footer className="position fixed bottom-0 bg-[#fb923c]">
-        <nav>
-          <Link to="/search" className="list-link m-3" >Search</Link>
+      <footer className="sm: w-full position fixed bottom-0 bg-[#d6d3d1] rounded-md">
+      <nav className='flex justify-between'>
+          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]"/></Link>
 
-          <Link to="/profile" className="profile-link m-3">{user.name}</Link>
 
-          <Link to="my-favs" className="logout-link m-3" >My favorits</Link>
+          <Link to="/search/parents" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#fb923c]" /></Link>
+
+          <Link to="/my-favs" className=" m-3"><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
+
+          <Link to="/nannyprofile" className="m-3" ><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
 
           <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3 text-white">LOGOUT</button>
@@ -85,20 +94,22 @@ function Home() {
           <Route path="/search/nannies" element={<SearchNannies listUpdateStamp={listUpdateStamp} />} />
           
           <Route path="/nannies/:nannyId" element={< NannyProfile />} />
+          <Route path="/nannies/favs" element={<FavoritsNannies listUpdateStamp={listUpdateStamp} />} />
         
         </Routes>
 
       </main>
-      <footer className="position fixed bottom-0 bg-[#fb923c]">
-        <nav>
-          <Link to="/search/nannies" className="m-3" >Search</Link>
+      <footer className="sm: w-full position fixed bottom-0 bg-[#d6d3d1] rounded-md">
+        <nav className='flex justify-between'>
+          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]"/></Link>
 
-          <Link to="/profile" className=" m-3">{user.name}</Link>
+          <Link to="/search/nannies" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
-          <Link to="my-favs" className="m-3" >My favorits</Link>
+          <Link to="/my-favs" className="m-3" ><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
+          <Link to="/profile" className=" m-3"><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
-          <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3 text-white">LOGOUT</button>
+          <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3 text-white rounded-md">LOGOUT</button>
         </nav>
 
       </footer></>

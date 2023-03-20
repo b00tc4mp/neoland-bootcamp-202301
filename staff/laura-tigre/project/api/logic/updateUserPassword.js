@@ -8,11 +8,11 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm){
     validateNewPassword(newPassword)
     validateNewPasswordConfirm(newPasswordConfirm)
     if(password === newPassword){
-        throw new CoherenceError(400, 'password and new password are equal')
+        throw new CoherenceError( 'password and new password are equal')
     }
 
     if(newPassword!== newPasswordConfirm){
-        throw new CoherenceError(400, 'Passwords do not match')
+        throw new CoherenceError('Passwords do not match')
     }
 
     return User.findById(userId)

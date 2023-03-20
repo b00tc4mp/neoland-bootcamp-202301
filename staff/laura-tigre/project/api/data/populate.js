@@ -29,7 +29,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                     user: userParent.id,
                     description: 'Im a parent who needs a very kid nanny',
                     city: 'Barcelona',
-                    extras: 'we need a nanny with car and who speaks spanish'
+                    extras: 'I have car and speaks spanish'
                 })
 
                 const kid = new Kid({
@@ -41,7 +41,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
                 const availability = new Availability({
                     day: 'Monday',
-                    times: 'Afternoon'
+                    times: 'Morning'
                 })
                 const availability2 = new Availability({
                     day: 'Friday',
@@ -55,9 +55,9 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                     user: userNanny.id,
                     city: 'Barcelona',
                     description: 'I am a very kynd nanny with reference',
-                    experience: 5,
+                    experience: 1,
                     dateOfBirth: new Date(1995, 2, 20),
-                    price: 10,
+                    price: 5,
                     extras: 'we need a nanny with car and who speaks spanish'
                 })
 

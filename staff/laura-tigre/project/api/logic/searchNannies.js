@@ -26,8 +26,6 @@ const { validateUserId, validateMondayMorningSelected,
 } = require('com')
 const { User, Nanny } = require('../data/models')
 
-
-
 function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, priceFrom, priceTo, yearsOfExperienceFrom, yearsOfExperienceTo) {
     validateUserId(userId)
     if (mondayMorningSelected !== undefined) validateMondayMorningSelected(mondayMorningSelected)
@@ -49,8 +47,8 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
     if (saturdayAfternoonSelected !== undefined) validateSaturdayAfternoonSelected(saturdayAfternoonSelected)
     if (saturdayEveningSelected !== undefined) validateSaturdayEveningSelected(saturdayEveningSelected)
     if (sundayMorningSelected !== undefined) validateSundayMorningSelected(sundayMorningSelected)
-    if (saturdayAfternoonSelected !== undefined) validateSundayAfternoonSelected(sundayAfternoonSelected)
-    if (saturdayEveningSelected !== undefined) validateSundayEveningSelected(sundayEveningSelected)
+    if (sundayAfternoonSelected !== undefined) validateSundayAfternoonSelected(sundayAfternoonSelected)
+    if (sundayEveningSelected !== undefined) validateSundayEveningSelected(sundayEveningSelected)
     if (priceFrom !== undefined) validatePriceFrom(priceFrom)
     if (priceTo !== undefined) validatePriceTo(priceTo)
     if (yearsOfExperienceFrom !== undefined) validateYearsOfExperienceFrom(yearsOfExperienceFrom)
@@ -62,115 +60,113 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
 
             if (user.role !== 'parent') throw new CoherenceError('invalid user role')
 
-
-            
             const filter = {}
 
-            if(mondayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Morning'} }}}]
-            if(mondayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Afternoon'} }}}]
-            if(mondayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times:{$eq:'Evening'} }}}]
+            if (mondayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Morning' } } } }]
+            if (mondayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Afternoon' } } } }]
+            if (mondayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Monday', times: { $eq: 'Evening' } } } }]
 
-            if(tuesdayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Morning'} }}}]
-            if(tuesdayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Afternoon'} }}}]
-            if(tuesdayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times:{$eq:'Evening'} }}}]
+            if (tuesdayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Morning' } } } }]
+            if (tuesdayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Afternoon' } } } }]
+            if (tuesdayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Tuesday', times: { $eq: 'Evening' } } } }]
 
-            if(wendsdayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Morning'} }}}]
-            if(wendsdayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Afternoon'} }}}]
-            if(wendsdayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times:{$eq:'Evening'} }}}]
+            if (wendsdayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Morning' } } } }]
+            if (wendsdayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Afternoon' } } } }]
+            if (wendsdayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Wendsday', times: { $eq: 'Evening' } } } }]
 
-            if(thursdayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Morning'} }}}]
-            if(thursdayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Afternoon'} }}}]
-            if(thursdayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times:{$eq:'Evening'} }}}]
+            if (thursdayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Morning' } } } }]
+            if (thursdayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Afternoon' } } } }]
+            if (thursdayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Thurday', times: { $eq: 'Evening' } } } }]
 
-            if(fridayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Morning'} }}}]
-            if(fridayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Afternoon'} }}}]
-            if(fridayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times:{$eq:'Evening'} }}}]
+            if (fridayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Morning' } } } }]
+            if (fridayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Afternoon' } } } }]
+            if (fridayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Friday', times: { $eq: 'Evening' } } } }]
 
-            if(saturdayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Morning'} }}}]
-            if(saturdayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Afternoon'} }}}]
-            if(saturdayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times:{$eq:'Evening'} }}}]
+            if (saturdayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Morning' } } } }]
+            if (saturdayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Afternoon' } } } }]
+            if (saturdayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Saturday', times: { $eq: 'Evening' } } } }]
 
-            if(sundayMorningSelected) filter['$and'] ? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Morning'} }}}
-            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Morning'} }}}]
-            if(sundayAfternoonSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Afternoon'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Afternoon'} }}}]
-            if(sundayEveningSelected) filter['$and']? filter['$and'].push(
-                { availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Evening'} }}}
-            ): filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times:{$eq:'Evening'} }}}]
-            
+            if (sundayMorningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Morning' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Morning' } } } }]
+            if (sundayAfternoonSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Afternoon' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Afternoon' } } } }]
+            if (sundayEveningSelected) filter['$and'] ? filter['$and'].push(
+                { availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Evening' } } } }
+            ) : filter['$and'] = [{ availabilities: { $elemMatch: { day: 'Sunday', times: { $eq: 'Evening' } } } }]
+
             if (priceFrom && !priceTo)
-            filter.price = { $gte: priceFrom }
+                filter.price = { $gte: priceFrom }
             else if (!priceFrom && priceTo)
-            filter.price = { $lte: priceTo }
+                filter.price = { $lte: priceTo }
             else if (priceFrom && priceTo)
-            filter.price = { $gte: priceFrom, $lte: priceTo }
-            
-            if(yearsOfExperienceFrom && !yearsOfExperienceTo)
-            filter.experience = {$gte : yearsOfExperienceFrom}
+                filter.price = { $gte: priceFrom, $lte: priceTo }
+
+            if (yearsOfExperienceFrom && !yearsOfExperienceTo)
+                filter.experience = { $gte: yearsOfExperienceFrom }
             else if (!yearsOfExperienceFrom && yearsOfExperienceTo)
-            filter.experience = {$lte : yearsOfExperienceTo}
+                filter.experience = { $lte: yearsOfExperienceTo }
             else if (yearsOfExperienceFrom && yearsOfExperienceTo)
-            filter.experience = {$gte : yearsOfExperienceFrom, $lte : yearsOfExperienceTo}
-            
+                filter.experience = { $gte: yearsOfExperienceFrom, $lte: yearsOfExperienceTo }
+
             return Nanny.find(filter).populate('user', '-password -__v').select('-__v').lean()
         })
         .then(nannies => {
             nannies.forEach(nanny => {
 
-                if(nanny._id){
-                nanny.id= nanny._id.toString()
-                delete nanny._id
-                delete nanny.__v
+                if (nanny._id) {
+                    nanny.id = nanny._id.toString()
+                    delete nanny._id
+                    delete nanny.__v
                 }
-                if(nanny.user._id){
-                    nanny.user.id= nanny.user._id.toString()
+                if (nanny.user._id) {
+                    nanny.user.id = nanny.user._id.toString()
                     delete nanny.user._id
                 }
                 nanny.availabilities.forEach(availability => {
-                    availability.id= availability._id.toString()
+                    availability.id = availability._id.toString()
                     delete availability._id
-                 })
-                
+                })
+
             })
-            
+
 
             return nannies
         })
