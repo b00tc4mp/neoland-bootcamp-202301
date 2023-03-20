@@ -6,34 +6,33 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Context from './Context'
 import Alert from './components/Alert'
 
+
 function App() {
 
-   const location = useLocation()
-   const [timestamp, setTimestamp] = useState(Date.now())
-   const [feedback, setFeedback] = useState()
+    const location = useLocation()
+    const [timestamp, setTimestamp] = useState(Date.now())
+    const [feedback, setFeedback] = useState()
 
-   useEffect(() => {
-    setTimestamp(Date.now())
-   }, [location])
+    useEffect(() => {
+        setTimestamp(Date.now())
+    }, [location])
 
-   const alert = (message, level = 'error') =>{
-    setFeedback({ message, level})
-   }
+    const alert = (message, level = 'error') => {
+        setFeedback({ message, level })
+    }
 
-   const handleAcceptFeedback = () => setFeedback()
+    const handleAcceptFeedback = () => setFeedback()
 
-    return <Context.Provider value={{ alert }}> 
-    
-    <div>
+    return <Context.Provider value={{ alert }}>
         <Routes>
-            <Route path="/*" element={sessionStorage.token ? <Home/> : <Navigate to ="/login"/>} />
+            <Route path="/*" element={sessionStorage.token ? <Home /> : <Navigate to="/login" />} />
 
-            <Route path="/login" element={sessionStorage.token ? <Navigate to="/"/> : <Login />} />
+            <Route path="/login" element={sessionStorage.token ? <Navigate to="/" /> : <Login />} />
 
-            <Route path="/register" element={sessionStorage.token ? <Navigate to="/"/> : <Register/>} />
+            <Route path="/register" element={sessionStorage.token ? <Navigate to="/" /> : <Register />} />
         </Routes>
-    </div>
-    {feedback && <Alert message={feedback.message} level={feedback.level} onAccept={handleAcceptFeedback} />}
+
+        {feedback && <Alert message={feedback.message} level={feedback.level} onAccept={handleAcceptFeedback} />}
     </Context.Provider>
 }
 

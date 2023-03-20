@@ -48,7 +48,6 @@ function ListDetail() {
 
                     return
                 }
-                
             })
         } catch (error) {
             alert(error.message)
@@ -133,7 +132,7 @@ function ListDetail() {
 
     return <Container className="pt-6">
 
-        <div className="px-4 pt-4 w-1/3 border-2 rounded-lg border-solid">
+        <div className="px-4 pt-4 w-1/3 border-2 rounded-lg border-solid sm: w-11/12">
 
             {list && <>
                 <div className="text-right px-2" >
@@ -147,17 +146,16 @@ function ListDetail() {
                 <p className="text-lg font-light">{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
 
                 <div>
-                <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
-                    <input className="px-1 border-2 rounded-md w-3/5 h-10 drop-shadow-sm focus:outline-teal-500" type="item" name="item" placeholder=" Add element" />
-                    <button type="submit" className=" drop-shadow-sm text-3xl flex">+</button>
+                    <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
+                        <input className="px-1 border-2 rounded-md w-3/5 h-10 drop-shadow-sm focus:outline-teal-500" type="item" name="item" placeholder=" Add element" />
+                        <button type="submit" className=" drop-shadow-sm text-3xl flex">+</button>
                     </form>
                 </div>
 
                 <Container TagName="ul" className="py-8 justify-items-start ">
                     {list.items.map(item =>
                         <li className="flex gap-2" key={item.id}>
-                            <input type="checkbox" id="checked" defaultChecked={item.checked} className="w-7"
-                                onChange={event => handleUpdateItemCheck(event, item.id)} />
+                            <input type="checkbox" id="checked" defaultChecked={item.checked} className="w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
 
                             <label htmlFor="checked"></label><p className="w-60 text-left focus:outline-teal-500" id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 

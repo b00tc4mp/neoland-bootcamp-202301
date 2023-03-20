@@ -4,7 +4,6 @@ import retrieveArchivedLists from '../logic/retrieve-archived-lists'
 import List from './List'
 import Context from '../Context'
 
-
 function Archived({ listUpdateStamp }) {
     const { alert } = useContext(Context)
 
@@ -18,7 +17,7 @@ function Archived({ listUpdateStamp }) {
 
                     return
                 }
-                setLists(lists.reverse())
+                setLists(lists)
             })
         }catch (error){
             alert(error.message)
@@ -38,11 +37,10 @@ function Archived({ listUpdateStamp }) {
             listsUpdated.splice(index, 1)
 
             return listsUpdated
-
         })
     }
 
-    return <Container TagName="ul" className="gap-4 m-3">
+    return <Container TagName="ul" className="gap-4 m-3 sm: w-11/12">
         {lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list}/>)}
     </Container>
 }

@@ -4,7 +4,7 @@ import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
 
-function UnregisterUser() {
+function UnregisterUser({ onUnregisterUser }) {
     console.log('unregisterUser -> render')
 
     const [feedback, setFeedback] = useState()
@@ -28,6 +28,8 @@ function UnregisterUser() {
                 event.target.reset()
 
                 delete sessionStorage.token
+
+                onUnregisterUser()
             })
         } catch (error) {
             setFeedback({

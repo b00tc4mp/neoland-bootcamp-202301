@@ -31,6 +31,10 @@ function searchList(userId, title) {
                                 delete item._id
                             }
                         })
+
+                        list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked ? 1 : 0), 0)
+                
+                        list.itemsTotalCount = list.items.length
                     })
                     return lists
                 })
