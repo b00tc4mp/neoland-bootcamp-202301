@@ -7,13 +7,13 @@ import Container from '../library/Container'
 import Button from '../library/Button'
 import Profile from '../components/Profile'
 import List from '../components/List'
-import Contract from '../components/Contract'
 import DataUser from '../components/DataUser'
 import UpdateUserPassword from '../components/UpdateUserPassword'
 import UpdateUserEmail from '../components/UpdateUserEmail'
 import retrieveUser from '../logic/retrieve-user'
 import createContract from '../logic/create-contract'
-import FormContract from '../components/FormContract'
+import ContractForm from '../components/ContractForm'
+import ContractDetail from '../components/ContractDetail'
 
 function Home() {
     console.log('Home -> render')
@@ -33,9 +33,9 @@ function Home() {
     const [user, setUser] = useState({})
 
 
-    const handleAdd = () => {
+    // const handleAdd = () => {
 
-    }
+    // }
 
     useEffect(() => {
         try {
@@ -90,7 +90,8 @@ function Home() {
                         <Route path='/profile' element={<Profile />} />
                         <Route path='/update-user-password' element={<UpdateUserPassword listUpdateStamp={listUpdateStamp} />} />
                         <Route path='/update-user-email' element={<UpdateUserEmail listUpdateStamp={listUpdateStamp} />} />
-                        <Route path='/form-contract' element={<FormContract listUpdateStamp={listUpdateStamp} />} />
+                        <Route path='/form-contract' element={<ContractForm listUpdateStamp={listUpdateStamp} />} />
+                        <Route path='/contract/:contractId' element={<ContractDetail listUpdateStamp={listUpdateStamp} />} />
                     </Routes>
 
                 </Container>

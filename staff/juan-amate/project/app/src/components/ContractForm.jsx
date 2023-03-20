@@ -5,8 +5,8 @@ import Input from '../library/Input'
 import Button from '../library/Button'
 import createContract from '../logic/create-contract'
 
-function FormContract() {
-    console.log('FormContract -> render')
+function ContractForm() {
+    console.log('ContractForm -> render')
 
     const [feedback, setFeedback] = useState()
 
@@ -259,4 +259,4 @@ function FormContract() {
     </Container >
 }
 
-export default FormContract
+export default ContractForm

@@ -9,12 +9,14 @@ const verifyToken = require('./utils/verifyToken')
 const authenticateUser = require('./logic/authenticateUser')
 const registerUser = require('./logic/registerUser')
 const retrieveUser = require('./logic/retrieveUser')
+const retrieveAdminUser = require('./logic/retrieveAdminUser')
 const updateUserEmail = require('./logic/updateUserEmail')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserData = require('./logic/updateUserData')
 const unregisterUser = require('./logic/unregisterUser')
 const createContract = require('./logic/createContract')
 const retrieveMyContracts = require('./logic/retrieveMyContracts')
+const retrieveContract = require('./logic/retrieveContract')
 
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {
@@ -105,6 +107,30 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                 const userId = verifyToken(req)
 
                 return retrieveUser(userId)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/users/admin', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                return retrieveAdminUser(userId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -347,6 +373,31 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                 const userId = verifyToken(req)
 
                 retrieveMyContracts(userId)
+                    .then(stickies => res.status(200).json(stickies))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/contracts/:contractId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const contractId = req.params.contractId
+
+                retrieveContract(userId, contractId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => {
                         if (error instanceof ExistenceError)

@@ -4,14 +4,15 @@ import Container from '../library/Container'
 import Context from '../Context'
 import ItemContract from './ItemContract'
 
-function Contract({ updateStamp }) {
+function Contract({ updateStamp, onDetailContract }) {
     console.log('Contract -> render')
 
     const { alert } = useContext(Context)
 
+    const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
     const [contracts, setContracts] = useState([])
 
-    const loadContract = () => {
+    const loadDetailContract = () => {
         try {
             retrieveMyContracts(sessionStorage.token, (error, contracts) => {
                 if (error) {
@@ -28,8 +29,8 @@ function Contract({ updateStamp }) {
     }
 
     useEffect(() => {
-        loadContract()
-    }, [updateStamp])
+        loadDetailContract()
+    }, [listUpdateStamp])
 
     return <Container TagName='ul'>
         {contracts.map(contract => <ItemContract key={contract.id} element={contract} />)}
