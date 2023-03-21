@@ -2,8 +2,6 @@ const { User, Contract, Place, Service } = require('../data/models')
 const {
   validateUserId,
   validateDate,
-  validateDescription,
-  validatePrice,
   validateEventDate,
   validateCeremonyPlaceAddress,
   validateCeremonyPlaceCity,
@@ -48,8 +46,6 @@ const {
  * 
  * @param {string} userId The id of the user
  * @param {Date} date Contract creation date
- * @param {string} description The contracted service description
- * @param {number} price Total price of the contracted service
  * @param {Date} eventDate Date and time of the event
  * @param {string} ceremonyPlaceDescription The description of the ceremony place of the event
  * @param {string} ceremonyPlaceAddres The address of the ceremony place of the event
@@ -81,8 +77,6 @@ const {
 function createContract(
   userId,
   date,
-  description,
-  price,
   eventDate,
   ceremonyPlaceDescription,
   ceremonyPlaceAddress,
@@ -124,8 +118,6 @@ function createContract(
 ) {
   validateUserId(userId)
   validateDate(date)
-  validateDescription(description)
-  validatePrice(price)
   validateEventDate(eventDate)
   validateCeremonyPlaceAddress(ceremonyPlaceAddress)
   validateCeremonyPlaceCity(celebrationPlaceCity)
@@ -212,8 +204,6 @@ function createContract(
       const contract = new Contract({
         user: userId,
         date,
-        description,
-        price,
         eventDate,
         ceremonyPlace,
         sessionPlace,

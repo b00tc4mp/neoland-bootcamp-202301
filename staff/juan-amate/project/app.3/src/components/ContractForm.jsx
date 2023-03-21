@@ -140,6 +140,7 @@ function ContractForm() {
             <br></br>
         </section>
 
+
         <section className='w-screen my-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">your couple</h2>
 
