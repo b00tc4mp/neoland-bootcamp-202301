@@ -8,7 +8,7 @@ const registerParent = require('./logic/registerParent')
 const registerNanny = require('./logic/registerNanny')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
-const unregisterUser = require('./logic/unregisterUser')
+const unregisterNanny = require('./logic/unregisterNanny')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 const retrieveParents = require('./logic/retrieveParents')
@@ -16,6 +16,7 @@ const retrieveNannies = require('./logic/retrieveNannies')
 const retrieveNannyProfile = require('./logic/retrieveNannyProfile')
 const retrieveParentProfile = require('./logic/retrieveParentProfile')
 const searchNannies = require('./logic/searchNannies')
+const searchParents = require('./logic/searchParents')
 const toggleFavNanny = require('./logic/toggleFavNanny')
 const retrieveFavNannies = require('./logic/retrieveFavNannies')
 const updateDescription = require('./logic/updateDescription')
@@ -132,7 +133,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const userId = verifyToken(req)
                 const { password } = req.body
 
-                unregisterUser(userId, password)
+                unregisterNanny(userId, password)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
@@ -419,6 +420,64 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
 
                 searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, priceFrom, priceTo, yearsOfExperienceFrom, yearsOfExperienceTo)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/users/parents/search', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                let { mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected,kidsFrom,kidsTo } = req.query
+
+                if (mondayMorningSelected) mondayMorningSelected = mondayMorningSelected === 'true'
+                if (mondayAfternoonSelected) mondayAfternoonSelected = mondayAfternoonSelected === 'true'
+                if (mondayEveningSelected) mondayEveningSelected = mondayEveningSelected === 'true'
+
+                if (tuesdayMorningSelected) tuesdayMorningSelected = tuesdayMorningSelected === 'true'
+                if (tuesdayAfternoonSelected) tuesdayAfternoonSelected = tuesdayAfternoonSelected === 'true'
+                if (tuesdayEveningSelected) tuesdayEveningSelected = tuesdayEveningSelected === 'true'
+
+                if (wendsdayMorningSelected) wendsdayMorningSelected = wendsdayMorningSelected === 'true'
+                if (wendsdayAfternoonSelected) wendsdayAfternoonSelected = wendsdayAfternoonSelected === 'true'
+                if (wendsdayEveningSelected) wendsdayEveningSelected = wendsdayEveningSelected === 'true'
+
+                if (thursdayMorningSelected) thursdayMorningSelected = thursdayMorningSelected === 'true'
+                if (thursdayAfternoonSelected) thursdayAfternoonSelected = thursdayAfternoonSelected === 'true'
+                if (thursdayEveningSelected) thursdayEveningSelected = thursdayEveningSelected === 'true'
+
+                if (fridayMorningSelected) fridayMorningSelected = fridayMorningSelected === 'true'
+                if (fridayAfternoonSelected) fridayAfternoonSelected = fridayAfternoonSelected === 'true'
+                if (fridayEveningSelected) fridayEveningSelected = fridayEveningSelected === 'true'
+
+                if (saturdayMorningSelected) saturdayMorningSelected = saturdayMorningSelected === 'true'
+                if (saturdayAfternoonSelected) saturdayAfternoonSelected = saturdayAfternoonSelected === 'true'
+                if (saturdayEveningSelected) saturdayEveningSelected = saturdayEveningSelected === 'true'
+
+                if (sundayMorningSelected) sundayMorningSelected = sundayMorningSelected === 'true'
+                if (sundayAfternoonSelected) sundayAfternoonSelected = sundayAfternoonSelected === 'true'
+                if (sundayEveningSelected) sundayEveningSelected = sundayEveningSelected === 'true'
+
+                if (kidsFrom) kidsFrom = parseInt(kidsFrom)
+                if (kidsTo) kidsTo = parseInt(kidsTo)
+
+    
+
+
+                searchParents(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, kidsFrom,kidsTo)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)

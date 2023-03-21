@@ -1,31 +1,30 @@
 import { useState, useEffect, useContext } from 'react'
-import retrieveNannies from '../logic/retrieve-nannies'
-import toggleFavNanny from '../logic/toogle-fav-nanny'
+import retrieveFavNannies from '../logic/retrieve-fav-nannies'
 import Container from '../library/Container'
+import toggleFavNanny from '../logic/toogle-fav-nanny'
 import Context from '../Context'
-import { Link} from 'react-router-dom'
-import { HeartIcon,} from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom'
+import { HeartIcon, } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
 
 
 
+function FavoritesNannies({ listUpdateStamp }) {
 
-
-function NanniesList({ listUpdateStamp}) {
-    console.log('NanniesList -> render')
-    const [nannies, setNannies] = useState([])
     const { alert } = useContext(Context)
-  
-   
+
+    const [nannies, setNannies] = useState([])
+
     const loadList = () => {
 
         try {
-
-            retrieveNannies(sessionStorage.token, (error, nannies) => {
+            retrieveFavNannies(sessionStorage.token, (error, nannies) => {
                 if (error) {
-                    alert(error)
+                    alert(error.message)
+
                     return
                 }
+
                 setNannies(nannies.reverse())
             })
         } catch (error) {
@@ -35,7 +34,8 @@ function NanniesList({ listUpdateStamp}) {
 
     useEffect(() => {
         loadList()
-        
+
+
     }, [listUpdateStamp])
 
     const handleToggleFavNanny = event => {
@@ -56,24 +56,32 @@ function NanniesList({ listUpdateStamp}) {
             alert(error.message)
         }
     }
+    
 
+   
     return <Container TagName="ul" className="gap-4 py-10 ">
-        {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={nanny.id} id={nanny.id}>
-        <button className="flex justify-center" id={nanny.id} onClick={handleToggleFavNanny}>{
-                
-                nanny.fav ? <HeartIcon className="h-5 w-5 text-red-500" />
+        {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={nanny.id} id={nanny.id} >
+            <button className="flex justify-center" id={nanny.id} onClick={handleToggleFavNanny} >{
+                nanny.fav ?
+                    <HeartIcon className="h-5 w-5 text-red-500" />
                     :
-                    <HeartIconOutline className="h-5 w-5 text-red-500"  />}</button>
+                    <HeartIconOutline className="h-5 w-5 text-red-500" />}</button>
 
-        <Link to={`/nannies/${nanny.id}`}>
-            <strong className="w-[28ch] text-sm text-left">{nanny.user.name}</strong>
+            <Link to={`/nannies/${nanny.id}`}>
+                <strong className="w-[28ch] text-sm text-left">{nanny.user.name}</strong>
             </Link>
             <p>{nanny.city}</p>
             <p>{nanny.description}</p>
             <p>{nanny.extras}</p>
         </li>
         )}
+
     </Container>
+
+
 }
 
-export default NanniesList
+
+
+
+export default FavoritesNannies

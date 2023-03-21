@@ -21,7 +21,8 @@ const validateExtras= require('./validators/validateExtras')
 const validatePrice = require('./validators/validatePrice')
 const validateAvailabilities = require('./validators/validateAvailabilities')
 const validateDescription = require('./validators/validateDescription')
-const validateKids= require('./validators/validateKids')
+const validateKidsFrom= require('./validators/validateKidsFrom')
+const validateKidsTo= require('./validators/validateKidsTo')
 const validateRole = require('./validators/validateRole')
 const validateUserParentId = require('./validators/validateUserParentId')
 const validateMondayMorningSelected = require('./validators/validateMondayMorningSelected')
@@ -111,7 +112,8 @@ module.exports={
     validatePrice,
     validateAvailabilities,
     validateDescription,
-    validateKids,
+    validateKidsFrom,
+    validateKidsTo,
     validateRole,
     validateUserParentId,
     validateMondayMorningSelected,

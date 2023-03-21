@@ -22,7 +22,7 @@ const { validateUserId, validateMondayMorningSelected,
     validatePriceFrom,
     validatePriceTo,
     validateYearsOfExperienceFrom,
-    validateYearsOfExperienceTo, CoherenceError
+    validateYearsOfExperienceTo, CoherenceError,ExistenceError,
 } = require('com')
 const { User, Nanny } = require('../data/models')
 

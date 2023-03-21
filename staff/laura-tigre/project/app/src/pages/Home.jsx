@@ -4,13 +4,14 @@ import { useNavigate, Routes, Route, Link } from 'react-router-dom'
 import Context from '../Context'
 import Container from '../library/Container'
 import ParentsList from '../components/ParentsList'
-import FavoritsNannies from '../components/FavoritsNannies'
+import FavoritesNannies from '../components/FavoritesNannies'
 import NanniesList from '../components/NanniesList'
 import NannyProfile from '../components/NannyProfile'
 import ParentProfile from '../components/ParentProfile'
 import ProfileUserNanny from '../components/ProfileUserNanny'
 import SearchNannies from '../components/SearchNannies'
-import {MagnifyingGlassIcon , HeartIcon, UserCircleIcon, HomeIcon} from '@heroicons/react/24/outline'
+import SearchParents from '../components/SearchParents'
+import { MagnifyingGlassIcon, HeartIcon, UserCircleIcon, HomeIcon } from '@heroicons/react/24/outline'
 
 
 
@@ -19,9 +20,13 @@ function Home() {
 
   const { alert } = useContext(Context)
   const navigate = useNavigate()
- 
   const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
   const [user, setUser] = useState({})
+  const [nannies, setNannies] = useState([])
+
+
+
+
   useEffect(() => {
     try {
       retrieveUser(sessionStorage.token, (error, user) => {
@@ -42,6 +47,26 @@ function Home() {
     navigate('/login')
   }
 
+  const handleToggleFavNanny = (nannyId) => {
+    setNannies(nannies => {
+      const index = nannies.findIndex(nanny => nanny.id === nannyId)
+      const nanny = nannies[index]
+      const nannyUpdated = { ...nanny }
+
+      nannyUpdated.fav = !nannyUpdated.fav
+
+      const nanniesUpdated = [...nannies]
+
+      nanniesUpdated[index] = nannyUpdated
+
+      return nanniesUpdated
+    })
+    
+
+  }
+
+
+
 
 
 
@@ -58,13 +83,14 @@ function Home() {
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} />} />
           <Route path="/parents/:parentId" element={< ParentProfile />} />
           <Route path="/nannyProfile" element={<ProfileUserNanny />} />
+          <Route path="/search/parents" element={<SearchParents listUpdateStamp={listUpdateStamp} />} />
         </Routes>
 
 
       </main>
       <footer className="sm: w-full position fixed bottom-0 bg-[#d6d3d1] rounded-md">
-      <nav className='flex justify-between'>
-          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]"/></Link>
+        <nav className='flex justify-between'>
+          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
 
           <Link to="/search/parents" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#fb923c]" /></Link>
@@ -89,23 +115,24 @@ function Home() {
       <main>
         <Routes>
 
-          <Route path="/" element={<NanniesList listUpdateStamp={listUpdateStamp} />} />
+          <Route path="/" element={<NanniesList listUpdateStamp={listUpdateStamp} onToggleFavNanny={handleToggleFavNanny} />} />
 
           <Route path="/search/nannies" element={<SearchNannies listUpdateStamp={listUpdateStamp} />} />
-          
+
           <Route path="/nannies/:nannyId" element={< NannyProfile />} />
-          <Route path="/nannies/favs" element={<FavoritsNannies listUpdateStamp={listUpdateStamp} />} />
-        
+          <Route path="/nannies/favs" element={<FavoritesNannies listUpdateStamp={listUpdateStamp}/>} />
+          
+
         </Routes>
 
       </main>
       <footer className="sm: w-full position fixed bottom-0 bg-[#d6d3d1] rounded-md">
         <nav className='flex justify-between'>
-          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]"/></Link>
+          <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
           <Link to="/search/nannies" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
-          <Link to="/my-favs" className="m-3" ><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
+          <Link to="/nannies/favs" className="m-3" ><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
           <Link to="/profile" className=" m-3"><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 

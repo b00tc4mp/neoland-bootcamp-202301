@@ -1,8 +1,8 @@
 const { validateUserId, validatePassword,ExistenceError, AuthError } = require('com')
-const { User } = require('../data/models')
+const { User,Nanny } = require('../data/models')
 const {Types: {ObjectId}}= require('mongoose')
 
-function unregisterUser(userId, password) {
+function unregisterNanny(userId, password) {
     validateUserId(userId)
     validatePassword(password)
 
@@ -11,10 +11,16 @@ function unregisterUser(userId, password) {
         if (!user) throw new ExistenceError(`user with id ${userId} not found`)
         if (user.password!== password) throw new AuthError('wrong credentials')
 
+        return Nanny.findById({'user': userId})
+
+        .then(() => {
+
         return User.deleteOne({ _id: new ObjectId(userId) })
+
+        })
 
     
     })
 }
 
-module.exports = unregisterUser 
+module.exports = unregisterNanny 

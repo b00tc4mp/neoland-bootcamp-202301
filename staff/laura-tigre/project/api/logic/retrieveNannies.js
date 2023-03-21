@@ -1,5 +1,5 @@
 const { validateUserId, ExistenceError } = require('com')
-const { User,Parent, Nanny } = require('../data/models')
+const { User, Parent, Nanny } = require('../data/models')
 /**
  * 
  * @param {string} userId 
@@ -9,58 +9,47 @@ const { User,Parent, Nanny } = require('../data/models')
 
 function retrieveParents(userId) {
     validateUserId(userId)
-   
+
     return User.findById(userId).lean()
-    .then(user => {
-        if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-
-        if (user.role === 'parent')
-            
-            return Parent.findOne({ user: userId }).lean()
-                .then(parent => {
-                    user.city = parent.city
-
-                    // sanitize
-                    delete user._id
-                    delete user.password
-                    delete user.__v
-
-                    return user
-                })
-    
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            return Nanny.find({city: user.city}).populate('user', '-password -__v').select('-__v').lean()
-          
-            
-            .then (nannies => {
+            if (user.role !== 'parent') throw new ExistenceError('user is not a parent')
 
-                nannies.forEach(nanny => {
+            return Parent.findOne({ user: userId }).lean()
+                .then(parent => {
+                    return Nanny.find({ city: parent.city }).populate('user', '-password -__v').select('-__v').lean()
 
-                    if(nanny._id){
-                    nanny.id= nanny._id.toString()
-                    delete nanny._id
-                    delete nanny.__v
-                    }
-                    if(nanny.user._id){
-                        nanny.user.id= nanny.user._id.toString()
-                        delete nanny.user._id
-                    }
-                    nanny.availabilities.forEach(availability => {
-                        availability.id= availability._id.toString()
-                        delete availability._id
-                     })
-                    
+
+                        .then(nannies => {
+
+                            const favNannies = user.favs.map(fav => fav.toString())
+
+                            nannies.forEach(nanny => {
+
+                                if (nanny._id) {
+                                    nanny.id = nanny._id.toString()
+                                    delete nanny._id
+                                    delete nanny.__v
+                                }
+                                if (nanny.user._id) {
+                                    nanny.user.id = nanny.user._id.toString()
+                                    delete nanny.user._id
+                                }
+                                nanny.availabilities.forEach(availability => {
+                                    availability.id = availability._id.toString()
+                                    delete availability._id
+                                })
+
+                                if (favNannies.includes(nanny.id)) nanny.fav = true
+
+                            })
+                            return nannies
+
+                        })
                 })
-                return nannies
 
-            })
-
-            
         })
-
-    })
 }
 
 module.exports = retrieveParents
