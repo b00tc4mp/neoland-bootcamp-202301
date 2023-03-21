@@ -3,7 +3,7 @@ import List from "../components/List"
 import Profile from "../components/Profile"
 import MyAuction from "../components/MyAuctions"
 import retrieveUser from "../logic/retrieve-user"
-import {  Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import Context from '../Context'
 import AuctionForm from "../components/AuctionForm"
 import AuctionDetail from "../components/AuctionDetail"
@@ -40,13 +40,13 @@ function Home() {
 
     return <div className="m-2 " >
         <header className="" >
-            <nav className="flex justify-between items-center p-3 bg-gray-700 " >
+            <nav className="flex justify-between items-center p-3 bg-gray-500 " >
 
                 <Link to="/" className="w-20 "><img className="logo" src="./logo.png"></img></Link>
 
                 <div className="flex items-center">
 
-                    <div className="ml-auto">
+                    <div className="buscador">
                         <input
                             type="text"
                             className="px-4 py-2 rounded-full text-gray-900 bg-gray-300 focus:outline-none focus:shadow-outline"
@@ -67,17 +67,17 @@ function Home() {
 
                 <Route path="/my-auctions" element={<MyAuction listUpdateStamp={listUpdateStamp} />} />
 
-                <Route path="/auction-form" element={<AuctionForm listUpdateStamp={listUpdateStamp} />} />
+                <Route path="/new-auction" element={<AuctionForm listUpdateStamp={listUpdateStamp} />} />
 
-                <Route path="/auction-detail" element={<AuctionDetail />} />
+                <Route path="/auctions/:auctionId" element={<AuctionDetail listUpdateStamp={listUpdateStamp} />} />
             </Routes>
         </main>
 
         <footer className="fixed bottom-0 left-0 flex justify-center">
 
-            <Link to={"/auction-form"}>
-              add
-            
+            <Link to={"/new-auction"}>
+                add
+
             </Link>
         </footer>
     </div>

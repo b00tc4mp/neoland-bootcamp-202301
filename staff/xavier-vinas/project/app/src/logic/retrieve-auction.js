@@ -1,4 +1,4 @@
-const {validateToken, validateCallback, ExistenceError, ServerError, ClientError} = require('com')
+const { validateToken, validateCallback, ExistenceError, ServerError, ClientError } = require('com')
 
 /**
  * Retrieves the user public information
@@ -6,10 +6,11 @@ const {validateToken, validateCallback, ExistenceError, ServerError, ClientError
  * @param {string} token The token of the user to retrieve
  * @param {function} callback The function to call back with the user (or an error)
  */
-function retrieveAuctions(token ,callback) {
+function retrieveAuction(token, auctionId, callback) {
     validateToken(token)
+    if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')
     validateCallback(callback)
-   
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -32,10 +33,10 @@ function retrieveAuctions(token ,callback) {
     }
 
     xhr.onerror = () => callback(new Error('network error'))
-    xhr.open('GET', `http://localhost:8080/auctions`)
+    xhr.open('GET', `http://localhost:8080/auctions/${auctionId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
- 
+
     xhr.send()
 }
 
-export default retrieveAuctions
+export default retrieveAuction

@@ -89,12 +89,13 @@ const auction = new Schema({
 const bid = new Schema({
     auction: {
         type: ObjectId,
-        required: true
-
+        required: true,
+        ref: 'Auction'
     },
     user: {
         type: ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     amount: {
         type: 'number',

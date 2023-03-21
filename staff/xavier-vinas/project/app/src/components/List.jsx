@@ -4,6 +4,7 @@ import Item from './Item'
 import Context from '../Context'
 import retrieveAuctions from '../logic/retrieve-auctions'
 
+
 function List({ listUpdateStamp }) {
  
     const { alert } = useContext(Context)
@@ -11,9 +12,10 @@ function List({ listUpdateStamp }) {
     const [auctions, setAuctions] = useState([])
 
 
+
     const loadList = () => {
         try {
-            retrieveAuctions(sessionStorage.token, (error, auctions) => {
+            retrieveAuctions(sessionStorage.token,  (error, auctions) => {
                 if (error) {
                     alert(error.message)
 

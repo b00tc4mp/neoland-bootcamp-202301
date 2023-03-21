@@ -17,6 +17,9 @@ const { FormatError, ExistenceError, AuthError, CoherenceError} = require('../..
 
 const createAuction = require('./logic/createAuction');
 const retrieveAuctions = require('./logic/retrieveAuctions');
+const retrieveAuction = require('./logic/retrieveAuction');
+const retrieveAuctionBid = require('./logic/retrieveAuctionBid');
+const bidAuction = require('./logic/bidAuction')
 
 
 
@@ -230,11 +233,11 @@ connect('mongodb://127.0.0.1:27017/subastadb')
         })
 
 
-        server.get('/allAuctions', (req, res) => {
+        server.get('/auctions', (req, res) => {
             try {
                 const userId = verifyToken(req)
-
-                retrieveAuctions(userId)
+                
+                retrieveAuctions(userId )
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -254,6 +257,88 @@ connect('mongodb://127.0.0.1:27017/subastadb')
 
             }
         })
+
+        server.get('/auctions/:auctionId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const {auctionId} = req.params
+
+                retrieveAuction(userId , auctionId)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+        })
+
+        server.get('/auctionBid/:auctionId', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                
+                const { auctionId } = req.params
+                
+                retrieveAuctionBid(auctionId , userId )
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+        })
+        server.patch('/bidAuctions/:auctionId', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { auctionId } = req.params
+                const { amount } = req.body
+
+                bidAuction(userId, auctionId, amount)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+        })
+
 
 
 
