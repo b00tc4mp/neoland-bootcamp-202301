@@ -9,7 +9,7 @@ const { validateToken, validatePassword, validateCallback, ClientError, ServerEr
  */
 
 
-function unregisterUser(token, password, callback) {
+function unregisterNanny(token, password, callback) {
     validateToken(token)
     validatePassword(password)
     validateCallback(callback)
@@ -39,7 +39,7 @@ function unregisterUser(token, password, callback) {
 
   xhr.onerror = () => callback(new Error('network error'))
  
-   xhr.open('DELETE', 'http://localhost:8080/users')
+   xhr.open('DELETE', 'http://localhost:8080/users/nanny')
    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
    xhr.setRequestHeader('Content-Type', 'application/json')
   const payload= {password}
@@ -49,5 +49,5 @@ function unregisterUser(token, password, callback) {
  
     
  }
- export default unregisterUser
+ export default unregisterNanny
  

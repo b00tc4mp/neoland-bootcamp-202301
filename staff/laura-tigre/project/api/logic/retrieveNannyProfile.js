@@ -1,10 +1,10 @@
-const { validateUserId, validateUserProfileId, ExistenceError } = require('com')
+const { validateUserId, validateUserNannyId, ExistenceError } = require('com')
 const { User, Nanny } = require('../data/models')
 
 function retrieveNannyProfile(userId, nannyId) {
 
     validateUserId(userId)
-    validateUserProfileId(nannyId)
+    validateUserNannyId(nannyId)
 
     return User.findById(userId).lean()
     .then(user => {

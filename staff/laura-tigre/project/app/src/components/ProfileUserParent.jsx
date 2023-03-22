@@ -2,21 +2,19 @@ import { useState} from "react"
 import {useParams} from 'react-router-dom'
 import updateUserPassword from '../logic/update-user-password'
 import updateUserEmail from '../logic/update-user-email'
-import updateDescription from "../logic/update-nanny-description"
-import updateExperience from "../logic/update-nanny-experience"
-import unregisterNanny from "../logic/unregister-nanny"
+import unregisterParent from "../logic/unregister-parent"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
 
 
 
-function ProfileUserNanny({onUnregisterNanny}) {
+function ProfileUserParent() {
   console.log('Profile -> render')
   console.log('UpdateUserPassword -> render')
 
   const [feedback, setFeedback] = useState()
-  const {nannyId} = useParams()
+  const {parentId} = useParams()
 
  
 
@@ -84,66 +82,14 @@ function ProfileUserNanny({onUnregisterNanny}) {
     }
   }
 
-  const handleSubmitExperience = (event) => {
-    event.preventDefault()
-    const newExperience =event.target.newExperience.value
-    try {
-      updateExperience(sessionStorage.token,nannyId,newExperience,error => {
-        if (error) {
-          setFeedback({
-            message: error.message,
-            level: 'error'
-          })
-          return
-        }
-       
-        event.target.reset()
-        setFeedback({
-          message: 'experience updated successfully',
-          level: 'success'
-        })
-      })
-    } catch (error) {
-      setFeedback({
-        message: error.message,
-        level: 'error'
-      })
-    }
-    
-  }
-  const handleSubmitDescription = (event) => {
-    event.preventDefault()
-    const newDescription = event.target.newDescription.value
-    try {
-      updateDescription(sessionStorage.token,nannyId,newDescription,error => {
-        if (error) {
-          setFeedback({
-            message: error.message,
-            level: 'error'
-          })
-          return
-        }
-        event.target.reset()
-
-        setFeedback({
-          message: 'description updated successfully',
-          level: 'success'
-        })
-      })
-    } catch (error) {
-      setFeedback({
-        message: error.message,
-        level: 'error'
-      })
-    }
-    
-  }
+ 
+ 
   const handleSubmitUnregister = (event) => {
     event.preventDefault()
 
     const password = event.target.password.value
     try {
-        unregisterNanny(sessionStorage.token, password, error => {
+        unregisterParent(sessionStorage.token, password, error => {
             if (error) {
 
                 setFeedback({
@@ -152,7 +98,8 @@ function ProfileUserNanny({onUnregisterNanny}) {
                 })
                 return
             }
-            onUnregisterNanny()
+            delete sessionStorage.token
+            
         })
     } catch (error) {
         setFeedback({
@@ -289,46 +236,16 @@ function ProfileUserNanny({onUnregisterNanny}) {
     </Container>
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
-    <Container TagName="form" onSubmit={handleSubmitExperience} className="flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">Experience</legend>
-        <input
-          className="bg-transparent "
-          type="number"
-          name="newExperience"
-          placeholder=" new experience" />
-
-        <Button type='submit'> New Experience</Button>
-
-      </fieldset>
-
-    </Container>
-    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
-
-    <Container TagName="form" onSubmit={handleSubmitDescription} className="flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">Description</legend>
-        <input
-          className="bg-transparent "
-          type="text"
-          name="newDescription"
-          placeholder=" new description" />
-
-        <Button type="submit">New description</Button>
-
-      </fieldset>
-
-    </Container>
-    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+   
 
     <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">Unregister User</legend>
+        <legend className="text-xl">UNREGISTER USER</legend>
        
         <input
           className="bg-transparent "
           type="password"
-          name="password"
+          name="unregister"
           placeholder=" your password" />
         <Button type="submit">Unregister user</Button>
 
@@ -347,4 +264,4 @@ function ProfileUserNanny({onUnregisterNanny}) {
 
 
 }
-export default ProfileUserNanny
+export default ProfileUserParent

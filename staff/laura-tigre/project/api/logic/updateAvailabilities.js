@@ -1,5 +1,5 @@
 const { User, Nanny } = require('../data/models')
-const { validateUserId, validateUserProfileId,validateNewMondayMorningSelected,
+const { validateUserId, validateUserNannyId, validateNewMondayMorningSelected,
     validateNewMondayAfternoonSelected,
     validateNewMondayEveningSelected,
     validateNewTuesdayMorningSelected,
@@ -23,82 +23,167 @@ const { validateUserId, validateUserProfileId,validateNewMondayMorningSelected,
     ExistenceError
 } = require('com')
 
-function updateAvailabilities(userId,nannyId, mondayNewMorningSelected, mondayNewAfternoonSelected, mondayNewEveningSelected, tuesdayNewMorningSelected, tuesdayNewAfternoonSelected, tuesdayNewEveningSelected, wendsdayNewMorningSelected, wendsdayNewAfternoonSelected, wendsdayNewEveningSelected, thursdayNewMorningSelected, thursdayNewAfternoonSelected, thursdayNewEveningSelected, fridayNewMorningSelected, fridayNewAfternoonSelected, fridayNewEveningSelected, saturdayNewMorningSelected, saturdayNewAfternoonSelected, saturdayNewEveningSelected, sundayNewMorningSelected, sundayNewAfternoonSelected, sundayNewEveningSelected,) {
+function updateAvailabilities(userId, nannyId,
+newMondayMorningSelected, 
+newMondayAfternoonSelected,
+newMondayEveningSelected,
+newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,) {
     validateUserId(userId)
-    validateUserProfileId(nannyId)
-    if (mondayNewMorningSelected !== undefined) 
-    validateNewMondayMorningSelected(mondayNewMorningSelected)
-    if (mondayNewAfternoonSelected !== undefined) validateNewMondayAfternoonSelected(mondayNewAfternoonSelected)
-    if (mondayNewEveningSelected !== undefined) validateNewMondayEveningSelected(mondayNewEveningSelected)
-    if (tuesdayNewMorningSelected !== undefined) validateNewTuesdayMorningSelected(tuesdayNewMorningSelected)
-    if (tuesdayNewAfternoonSelected !== undefined) validateNewTuesdayAfternoonSelected(tuesdayNewAfternoonSelected)
-    if (tuesdayNewEveningSelected !== undefined) validateNewTuesdayEveningSelected(tuesdayNewEveningSelected)
-    if (wendsdayNewMorningSelected !== undefined) validateNewWendsdayMorningSelected(wendsdayNewMorningSelected)
-    if (wendsdayNewAfternoonSelected !== undefined) validateNewWendsdayAfternoonSelected(wendsdayNewAfternoonSelected)
-    if (wendsdayNewEveningSelected !== undefined) validateNewWendsdayEveningSelected(wendsdayNewEveningSelected)
-    if (thursdayNewMorningSelected !== undefined) validateNewThursdayMorningSelected(thursdayNewMorningSelected)
-    if (thursdayNewAfternoonSelected !== undefined) validateNewThursdayAfternoonSelected(thursdayNewAfternoonSelected)
-    if (thursdayNewEveningSelected !== undefined) validateNewThursdayEveningSelected(thursdayNewEveningSelected)
-    if (fridayNewMorningSelected !== undefined) validateNewFridayMorningSelected(fridayNewMorningSelected)
-    if (fridayNewAfternoonSelected !== undefined) validateNewFridayAfternoonSelected(fridayNewAfternoonSelected)
-    if (fridayNewEveningSelected !== undefined) validateNewFridayEveningSelected(fridayNewEveningSelected)
-    if (saturdayNewMorningSelected !== undefined) validateNewSaturdayMorningSelected(saturdayNewMorningSelected)
-    if (saturdayNewAfternoonSelected !== undefined) validateNewSaturdayAfternoonSelected(saturdayNewAfternoonSelected)
-    if (saturdayNewEveningSelected !== undefined) validateNewSaturdayEveningSelected(saturdayNewEveningSelected)
-    if (sundayNewMorningSelected !== undefined) validateNewSundayMorningSelected(sundayNewMorningSelected)
-    if (sundayNewAfternoonSelected !== undefined) validateNewSundayAfternoonSelected(sundayNewAfternoonSelected)
-    if (sundayNewEveningSelected !== undefined) validateNewSundayEveningSelected(sundayNewEveningSelected)
+    validateUserNannyId(nannyId)
+    if (newMondayMorningSelected !== undefined)validateNewMondayMorningSelected(newMondayMorningSelected)
+    if (newMondayAfternoonSelected !== undefined) validateNewMondayAfternoonSelected(newMondayAfternoonSelected)
+    if (newMondayEveningSelected !== undefined) validateNewMondayEveningSelected(newMondayEveningSelected)
+    if (newTuesdayMorningSelected !== undefined) validateNewTuesdayMorningSelected(newTuesdayMorningSelected)
+    if (newTuesdayAfternoonSelected !== undefined) validateNewTuesdayAfternoonSelected(newTuesdayAfternoonSelected)
+    if (newTuesdayEveningSelected !== undefined) validateNewTuesdayEveningSelected(newTuesdayEveningSelected)
+    if (newWendsdayMorningSelected !== undefined) validateNewWendsdayMorningSelected(newWendsdayMorningSelected)
+    if (newWendsdayAfternoonSelected !== undefined) validateNewWendsdayAfternoonSelected(newWendsdayAfternoonSelected)
+    if (newWendsdayEveningSelected !== undefined) validateNewWendsdayEveningSelected(newWendsdayEveningSelected)
+    if (newThursdayMorningSelected !== undefined) validateNewThursdayMorningSelected(newThursdayMorningSelected)
+    if (newThursdayAfternoonSelected !== undefined) validateNewThursdayAfternoonSelected(newThursdayAfternoonSelected)
+    if (newThursdayEveningSelected !== undefined) validateNewThursdayEveningSelected(newThursdayEveningSelected)
+    if (newFridayMorningSelected !== undefined) validateNewFridayMorningSelected(newFridayMorningSelected)
+    if (newFridayAfternoonSelected !== undefined) validateNewFridayAfternoonSelected(newFridayAfternoonSelected)
+    if (newFridayEveningSelected !== undefined) validateNewFridayEveningSelected(newFridayEveningSelected)
+    if (newSaturdayMorningSelected !== undefined) validateNewSaturdayMorningSelected(newSaturdayMorningSelected)
+    if (newSaturdayAfternoonSelected !== undefined) validateNewSaturdayAfternoonSelected(newSaturdayAfternoonSelected)
+    if (newSaturdayEveningSelected !== undefined) validateNewSaturdayEveningSelected(newSaturdayEveningSelected)
+    if (newSundayMorningSelected !== undefined) validateNewSundayMorningSelected(newSundayMorningSelected)
+    if (newSundayAfternoonSelected !== undefined) validateNewSundayAfternoonSelected(newSundayAfternoonSelected)
+    if (newSundayEveningSelected !== undefined) validateNewSundayEveningSelected(newSundayEveningSelected)
 
 
     return User.findById(userId).lean()
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-            return Nanny.findById(nannyId).populate('user', 'name').select('availabilities').lean()
+            return Nanny.findById(nannyId)
         })
         .then(nanny => {
             if (!nanny) throw new ExistenceError(`nanny with id ${nannyId} not found`)
 
-        //    const availability = Nanny.findById(nannyId).populate('availability', 'day times')
-            const availabilities= nanny.availabilities
+            const availabilities = []
             
-            availabilities.mondayMorningSelected = mondayNewMorningSelected
-            availabilities.mondayAfternoonSelected = mondayNewAfternoonSelected
-            availabilities.mondayEveningSelected = mondayNewEveningSelected
+            if(newMondayMorningSelected )  availabilities.push({day: 'Monday', times: ['Morning']})
 
-            availabilities.tuesdayMorningSelected= tuesdayNewMorningSelected
-            availabilities.tuesdayAfternoonSelected= tuesdayNewAfternoonSelected
-            availabilities.tuesdayEveningSelected= tuesdayNewEveningSelected
+            if(newMondayAfternoonSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Monday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Monday', times: ['Afternoon']})
+            }
 
-            availabilities.wendsdayMorningSelected= wendsdayNewMorningSelected
-            availabilities.wendsdayAfternoonSelected= wendsdayNewAfternoonSelected
-            availabilities.wendsdayEveningSelected= wendsdayNewEveningSelected
+            if(newMondayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Monday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Monday', times: ['Evening']})
+            }
 
-            availabilities.thursdayMorningSelected= thursdayNewMorningSelected
-            availabilities.thursdayAfternoonSelected= thursdayNewAfternoonSelected
-            availabilities.thursdayEveningSelected= thursdayNewEveningSelected
 
-            availabilities.fridayMorningSelected = fridayNewMorningSelected
-            availabilities.fridayAfternoonSelected= fridayNewAfternoonSelected
-            availabilities.fridayEveningSelected= fridayNewEveningSelected
+            if( newTuesdayMorningSelected )   availabilities.push({day: 'Tuesday', times: ['Morning']})
 
-            availabilities.saturdayMorningSelected= saturdayNewMorningSelected
-            availabilities.saturdayAfternoonSelected= saturdayNewAfternoonSelected
-            availabilities.saturdayEveningSelected= saturdayNewEveningSelected
+            if( newTuesdayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Tuesday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Tuesday', times: ['Afternoon']})
+            }
 
-            availabilities.sundayMorningSelected= sundayNewMorningSelected
-            availabilities.sundayAfernoonSelected= sundayNewAfternoonSelected
-            availabilities.sundayEveningSelected= sundayNewEveningSelected
+            if( newTuesdayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Tuesday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Tuesday', times: ['Evening']})
+            }
 
-            nanny.id= nanny._id.toString()
-             nanny.user.id= nanny.user._id.toString()
-             nanny.availabilities.forEach(availability => {
-                availability.id= availability._id.toString()
+
+
+            if( newWendsdayMorningSelected )   availabilities.push({day: 'Wendsday', times: ['Morning']})
+
+            if( newWendsdayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Wendsday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Wendsday', times: ['Afternoon']})
+            }
+
+            if( newWendsdayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Wendsday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Wendsday', times: ['Evening']})
+            }
+
+            
+            if( newThursdayMorningSelected )   availabilities.push({day: 'Thursday', times: ['Morning']})
+
+            if( newThursdayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Thursday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Thursday', times: ['Afternoon']})
+            }
+
+            if( newThursdayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Thursday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Thursday', times: ['Evening']})
+            }
+
+            if( newFridayMorningSelected )   availabilities.push({day: 'Friday', times: ['Morning']})
+
+            if( newFridayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Friday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Friday', times: ['Afternoon']})
+            }
+
+            if( newFridayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Friday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Friday', times: ['Evening']})
+            }
+
+
+            if( newSaturdayMorningSelected )   availabilities.push({day: 'Saturday', times: ['Morning']})
+
+            if( newSaturdayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Saturday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Saturday', times: ['Afternoon']})
+            }
+
+            if( newSaturdayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Saturday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Saturday', times: ['Evening']})
+            }
+
+
+
+            if( newSundayMorningSelected )   availabilities.push({day: 'Sunday', times: ['Morning']})
+
+            if( newSundayAfternoonSelected )  {
+                const dayExists = availabilities.find(availability => availability.day === 'Sunday')
+                if(dayExists) dayExists.times.push('Afternoon')
+                else  availabilities.push({day: 'Sunday', times: ['Afternoon']})
+            }
+
+            if( newSundayEveningSelected ) {
+                const dayExists = availabilities.find(availability => availability.day === 'Sunday')
+                if(dayExists) dayExists.times.push('Evening')
+                else  availabilities.push({day: 'Sunday', times: ['Evening']})
+            }
+
+
+
+            nanny.availabilities= availabilities
+            
+                 
+
+                nanny.id = nanny._id.toString()
+                nanny.user.id = nanny.user._id.toString()
+                nanny.availabilities.forEach(availability => {
+                availability.id = availability._id.toString()
                 delete availability._id
-             })
-             delete nanny._id
-             delete nanny.user._id
-            return nanny
-            
+            })
+            delete nanny._id
+            delete nanny.user._id
+            return nanny.save()
+
         })
 }
 module.exports = updateAvailabilities

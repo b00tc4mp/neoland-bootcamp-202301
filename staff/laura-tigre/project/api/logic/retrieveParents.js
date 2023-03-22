@@ -34,6 +34,7 @@ function retrieveParents(userId) {
             return Parent.find({city: user.city}).populate('user', '-password -__v').select('-__v').lean()
 
             .then (parents => {
+                const favParents = user.favs.map(fav => fav.toString())
 
                 parents.forEach(parent => {
 
@@ -54,6 +55,9 @@ function retrieveParents(userId) {
                         kid.id= kid._id.toString()
                         delete kid._id
                      })
+
+                     if (favParents.includes(parent.id)) parent.fav = true
+
                     
                 })
                 return parents

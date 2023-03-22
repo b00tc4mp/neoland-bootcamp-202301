@@ -5,15 +5,15 @@ const { User, Availability, Kid, Parent, Nanny, Chat, Message } = require('./mod
 connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
         const userParent = new User({
-            name: 'Maria Fernandez Cobo',
-            email: 'maria3@fernandez.com',
+            name: 'Isabel Fernandez',
+            email: 'isabel@fernandez.com',
             password: '123123123',
             role: 'parent'
         })
 
         const userNanny = new User({
-            name: 'Patri Gonzalez',
-            email: 'patri3@gonzalez.com',
+            name: 'Mariloli Gonzalez',
+            email: 'mariloli@gonzalez.com',
             password: '123123123',
             role: 'nanny'
         })
@@ -27,38 +27,40 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             .then(([userParent, userNanny]) => {
                 const parent = new Parent({
                     user: userParent.id,
-                    description: 'Im a parent who needs a very kid nanny',
+                    description: 'Im a parent who needs a nanny every morning',
                     city: 'Barcelona',
-                    extras: 'I have car and speaks spanish'
+                    extras: 'I need a nanny with reference'
                 })
 
                 const kid = new Kid({
-                    name: 'Pepe',
+                    name: 'Mario',
                     dateOfBirth: new Date(2016, 2, 20),
+                })
+                const kid2= new Kid({
+                    name: 'Maria',
+                    dateOfBirth:new Date(2016, 2, 20)
                 })
 
                 parent.kids.push(kid)
+                parent.kids.push(kid2)
 
                 const availability = new Availability({
                     day: 'Monday',
                     times: 'Morning'
                 })
-                const availability2 = new Availability({
-                    day: 'Friday',
-                    times: 'Evening'
-                })
+               
 
                 parent.availabilities.push(availability)
-                parent.availabilities.push(availability2)
+             
 
                 const nanny = new Nanny({
                     user: userNanny.id,
                     city: 'Barcelona',
-                    description: 'I am a very kynd nanny with reference',
-                    experience: 1,
+                    description: 'I am a very funny nanny with reference',
+                    experience: 5,
                     dateOfBirth: new Date(1995, 2, 20),
                     price: 5,
-                    extras: 'we need a nanny with car and who speaks spanish'
+                    extras: 'I have car'
                 })
 
                 const availability3 = new Availability({

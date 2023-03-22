@@ -1,4 +1,4 @@
-import{validateToken,validateUserProfileId,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateUserNannyId,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
@@ -12,7 +12,7 @@ import{validateToken,validateUserProfileId,validateNewDescription ,validateCallb
 
 function updateDescription(token,nannyId,newDescription, callback) {
     validateToken(token)
-    validateUserProfileId(nannyId)
+    validateUserNannyId(nannyId)
     validateNewDescription(newDescription)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
@@ -40,7 +40,7 @@ function updateDescription(token,nannyId,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH',`http://localhost:8080/users/${nannyId}/updateNewDescription`)
+    xhr.open('PATCH',`http://localhost:8080/users/${nannyId}/updateDescription`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

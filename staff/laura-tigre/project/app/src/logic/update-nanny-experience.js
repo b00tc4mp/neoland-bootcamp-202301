@@ -1,4 +1,4 @@
-import{validateToken, validateUserProfileId,validateNewExperience,validateCallback ,ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken, validateUserNannyId,validateNewExperience,validateCallback ,ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
@@ -12,7 +12,7 @@ import{validateToken, validateUserProfileId,validateNewExperience,validateCallba
 
 function updateExperience(token,nannyId,newExperience,callback) {
     validateToken(token)
-    validateUserProfileId(nannyId)
+    validateUserNannyId(nannyId)
     validateNewExperience(newExperience)
     validateCallback(callback)
     const xhr = new XMLHttpRequest

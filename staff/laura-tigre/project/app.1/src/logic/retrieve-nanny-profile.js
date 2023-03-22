@@ -1,4 +1,4 @@
-const {validateToken,validateUserProfileId ,validateCallback, ClientError,ServerError, ExistenceError} = require('com')
+const {validateToken,validateUserNannyId ,validateCallback, ClientError,ServerError, ExistenceError} = require('com')
 /**
  * Retrieves the user public information
  * 
@@ -8,7 +8,7 @@ const {validateToken,validateUserProfileId ,validateCallback, ClientError,Server
 
 function retrieveNannyProfile(token,nannyId,callback) {
     validateToken(token)
-    validateUserProfileId(nannyId)
+    validateUserNannyId(nannyId)
     validateCallback(callback)
     
     const xhr = new XMLHttpRequest()

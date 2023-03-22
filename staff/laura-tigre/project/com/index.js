@@ -13,7 +13,7 @@ const validateNewPassword= require('./validators/validateNewPassword')
 const validateNewPasswordConfirm= require('./validators/validateNewPasswordConfirm')
 const validateColor = require('./validators/validateColor')
 const validateToken= require('./validators/validateToken')
-const validateUserProfileId = require('./validators/validateUserProfileId')
+const validateUserNannyId = require('./validators/validateUserNannyId')
 const validateCity= require('./validators/validateCity')
 const validatePresentation = require('./validators/validatePresentation')
 const validateExperience = require('./validators/validateExperience')
@@ -74,6 +74,7 @@ const validateNewSundayAfternoonSelected = require('./validators/validateNewSund
 const validateNewSundayEveningSelected = require('./validators/validateNewSundayEveningSelected')
 const validateNewDescription = require('./validators/validateNewDescription')
 const validateNewExperience= require('./validators/validateNewExperience')
+const validateParentId = require('./validators/validateParentId')
 
 
 
@@ -104,7 +105,7 @@ module.exports={
     validateNewPasswordConfirm,
     validateColor,
     validateToken,
-    validateUserProfileId,
+    validateUserNannyId,
     validateCity,
     validatePresentation,
     validateExperience,
@@ -165,6 +166,7 @@ module.exports={
     validateNewSundayEveningSelected,
     validateNewDescription,
     validateNewExperience,
+    validateParentId,
 
 
    

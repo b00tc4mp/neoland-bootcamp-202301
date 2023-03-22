@@ -9,6 +9,7 @@ const registerNanny = require('./logic/registerNanny')
 const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const unregisterNanny = require('./logic/unregisterNanny')
+const unregisterParent = require('./logic/unregisterParent')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 const retrieveParents = require('./logic/retrieveParents')
@@ -18,14 +19,17 @@ const retrieveParentProfile = require('./logic/retrieveParentProfile')
 const searchNannies = require('./logic/searchNannies')
 const searchParents = require('./logic/searchParents')
 const toggleFavNanny = require('./logic/toggleFavNanny')
+const toggleFavParent = require('./logic/toggleFavParent')
 const retrieveFavNannies = require('./logic/retrieveFavNannies')
 const updateDescription = require('./logic/updateDescription')
 const updateExperience = require('./logic/updateExperience')
+const retrieveFavParents = require('./logic/retrieveFavParents')
 
 
 const JWT_SECRET = 'lalaland'
 
 const { FormatError, ExistenceError, AuthError, CoherenceError } = require('com')
+
 
 connect('mongodb://127.0.0.1:27017/kangaroo')
 
@@ -128,12 +132,41 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
-        server.delete('/users', jsonBodyParser, (req, res) => {
+        server.delete('/users/nanny', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
                 const { password } = req.body
 
                 unregisterNanny(userId, password)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+
+                        else if (error instanceof AuthError) res.status(401)
+
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError) res.status(400)
+
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+
+
+        })
+
+        server.delete('/users/parent', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { password } = req.body
+
+                unregisterParent(userId, password)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
@@ -532,6 +565,59 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
                 retrieveFavNannies(userId)
                     .then(nannies => res.status(200).json(nannies))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                    
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+                
+            }
+        })
+
+        server.patch('/parents/:parentId/favs', (req, res) => {
+
+            try {
+                const userId = verifyToken(req)
+
+                const { parentId } = req.params
+
+                toggleFavParent(userId, parentId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+
+
+
+        })
+        server.get('/user/parents/favs', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveFavParents(userId)
+                    .then(parents => res.status(200).json(parents))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
                     

@@ -1,4 +1,4 @@
-function validateParentId(userParentId) {
-    if (typeof userParentId !== 'string') throw new TypeError('userParentId is not a string')
+function validateParentId(ParentId) {
+    if (typeof ParentId !== 'string') throw new TypeError('ParentId is not a string')
 }
 module.exports= validateParentId

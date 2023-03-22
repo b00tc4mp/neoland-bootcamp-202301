@@ -1,4 +1,4 @@
-const { User, Nanny } = require('../data/models')
+const { User} = require('../data/models')
 const { validateUserId, ExistenceError } = require('com')
 
 function retrieveFavNannies(userId) {

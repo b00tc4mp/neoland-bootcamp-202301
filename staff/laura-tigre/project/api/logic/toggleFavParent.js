@@ -1,0 +1,38 @@
+const { validateUserId, validateParentId, ExistenceError } = require('com');
+const { User, Parent } = require('../data/models')
+
+
+/**
+* Toggles favorite of a specific sticky
+* 
+* @param {string} userId The userId
+* @param {string} parentId The parent identifier
+*/
+
+function toggleFavParent(userId, parentId) {
+    validateUserId(userId)
+    validateParentId(parentId)
+
+
+    return Promise.all([User.findById(userId), Parent.findById(parentId)])
+        .then(([user, parent]) => {
+            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+
+            if (!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
+
+            const favs = user.favs
+
+            const index = favs.indexOf(parentId)
+
+            if (index < 0)
+                favs.push(parentId)
+            else
+                favs.splice(index, 1)
+
+            return user.save()
+
+
+        })
+
+}
+module.exports = toggleFavParent
