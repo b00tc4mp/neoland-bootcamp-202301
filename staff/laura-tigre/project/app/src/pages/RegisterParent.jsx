@@ -16,10 +16,9 @@ function Parents(props) {
         const city = event.target.city.value
         const email = event.target.email.value
         const password = event.target.password.value
-        const role = event.target.role.value
 
         try {
-            registerParent(name, city,email, password, role, error => {
+            registerParent(name, city,email, password, error => {
                 if (error) {
                     setFeedback(error.message)
                     return
@@ -32,11 +31,11 @@ function Parents(props) {
             setFeedback(error.message)
         }
     }
-    return <Container className="justify-center font-['Poppins'] h-screen bg-slate-100">
+    return <Container className="justify-center font-['Poppins'] h-screen">
         <main className='h-max'  >
             <h2 className="text-center text-2xl font-bold text-[#fb923c]">FAMILIES KANGAROO</h2>
 
-            <Container TagName="form" className="gap-4 bg-[#fed7aa] mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
+            <Container TagName="form" className="sm: 1/2 gap-4 bg-[#fed7aa] mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
                 <img className="h-20 w-20 " src="images/kangaroo.png" alt="kangaroo" />
 
                 <Container className="justify-center gap-2">
@@ -48,10 +47,6 @@ function Parents(props) {
                     <input className="bg-[transparent] text-center focus:outline-none " type="email" id="email" placeholder="Your email" required />
                    
                     <input className=" bg-[transparent] text-center focus:outline-none " type="password" id="password" placeholder="Your password" required />
-                    <select className='bg-[transparent] text-[grey] text-center' name="role">
-                        <option value="parent">Family</option> */
-                        
-                     </select>
                 </Container>
                 <div>
                     <Button type='submit'>REGISTER</Button>

@@ -1,5 +1,5 @@
 const { connect, disconnect } = require('mongoose')
-const updateDescription = require('./updateDescription')
+const updateDescriptionParent = require('./updateDescriptionParent')
 
 
 
@@ -7,7 +7,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
         
 
-        return updateDescription('6415f5e39e3d8c682f1fbee7','6415f5e59e3d8c682f1fbef2','I am a student of the University and I love kids')
+        return updateDescriptionParent('6641adfcbd2e17978d7935e92','641adfcdd2e17978d7935e97','I need a nanny who wear my kids to school')
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

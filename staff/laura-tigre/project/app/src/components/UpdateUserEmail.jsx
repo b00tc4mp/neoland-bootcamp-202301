@@ -42,27 +42,21 @@ function UpdateUserEmail() {
     return <Container>
        <Container TagName="form" className="sm: w-1/2 gap-4mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend>Change Password</legend>
+        <legend>New Email</legend>
         <input
           className="bg-transparent "
-          type="password"
-          name="currentPassword"
-          placeholder="current password"
+          type="email"
+          name="newEmail"
+          placeholder="new email"
         />
         <input
           className="bg-transparent  "
           type="password"
-          name="newPassword"
-          placeholder="new password"
+          name="password"
+          placeholder="your password"
         />
-        <input
-          className="bg-transparent  "
-          type="password"
-          name="newPasswordConfirm"
-          placeholder="confirm new password"
-        />
-
-        <Button type="submit">Update password</Button>
+        
+        <Button type="submit">Update email</Button>
 
       </fieldset>
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}

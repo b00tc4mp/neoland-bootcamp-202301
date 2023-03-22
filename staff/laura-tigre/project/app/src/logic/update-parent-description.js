@@ -1,19 +1,19 @@
-import{validateToken, validatePassword,validateNewEmail, validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateUserParentId,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} newEmail The user new email
- * @param {string} password The user password
+ * @param {string} parentId The parent identifier
+ * @param {string} newDescription The parent new description
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateUserEmail(token,password,newEmail, callback) {
+function updateDescriptionParent(token,parentId,newDescription, callback) {
     validateToken(token)
-    validatePassword(password)
-    validateNewEmail(newEmail)
+    validateUserParentId(parentId)
+    validateNewDescription(newDescription)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
      
@@ -40,14 +40,14 @@ function updateUserEmail(token,password,newEmail, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/users/updateEmail')
+    xhr.open('PATCH',`http://localhost:8080/users/${parentId}/updateDescription`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   
-    const payload = {password,newEmail }
+    const payload = {newDescription }
     const json = JSON.stringify(payload)
   
     xhr.send(json)
   
   }
-  export default updateUserEmail
+  export default updateDescriptionParent

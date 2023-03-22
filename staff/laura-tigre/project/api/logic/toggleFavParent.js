@@ -3,7 +3,7 @@ const { User, Nanny, Parent } = require('../data/models')
 
 
 /**
-* Toggles favorite of a specific sticky
+* Toggles favorite of a specific parent
 * 
 * @param {string} userId The userId
 * @param {string} parentId The parent identifier

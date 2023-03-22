@@ -1,23 +1,22 @@
-const { validateName, validateCity,validateExperience,validateEmail, validatePassword, validateRole, validateCallback, ClientError, ServerError, CoherenceError } = require('com')
+const { validateName, validateCity,validateExperience,validateEmail, validatePassword,validateCallback, ClientError, ServerError, CoherenceError } = require('com')
 
 /**
  * Registers a user in the database
  * 
  * @param {string} name The user full name
  * @param {string} email The user email
- * @param {string} role The user role
  * @param {string} password The user password
  * @param {function} callback The callback
  */
 
-function registerNanny(name,city,experience,email, password, role, callback) {
+function registerNanny(name,city,experience,email, password,callback) {
 
     validateName(name)
     validateCity(city)
     validateExperience(experience)
     validateEmail(email)
     validatePassword(password)
-    validateRole(role)
+  
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest
@@ -45,7 +44,7 @@ function registerNanny(name,city,experience,email, password, role, callback) {
     xhr.open('POST', 'http://localhost:8080/users/nanny')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { name,city,experience,email, password, role }
+    const user = { name,city,experience,email, password}
     const json = JSON.stringify(user)
 
     xhr.send(json)

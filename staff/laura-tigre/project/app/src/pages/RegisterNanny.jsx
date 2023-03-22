@@ -17,10 +17,9 @@ function RegisterNanny(props) {
         const experience = event.target.experience.value
         const email = event.target.email.value
         const password = event.target.password.value
-        const role = event.target.role.value
 
         try {
-            registerNanny(name, city,experience,email, password, role, error => {
+            registerNanny(name, city,experience,email, password, error => {
                 if (error) {
                     setFeedback(error.message)
                     return
@@ -37,7 +36,7 @@ function RegisterNanny(props) {
         <main className='h-max'  >
             <h2 className="text-center text-2xl font-bold text-[#fb923c]">NANNY KANGAROO</h2>
 
-            <Container TagName="form" className="gap-4 bg-[#fed7aa] mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
+            <Container TagName="form" className="sm: 1/2 gap-4 bg-[#fed7aa] mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
                 <img className="h-20 w-20 " src="images/kangaroo.png" alt="kangaroo" />
 
                 <Container className="justify-center gap-2">
@@ -51,10 +50,7 @@ function RegisterNanny(props) {
                     <input className="bg-[transparent] text-center focus:outline-none " type="email" id="email" placeholder="Your email" required />
                    
                     <input className=" bg-[transparent] text-center focus:outline-none " type="password" id="password" placeholder="Your password" required />
-                    <select className='bg-[transparent] text-[grey] text-center' name="role">
-                        
-                        <option value="nanny">Nanny</option>
-                    </select>
+                
                 </Container>
                 <div>
                     <Button type='submit'>REGISTER</Button>

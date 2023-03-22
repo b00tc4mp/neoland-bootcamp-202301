@@ -91,7 +91,7 @@ function Home() {
 
 
 
-  return <Container className="font-['Poppins'] h-full bg-[#f5f5f4]">
+  return <Container className="sm:1/2 font-['Poppins'] h-full">
     {user.role === 'nanny' && <><header className='flex flex-row'>
       <Link to="/">
         <img src="images/kangaroo.png" alt="kangaroo" className="w-14 h-14 bg-[#fb923c] rounded-full p-1 m-2" />
@@ -103,7 +103,7 @@ function Home() {
 
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} onToggleFavParent={handleToggleFavParent}  />} />
           <Route path="/parents/:parentId" element={< ParentProfile />} />
-          <Route path="/nannyProfile" element={<ProfileUserNanny />} />
+          <Route path="/nannyProfile" element={<ProfileUserNanny/>} />
           <Route path="/parents/favs" element={<FavoritesParents listUpdateStamp={listUpdateStamp}/>} />
           
           <Route path="/search/parents" element={<SearchParents listUpdateStamp={listUpdateStamp} />} />

@@ -62,10 +62,10 @@ function SearchNannies({ listUpdateStamp }) {
 
 
 
-    return <div className='w-full sm:w-1/3 h-full mb-20'>
+    return <Container className='w-full sm:w-1/3 h-full mb-20'>
 
 
-        <form className='sm: w-1/2  p-5' onSubmit={handleSubmit}>
+        <Container TagName="form" className='sm: w-1/3  p-5' onSubmit={handleSubmit}>
             <label className='p-5 mb-10' htmlFor="search">SEARCH NANNIES</label>
             <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
                 <legend>Availability</legend>
@@ -151,7 +151,7 @@ function SearchNannies({ listUpdateStamp }) {
 
                 <Button type='submit'>SEARCH</Button>
             </Container>
-        </form>
+        </Container>
 
         <Container className="gap-2">
 
@@ -170,7 +170,7 @@ function SearchNannies({ listUpdateStamp }) {
         </Container>
 
 
-    </div>
+    </Container>
 
 
 }

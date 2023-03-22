@@ -2,7 +2,7 @@ const {User, Nanny} = require('../data/models')
 
 const { validateUserId,validateUserNannyId, validateNewDescription ,ExistenceError,} = require('com')
 
-function updateDescription(userId,nannyId, newDescription) {
+function updateDescriptionNanny(userId,nannyId, newDescription) {
     validateUserId(userId)
     validateUserNannyId(nannyId)
     validateNewDescription(newDescription)
@@ -23,4 +23,4 @@ function updateDescription(userId,nannyId, newDescription) {
         })
        
 }
-module.exports = updateDescription
+module.exports = updateDescriptionNanny

@@ -28,7 +28,7 @@ const user = new Schema({
 const availability = new Schema({
     day: {
         type: String,
-        enum: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        enum: ['Sunday', 'Monday', 'Tuesday', 'Wendsday', 'Thursday', 'Friday', 'Saturday'],
         required: true
     },
     times: [{

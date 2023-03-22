@@ -29,7 +29,7 @@ function retrieveFavParents(userId) {
                 _parent.availabilities = parent.availabilities
 
                 _parent.availabilities.forEach(availability => {
-                    availability.id = availability.id.toString()
+                    availability.id = availability._id.toString()
                     delete availability._id
                 })
 

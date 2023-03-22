@@ -21,9 +21,13 @@ const searchParents = require('./logic/searchParents')
 const toggleFavNanny = require('./logic/toggleFavNanny')
 const toggleFavParent = require('./logic/toggleFavParent')
 const retrieveFavNannies = require('./logic/retrieveFavNannies')
-const updateDescription = require('./logic/updateDescription')
+const updateDescriptionNanny = require('./logic/updateDescriptionNanny')
+const updateDescriptionParent = require('./logic/updateDescriptionParent')
 const updateExperience = require('./logic/updateExperience')
 const retrieveFavParents = require('./logic/retrieveFavParents')
+const updateNannyAvailabilities = require('./logic/updateNannyAvailabilities')
+const updateParentAvailabilities = require('./logic/updateParentAvailabilities')
+const retrieveNanny = require('./logic/retrieveNanny')
 
 
 const JWT_SECRET = 'lalaland'
@@ -41,9 +45,9 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         server.post('/users/parent', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
-                const { name, city, email, password, role } = user
+                const { name, city, email, password} = user
 
-                registerParent(name, city, email, password, role)
+                registerParent(name, city, email, password)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)
@@ -63,9 +67,9 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         server.post('/users/nanny', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
-                const { name, city, experience, email, password, role } = user
+                const { name, city, experience, email, password} = user
 
-                registerNanny(name, city, experience, email, password, role)
+                registerNanny(name, city, experience, email, password)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)
@@ -113,6 +117,29 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const userId = verifyToken(req)
 
                 retrieveUser(userId)
+
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/nanny/:nannyId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { nannyId } = req.params
+                retrieveUser(userId,nannyId)
 
                     .then(user => res.json(user))
                     .catch(error => {
@@ -293,7 +320,100 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const { newDescription } = credentials
                 
  
-                updateDescription(userId, nannyId, newDescription)
+                updateDescriptionNanny(userId, nannyId, newDescription)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/parent/:parentId/updateDescription', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+
+                const credentials = req.body
+                const { parentId } = req.params
+
+                const { newDescription } = credentials
+                
+ 
+                updateDescriptionParent(userId, parentId, newDescription)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/nanny/:nannyId/updateAvailabilities', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+                const { nannyId } = req.params
+                const{ newMondayMorningSelected, newMondayAfternoonSelected, newMondayEveningSelected, newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected} = req.body
+
+               
+
+                updateNannyAvailabilities(userId, nannyId,newMondayMorningSelected,newMondayAfternoonSelected,
+                    newMondayEveningSelected,newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,)
+                    
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/parent/:parentId/updateAvailabilities', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+                const { parentId } = req.params
+                const{ newMondayMorningSelected, newMondayAfternoonSelected, newMondayEveningSelected, newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected} = req.body
+
+               
+
+                updateParentAvailabilities(userId, parentId,newMondayMorningSelected,newMondayAfternoonSelected,
+                    newMondayEveningSelected,newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,)
+                    
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof AuthError) res.status(401)

@@ -1,11 +1,13 @@
-import { useState} from "react"
-import {useParams} from 'react-router-dom'
-import updateUserPassword from '../logic/update-user-password'
-import updateUserEmail from '../logic/update-user-email'
+import { useState } from "react"
+import { useParams } from 'react-router-dom'
 import unregisterParent from "../logic/unregister-parent"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
+import UpdateUserPassword from "./UpdateUserPassword"
+import UpdateUserEmail from "./UpdateUserEmail"
+import updateParentAvailabilities from "../logic/update-parent-availabilities"
+import updateDescriptionParent from "../logic/update-parent-description"
 
 
 
@@ -14,234 +16,216 @@ function ProfileUserParent() {
   console.log('UpdateUserPassword -> render')
 
   const [feedback, setFeedback] = useState()
-  const {parentId} = useParams()
+  const { parentId } = useParams()
 
- 
-
-  const handleSubmit = (event) => {
+  const handleSubmitAvailability = (event) => {
     event.preventDefault()
 
-    const currentPassword = event.target.currentPassword.value
-    const newPassword = event.target.newPassword.value
-    const newPasswordConfirm = event.target.newPasswordConfirm.value
+    const newMondayMorningSelected = event.target.newMondayMorningSelected.checked
+    const newMondayAfternoonSelected = event.target.newMondayAfternoonSelected.checked
+    const newMondayEveningSelected = event.target.newMondayEveningSelected.checked
+    const newTuesdayMorningSelected = event.target.newTuesdayMorningSelected.checked
+    const newTuesdayAfternoonSelected = event.target.newTuesdayAfternoonSelected.checked
+    const newTuesdayEveningSelected = event.target.newTuesdayEveningSelected.checked
+    const newWendsdayMorningSelected = event.target.newWendsdayMorningSelected.checked
+    const newWendsdayAfternoonSelected = event.target.newWendsdayAfternoonSelected.checked
+    const newWendsdayEveningSelected = event.target.newWendsdayEveningSelected.checked
+    const newThursdayMorningSelected = event.target.newThursdayMorningSelected.checked
+    const newThursdayAfternoonSelected = event.target.newThursdayAfternoonSelected.checked
+    const newThursdayEveningSelected = event.target.newThursdayEveningSelected.checked
+    const newFridayMorningSelected = event.target.newFridayMorningSelected.checked
+    const newFridayAfternoonSelected = event.target.newFridayAfternoonSelected.checked
+    const newFridayEveningSelected = event.target.newFridayEveningSelected.checked
+    const newSaturdayMorningSelected = event.target.newSaturdayMorningSelected.checked
+    const newSaturdayAfternoonSelected = event.target.newSaturdayAfternoonSelected.checked
+    const newSaturdayEveningSelected = event.target.newSaturdayEveningSelected.checked
+    const newSundayMorningSelected = event.target.newSundayMorningSelected.checked
+    const newSundayAfternoonSelected = event.target.newSundayAfternoonSelected.checked
+    const newSundayEveningSelected = event.target.newSundayEveningSelected.checked
 
     try {
-      updateUserPassword(sessionStorage.token, currentPassword, newPassword, newPasswordConfirm, error => {
-        if (error) {
+      updateParentAvailabilities(sessionStorage.token, parentId, newMondayMorningSelected,
+        newMondayAfternoonSelected,
+        newMondayEveningSelected,
+        newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,error => {
+          if (error) {
+            setFeedback({
+              message: error.message,
+              level: 'error'
+            })
+            return
+          }
+         
+          event.target.reset()
           setFeedback({
-            message: error.message,
-            level: 'error'
+            message: 'availability updated successfully',
+            level: 'success'
           })
-
-          return
-        }
-        event.target.reset()
-        setFeedback({
-          message: 'password update successfully',
-          level: 'success'
         })
-
-      })
-
-
-    } catch (error) {
-
-      setFeedback({
-        message: error.message,
-        level: 'error'
-      })
-    }
-  }
-  const handleSubmitEmail = (event) => {
-    event.preventDefault()
-
-    const password = event.target.password.value
-    const newEmail = event.target.newEmail.value
-
-    try {
-      updateUserEmail(sessionStorage.token, password, newEmail, error => {
-        if (error) {
-          setFeedback({
-            message: error.message,
-            level: 'error'
-          })
-          return
-        }
-        event.target.reset()
-
+      } catch (error) {
         setFeedback({
-          message: 'email updated successfully',
-          level: 'success'
+          message: error.message,
+          level: 'error'
         })
-      })
-    } catch (error) {
-      setFeedback({
-        message: error.message,
-        level: 'error'
-      })
-    }
-  }
+      }
+      
+        
 
- 
- 
+    }
+  
+
+
+
   const handleSubmitUnregister = (event) => {
     event.preventDefault()
 
     const password = event.target.password.value
     try {
-        unregisterParent(sessionStorage.token, password, error => {
-            if (error) {
+      unregisterParent(sessionStorage.token, password, error => {
+        if (error) {
 
-                setFeedback({
-                    message: error.message,
-                    level: 'error'
-                })
-                return
-            }
-            delete sessionStorage.token
-            
-        })
-    } catch (error) {
-        setFeedback({
+          setFeedback({
             message: error.message,
             level: 'error'
-        })
+          })
+          return
+        }
+        delete sessionStorage.token
+
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
 
     }
-}
+  }
+  const handleSubmitDescription = (event) => {
+    event.preventDefault()
+    const newDescription = event.target.newDescription.value
+    try {
+      updateDescriptionParent(sessionStorage.token,parentId,newDescription,error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+        event.target.reset()
 
-
-  const handleSubmitAvailability = () => {
-
-
+        setFeedback({
+          message: 'description updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
+    }
+    
   }
 
+
+  
+
   return <Container className="mb-20">
-    <form className='sm: w-1/2  p-5' onSubmit={handleSubmitAvailability}>
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend>Availability</legend>
-        <table className='table table-fixed m-5'>
-          <thead>
-            <tr className='space-x-1'>
-              <th>Day</th>
-              <th>Morning</th>
-              <th>Afternoon</th>
-              <th>Evening</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Monday</th>
-              <td><input type="checkbox" id='mondayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='mondayAfternoonSelected' name='mondayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='mondayEveningSelected' name='mondayEveningSelected' ></input></td>
+    <Container TagName="form" className='sm: w-1/3 p-5' onSubmit={handleSubmitAvailability}>
+    <fieldset className='sm: w-1/3 p-5 border-solid border-2 border-orange-500 rounded-md'>
+      <legend>Availability</legend>
+      <table className='sm: table table-fixed m-5'>
+        <thead>
+          <tr className='sm:space-x-1'>
+            <th>Day</th>
+            <th>Morning</th>
+            <th>Afternoon</th>
+            <th>Evening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className='sm:text-center space-x-1'>
+            <th className='sm:space-x-2'>Monday</th>
+            <td><input type="checkbox" id='newMondayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newMondayAfternoonSelected' name='newMondayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newMondayEveningSelected' name='newMondayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Tuesday</th>
-              <td><input type="checkbox" id='tuesdayMorningSelected' name='tuesdayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='tuesdayAfternoonSelected' name='tuesdayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='tuesdayEveningSelected' name='tuesdayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='sm:space-x-2'>Tuesday</th>
+            <td><input type="checkbox" id='newTuesdayMorningSelected' name='newTuesdayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newTuesdayAfternoonSelected' name='newTuesdayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newTuesdayEveningSelected' name='newTuesdayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Wendsday</th>
-              <td><input type="checkbox" id='wendsdayMorningSelected' name='wendsdayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='wendsdayAfternoonSelected' name='wendsdayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='wendsdayEveningSelected' name='wendsdayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='sm:space-x-2'>Wendsday</th>
+            <td><input type="checkbox" id='newWendsdayMorningSelected' name='newWendsdayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newWendsdayAfternoonSelected' name='newWendsdayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newWendsdayEveningSelected' name='newWendsdayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Thursday</th>
-              <td><input type="checkbox" id='thursdayMorningSelected' name='thursdayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='thursdayAfternoonSelected' name='thursdayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='thursdayEveningSelected' name='thursdayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='sm:space-x-2'>Thursday</th>
+            <td><input type="checkbox" id='newThursdayMorningSelected' name='newThursdayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newThursdayAfternoonSelected' name='newThursdayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newThursdayEveningSelected' name='newThursdayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Friday</th>
-              <td><input type="checkbox" id='fridayMorningSelected' name='fridayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='fridayAfternoonSelected' name='fridayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='fridayEveningSelected' name='fridayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='sm:space-x-2'>Friday</th>
+            <td><input type="checkbox" id='newFridayMorningSelected' name='newFridayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newFridayAfternoonSelected' name='newFridayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newFridayEveningSelected' name='newFridayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Saturday</th>
-              <td><input type="checkbox" id='saturdayMorningSelected' name='saturdayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='saturdayAfternoonSelected' name='saturdayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='saturdayEveningSelected' name='saturdayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='space-x-2'>Saturday</th>
+            <td><input type="checkbox" id= 'newSaturdayMorningSelected' name= 'newSaturdayMorningSelected' ></input></td>
+            <td><input type="checkbox" id= 'newSaturdayAfternoonSelected' name= 'newSaturdayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id= 'newSaturdayEveningSelected' name= 'newSaturdayEveningSelected' ></input></td>
 
-            </tr>
-            <tr className='text-center space-x-1'>
-              <th className='space-x-2'>Sunday</th>
-              <td><input type="checkbox" id='sundayMorningSelected' name='sundayMorningSelected' ></input></td>
-              <td><input type="checkbox" id='sundayAfternoonSelected' name='sundayAfternoonSelected' ></input></td>
-              <td><input type="checkbox" id='sundayEveningSelected' name='sundayEveningSelected' ></input></td>
+          </tr>
+          <tr className='sm:text-center space-x-1'>
+            <th className='space-x-2'>Sunday</th>
+            <td><input type="checkbox" id='newSundayMorningSelected' name='newSundayMorningSelected' ></input></td>
+            <td><input type="checkbox" id='newSundayAfternoonSelected' name='newSundayAfternoonSelected' ></input></td>
+            <td><input type="checkbox" id='newSundayEveningSelected' name='newSundayEveningSelected' ></input></td>
 
-            </tr>
-          </tbody>
-        </table>
+          </tr>
+        </tbody>
+      </table>
 
-        <Button type="submit">New Availability</Button>
-      </fieldset>
-    </form>
-
-    <Container TagName="form" className="gap-4mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">CHANGE PASSWORD</legend>
-        <input
-          className="bg-transparent "
-          type="password"
-          name="currentPassword"
-          placeholder="current password"
-        />
-        <input
-          className="bg-transparent  "
-          type="password"
-          name="newPassword"
-          placeholder="new password"
-        />
-        <input
-          className="bg-transparent  "
-          type="password"
-          name="newPasswordConfirm"
-          placeholder="confirm new password"
-        />
-
-        <Button type="submit">Update password</Button>
-
-      </fieldset>
-    </Container>
+      <Button type="submit">New Availability</Button>
+    </fieldset>
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
-
-    <Container TagName="form" onSubmit={handleSubmitEmail} className="flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
+  </Container>
+    <UpdateUserPassword/>
+    <UpdateUserEmail />
+    <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
+    flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">NEW EMAIL</legend>
+        <legend >Description</legend>
         <input
-          className="bg-transparent "
-          type="email"
-          name="newEmail"
-          placeholder=" new email" />
-        <input
-          className="bg-transparent "
-          type="password"
-          name="password"
-          placeholder=" your password" />
+          className="sm: bg-transparent "
+          type="text"
+          name="newDescription"
+          placeholder=" new description" />
 
-
-        <Button type="submit">New Email</Button>
+        <Button type="submit">New description</Button>
 
       </fieldset>
-
-    </Container>
-    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
    
+    </Container>
 
+    
     <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
-        <legend className="text-xl">UNREGISTER USER</legend>
-       
+        <legend className="text-xl">Unregister User</legend>
+
         <input
           className="bg-transparent "
           type="password"

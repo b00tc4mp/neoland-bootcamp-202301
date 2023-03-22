@@ -5,15 +5,15 @@ const { User, Availability, Kid, Parent, Nanny, Chat, Message } = require('./mod
 connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
         const userParent = new User({
-            name: 'Isabel Fernandez',
-            email: 'isabel@fernandez.com',
+            name: 'Miguel Fernandez',
+            email: 'miguel@fernandez.com',
             password: '123123123',
             role: 'parent'
         })
 
         const userNanny = new User({
-            name: 'Mariloli Gonzalez',
-            email: 'mariloli@gonzalez.com',
+            name: 'Maribel Gonzalez',
+            email: 'maribel@gonzalez.com',
             password: '123123123',
             role: 'nanny'
         })
@@ -27,17 +27,17 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             .then(([userParent, userNanny]) => {
                 const parent = new Parent({
                     user: userParent.id,
-                    description: 'Im a parent who needs a nanny every morning',
+                    description: 'Im a parent who needs a nanny for my two kids',
                     city: 'Barcelona',
                     extras: 'I need a nanny with reference'
                 })
 
                 const kid = new Kid({
-                    name: 'Mario',
+                    name: 'juan',
                     dateOfBirth: new Date(2016, 2, 20),
                 })
                 const kid2= new Kid({
-                    name: 'Maria',
+                    name: 'juana',
                     dateOfBirth:new Date(2016, 2, 20)
                 })
 
@@ -48,18 +48,22 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                     day: 'Monday',
                     times: 'Morning'
                 })
-               
-
+                const availability2 = new Availability({
+                    day: 'Monday',
+                    times: 'Evening'
+                })
+            
                 parent.availabilities.push(availability)
+                parent.availabilities.push(availability2)
              
 
                 const nanny = new Nanny({
                     user: userNanny.id,
                     city: 'Barcelona',
-                    description: 'I am a very funny nanny with reference',
-                    experience: 5,
+                    description: 'I am a nanny with reference',
+                    experience: 4,
                     dateOfBirth: new Date(1995, 2, 20),
-                    price: 5,
+                    price: 15,
                     extras: 'I have car'
                 })
 

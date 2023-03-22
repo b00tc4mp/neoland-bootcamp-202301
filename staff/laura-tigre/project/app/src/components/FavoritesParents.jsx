@@ -68,7 +68,7 @@ function FavoritesParents({ listUpdateStamp }) {
                     <HeartIconOutline className="h-5 w-5 text-red-500" />}</button>
 
             <Link to={`/parents/${parent.id}`}>
-                <strong className="w-[28ch] text-sm text-left">{parent.user.name}</strong>
+                <strong className="w-[28ch] text-sm text-left">{parent.name}</strong>
             </Link>
             <p>{parent.city}</p>
             <p>{parent.description}</p>

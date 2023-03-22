@@ -34,7 +34,7 @@ function ParentProfile() {
             <strong>{parent.user.name}</strong>
             <p>City: {parent.city}</p>
              <p>Description: {parent.description}</p>
-             <ul>Kids : {parent.kids.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth}</li>)}</ul>
+             <ul>Kids : {parent.kids.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0,10)}</li>)}</ul>
             <ul>Availability : {parent.availabilities.map(availabity => <li key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
             
              <p>Extras: {parent.extras}</p> 

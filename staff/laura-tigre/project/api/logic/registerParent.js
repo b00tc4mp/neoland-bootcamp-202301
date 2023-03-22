@@ -1,5 +1,4 @@
 const { User, Parent } = require('../data/models')
-const { Types: { ObjectId } } = require('mongoose')
 const { validateName, validateCity, validateEmail, validatePassword, validateRole, CoherenceError, } = require('com')
 
 

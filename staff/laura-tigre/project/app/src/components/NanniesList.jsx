@@ -57,7 +57,7 @@ function NanniesList({ listUpdateStamp}) {
         }
     }
 
-    return <Container TagName="ul" className="gap-4 py-10 ">
+    return <Container TagName="ul" className="sm: 1/2 gap-4 py-10 ">
         {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={nanny.id} id={nanny.id}>
         <button className="flex justify-center" id={nanny.id} onClick={handleToggleFavNanny}>{
                 

@@ -7,14 +7,14 @@ const { User, Parent, Nanny } = require('../data/models')
  * @returns 
  */
 
-function retrieveParents(userId) {
+function retrieveNannies(userId) {
     validateUserId(userId)
 
     return User.findById(userId).lean()
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            if (user.role !== 'parent') throw new ExistenceError('user is not a parent')
+            
 
             return Parent.findOne({ user: userId }).lean()
                 .then(parent => {
@@ -23,7 +23,7 @@ function retrieveParents(userId) {
 
                         .then(nannies => {
 
-                            const favNannies = user.favs.map(fav => fav.toString())
+                            const favNannies = parent.favs.map(fav => fav.toString())
 
                             nannies.forEach(nanny => {
 
@@ -52,5 +52,5 @@ function retrieveParents(userId) {
         })
 }
 
-module.exports = retrieveParents
+module.exports = retrieveNannies
 
