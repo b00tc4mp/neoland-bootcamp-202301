@@ -7,7 +7,6 @@ import Context from '../Context'
 import Container from "../library/Container"
 import { useLocation, useSearchParams } from 'react-router-dom'
 
-
 function Lists({refreshTime}) {
     console.log('Home -> render')
 
@@ -59,7 +58,7 @@ function Lists({refreshTime}) {
                 setLists(lists)
             })
         } catch (error) {
-            alert(error.message)
+            alert(error.message) 
         }
     }
 

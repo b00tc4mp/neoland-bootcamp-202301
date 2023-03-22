@@ -47,11 +47,11 @@ function UpdateUserPassword() {
         <Container TagName="form" onSubmit={handleSubmit} className="justify-center gap-6">
             <Container className="gap-3">
                 
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="currentPassword" placeholder ="Current password"/>
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="password" name="currentPassword" placeholder ="Current password"/>
 
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="newPassword" placeholder ="New password" />
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="password" name="newPassword" placeholder ="New password" />
 
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-purple-300" type="password" name="newPasswordRepeat"  placeholder ="Confirm new password" />
+                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="password" name="newPasswordRepeat"  placeholder ="Confirm new password" />
             </Container>
             <Button type="submit" className="w-40">Update password</Button>
         </Container>

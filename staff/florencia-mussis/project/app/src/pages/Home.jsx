@@ -18,6 +18,7 @@ function Home() {
     const navigate = useNavigate()
 
     const [user, setUser] = useState({})
+    
     const [refreshTime, setRefreshTime] = useState()
 
     useEffect(() => {
