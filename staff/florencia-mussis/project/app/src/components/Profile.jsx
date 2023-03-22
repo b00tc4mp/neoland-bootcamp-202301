@@ -6,7 +6,7 @@ import Container from '../library/Container'
 function Profile({onUnregisterUser}) {
     console.log('Profile -> render')
 
-    return <Container className='gap-20 pt-8'>
+    return <Container className='py-14 gap-20'>
         <UpdateUserPassword/>
         <UpdateUserEmail/>
         <UnregisterUser onUnregisterUser={onUnregisterUser}/>

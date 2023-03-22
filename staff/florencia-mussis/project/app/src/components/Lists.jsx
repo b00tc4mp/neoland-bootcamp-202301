@@ -97,7 +97,7 @@ function Lists({refreshTime}) {
 
     return <div className="h-full">
 
-        <main className="py-10">
+        <main className="py-14">
             <div>
                 {(location.pathname === '/') &&
                     <form ref={formRef} onSubmit={handleSearchList} className="flex justify-center  gap-2">

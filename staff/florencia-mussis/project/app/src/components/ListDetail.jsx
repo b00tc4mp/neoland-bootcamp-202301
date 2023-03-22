@@ -178,7 +178,7 @@ function ListDetail() {
     if (list) {
         const allChecked = list.items.length? list.items.every(item => item.checked) : false
 
-        return <Container className="pt-6">
+        return <Container className="pt-14">
 
             <div className="px-4 pt-4 w-1/3 border-2 rounded-lg border-solid sm: w-11/12">
                 <div className="text-right px-2" >
@@ -198,7 +198,7 @@ function ListDetail() {
                     </form>
                 </div>
 
-                {list.items.length > 1 && <div className="flex justify-between pt-10 ">
+                {list.items.length > 1 &&<div className="flex justify-between pt-10 ">
                     <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} defaultChecked={allChecked} checked={allChecked} />
                     <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
                 </div>}

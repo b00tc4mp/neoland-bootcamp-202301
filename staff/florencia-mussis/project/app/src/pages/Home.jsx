@@ -9,16 +9,25 @@ import icono from "../img/icono.png"
 import Button from "../library/Button"
 import { BookmarkIcon } from '@heroicons/react/24/solid'
 import Lists from "../components/Lists"
+import { Bars3Icon } from '@heroicons/react/24/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 function Home() {
     console.log('Home -> render')
 
     const { alert } = useContext(Context)
 
+    const [showNav, setShowNav] = useState(false)
+
+    const handleClick = () => {
+        setShowNav(!showNav)
+
+    }
+
     const navigate = useNavigate()
 
     const [user, setUser] = useState({})
-    
+
     const [refreshTime, setRefreshTime] = useState()
 
     useEffect(() => {
@@ -51,16 +60,25 @@ function Home() {
 
     return <div className="h-full">
 
-        <header className="fixed top-0 w-full flex justify-between p-2 shadow shadow-teal-500 bg-white">
+
+        <header className="fixed top-0 w-full justify-between flex p-2 shadow shadow-teal-500 bg-white py-5 z-50">
             <a className="w-16" onClick={handleNavigateToHome}><img src={icono} /></a>
+            <button onClick={handleClick} className='mx-3 text-center'>
+                {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8' />}
+            </button>
 
-            <nav className="flex items-center gap-5 sm: gap-0.5">
-                <Link to="/archived" className="m-3" href=""><BookmarkIcon className="h-8 w-8" /></Link>
+            {showNav &&
+                <div onClick={handleClick} className=" w-full h-full fixed">
+                    <ul className='flex flex-col   items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-4  w-52 gap-y-8 rounded right-0'>
 
-                <Link to="/profile" className="font-montserrat sm: w-24 text-center" href="">{user.name}</Link>
+                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className="h-8 w-8" /></Link>
 
-                <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md sm: w-20">Logout</Button>
-            </nav>
+                        <Link to="/profile" className="font-montserrat sm: w-24 text-center" href="">{user.name}</Link>
+
+                        <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md sm: w-20 ">LOGOUT</Button>
+                    </ul>
+                </div>
+            }
         </header>
 
         <main className="py-20">
