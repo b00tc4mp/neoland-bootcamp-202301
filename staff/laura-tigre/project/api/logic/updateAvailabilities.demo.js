@@ -7,7 +7,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
         
 
-        return updateAvailabilities('6415f5e39e3d8c682f1fbee7','6415f5e59e3d8c682f1fbef2' ,true, false, true,  false,false,false,  false,false,false, false,false,false, false,false,false, false,false,false,true,true,true)
+        return updateAvailabilities('641a9f8e941192a2c573c005','641a9f8e941192a2c573c010' ,true, false, true,  false,false,false,  false,false,false, false,false,false, false,false,false, false,false,false,true,true,true)
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

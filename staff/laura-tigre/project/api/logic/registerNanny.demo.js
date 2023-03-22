@@ -1,11 +1,10 @@
 const { connect, disconnect } = require('mongoose')
-const retrieveFavParents = require('./retrieveFavParents')
+const registerNanny = require('./registerNanny')
 
 connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
-        return retrieveFavParents('641ace52897f7580550bb03f')
+        return registerNanny('Laura Tigre 2', 'Barcelona', 8, 'lauratigre2@gmail.com', '123123123')
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))
     .finally(() => disconnect())
-

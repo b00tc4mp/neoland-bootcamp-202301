@@ -1,46 +1,40 @@
-const{User,Parent}=require('../data/models')
-const {Types:{ ObjectId} }= require('mongoose')
-const {validateName, validateCity,validateEmail,validatePassword,validateRole, CoherenceError, }= require('com')
+const { User, Parent } = require('../data/models')
+const { Types: { ObjectId } } = require('mongoose')
+const { validateName, validateCity, validateEmail, validatePassword, validateRole, CoherenceError, } = require('com')
 
 
 
-function registerParent(name,city,email,password,role){
+function registerParent(name, city, email, password) {
 
     validateName(name)
     validateCity(city)
     validateEmail(email)
     validatePassword(password)
-    validateRole(role)
-   
-    return User.findOne({email})
 
-    .then(user=>{
-        if(user) throw new CoherenceError('user already exists')
+    return User.findOne({ email })
 
-            user= new User({
+        .then(user => {
+            if (user) throw new CoherenceError('user already exists')
+
+            user = new User({
                 name,
                 email,
                 password,
-                role
+                role: 'parent'
             })
 
-            user.save()
-        .then(parent=>{
-
-            
-            parent= new Parent({
-             
-                city,
-               
-            })
-            
-            
-            parent.user = user._id
-            parent.save()
-        })  
+            return user.save()
+                .then(user => {
 
 
+                    const parent = new Parent({
 
-})
+                        city,
+
+                    })
+                    parent.user = user._id
+                    return parent.save()
+                })
+        })
 }
-module.exports=registerParent
+module.exports = registerParent

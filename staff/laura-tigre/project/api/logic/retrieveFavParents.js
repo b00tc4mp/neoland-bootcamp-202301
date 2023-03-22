@@ -1,47 +1,50 @@
-const { User} = require('../data/models')
+const { User, Nanny } = require('../data/models')
 const { validateUserId, ExistenceError } = require('com')
 
 function retrieveFavParents(userId) {
     validateUserId(userId)
 
-    return User.findById(userId).populate({
-        path:'favs',
-        select:'-__v',
-        populate:{
-            path:'user',
-            select:'name'
-        }
-    }).lean()
-    .then(user => {
-        if(!user) throw new ExistenceError(`User ${user} not found`)
-
-        const parents = user.favs
-        parents.forEach(parent =>{
-            parent.fav= true
-
-            if(parent._id){
-                parent.id= parent._id.toString()
-                delete parent._id
-                delete parent.__v
+    return Promise.all([
+        User.findById(userId).lean(),
+        Nanny.findOne({ user: userId }).populate({
+            path: 'favs',
+            populate: {
+                path: 'user'
             }
-            if(parent.user._id){
-                parent.user.id= parent.user._id.toString()
-                delete parent.user._id
+        }).lean()
+    ])
+        .then(([user, nanny]) => {
+            if (!user) throw new ExistenceError(`User ${userId} not found`)
 
-            }
-            parent.availabilities.forEach(availability=>{
-                availability.id= availability.id.toString()
-                delete availability._id
-            })
-            parents.kids.forEach(kid=>{
-                kid.id= kid._id.toString()
-                delete kid._id
+            if (!nanny) throw new ExistenceError(`Nanny related to user with id ${userId} not found`)
+
+            const parents = nanny.favs.map(parent => {
+                const _parent = {}
+
+                _parent.id = parent._id.toString()
+                _parent.fav = true
+
+                _parent.name = parent.user.name
+
+                _parent.availabilities = parent.availabilities
+
+                _parent.availabilities.forEach(availability => {
+                    availability.id = availability.id.toString()
+                    delete availability._id
+                })
+
+                _parent.kids = parent.kids
+
+                _parent.kids.forEach(kid => {
+                    kid.id = kid._id.toString()
+                    delete kid._id
+                })
+
+                return _parent
             })
 
+            return parents
         })
-
-        return parents
-    })
 
 
 }

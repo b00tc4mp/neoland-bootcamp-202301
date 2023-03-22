@@ -1,5 +1,5 @@
 const { validateUserId, validateParentId, ExistenceError } = require('com');
-const { User, Parent } = require('../data/models')
+const { User, Nanny, Parent } = require('../data/models')
 
 
 /**
@@ -14,13 +14,15 @@ function toggleFavParent(userId, parentId) {
     validateParentId(parentId)
 
 
-    return Promise.all([User.findById(userId), Parent.findById(parentId)])
-        .then(([user, parent]) => {
+    return Promise.all([User.findById(userId), Nanny.findOne({ user: userId }), Parent.findById(parentId)])
+        .then(([user, nanny, parent]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+
+            if (!nanny) throw new ExistenceError(`nanny related to user with id ${userId} not found`)
 
             if (!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
 
-            const favs = user.favs
+            const favs = nanny.favs
 
             const index = favs.indexOf(parentId)
 
@@ -29,10 +31,8 @@ function toggleFavParent(userId, parentId) {
             else
                 favs.splice(index, 1)
 
-            return user.save()
-
-
+            return nanny.save()
         })
-
 }
+
 module.exports = toggleFavParent

@@ -22,11 +22,7 @@ const user = new Schema({
         type: String,
         enum: ['parent', 'nanny'],
         required: true,
-    },
-    favs: [{
-        type: ObjectId,
-        ref: 'Nanny'
-    }]
+    }
 })
 
 const availability = new Schema({
@@ -74,7 +70,11 @@ const parent = new Schema({
     extras: {
         type: String,
         required: false
-    }
+    },
+    favs: [{
+        type: ObjectId,
+        ref: 'Nanny'
+    }]
 })
 
 
@@ -115,6 +115,11 @@ const nanny = new Schema({
         type: String,
         required:false
     },
+
+    favs: [{
+        type: ObjectId,
+        ref: 'Parent'
+    }]
 })
 
 const message = new Schema({
