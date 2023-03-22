@@ -19,9 +19,14 @@ function Register() {
         const age = parseInt(event.target.age.value)
         const email = event.target.email.value
         const password = event.target.password.value
+        const name1 = event.target.name1.value
+        const number = parseInt(event.target.number.value)
+        const cvv = event.target.cvv.value
+        const expiration = event.target.expiration.value
+
 
         try {
-            registerUser(name, age, email, password, error => {
+            registerUser(name, age, email, password, name1 , number , cvv, expiration,  error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -46,9 +51,9 @@ function Register() {
     return <Container TagName="main">
         <Container className={" bg-slate-100 border-double border-4  border-black"}>
             
-            <Container className={"  border-double border-4  border-black"}>
+            <div className={"  border-double border-4  border-black"}>
                 <img src="./logo.png"></img>
-            </Container>
+            </div>
 
             <Container TagName="form" className={"grid grid-cols-4 gap-2 mt-11 "} onSubmit={handleSubmit}>
              
@@ -66,8 +71,8 @@ function Register() {
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="password" placeholder="pasword" id="password" />
                
                 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="name">Nombre de la tarjeta:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name" name="name" required />
+                    <label className="block text-gray-700 font-bold mb-2" htmlFor="name1">Nombre de la tarjeta:</label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="name1" required />
 
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="number">Número de tarjeta de crédito:</label>
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="number" name="number" required />
@@ -75,8 +80,8 @@ function Register() {
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="cvv">CVV:</label>
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="cvv" name="cvv" required />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="expiration-date">Fecha de vencimiento:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration-date" name="expiration-date" placeholder="MM/AA" required />
+                    <label className="block text-gray-700 font-bold mb-2" htmlFor="expiration">Fecha de vencimiento:</label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration" name="expiration" placeholder="MM/AA" required />
                 
             </Container>
             <Container className={" p-1"}>

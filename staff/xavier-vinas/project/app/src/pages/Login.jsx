@@ -49,9 +49,9 @@ function Login() {
 
             <Container TagName="form" onSubmit={handleSubmit}>
 
-                <Container className={"  border-double border-4  border-black"}>
+                <div className={"  border-double border-4  border-black"}>
                     <img src="./logo.png"></img>
-                </Container>
+                </div>
 
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="email">Username </label>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="Enter Email" id="email" required />

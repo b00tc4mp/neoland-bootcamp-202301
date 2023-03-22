@@ -7,15 +7,15 @@ import Button from "../library/Button"
 import BidList from "./BidList"
 
 
-function AuctionDetail() {
+
+
+function AuctionDetail({}) {
 
     const { auctionId } = useParams()
 
     const { alert } = useContext(Context)
 
     const [auction, setAuction] = useState([])
-
-    
 
 
     const loadAuction = () => {
@@ -38,42 +38,29 @@ function AuctionDetail() {
         loadAuction()
     }, [])
 
-    const handleToggleBid = event => { 
-        event.preventDefault()
+    
 
 
-    }
-
-
-
-    return <Container className="" TagName="ul">
+    return <Container className="bg-gray-200 rounded-lg shadow-md p-6" TagName="ul">
         <div className="flex justify-between items-start mb-2">
-            <h2 className="text-lg font-medium mr-4">{auction.title}</h2>
+            <h2 className="text-xl font-medium mr-4">{auction.title}</h2>
         </div>
         <img className="w-full h-64 object-cover mb-2" src={auction.photo} alt={auction.title} />
         <div>
-            <p>{auction.description}</p>
-            
+            <p className="text-lg leading-7 text-gray-600">{auction.description}</p>
         </div>
-        <Container>
-        <div className="flex justify-between items-end gap-20">
-            <p>Bid Rate: {auction.bidRate}</p>
-            <p> Price: {auction.price}</p>
-        </div>
-        <div className="">
-            <p>End date: {auction.endDate}</p>
-            <p>Start date: {auction.startDate}</p>
-        </div>
+        <Container className="mt-4">
+            <div className="flex justify-between items-end gap-20">
+                <p className="text-gray-600">Bid Rate: {auction.bidRate}</p>
+                <p className="text-gray-600">Price: {auction.price}</p>
+            </div>
+            <div className="flex flex-col justify-between items-end mt-2 border-b border-gray-400 pb-2">
+                <p className="text-gray-600">Start date: <span className="font-medium">{new Date(auction.startDate).toLocaleString()}</span></p>
+                <p className="text-gray-600">End date: <span className="font-medium">{new Date(auction.endDate).toLocaleString()}</span></p>
+            </div>
         </Container>
-
-        <Container>
-            <BidList/>
-        </Container>
-
-        <Container type='form' onSubmit={handleToggleBid}>
-            <input className="px-4 py-2 rounded-full text-gray-900 bg-gray-300 focus:outline-none focus:shadow-outline" type='number'  />
-        <Button type='submit'>bid</Button>
-
+        <Container className="mt-4">
+            <BidList price={auction.price} bidRate={auction.bidRate} />
         </Container>
     </Container>
 

@@ -9,12 +9,13 @@ const { validateName, validateAge, validateEmail, validatePassword, validateCall
  * @param {string} password The user password
  * @param {function} callback The callback
  */
-function registerUser(name, age, email, password, callback) {
+function registerUser(name, age, email, password,creditCard, callback) {
     validateName(name)
     validateAge(age)
     validateEmail(email)
     validatePassword(password)
     validateCallback(callback)
+    if (typeof creditCard !== 'number') throw new TypeError('creditcard is not a number')
 
     const xhr = new XMLHttpRequest
 
@@ -42,7 +43,7 @@ function registerUser(name, age, email, password, callback) {
     xhr.open('POST', 'http://localhost:8080/users')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { name, age, email, password }
+    const user = { name, age, email, password, creditCard }
     const json = JSON.stringify(user)
     xhr.send(json)
 }

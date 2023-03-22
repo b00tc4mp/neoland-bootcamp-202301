@@ -13,13 +13,14 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-const { FormatError, ExistenceError, AuthError, CoherenceError} = require('../../com');
+const { FormatError, ExistenceError, AuthError, CoherenceError } = require('../../com');
 
 const createAuction = require('./logic/createAuction');
 const retrieveAuctions = require('./logic/retrieveAuctions');
 const retrieveAuction = require('./logic/retrieveAuction');
 const retrieveAuctionBid = require('./logic/retrieveAuctionBid');
 const bidAuction = require('./logic/bidAuction')
+const retrieveMyAuctions = require('./logic/retrieveMyAuctions')
 
 
 
@@ -203,11 +204,11 @@ connect('mongodb://127.0.0.1:27017/subastadb')
         server.post('/auctions', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
-                
+
                 const { title, description, price, photo, bidRate, startDate, endDate } = req.body
 
                 const startDate1 = new Date(startDate)
-                const endDate1 = new Date(endDate) 
+                const endDate1 = new Date(endDate)
 
                 createAuction(userId, title, description, price, photo, bidRate, startDate1, endDate1)
                     .then(() => res.status(201).send())
@@ -236,8 +237,8 @@ connect('mongodb://127.0.0.1:27017/subastadb')
         server.get('/auctions', (req, res) => {
             try {
                 const userId = verifyToken(req)
-                
-                retrieveAuctions(userId )
+
+                retrieveAuctions(userId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -262,9 +263,9 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             try {
                 const userId = verifyToken(req)
 
-                const {auctionId} = req.params
+                const { auctionId } = req.params
 
-                retrieveAuction(userId , auctionId)
+                retrieveAuction(userId, auctionId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -288,10 +289,10 @@ connect('mongodb://127.0.0.1:27017/subastadb')
         server.get('/auctionBid/:auctionId', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
-                
+
                 const { auctionId } = req.params
-                
-                retrieveAuctionBid(auctionId , userId )
+
+                retrieveAuctionBid(auctionId, userId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -311,7 +312,7 @@ connect('mongodb://127.0.0.1:27017/subastadb')
 
             }
         })
-        server.patch('/bidAuctions/:auctionId', jsonBodyParser, (req, res) => {
+        server.patch('/auctions/:auctionId/bids', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -319,6 +320,31 @@ connect('mongodb://127.0.0.1:27017/subastadb')
                 const { amount } = req.body
 
                 bidAuction(userId, auctionId, amount)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+
+            }
+        })
+
+        server.get('/myAuctions', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveMyAuctions(userId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)

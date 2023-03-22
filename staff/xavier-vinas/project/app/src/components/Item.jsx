@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 function Item({ element }) {
-    return <Link to={`/auctions/${element.id}`}>
+    return <Link to={`/auctions/${element.id}`} className="text-lg h-full">
         <li className="bg-slate-100 flex flex-col py-4 px-6 my-4" key={element.id}>
             <div className="flex justify-between items-start mb-2">
                 <h2 className="text-lg font-medium mr-4">{element.title}</h2>

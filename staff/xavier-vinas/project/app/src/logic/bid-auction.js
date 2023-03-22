@@ -31,7 +31,7 @@ function bidAuction(token, auctionId, amount, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', `http://localhost:8080/bidAuctions${auctionId}`)
+    xhr.open('PATCH', `http://localhost:8080/auctions/${auctionId}/bids`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

@@ -34,7 +34,7 @@ function List({ listUpdateStamp }) {
     }, [listUpdateStamp])
 
 
-    return <Container TagName="ul" className="gap-5">
+    return <Container TagName="ul" className="h-full flex flex-col py-4 px-6 my-4">
         {auctions.map(auction => <Item key={auction.id} element={auction} />)}
     </Container>
 }

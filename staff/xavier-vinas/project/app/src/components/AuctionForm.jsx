@@ -19,17 +19,15 @@ function AuctionForm({ }) {
         const endDate = new Date(event.target.endDate.value)
 
         try {
-            createAuction(sessionStorage.token ,title, description, price, photo, bidRate, startDate, endDate, error => {
-                
-                if (error) {
+            createAuction(sessionStorage.token ,title, description, price, photo, bidRate, startDate, endDate, error => {        
                     if (error) {
                         alert(error.message)
 
                         return
                     }
-                }
+                
                 navigate('/')
-                 // navegar a home  
+               
                 })
         } catch (error) {
             alert(error.message)
