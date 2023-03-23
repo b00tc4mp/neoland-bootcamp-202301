@@ -38,9 +38,9 @@ function Home() {
 
     })
 
-    return <div className="m-2 bg-gray-200 m-2 border-b w-full  " >
+    return <div className=" bg-gray-200 m-2 border-b   " >
         <header className="" >
-            <nav className="flex justify-between items-center p-3 bg-gray-200 " >
+            <nav className="flex justify-between items-center p-3 bg-gray-200 border-b border-gray-400 " >
 
                 <Link to="/" className="w-20  border-double border-4  border-black "><img className="logo" src="./logo.png"></img></Link>
 
@@ -55,11 +55,11 @@ function Home() {
                     </div>
                 </div>
 
-                <Link to="/my-auctions" className="">my auctions</Link>
-                <Link to="/profile" className="">{user.name}</Link>            </nav>
+                <Link to="/my-auctions" className="border-double border-4  border-blac inline-block rounded   px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-700 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-400 dark:hover:bg-opacity-10">my auctions</Link>
+                <Link to="/profile" className="border-double border-4  border-blac inline-block rounded   px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-700 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-400 dark:hover:bg-opacity-10">{user.name}</Link>            </nav>
 
         </header>
-        <main className=" h-full flex flex-col py-4 px-6 ">
+        <main className="  ">
             <Routes>
                 <Route path="/" element={<List listUpdateStamp={listUpdateStamp} />} />
 

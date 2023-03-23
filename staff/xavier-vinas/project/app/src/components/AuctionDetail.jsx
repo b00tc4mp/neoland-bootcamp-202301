@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import Container from "../library/Container"
 import Context from '../Context'
 import retrieveAuction from "../logic/retrieve-auction"
-import Button from "../library/Button"
 import BidList from "./BidList"
 
 
@@ -45,18 +44,19 @@ function AuctionDetail({}) {
         <div className="flex justify-between items-start mb-2">
             <h2 className="text-xl font-medium mr-4">{auction.title}</h2>
         </div>
-        <img className="w-full h-64 object-cover mb-2" src={auction.photo} alt={auction.title} />
+        <img className="w-full h-64 object-cover mb-2 rounded" src={auction.photo} alt={auction.title} />
         <div>
             <p className="text-lg leading-7 text-gray-600">{auction.description}</p>
         </div>
         <Container className="mt-4">
-            <div className="flex justify-between items-end gap-20">
-                <p className="text-gray-600">Bid Rate: {auction.bidRate}</p>
-                <p className="text-gray-600">Price: {auction.price}</p>
+            <div className=" gap-20">
+                <p className="text-gray-600">Bid Rate:<span className="font-medium"> {auction.bidRate}</span></p>
+                <p className="text-gray-600">Price: <span className="font-medium">{auction.price}</span> </p>
             </div>
-            <div className="flex flex-col justify-between items-end mt-2 border-b border-gray-400 pb-2">
+            <div className=" border-b border-gray-400 pb-2">
                 <p className="text-gray-600">Start date: <span className="font-medium">{new Date(auction.startDate).toLocaleString()}</span></p>
                 <p className="text-gray-600">End date: <span className="font-medium">{new Date(auction.endDate).toLocaleString()}</span></p>
+                <p className=" text-gray-600">Status: <span className="font-medium">{auction.status}</span></p>
             </div>
         </Container>
         <Container className="mt-4">

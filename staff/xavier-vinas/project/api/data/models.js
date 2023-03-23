@@ -30,7 +30,8 @@ const user = new Schema({
     role: {
         type: 'string',
         enum: ['client', 'admin'],
-        required: true
+        required: true,
+        default: 'client'
     },
     name: {
         type: 'string',
@@ -83,6 +84,11 @@ const auction = new Schema({
     endDate: {
         type: 'date',
         required: true
+    },
+    status: {
+        type: 'string',
+        enum: ['created' , 'open', 'closed'],
+        default: 'created'
     }
 })
 

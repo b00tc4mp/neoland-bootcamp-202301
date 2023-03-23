@@ -13,23 +13,27 @@ function bidAuction(userId, auctionId, amount) {
     ])
         .then(([user, auction, bids]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-
             if (!auction) throw new ExistenceError(`auction with id ${auctionId} not found`)
 
-            const maxBidAmount = bids.reduce((max, bid) => {
-                return bid.amount > max ? bid.amount : max
-            }, auction.price)
+            return Auction.updateMany({ endDate: { $lt: new Date() }, status: 'open' }, { status: 'closed' })
+                .then(() => {
+                    if (auction.status === 'closed') throw new ValueError(' estatus are closed')
 
-            if (amount < maxBidAmount + auction.bidRate) throw new ValueError('bid amount is lower than current max bidded amount')
+                    const maxBidAmount = bids.reduce((max, bid) => {
+                        return bid.amount > max ? bid.amount : max
+                    }, auction.price)
 
-            const bid = new Bid({
-                auction: auctionId,
-                user: userId,
-                amount,
-                date: new Date()
-            })
+                    if (amount < maxBidAmount + auction.bidRate) throw new ValueError('bid amount is lower than current max bidded amount')
 
-            return bid.save()
+                    const bid = new Bid({
+                        auction: auctionId,
+                        user: userId,
+                        amount,
+                        date: new Date()
+                    })
+
+                    return bid.save()
+                })
         });
 }
 
