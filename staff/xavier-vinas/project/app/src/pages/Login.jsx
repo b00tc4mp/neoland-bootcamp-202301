@@ -9,7 +9,7 @@ import Feedback from '../components/Feedback'
 function Login() {
     const navigate = useNavigate()
 
-    const [feedback, setFeedback] = useState("") 
+    const [feedback, setFeedback] = useState("")
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -44,8 +44,8 @@ function Login() {
 
 
 
-    return <Container TagName = "main" >
-        <Container className={"bg-slate-100 border-double border-4 border-black"}>
+    return <Container TagName="main" className="sm: font-['Montserrat'] bg-slate-100 h-full mt-0 mb-0 " >
+        <Container className="sm: ">
 
             <Container TagName="form" onSubmit={handleSubmit}>
 
@@ -53,17 +53,17 @@ function Login() {
                     <img src="./logo.png"></img>
                 </div>
 
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="email">Username </label>
-                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="Enter Email" id="email" required />
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="email">Username </label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="Enter Email" id="email" required />
 
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="password">Pasword</label>
-                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="pasword" id="password" required />
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="password">Pasword</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="pasword" id="password" required />
 
 
                 <Button type="submit">Login</Button>
 
                 {feedback && <Feedback message={feedback.message} level={feedback.level} />}
-                <p className="flex items-center justify-center text-gray-700 font-bold mb-2">or <Link to="/register"> Register</Link></p>
+                <p className="flex items-center justify-center text-gray-700 font-bold   "><Link to="/register"> Register</Link></p>
             </Container>
 
         </Container>

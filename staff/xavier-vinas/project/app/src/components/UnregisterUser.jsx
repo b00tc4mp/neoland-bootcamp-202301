@@ -41,7 +41,7 @@ function UnregisterUser({ onUnregisterUser }) {
     }
     return <Container >
         <Container  >
-            <h2 className=" underline decoration-double text-xl">Delete Account</h2>
+            <h2 className="text-xl">Delete Account</h2>
             <Container TagName='form' onSubmit={handleSubmit}>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" placeholder="your password" />
                 <Button type="submit">Unregister</Button>

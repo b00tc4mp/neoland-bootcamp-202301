@@ -3,27 +3,19 @@ import UpdateUserEmail from './UpdateUserEmail'
 import UnregisterUser from './UnregisterUser'
 import Container from '../library/Container'
 import { useNavigate } from 'react-router-dom'
-import Button from '../library/Button'
+
 import {  Link } from 'react-router-dom'
 
 function Profile({ onUnregisterUser }) {
-    const navigate = useNavigate()
-    const handleLogout = () => {
-        delete sessionStorage.token
-
-        navigate('/login')
-    }
 
 
-    return <Container className="p-10 h-10">
+    return <Container className="sm: bg-slate-100 h-full">
         <UpdateUserPassword />
         <UpdateUserEmail />
         <UnregisterUser onUnregisterUser={onUnregisterUser} />
-        <Container>
-            <Button className="" onClick={handleLogout}>Logout</Button>
-        </Container>
-        <Link to={"/new-auction"}>
-            add
+      
+        <Link  to={"/new-auction"}>
+            <p className=' border-double border-4  border-black' >Add auction</p>
 
         </Link>
 

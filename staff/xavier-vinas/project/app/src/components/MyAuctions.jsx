@@ -35,7 +35,7 @@ function MyAuctions({ listUpdateStamp }) {
 
 
 
-    return <Container TagName="ul" className="h-full flex flex-col py-4 px-6 my-4">
+    return <Container TagName="ul" className="sm: h-full flex flex-col py-4 px-6 my-4">
         {myAuctions.map(auction => <Item key={auction.id} element={auction} />)}
     </Container>
 }

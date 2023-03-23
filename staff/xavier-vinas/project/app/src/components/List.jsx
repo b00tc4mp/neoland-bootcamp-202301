@@ -34,7 +34,7 @@ function List({ listUpdateStamp }) {
     }, [listUpdateStamp])
 
 
-    return <Container TagName="ul" className="">
+    return <Container TagName="ul" className="sm: ">
         {auctions.map(auction => <Item key={auction.id} element={auction} />)}
     </Container>
 }

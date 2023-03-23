@@ -26,7 +26,7 @@ function Register() {
 
 
         try {
-            registerUser(name, age, email, password, name1 , number , cvv, expiration,  error => {
+            registerUser(name, age, email, password, name1, number, cvv, expiration, error => {
                 if (error) {
                     setFeedback({
                         message: error.message,
@@ -48,44 +48,44 @@ function Register() {
     }
 
 
-    return <Container TagName="main">
-        <Container className={" bg-slate-100 border-double border-4  border-black"}>
-            
-            <div className={"  border-double border-4  border-black"}>
+    return <Container TagName="main" className="sm: font-['Montserrat'] bg-slate-100 h-full mt-0">
+        <Container className={"sm: "}>
+
+            <div className={"sm:  border-double border-4  border-black"}>
                 <img src="./logo.png"></img>
             </div>
 
-            <Container TagName="form" className={"grid grid-cols-4 gap-2 mt-11 "} onSubmit={handleSubmit}>
-             
-                
-                    <label className="gap-10 block text-gray-700 font-bold mb-2" htmlFor="name">Your username :</label>
-                    <input className=" gap-10shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="text" placeholder="Enter username" id="name" />
+            <Container TagName="form" className={"sm: grid grid-cols-1 gap-2 mt-11 "} onSubmit={handleSubmit}>
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="age">age:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="number" placeholder="Enter age" id="age" />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="email">Email adress:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="email" id="email" />
+                <label className="sm: gap-10 block text-gray-700 font-bold mb-2" htmlFor="name">Your username :</label>
+                <input className="sm: gap-10shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="text" placeholder="Enter username" id="name" />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="password">choose a pasword:<sup>*</sup></label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="password" placeholder="pasword" id="password" />
-               
-                
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="name1">Nombre de la tarjeta:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="name1" required />
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="age">age:</label>
+                <input className="sm: hadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="number" placeholder="Enter age" id="age" />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="number">Número de tarjeta de crédito:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="number" name="number" required />
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="email">Email adress:</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="email" id="email" />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="cvv">CVV:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="cvv" name="cvv" required />
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="password">choose a pasword:<sup>*</sup></label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="password" placeholder="pasword" id="password" />
 
-                    <label className="block text-gray-700 font-bold mb-2" htmlFor="expiration">Fecha de vencimiento:</label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration" name="expiration" placeholder="MM/AA" required />
-                
+
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="name1">Nombre de la tarjeta:</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="name1" required />
+
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="number">Número de tarjeta de crédito:</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="number" name="number" required />
+
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="cvv">CVV:</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="cvv" name="cvv" required />
+
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="expiration">Fecha de vencimiento:</label>
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration" name="expiration" placeholder="MM/AA" required />
+
             </Container>
             <Container className={" p-1"}>
-                <Button className ={""} type="submit">Register</Button>
+                <Button className={""} type="submit">Register</Button>
             </Container>
 
             {feedback && <Feedback message={feedback.message} level={feedback.level} />}
