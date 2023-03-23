@@ -30,6 +30,9 @@ const updateItemText = require('./logic/updateItemText')
 const deleteItem = require('./logic/deleteItem')
 const updateListShared = require('./logic/updateListShared')
 const searchList = require('./logic/searchList')
+const shareList = require('./logic/shareList')
+const removeSharedFromList = require('./logic/removeSharedFromList')
+const updateListSharedMode = require('./logic/updateListSharedMode')
 
 
 connect('mongodb://127.0.0.1:27017/mylistsdb')
@@ -350,7 +353,7 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             try {
                 const userId = verifyToken(req)
 
-                const {q : title} = req.query
+                const { q: title } = req.query
 
                 searchList(userId, title)
                     .then(lists => res.status(200).json(lists))
@@ -506,33 +509,33 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.patch('/lists/:listId/shared', jsonBodyParser, (req, res) => {
-            try {
-                const userId = verifyToken(req)
+        // server.patch('/lists/:listId/shared', jsonBodyParser, (req, res) => {
+        //     try {
+        //         const userId = verifyToken(req)
 
-                const { listId } = req.params
+        //         const { listId } = req.params
 
-                const { shared } = req.body
+        //         const { shared } = req.body
 
-                updateListShared(userId, listId, shared)
-                    .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof ExistenceError)
-                            res.status(404)
-                        else if (error instanceof CoherenceError)
-                            res.status(409)
-                        else
-                            res.status(500)
-                        res.json({ error: error.message })
-                    })
-            } catch (error) {
-                if (error instanceof TypeError)
-                    res.status(400)
-                else
-                    res.status(500)
-                res.json({ error: error.message })
-            }
-        })
+        //         updateListShared(userId, listId, shared)
+        //             .then(() => res.status(204).send())
+        //             .catch(error => {
+        //                 if (error instanceof ExistenceError)
+        //                     res.status(404)
+        //                 else if (error instanceof CoherenceError)
+        //                     res.status(409)
+        //                 else
+        //                     res.status(500)
+        //                 res.json({ error: error.message })
+        //             })
+        //     } catch (error) {
+        //         if (error instanceof TypeError)
+        //             res.status(400)
+        //         else
+        //             res.status(500)
+        //         res.json({ error: error.message })
+        //     }
+        // })
 
         server.delete('/lists/:listId/items/checked/all', (req, res) => {
             try {
@@ -579,6 +582,87 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                     })
             } catch (error) {
                 if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.post('/lists/:listId/share', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId } = req.params
+
+                const { email, mode } = req.body
+
+                shareList(userId, listId, email, mode)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError  || error instanceof ValueError || error instanceof FormatError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.delete('/lists/:listId/shareds/:sharedId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { listId, sharedId } = req.params
+
+                removeSharedFromList(userId, listId, sharedId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.patch('/lists/:listId/shareds/:sharedId/mode', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const { mode } = req.body
+
+                const { listId, sharedId } = req.params
+
+                updateListSharedMode(userId, listId, sharedId, mode)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ValueError )
                     res.status(400)
                 else
                     res.status(500)

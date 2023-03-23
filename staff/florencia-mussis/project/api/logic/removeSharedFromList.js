@@ -1,4 +1,4 @@
-const { validateUserId, validateListId, ExistenceError, CoherenceError } = require('com')
+const { validateUserId, validateListId, validateSharedId, ExistenceError, CoherenceError, } = require('com')
 const { User, List } = require('../data/models')
 
 /**
@@ -6,10 +6,12 @@ const { User, List } = require('../data/models')
  * 
  * @param {string} userId The userId of the user 
  * @param {string} listId The listId of the list
+ * @param {string} shareId The shareId of the share
  */
-function toggleAllItemsCheck(userId, listId) {
+function removeSharedFromList(userId, listId, sharedId) {
     validateUserId(userId)
     validateListId(listId)
+    validateSharedId(sharedId)
 
     return User.findById(userId)
         .then(user => {
@@ -22,15 +24,14 @@ function toggleAllItemsCheck(userId, listId) {
 
             if (list.user.toString() !== userId) throw new CoherenceError(`List with id ${listId} does not belong to user with id ${userId}`)
 
-            const checkedAll = list.items.every(item => item.checked)
+            const sharedIndex = list.shareds.findIndex(shared => shared._id.toString() === sharedId)
 
-            if (checkedAll) 
-                list.items.forEach(item => item.checked = false)
-            else
-                list.items.forEach(item => item.checked = true)
-            
+            if (sharedIndex < 0) throw new ExistenceError(`Shared ${shared} not found`)
+
+            list.shareds.splice(sharedIndex, 1)
+
             return list.save()
         })
 }
 
-module.exports = toggleAllItemsCheck
+module.exports = removeSharedFromList

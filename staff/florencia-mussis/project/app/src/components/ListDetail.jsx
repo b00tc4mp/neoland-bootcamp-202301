@@ -14,17 +14,27 @@ import updateListShared from '../logic/update-list-shared'
 import removeCheckedItemsFromList from '../logic/remove-checked-items-from-list'
 import Confirm from "./Confirm"
 import toggleAllItemsCheck from '../logic/toggle-all-items-check'
+import shareList from "../logic/share-list"
+import removeSharedFromList from "../logic/remove-shared-from-list"
+import Button from "../library/Button"
 
 function ListDetail() {
     console.log('ListDetail -> render')
 
     const [list, setList] = useState()
 
-    const { listId } = useParams()
+    const { listId, sharedId } = useParams()
 
     const { alert } = useContext(Context)
 
     const [removeCheckedItemsFromListConfirmOn, setremoveCheckedItemsFromListConfirmOn] = useState(false)
+
+    const [showShare, setShowShare] = useState(false)
+
+    const handleClick = () => {
+        setShowShare(!showShare)
+    }
+
 
     const loadList = () => {
         try {
@@ -175,14 +185,45 @@ function ListDetail() {
         }
     }
 
+    const handleShareList = (event) => {
+        event.preventDefault()
+        try {
+            shareList(sessionStorage.token, listId, event.target.email.value, event.target.mode.value, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                loadList()
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleRemoveSharedFromList = (sharedId) => {
+        try {
+            removeSharedFromList(sessionStorage.token, listId, sharedId, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+                loadList()
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     if (list) {
-        const allChecked = list.items.length? list.items.every(item => item.checked) : false
+        const allChecked = list.items.length ? list.items.every(item => item.checked) : false
 
         return <Container className="pt-14">
 
-            <div className="px-4 pt-4 w-1/3 border-2 rounded-lg border-solid sm: w-11/12">
+            <div className="px-4 pt-4  border-2 rounded-lg border-solid sm: w-11/12">
                 <div className="text-right px-2" >
-                    <button className="w-7" onClick={() => handleUpdateShare(list.id, list.shared)}>
+                    <button className="w-7" onClick={handleClick}>
                         {list.shared ? <UserPlusIcon /> : <UserPlusIconOutline />}
                     </button>
                 </div>
@@ -198,15 +239,15 @@ function ListDetail() {
                     </form>
                 </div>
 
-                {list.items.length > 1 &&<div className="flex justify-between pt-10 ">
-                    <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} defaultChecked={allChecked} checked={allChecked} />
+                {list.items.length > 1 && <div className="flex justify-between pt-10 ">
+                    <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} checked={allChecked} />
                     <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
                 </div>}
 
                 <Container TagName="ul" className="py-8 justify-items-start ">
                     {list.items.map(item =>
                         <li className="flex gap-2" key={item.id}>
-                            <input type="checkbox" defaultChecked={item.checked} checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
+                            <input type="checkbox" checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
 
                             <label htmlFor="checked"></label><p className={`w-60 text-left focus:outline-teal-500 ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 
@@ -214,6 +255,41 @@ function ListDetail() {
                         </li>)}
                 </Container>
             </div>
+
+            {showShare &&
+                <Container>
+                    <div onClick={handleClick} className="px-4 pt-4 border-2 rounded-lg border-solid sm: w-11/12">
+                        <p className="text-center text-xl">Share</p>
+                        <form onSubmit={handleShareList} className="flex flex-col justify-center pt-6 gap-4">
+                            <div className="flex gap-2">
+                                <input className="px-1 border-2 rounded-md w-4/5 h-10 drop-shadow-sm focus:outline-teal-500" type="email" name="email" placeholder=" Add people" />
+                                <div className="flex items-center gap-1">
+                                    <input type="radio" name="mode" value="viewer" id="viewer" defaultChecked />
+                                    <label htmlFor="viewer">Viewer</label>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <input type="radio" name="mode" value="editor" id="editor" />
+                                    <label htmlFor="editor">Editor</label>
+                                </div>
+                            </div>
+                            <div className="text-center">
+                                <button type="submit" className=" drop-shadow-sm text-4xl">+</button>
+                            </div>
+                        </form>
+
+                        <Container TagName="ul" className="py-8 justify-items-start ">
+                            {list.shareds.map(shared =>
+                                <li className="flex gap-2" key={shared.id}>
+                                    <button className="w-6 text-center text-black text-sm" onClick={() => handleRemoveSharedFromList(shared.id)}>  X</button>
+                                </li>)}
+                        </Container>
+                        <div className="flex gap-2 justify-center">
+                            <Button className="w-20 text-md" onClick={() => handleDeleteItem()}>  Cancel</Button>
+                            <Button className="w-20 text-md" onClick={() => handleDeleteItem()}>  Save</Button>
+                        </div>
+                    </div>
+                </Container>
+            }
 
             {removeCheckedItemsFromListConfirmOn && <Confirm message="Do you want to remove all selected items?" onAccept={handleAcceptRemoveCheckedItemsFromList} onCancel={handleCancelRemoveCheckedItemsFromList} />}
         </Container>

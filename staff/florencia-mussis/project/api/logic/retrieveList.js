@@ -11,12 +11,11 @@ function retrieveList(userId, listId) {
     validateUserId(userId)
     validateListId(listId)
 
-
     return User.findById(userId)
         .then(user => {
             if (!user) throw new ExistenceError(`User with id ${userId} not found`)
 
-            return List.findById(listId).lean()
+            return List.findById(listId).populate({ path: 'shareds.user', select: 'name' }).lean()
                 .then(list => {
                     if (!list) throw new ExistenceError(`List with id ${listId} not found`)
 
@@ -32,12 +31,22 @@ function retrieveList(userId, listId) {
                     }
 
                     delete list.__v
-
+                
+    
                     list.items.forEach(items => {
                         items.id = items._id.toString()
                         delete items._id
                     })
 
+
+                    list.shareds.forEach(shared => {  
+                        if (shared.user._id){
+                        shared.user.id = shared.user._id.toString()
+                        delete shared.user._id
+                        }
+                        shared.id = shared._id.toString()
+                        delete shared._id
+                    })
 
                     list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked? 1 : 0), 0)
                     

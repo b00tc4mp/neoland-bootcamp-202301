@@ -16,6 +16,8 @@ const validateArchived = require('./validators/validateArchived')
 const validateChecked = require('./validators/validateChecked')
 const validateItemId = require('./validators/validateItemId')
 const validateShared = require('./validators/validateShared')
+const validateMode = require('./validators/validateMode')
+const validateSharedId = require('./validators/validateSharedId')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -46,6 +48,8 @@ module.exports = {
     validateChecked,
     validateItemId,
     validateShared,
+    validateMode,
+    validateSharedId,
 
     FormatError,
     ExistenceError,

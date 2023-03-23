@@ -32,6 +32,20 @@ const item = new Schema({
     },  
 })
 
+const shared = new Schema({
+    user: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    mode: {
+        type: 'string',
+        enum: ['viewer', 'editor'],
+        default: 'viewer',
+        required: true
+    }
+})
+
 const list = new Schema({
     user: {
         type: ObjectId,
@@ -48,19 +62,17 @@ const list = new Schema({
         default: false,
         required: true
     },
-    shared: {
-        type: 'boolean',
-        default: false,
-        required: true
-    },
+    shareds: [shared],
 })
 
 const User = model('User', user)
 const List = model('List', list)
 const Item = model('Item', item)
+const Shared = model('Shared', shared)
 
 module.exports ={
     User,
     List,
-    Item
+    Item,
+    Shared
 }
