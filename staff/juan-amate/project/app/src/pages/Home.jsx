@@ -7,14 +7,12 @@ import Container from '../library/Container'
 import Button from '../library/Button'
 import Profile from '../components/Profile'
 import List from '../components/List'
-import DataUser from '../components/DataUser'
 import UpdateUserPassword from '../components/UpdateUserPassword'
 import UpdateUserEmail from '../components/UpdateUserEmail'
 import retrieveUser from '../logic/retrieve-user'
-import createContract from '../logic/create-contract'
 import ContractForm from '../components/ContractForm'
 import ContractDetail from '../components/ContractDetail'
-import DocuPdf from '../components/DocuPdf'
+import ContractPdf from '../components/ContractPdf'
 
 function Home() {
     console.log('Home -> render')
@@ -69,6 +67,7 @@ function Home() {
                     <div className='flex justify-between items-center'>
 
                         <img className='mx-3' src='../../images/logo-web.png' alt='logo' />
+
                         <ul className={`${showNav ? 'left-0' : '-left-full'} flex flex-col justify-center items-center bg-yellow-600 fixed top-0 text-white text-xl font-quicksand h-full w-80 gap-y-8 duration-200 transition-all`}>
 
                             <Link to='/' className='cursor-pointer'>Home</Link>
@@ -81,6 +80,7 @@ function Home() {
                         <div onClick={handleClick} className='mx-3 cursor-pointer'>
                             {showNav ? <XMarkIcon className='h-8 w-8' /> : <Bars3Icon className='h-8 w-8' />}
                         </div>
+
                     </div>
                 </div>
             </header>
@@ -94,12 +94,12 @@ function Home() {
                         <Route path='/update-user-email' element={<UpdateUserEmail listUpdateStamp={listUpdateStamp} />} />
                         <Route path='/form-contract' element={<ContractForm listUpdateStamp={listUpdateStamp} />} />
                         <Route path='/contract/:contractId' element={<ContractDetail listUpdateStamp={listUpdateStamp} />} />
-                        <Route path='/docu-pdf' element={<DocuPdf listUpdateStamp={listUpdateStamp} />} />
+                        <Route path='/contract/:contractId/pdf' element={<ContractPdf listUpdateStamp={listUpdateStamp} />} />
                     </Routes>
                 </Container>
             </main>
 
-            <footer className="bg-trasnparent flex justify-end items-center m-4 fixed h-14 bottom-0 right-0 w-full">
+            <footer className="bg-transparent flex justify-end items-center m-4 fixed h-14 bottom-0 right-0 w-full">
                 {(location.pathname === '/') && <Button onClick={handleAdd}>+</Button>}
 
             </footer>

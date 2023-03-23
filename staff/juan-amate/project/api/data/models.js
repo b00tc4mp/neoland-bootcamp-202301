@@ -12,7 +12,8 @@ const user = new Schema({
     role: {
         type: 'string',
         enum: ['admin', 'client'],
-        required: true
+        required: true,
+        default: 'client'
     },
     address: {
         type: 'string',
