@@ -1,18 +1,22 @@
 const { User, Nanny } = require('../data/models')
 
-const { validateUserId, validateNewExperience, ExistenceError } = require('com')
+const { validateUserId, validateNewExtras, ExistenceError, } = require('com')
 
-function updateExperience(userId, newExperience) {
+function updateExtrasNanny(userId, newExtras) {
     validateUserId(userId)
-    validateNewExperience(newExperience)
+    validateNewExtras(newExtras)
 
 
     return Promise.all([User.findById(userId).lean(), Nanny.findOne({ user: userId })])
         .then(([user, nanny]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+
             if (!nanny) throw new ExistenceError(`nanny with id ${userId} not found`)
-            nanny.experience = newExperience
+            nanny.extras = newExtras
             return nanny.save()
+
+
         })
+
 }
-module.exports = updateExperience
+module.exports = updateExtrasNanny

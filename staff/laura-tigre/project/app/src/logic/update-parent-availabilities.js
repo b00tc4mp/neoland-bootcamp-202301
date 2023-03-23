@@ -1,21 +1,19 @@
-import { validateToken, validateParentId,validateNewMondayMorningSelected,validateNewMondayAfternoonSelected,validateNewMondayEveningSelected,  validateNewTuesdayMorningSelected,validateNewTuesdayAfternoonSelected,validateNewTuesdayEveningSelected,  validateNewWendsdayMorningSelected,validateNewWendsdayAfternoonSelected,validateNewWendsdayEveningSelected, validateNewThursdayMorningSelected,validateNewThursdayAfternoonSelected,validateNewThursdayEveningSelected,validateNewFridayMorningSelected,validateNewFridayAfternoonSelected,validateNewFridayEveningSelected, validateNewSaturdayMorningSelected,validateNewSaturdayAfternoonSelected,validateNewSaturdayEveningSelected,validateNewSundayMorningSelected,validateNewSundayAfternoonSelected,validateNewSundayEveningSelected, validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import { validateToken,validateNewMondayMorningSelected,validateNewMondayAfternoonSelected,validateNewMondayEveningSelected,  validateNewTuesdayMorningSelected,validateNewTuesdayAfternoonSelected,validateNewTuesdayEveningSelected,  validateNewWendsdayMorningSelected,validateNewWendsdayAfternoonSelected,validateNewWendsdayEveningSelected, validateNewThursdayMorningSelected,validateNewThursdayAfternoonSelected,validateNewThursdayEveningSelected,validateNewFridayMorningSelected,validateNewFridayAfternoonSelected,validateNewFridayEveningSelected, validateNewSaturdayMorningSelected,validateNewSaturdayAfternoonSelected,validateNewSaturdayEveningSelected,validateNewSundayMorningSelected,validateNewSundayAfternoonSelected,validateNewSundayEveningSelected, validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} parentId The parent identifier
  * @param {bolean} newSundayMorningSelected.... The days that the parent will be selected
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateParentAvailabilities(token, parentId, newMondayMorningSelected,
+function updateParentAvailabilities(token,newMondayMorningSelected,
     newMondayAfternoonSelected,
     newMondayEveningSelected,
     newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected, callback) {
     validateToken(token)
-    validateParentId(parentId)
     validateNewMondayMorningSelected(newMondayMorningSelected)
     validateNewMondayAfternoonSelected(newMondayAfternoonSelected)
     validateNewMondayEveningSelected(newMondayEveningSelected)
@@ -63,7 +61,7 @@ function updateParentAvailabilities(token, parentId, newMondayMorningSelected,
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', `http://localhost:8080'/parent/${parentId}/updateAvailabilities`)
+    xhr.open('PATCH', 'http://localhost:8080/parent/updateAvailabilities')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

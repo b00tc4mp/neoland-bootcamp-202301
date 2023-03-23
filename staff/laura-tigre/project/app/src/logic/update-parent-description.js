@@ -1,18 +1,16 @@
-import{validateToken,validateUserParentId,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} parentId The parent identifier
  * @param {string} newDescription The parent new description
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateDescriptionParent(token,parentId,newDescription, callback) {
+function updateDescriptionParent(token,newDescription, callback) {
     validateToken(token)
-    validateUserParentId(parentId)
     validateNewDescription(newDescription)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
@@ -40,7 +38,7 @@ function updateDescriptionParent(token,parentId,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH',`http://localhost:8080/users/${parentId}/updateDescription`)
+    xhr.open('PATCH','http://localhost:8080/parent/updateDescription')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

@@ -23,13 +23,12 @@ const { validateUserId, validateUserNannyId, validateNewMondayMorningSelected,
     ExistenceError
 } = require('com')
 
-function updateNannyAvailabilities(userId, nannyId,
+function updateNannyAvailabilities(userId,
     newMondayMorningSelected,
     newMondayAfternoonSelected,
     newMondayEveningSelected,
     newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected) {
     validateUserId(userId)
-    validateUserNannyId(nannyId)
     if (newMondayMorningSelected !== undefined) validateNewMondayMorningSelected(newMondayMorningSelected)
     if (newMondayAfternoonSelected !== undefined) validateNewMondayAfternoonSelected(newMondayAfternoonSelected)
     if (newMondayEveningSelected !== undefined) validateNewMondayEveningSelected(newMondayEveningSelected)
@@ -53,13 +52,11 @@ function updateNannyAvailabilities(userId, nannyId,
     if (newSundayEveningSelected !== undefined) validateNewSundayEveningSelected(newSundayEveningSelected)
 
 
-    return User.findById(userId).lean()
-        .then(user => {
+    return Promise.all([User.findById(userId).lean(),Nanny.findOne({user: userId})])
+        .then(([user, nanny]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-            return Nanny.findById(nannyId)
-        })
-        .then(nanny => {
-            if (!nanny) throw new ExistenceError(`nanny with id ${nannyId} not found`)
+           
+            if (!nanny) throw new ExistenceError(`nanny with id ${userId} not found`)
 
             const availabilities = []
 

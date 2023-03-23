@@ -1,17 +1,19 @@
-import{validateToken,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateNewName,validateNewDateOfBirth ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} newDescription The nanny new description
+ * @param {string} newName The parent new description
+ * @param {} newDateOfBirth  kids age
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateDescriptionNanny(token,newDescription, callback) {
+function createKids(token,newName, newDateOfBirth,callback) {
     validateToken(token)
-    validateNewDescription(newDescription)
+    validateNewName(newName)
+    validateNewDateOfBirth(newDateOfBirth)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
      
@@ -38,14 +40,14 @@ function updateDescriptionNanny(token,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/nanny/updateDescription')
+    xhr.open('POST','http://localhost:8080/kids')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   
-    const payload = {newDescription }
+    const payload = {newName,newDateOfBirth }
     const json = JSON.stringify(payload)
   
     xhr.send(json)
   
   }
-  export default updateDescriptionNanny
+  export default createKids

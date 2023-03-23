@@ -1,31 +1,19 @@
-const {User, Parent} = require('../data/models')
+const { User, Parent } = require('../data/models')
 
-const { validateUserId,validateUserParentId, validateNewDescription ,ExistenceError,} = require('com')
+const { validateUserId, validateNewDescription, ExistenceError, } = require('com')
 
-function updateDescriptionParent(userId,parentId, newDescription) {
+function updateDescriptionParent(userId, newDescription) {
     validateUserId(userId)
-    validateUserParentId(parentId)
     validateNewDescription(newDescription)
 
 
-    return User.findById(userId).lean()
-        .then(user => {
+    return Promise.all([User.findById(userId), Parent.findOne({ user: userId })])
+        .then(([user, parent]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-            
-            return Parent.findById(parentId)
-            
-            .then(parent => {
-                if (!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
-                parent.description = newDescription
-                
-                
-                return parent.save()
-            
-              
-            
-            })
-            
+          if (!parent) throw new ExistenceError(`parent with id ${userId} not found`)
+            parent.description = newDescription
+            return parent.save()
         })
-       
+
 }
 module.exports = updateDescriptionParent

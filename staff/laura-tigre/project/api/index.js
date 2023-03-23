@@ -14,8 +14,8 @@ const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 const retrieveParents = require('./logic/retrieveParents')
 const retrieveNannies = require('./logic/retrieveNannies')
-const retrieveNannyProfile = require('./logic/retrieveNannyProfile')
-const retrieveParentProfile = require('./logic/retrieveParentProfile')
+const retrieveNanny = require('./logic/retrieveNanny')
+const retrieveParent = require('./logic/retrieveParent')
 const searchNannies = require('./logic/searchNannies')
 const searchParents = require('./logic/searchParents')
 const toggleFavNanny = require('./logic/toggleFavNanny')
@@ -27,12 +27,19 @@ const updateExperience = require('./logic/updateExperience')
 const retrieveFavParents = require('./logic/retrieveFavParents')
 const updateNannyAvailabilities = require('./logic/updateNannyAvailabilities')
 const updateParentAvailabilities = require('./logic/updateParentAvailabilities')
-const retrieveNanny = require('./logic/retrieveNanny')
+const createKids = require('./logic/createKids')
+const updateExtrasNanny = require('./logic/updateExtrasNanny')
+const updateExtrasParent = require('./logic/updateExtrasParent')
+const retrieveKids= require('./logic/retrieveKids')
+const insertPhotoNanny = require('./logic/insertPhotoNanny')
+
 
 
 const JWT_SECRET = 'lalaland'
 
+
 const { FormatError, ExistenceError, AuthError, CoherenceError } = require('com')
+
 
 
 connect('mongodb://127.0.0.1:27017/kangaroo')
@@ -135,11 +142,11 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.get('/nanny/:nannyId', (req, res) => {
+        server.get('/parent/kids', (req, res) => {
             try {
                 const userId = verifyToken(req)
-                const { nannyId } = req.params
-                retrieveUser(userId,nannyId)
+
+                retrieveKids(userId)
 
                     .then(user => res.json(user))
                     .catch(error => {
@@ -154,6 +161,28 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 else
                     res.status(500)
 
+                res.json({ error: error.message })
+            }
+
+        })
+        server.post('nanny/photo', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const {photo} =req.body
+
+                insertPhotoNanny(userId,photo)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError) res.status(400)
+                else res.status(500)
                 res.json({ error: error.message })
             }
 
@@ -278,18 +307,17 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         })
 
 
-        server.patch('/nanny/:nannyId/updateExperience', jsonBodyParser, (req, res) => {
+        server.patch('/nanny/updateExperience', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
 
                 const credentials = req.body
-                const { nannyId } = req.params
 
                 let { newExperience } = credentials
                 newExperience= Number(newExperience)
  
-                updateExperience(userId, nannyId, newExperience)
+                updateExperience(userId,newExperience)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof AuthError) res.status(401)
@@ -309,18 +337,17 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/nanny/:nannyId/updateDescription', jsonBodyParser, (req, res) => {
+        server.patch('/nanny/updateDescription', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
 
                 const credentials = req.body
-                const { nannyId } = req.params
 
                 const { newDescription } = credentials
                 
  
-                updateDescriptionNanny(userId, nannyId, newDescription)
+                updateDescriptionNanny(userId, newDescription)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof AuthError) res.status(401)
@@ -340,18 +367,17 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/parent/:parentId/updateDescription', jsonBodyParser, (req, res) => {
+
+        server.patch('/parent/updateDescription', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
 
                 const credentials = req.body
-                const { parentId } = req.params
 
                 const { newDescription } = credentials
-                
- 
-                updateDescriptionParent(userId, parentId, newDescription)
+            
+                updateDescriptionParent(userId, newDescription)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof AuthError) res.status(401)
@@ -371,16 +397,74 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/nanny/:nannyId/updateAvailabilities', jsonBodyParser, (req, res) => {
+        server.patch('/nanny/updateExtras', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
-                const { nannyId } = req.params
+                const credentials = req.body
+                const { newExtras } = credentials
+                
+ 
+                updateExtrasNanny(userId,newExtras)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/parent/updateExtras', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+
+                const credentials = req.body
+
+                const { newExtras } = credentials
+                
+ 
+                updateExtrasParent(userId,newExtras)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/nanny/updateAvailabilities', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+             
                 const{ newMondayMorningSelected, newMondayAfternoonSelected, newMondayEveningSelected, newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected} = req.body
 
                
 
-                updateNannyAvailabilities(userId, nannyId,newMondayMorningSelected,newMondayAfternoonSelected,
+                updateNannyAvailabilities(userId,newMondayMorningSelected,newMondayAfternoonSelected,
                     newMondayEveningSelected,newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,)
                     
                     .then(() => res.status(204).send())
@@ -402,16 +486,15 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/parent/:parentId/updateAvailabilities', jsonBodyParser, (req, res) => {
+        server.patch('/parent/updateAvailabilities', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
-                const { parentId } = req.params
                 const{ newMondayMorningSelected, newMondayAfternoonSelected, newMondayEveningSelected, newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected} = req.body
 
                
 
-                updateParentAvailabilities(userId, parentId,newMondayMorningSelected,newMondayAfternoonSelected,
+                updateParentAvailabilities(userId,newMondayMorningSelected,newMondayAfternoonSelected,
                     newMondayEveningSelected,newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,)
                     
                     .then(() => res.status(204).send())
@@ -429,6 +512,30 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 else
                     res.status(500)
 
+                res.json({ error: error.message })
+            }
+
+        })
+        server.post('/kids', jsonBodyParser, (req, res) => {
+            try {
+               
+                const { newName, newDateOfBirth} = req.body
+                
+                const userId = verifyToken(req)
+
+                createKids(userId, newName, new Date(newDateOfBirth))
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError) res.status(400)
+                else res.status(500)
                 res.json({ error: error.message })
             }
 
@@ -487,7 +594,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const userId = verifyToken(req)
                 const { nannyId } = req.params
 
-                retrieveNannyProfile(userId, nannyId)
+                retrieveNanny(userId, nannyId)
 
                     .then(nanny => res.json(nanny))
                     .catch(error => {
@@ -509,9 +616,12 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         server.get('/parents/:parentId', (req, res) => {
             try {
                 const userId = verifyToken(req)
-                const { parentId } = req.params
 
-                retrieveParentProfile(userId, parentId)
+                let parentId 
+
+                if(req.params.parentId !== 'profile') parentId = req.params.parentId
+
+                retrieveParent(userId, parentId)
 
                     .then(parent => res.json(parent))
                     .catch(error => {

@@ -1,17 +1,17 @@
-import{validateToken,validateNewDescription ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateNewExtras ,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} newDescription The nanny new description
+ * @param {string} newExtras The nanny new description
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateDescriptionNanny(token,newDescription, callback) {
+function updateExtrasNanny(token,newExtras, callback) {
     validateToken(token)
-    validateNewDescription(newDescription)
+    validateNewExtras(newExtras)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
      
@@ -38,14 +38,14 @@ function updateDescriptionNanny(token,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/nanny/updateDescription')
+    xhr.open('PATCH','http://localhost:8080/nanny/updateExtras')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   
-    const payload = {newDescription }
+    const payload = {newExtras }
     const json = JSON.stringify(payload)
   
     xhr.send(json)
   
   }
-  export default updateDescriptionNanny
+  export default updateExtrasNanny

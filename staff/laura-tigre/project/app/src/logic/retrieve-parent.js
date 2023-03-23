@@ -6,7 +6,7 @@ const {validateToken,validateUserParentId ,validateCallback, ClientError,ServerE
  * @param {function} callback The function to call back with the user (or an error)
  */
 
-function retrieveParentProfile(token,parentId,callback) {
+function retrieveParent(token,parentId,callback) {
     validateToken(token)
     validateUserParentId(parentId)
     validateCallback(callback)
@@ -39,4 +39,4 @@ function retrieveParentProfile(token,parentId,callback) {
     xhr.send()
     
 }
-export default retrieveParentProfile
+export default retrieveParent

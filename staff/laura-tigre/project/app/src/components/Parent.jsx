@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import retrieveParentProfile from '../logic/retrieve-parent-profile'
+import retrieveParent from '../logic/retrieve-parent'
 import Container from '../library/Container'
 
 
@@ -14,7 +14,7 @@ function ParentProfile() {
     useEffect(() => {
 
         try {
-        retrieveParentProfile(sessionStorage.token, parentId, (error, parent)=>{
+        retrieveParent(sessionStorage.token, parentId, (error, parent)=>{
             if (error) {
                 alert(error)
                 return

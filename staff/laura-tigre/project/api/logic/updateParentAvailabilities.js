@@ -1,5 +1,5 @@
 const { User,Parent,Availability } = require('../data/models')
-const { validateUserId, validateUserParentId, validateNewMondayMorningSelected,
+const { validateUserId, validateNewMondayMorningSelected,
     validateNewMondayAfternoonSelected,
     validateNewMondayEveningSelected,
     validateNewTuesdayMorningSelected,
@@ -23,13 +23,12 @@ const { validateUserId, validateUserParentId, validateNewMondayMorningSelected,
     ExistenceError
 } = require('com')
 
-function updateParentAvailabilities(userId, parentId,
+function updateParentAvailabilities(userId,
     newMondayMorningSelected,
     newMondayAfternoonSelected,
     newMondayEveningSelected,
     newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected) {
     validateUserId(userId)
-    validateUserParentId(parentId)
     if (newMondayMorningSelected !== undefined) validateNewMondayMorningSelected(newMondayMorningSelected)
     if (newMondayAfternoonSelected !== undefined) validateNewMondayAfternoonSelected(newMondayAfternoonSelected)
     if (newMondayEveningSelected !== undefined) validateNewMondayEveningSelected(newMondayEveningSelected)
@@ -53,13 +52,11 @@ function updateParentAvailabilities(userId, parentId,
     if (newSundayEveningSelected !== undefined) validateNewSundayEveningSelected(newSundayEveningSelected)
 
 
-    return User.findById(userId).lean()
-        .then(user => {
+    return Promise.all ([User.findById(userId).lean(),Parent.findOne({user: userId})])
+        .then(([user,parent]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-            return Parent.findById(parentId)
-        })
-        .then(parent => {
-            if (!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
+        
+            if (!parent) throw new ExistenceError(`parent with id ${userId} not found`)
 
             const availabilities = []
 

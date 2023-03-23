@@ -75,6 +75,10 @@ const validateNewSundayEveningSelected = require('./validators/validateNewSunday
 const validateNewDescription = require('./validators/validateNewDescription')
 const validateNewExperience= require('./validators/validateNewExperience')
 const validateParentId = require('./validators/validateParentId')
+const validateNewName= require('./validators/validateNewName')
+const validateNewDateOfBirth = require('./validators/validateNewDateOfBirth')
+const validateNewExtras = require('./validators/validateNewExtras')
+const validatePhoto = require('./validators/validatePhoto')
 
 
 
@@ -167,6 +171,10 @@ module.exports={
     validateNewDescription,
     validateNewExperience,
     validateParentId,
+    validateNewName,
+    validateNewDateOfBirth,
+    validateNewExtras,
+    validatePhoto,
 
 
    

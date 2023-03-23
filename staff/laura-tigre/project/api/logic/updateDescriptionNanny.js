@@ -1,26 +1,19 @@
-const {User, Nanny} = require('../data/models')
+const { User, Nanny } = require('../data/models')
 
-const { validateUserId,validateUserNannyId, validateNewDescription ,ExistenceError,} = require('com')
+const { validateUserId, validateNewDescription, ExistenceError, } = require('com')
 
-function updateDescriptionNanny(userId,nannyId, newDescription) {
+function updateDescriptionNanny(userId, newDescription) {
     validateUserId(userId)
-    validateUserNannyId(nannyId)
     validateNewDescription(newDescription)
 
 
-    return User.findById(userId).lean()
-        .then(user => {
+    return Promise.all([User.findById(userId), Nanny.findOne({ user: userId })])
+        .then(([user, nanny]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-            
-            return Nanny.findById(nannyId)
-            
-            .then(nanny => {
-                if (!nanny) throw new ExistenceError(`nanny with id ${nannyId} not found`)
-                nanny.description = newDescription
-                return nanny.save()
-            })
-            
+            if (!nanny) throw new ExistenceError(`nanny with id ${userId} not found`)
+            nanny.description = newDescription
+            return nanny.save()
         })
-       
+
 }
 module.exports = updateDescriptionNanny

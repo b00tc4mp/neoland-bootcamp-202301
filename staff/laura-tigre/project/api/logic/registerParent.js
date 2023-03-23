@@ -1,5 +1,5 @@
 const { User, Parent } = require('../data/models')
-const { validateName, validateCity, validateEmail, validatePassword, validateRole, CoherenceError, } = require('com')
+const { validateName, validateCity, validateEmail, validatePassword, CoherenceError, } = require('com')
 
 
 

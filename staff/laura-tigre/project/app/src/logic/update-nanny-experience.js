@@ -1,18 +1,16 @@
-import{validateToken, validateUserNannyId,validateNewExperience,validateCallback ,ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import{validateToken,validateNewExperience,validateCallback ,ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates nanny experience
  * 
  * @param {string} token The session token
- * @param {string} nannyId The nanny identifier
  * @param {string} newExperience The nanny experience
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateExperience(token,nannyId,newExperience,callback) {
+function updateExperience(token,newExperience,callback) {
     validateToken(token)
-    validateUserNannyId(nannyId)
     validateNewExperience(newExperience)
     validateCallback(callback)
     const xhr = new XMLHttpRequest
@@ -40,7 +38,7 @@ function updateExperience(token,nannyId,newExperience,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH',`http://localhost:8080/nanny/${nannyId}/updateExperience`)
+    xhr.open('PATCH','http://localhost:8080/nanny/updateExperience')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

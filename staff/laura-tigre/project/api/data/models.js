@@ -71,6 +71,10 @@ const parent = new Schema({
         type: String,
         required: false
     },
+    photo:{
+        type: String,
+        required: false
+    },
     favs: [{
         type: ObjectId,
         ref: 'Nanny'
@@ -114,6 +118,10 @@ const nanny = new Schema({
     extras: {
         type: String,
         required:false
+    },
+    photo:{
+        type: String,
+        required: false
     },
 
     favs: [{

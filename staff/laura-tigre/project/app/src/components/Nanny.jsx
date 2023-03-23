@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import retrieveNannyProfile from '../logic/retrieve-nanny-profile'
+import retrieveNanny from '../logic/retrieve-nanny'
 import Container from '../library/Container'
 
 
@@ -14,7 +14,7 @@ function NannyProfile() {
     useEffect(() => {
 
         try {
-        retrieveNannyProfile(sessionStorage.token, nannyId, (error, nanny)=>{
+        retrieveNanny(sessionStorage.token, nannyId, (error, nanny)=>{
             if (error) {
                 alert(error)
                 return

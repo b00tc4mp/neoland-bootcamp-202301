@@ -1,9 +1,9 @@
 import { useState} from "react"
-import {useParams} from 'react-router-dom'
 import UpdateUserPassword from "./UpdateUserPassword"
 import UpdateUserEmail from "./UpdateUserEmail"
 import updateNannyAvailabilities from "../logic/update-nanny-availabilities"
 import updateDescriptionNanny from "../logic/update-nanny-description"
+import updateExtrasNanny from "../logic/update-nanny-extras"
 import updateExperience from "../logic/update-nanny-experience"
 import unregisterNanny from "../logic/unregister-nanny"
 import Button from '../library/Button'
@@ -18,7 +18,6 @@ function ProfileUserNanny({onUnregisterNanny}) {
   console.log('UpdateUserPassword -> render')
 
   const [feedback, setFeedback] = useState()
-  const {nannyId} = useParams()
 
   const handleSubmitAvailability = (event) => {
     event.preventDefault()
@@ -46,7 +45,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
     const newSundayEveningSelected = event.target.newSundayEveningSelected.checked
 
     try {
-      updateNannyAvailabilities(sessionStorage.token, nannyId, newMondayMorningSelected,
+      updateNannyAvailabilities(sessionStorage.token,newMondayMorningSelected,
         newMondayAfternoonSelected,
         newMondayEveningSelected,
         newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected,error => {
@@ -76,9 +75,9 @@ function ProfileUserNanny({onUnregisterNanny}) {
   }
   const handleSubmitExperience = (event) => {
     event.preventDefault()
-    const newExperience =event.target.newExperience.value
+    const newExperience =parseInt(event.target.newExperience.value)
     try {
-      updateExperience(sessionStorage.token,nannyId,newExperience,error => {
+      updateExperience(sessionStorage.token,newExperience,error => {
         if (error) {
           setFeedback({
             message: error.message,
@@ -105,7 +104,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
     event.preventDefault()
     const newDescription = event.target.newDescription.value
     try {
-      updateDescriptionNanny(sessionStorage.token,nannyId,newDescription,error => {
+      updateDescriptionNanny(sessionStorage.token,newDescription,error => {
         if (error) {
           setFeedback({
             message: error.message,
@@ -117,6 +116,33 @@ function ProfileUserNanny({onUnregisterNanny}) {
 
         setFeedback({
           message: 'description updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
+    }
+    
+  }
+  const handleSubmitExtras = (event) => {
+    event.preventDefault()
+    const newExtras = event.target.newExtras.value
+    try {
+      updateExtrasNanny(sessionStorage.token,newExtras,error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+        event.target.reset()
+
+        setFeedback({
+          message: 'new extras updated successfully',
           level: 'success'
         })
       })
@@ -255,6 +281,22 @@ function ProfileUserNanny({onUnregisterNanny}) {
           placeholder=" new description" />
 
         <Button type="submit">New description</Button>
+
+      </fieldset>
+
+   
+    </Container>
+    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2
+    flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
+      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+        <legend >Extras</legend>
+        <input
+          className="sm: bg-transparent "
+          type="text"
+          name="newExtras"
+          placeholder=" new extras" />
+
+        <Button type="submit">New extras</Button>
 
       </fieldset>
 

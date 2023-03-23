@@ -7,13 +7,13 @@ import ParentsList from '../components/ParentsList'
 import FavoritesNannies from '../components/FavoritesNannies'
 import FavoritesParents from '../components/FavoritesParents'
 import NanniesList from '../components/NanniesList'
-import NannyProfile from '../components/NannyProfile'
-import ParentProfile from '../components/ParentProfile'
-import ProfileUserNanny from '../components/ProfileUserNanny'
+import Nanny from '../components/Nanny'
+import Parent from '../components/Parent'
+import ProfileNanny from '../components/ProfileNanny'
 import SearchNannies from '../components/SearchNannies'
 import SearchParents from '../components/SearchParents'
 import { MagnifyingGlassIcon, HeartIcon, UserCircleIcon, HomeIcon } from '@heroicons/react/24/outline'
-import ProfileUserParent from '../components/ProfileUserParent'
+import ProfileParent from '../components/ProfileParent'
 
 
 
@@ -102,8 +102,8 @@ function Home() {
         <Routes>
 
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} onToggleFavParent={handleToggleFavParent}  />} />
-          <Route path="/parents/:parentId" element={< ParentProfile />} />
-          <Route path="/nannyProfile" element={<ProfileUserNanny/>} />
+          <Route path="/parents/:parentId" element={< Parent />} />
+          <Route path="/profile" element={<ProfileNanny/>} />
           <Route path="/parents/favs" element={<FavoritesParents listUpdateStamp={listUpdateStamp}/>} />
           
           <Route path="/search/parents" element={<SearchParents listUpdateStamp={listUpdateStamp} />} />
@@ -120,7 +120,7 @@ function Home() {
 
           <Link to="/parents/favs" className=" m-3"><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
-          <Link to="/nannyprofile" className="m-3" ><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
+          <Link to="/profile" className="m-3" ><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
 
           <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3 text-white">LOGOUT</button>
@@ -142,9 +142,9 @@ function Home() {
 
           <Route path="/search/nannies" element={<SearchNannies listUpdateStamp={listUpdateStamp} />} />
 
-          <Route path="/nannies/:nannyId" element={< NannyProfile />} />
+          <Route path="/nannies/:nannyId" element={< Nanny />} />
           <Route path="/nannies/favs" element={<FavoritesNannies listUpdateStamp={listUpdateStamp}/>} />
-          <Route path="/parentProfile" element={<ProfileUserParent />} />
+          <Route path="/profile/profile" element={<ProfileParent />} />
 
         </Routes>
 
@@ -157,7 +157,7 @@ function Home() {
 
           <Link to="/nannies/favs" className="m-3" ><HeartIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
-          <Link to="/parentProfile" className=" m-3"><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
+          <Link to="/profile/profile" className=" m-3"><UserCircleIcon className="h-8 w-8 text-[#fb923c]" /></Link>
 
           <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3 text-white rounded-md">LOGOUT</button>
         </nav>

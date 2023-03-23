@@ -1,21 +1,19 @@
-import { validateToken, validateNannyId,validateNewMondayMorningSelected,validateNewMondayAfternoonSelected,validateNewMondayEveningSelected,  validateNewTuesdayMorningSelected,validateNewTuesdayAfternoonSelected,validateNewTuesdayEveningSelected,  validateNewWendsdayMorningSelected,validateNewWendsdayAfternoonSelected,validateNewWendsdayEveningSelected, validateNewThursdayMorningSelected,validateNewThursdayAfternoonSelected,validateNewThursdayEveningSelected,validateNewFridayMorningSelected,validateNewFridayAfternoonSelected,validateNewFridayEveningSelected, validateNewSaturdayMorningSelected,validateNewSaturdayAfternoonSelected,validateNewSaturdayEveningSelected,validateNewSundayMorningSelected,validateNewSundayAfternoonSelected,validateNewSundayEveningSelected, validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+import { validateToken,validateNewMondayMorningSelected,validateNewMondayAfternoonSelected,validateNewMondayEveningSelected,  validateNewTuesdayMorningSelected,validateNewTuesdayAfternoonSelected,validateNewTuesdayEveningSelected,  validateNewWendsdayMorningSelected,validateNewWendsdayAfternoonSelected,validateNewWendsdayEveningSelected, validateNewThursdayMorningSelected,validateNewThursdayAfternoonSelected,validateNewThursdayEveningSelected,validateNewFridayMorningSelected,validateNewFridayAfternoonSelected,validateNewFridayEveningSelected, validateNewSaturdayMorningSelected,validateNewSaturdayAfternoonSelected,validateNewSaturdayEveningSelected,validateNewSundayMorningSelected,validateNewSundayAfternoonSelected,validateNewSundayEveningSelected, validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
 
 
 /**
  * Updates the user password
  * 
  * @param {string} token The session token
- * @param {string} nannyId The nanny identifier
  * @param {bolean} newSundayMorningSelected.... The days that the nanny will be selected
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-function updateNannyAvailabilities(token, nannyId, newMondayMorningSelected,
+function updateNannyAvailabilities(token,newMondayMorningSelected,
     newMondayAfternoonSelected,
     newMondayEveningSelected,
     newTuesdayMorningSelected, newTuesdayAfternoonSelected, newTuesdayEveningSelected, newWendsdayMorningSelected, newWendsdayAfternoonSelected, newWendsdayEveningSelected, newThursdayMorningSelected, newThursdayAfternoonSelected, newThursdayEveningSelected, newFridayMorningSelected, newFridayAfternoonSelected, newFridayEveningSelected, newSaturdayMorningSelected, newSaturdayAfternoonSelected, newSaturdayEveningSelected, newSundayMorningSelected, newSundayAfternoonSelected, newSundayEveningSelected, callback) {
     validateToken(token)
-    validateNannyId(nannyId)
     validateNewMondayMorningSelected(newMondayMorningSelected)
     validateNewMondayAfternoonSelected(newMondayAfternoonSelected)
     validateNewMondayEveningSelected(newMondayEveningSelected)
@@ -63,7 +61,7 @@ function updateNannyAvailabilities(token, nannyId, newMondayMorningSelected,
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', `http://localhost:8080'/nanny/${nannyId}/updateAvailabilities`)
+    xhr.open('PATCH', 'http://localhost:8080/nanny/updateAvailabilities')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
