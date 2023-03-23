@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect , useContext } from 'react'
 
 import retrieveMyStickies from '../logic/retrieve-my-stickies'
 import Container from '../library/Container'
 import Item from './Item'
+import Context from '../Context'
 
-function MyList({ listUpdateStamp, user, onToggleFav }) {
+function MyList({ listUpdateStamp }) {
+    const { alert } = useContext(Context)
 
 
     const [stickies, setStickies] = useState([])
@@ -100,11 +102,28 @@ function MyList({ listUpdateStamp, user, onToggleFav }) {
             return stickiesUpdated
         })
     }
+    const handleToggleFav = stickyId => {
+        setStickies(stickies => {
+            const index = stickies.findIndex(sticky => sticky.id === stickyId)
+
+            const sticky = stickies[index]
+
+            const stickyUpdated = { ...sticky }
+
+            stickyUpdated.fav = !stickyUpdated.fav
+
+            const stickiesUpdated = [...stickies]
+
+            stickiesUpdated[index] = stickyUpdated
+
+            return stickiesUpdated
+        })
+    }
 
     return <Container TagName="ul" className="gap-5">
         {stickies.map(sticky => <Item key={sticky.id} element={sticky} onUpdateVisibility={handleUpdateVisibility}
             onDelete={handleRemoveFromList} onToggleLike={handleToggleLike} onUpdateColor={handleUpdateColor}
-            user={user} onToggleFav={onToggleFav} />)}
+            onToggleFav={handleToggleFav} />)}
     </Container>
 }
 

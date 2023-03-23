@@ -3,7 +3,7 @@ const bidAuction = require('./bidAuction')
 
 connect('mongodb://127.0.0.1:27017/subastadb')
     .then(() => {
-        return bidAuction('641574f46f82cc52e92f07b1', '641976dccbc54dc5b6b93f4f' , 10000149000 )
+        return bidAuction('6412dd0f266b2f321035f498', '641c332ff364c0b200e338b4' , 60000000 )
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

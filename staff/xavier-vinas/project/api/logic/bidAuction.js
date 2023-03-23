@@ -1,5 +1,5 @@
 const { User, Auction, Bid } = require('../data/models')
-const { validateUserId, ExistenceError, ValueError } = require('../../../com')
+const { validateUserId, ExistenceError, ValueError, CoherenceError } = require('../../../com')
 
 function bidAuction(userId, auctionId, amount) {
     validateUserId(userId)
@@ -17,7 +17,7 @@ function bidAuction(userId, auctionId, amount) {
 
             return Auction.updateMany({ endDate: { $lt: new Date() }, status: 'open' }, { status: 'closed' })
                 .then(() => {
-                    if (auction.status === 'closed') throw new ValueError(' estatus are closed')
+                    if (auction.status === 'closed') throw new CoherenceError('auction is closed')
 
                     const maxBidAmount = bids.reduce((max, bid) => {
                         return bid.amount > max ? bid.amount : max

@@ -204,32 +204,7 @@ connect('mongodb://127.0.0.1:27017/mydb')
             }
         })
 
-        server.delete('/users', jsonBodyParser, (req, res) => { // jsonBodyParser traduce los datos q le enviamos
-            try {
-                const userId = verifyToken(req)
 
-                const { password } = req.body //para extraer la propiedad password de body
-                // const password = req.body.password
-                unregisterUser(userId, password)
-                    .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof ExistenceError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-            } catch (error) {
-                if (error instanceof TypeError || error instanceof RangeError)
-                    res.status(400)
-                else
-                    res.status(500)
-                res.json({ error: error.message })
-            }
-        })
 
 
         server.post('/stickies', jsonBodyParser, (req, res) => {

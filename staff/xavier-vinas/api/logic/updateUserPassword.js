@@ -1,4 +1,4 @@
-const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm, CoherenceError, AuthError , ExistenceError } = require('com')
+const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm, CoherenceError, AuthError , ExistenceError } = require('../../com')
 const { User } = require('../data/models')
 
 function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {

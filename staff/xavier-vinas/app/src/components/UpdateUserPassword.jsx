@@ -2,15 +2,15 @@ import { useState } from "react"
 import updateUserPassword from "../logic/update-user-password"
 import Container from '../library/Container'
 import Button from '../library/Button'
+import Feedback from './Feedback'
 
 
 
 function UpdateUserPassword() {
 
-    const [feedback, setFeedback] = useState({
-        message: "",
-        type: ""
-    })
+    const [feedback, setFeedback] = useState()
+     
+
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -24,7 +24,7 @@ function UpdateUserPassword() {
                 if (error) {
                     setFeedback({
                         message: error.message,
-                        type: 'error'
+                        level: 'error'
                     })
 
                     return
@@ -34,13 +34,13 @@ function UpdateUserPassword() {
 
                 setFeedback({
                     message: 'password updated successfully',
-                    type: 'success'
+                    level: 'success'
                 })
             })
         } catch (error) {
             setFeedback({
                 message: error.message,
-                type: 'error'
+                level: 'error'
             })
         }
     }
@@ -53,7 +53,7 @@ function UpdateUserPassword() {
             <input className="shadow-lg shadow-black p-1 rounded-full " type="password" name="newPasswordConfirm" placeholder="confirm new password" />
             <Button type="submit">Update password</Button>
         </Container>
-        <p className={`font-odibee ${feedback.type === 'success' ? "text-[greenyellow]" : "text-[tomato]"}`}>{feedback.message}</p>
+        {feedback && <Feedback message={feedback.message} level={feedback.level} />}
     </Container>
 }
 

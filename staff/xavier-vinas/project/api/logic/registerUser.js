@@ -12,7 +12,7 @@ function registerUser(name, age, email, password , creditCard) {
             if (user) throw new CoherenceError('user already registered')
             
 
-            user = new User({ name, age, email, password, creditCard })
+            user = new User({ name, age, email, password, creditCard ,role:'client' })
 
             return user.save()
 

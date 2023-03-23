@@ -50,13 +50,14 @@ function AuctionDetail({}) {
         </div>
         <Container className="mt-4">
             <div className=" gap-20">
-                <p className="text-gray-600">Bid Rate:<span className="font-medium"> {auction.bidRate}</span></p>
-                <p className="text-gray-600">Price: <span className="font-medium">{auction.price}</span> </p>
+                <p className="text-gray-600">Bid Rate:<span className="font-medium"> {auction.bidRate} $</span></p>
+                <p className="text-gray-600">Price: <span className="font-medium">{auction.price} $</span> </p>
             </div>
             <div className=" border-b border-gray-400 pb-2">
                 <p className="text-gray-600">Start date: <span className="font-medium">{new Date(auction.startDate).toLocaleString()}</span></p>
                 <p className="text-gray-600">End date: <span className="font-medium">{new Date(auction.endDate).toLocaleString()}</span></p>
                 <p className=" text-gray-600">Status: <span className="font-medium">{auction.status}</span></p>
+                <p className=" text-gray-600">User status: <span className="font-medium">{auction.userStatus}</span></p>
             </div>
         </Container>
         <Container className="mt-4">

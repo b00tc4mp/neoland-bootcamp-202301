@@ -4,7 +4,9 @@ import updateStickyVisibility from '../logic/update-sticky-visibility'
 import toggleLikeSticky from '../logic/toggle-like-sticky'
 import changeStickyColor from '../logic/change-sticky-color'
 import toggleFavSticky from '../logic/toggle-fav-sticky'
-import extractUserId from  '../utils/extractUserId'  
+import extractUserId from '../utils/extractUserId'  
+import Context from '../Context'
+import { useContext } from 'react'
 
 import { HeartIcon, StarIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartIconOutline, StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
@@ -12,12 +14,15 @@ import { Link } from 'react-router-dom'
 
 
 
-function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav, user }) {
+function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateColor, onToggleFav }) {
+    const { alert } = useContext(Context)
+    
     const userId = extractUserId(sessionStorage.token)
+
 
     const handleUpdateText = event => {
         try {
-            updateStickyText(sessionStorage.token, event.target.dataset.id, event.target.innerText, error => {
+            updateStickyText(sessionStorage.token, element.id, event.target.innerText, error => {
                 if (error) {
                     alert(error.message)
 
@@ -33,14 +38,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
         try {
             const newVisibility = event.target.dataset.visibility === 'public' ? 'private' : 'public'
 
-            updateStickyVisibility(sessionStorage.token, event.target.dataset.id, newVisibility, error => {
+            updateStickyVisibility(sessionStorage.token, element.id, newVisibility, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onUpdateVisibility(event.target.dataset.id, newVisibility)
+                onUpdateVisibility(element.id, newVisibility)
             })
         } catch (error) {
             alert(error.message)
@@ -49,16 +54,15 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleToggleLike = event => {
         try {
-            const stickyId = event.currentTarget.dataset.id
-
-            toggleLikeSticky(sessionStorage.token, stickyId, error => {
+           
+            toggleLikeSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
 
-                onToggleLike(userId, stickyId)
+                onToggleLike(userId, element.id)
             })
         } catch (error) {
             alert(error.message)
@@ -68,15 +72,14 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleToggleFav = event => {
 
-        const stickyId = event.currentTarget.dataset.id
         try {
-            toggleFavSticky(sessionStorage.token, stickyId, error => {
+            toggleFavSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-                onToggleFav(userId, stickyId)
+                onToggleFav(element.id)
             })
         } catch (error) {
             alert(error.message)
@@ -85,13 +88,13 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleDelete = event => {
         try {
-            deleteSticky(sessionStorage.token, event.target.dataset.id, error => {
+            deleteSticky(sessionStorage.token, element.id, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-                onDelete(event.target.dataset.id)
+                onDelete(element.id)
 
             })
         } catch (error) {
@@ -101,13 +104,13 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
 
     const handleChangeColor = event => {
         try {
-            changeStickyColor(sessionStorage.token, event.target.dataset.id, event.target.value, error => {
+            changeStickyColor(sessionStorage.token, element.id, event.target.value, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-                onUpdateColor(event.target.dataset.id, event.target.value)
+                onUpdateColor(element.id, event.target.value)
             })
         } catch (error) {
             alert(error.message)
@@ -132,9 +135,9 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
     
     return <li className={`${bgColor} w-[60ch] p-10 border-double  border-2`} key={element.id}>
         <div className="text-right  flex justify-end">
-            <button className="h-5 w-10 text-[#0a0802] m-1  flex " data-id={element.id} onClick={handleToggleFav}>{
+            <button className="h-5 w-10 text-[#0a0802] m-1  flex " onClick={handleToggleFav}>{
 
-                user.favs?.includes(element.id) ?
+                element.fav ?
                     <StarIcon className="h-4 w-4 text-red-500" />
                     :
                     <StarIconOutline className="h-4 w-4 text-black-500" />}</button>
@@ -146,8 +149,7 @@ function Item({ element, onUpdateVisibility, onToggleLike, onDelete, onUpdateCol
                     <option value="blue">blue</option>
                     <option value="yellow">yellow</option>
                 </select>
-                <button className="w-5 h-5  text-[#020200] m-1" data-id={element.id} data-visibility={element.visibility}
-                    onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
+                <button className="w-5 h-5  text-[#020200] m-1" onClick={handleUpdateVisibility}>{element.visibility === 'public' ? '-' : '+'}</button>
 
             </>}
             {element.user.id === userId && <button className="w-5 h-5  text-[#030301] m-1"

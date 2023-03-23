@@ -3,6 +3,7 @@ import Container from "../library/Container"
 import authenticateUser from "../logic/authenticate-user"
 import Button from "../library/Button"
 import { Link, useNavigate } from 'react-router-dom'
+import Feedback from '../components/Feedback'
 
 function Login() {
     const navigate = useNavigate()
@@ -19,7 +20,10 @@ function Login() {
 
             authenticateUser(email, password, (error, token) => {
                 if (error) {
-                    setFeedback(error.message)
+                    setFeedback({
+                        message: error.message,
+                        level: 'error'
+                    })
 
                     return
                 }
@@ -29,10 +33,12 @@ function Login() {
             })
 
         } catch (error) {
-            setFeedback(error.message)
-
-        }
-
+            
+                setFeedback({
+                    message: error.message,
+                    level: 'error'
+                })
+            }
     }
 
     return <Container TagName="main">
@@ -51,7 +57,7 @@ function Login() {
 
                 <Button type="submit">Login</Button>
 
-                <p className="flex items-center justify-center gap-2"> {feedback}</p>
+                {feedback && <Feedback message={feedback.message} level={feedback.level} />}
                 <p className="flex items-center justify-center gap-2">or <Link to ="/register">Register</Link></p>
             </Container>
 

@@ -72,7 +72,7 @@ function BidList({ price, bidRate }) {
 
         const nextBidAmount = maxBidAmount + bidRate
 
-        return <Container className="mt-1 bg-gray-200 p-6  border-double border-4  border-black max-h-96 overflow-y-scroll shadow-2xl " TagName="ul">
+        return <Container className="mt-1 bg-gray-200 p-6  border-double border-4 rounded border-black max-h-96 overflow-y-scroll shadow-2xl " TagName="ul">
             <Container TagName="form" onSubmit={handleBid} className="mt-1">
                 <h2><i>Live Auctions</i></h2>
                 <input defaultValue={nextBidAmount} min={nextBidAmount} step={bidRate} className="px-4 py-2 rounded-full text-gray-900 bg-gray-300 focus:outline-none focus:shadow-outline" type="number" name="amount" />

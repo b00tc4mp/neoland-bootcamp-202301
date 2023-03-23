@@ -75,10 +75,7 @@ function Home() {
 
         <footer className="fixed bottom-0 left-0 flex justify-center">
 
-            <Link to={"/new-auction"}>
-                add
-
-            </Link>
+          
         </footer>
     </div>
 }

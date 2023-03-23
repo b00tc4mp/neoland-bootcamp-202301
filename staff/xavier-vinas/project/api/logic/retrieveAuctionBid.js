@@ -6,7 +6,6 @@ function retrieveAuctionBid(auctionId, userId) {
     validateUserId(userId)
 
     return Promise.all([
-
         Auction.findById(auctionId),
         User.findById(userId),
         Bid.find({ auction: auctionId }).populate('user', 'name').lean()

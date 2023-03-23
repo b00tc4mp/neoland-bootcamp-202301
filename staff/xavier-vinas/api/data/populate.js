@@ -3,11 +3,15 @@ const { User, Sticky } = require('./models')
 
 connect('mongodb://127.0.0.1:27017/mydb')
     .then(() => {
+        const creditCard = new CreditCard({
+        })
+
         const user = new User({
             name: 'Cara2 Pan2',
             age: 136,
             email: 'Cara@pan2.com',
-            password: '123123123'
+            password: '123123123',
+            creditCard: creditCard
         })
         return user.save()
     })

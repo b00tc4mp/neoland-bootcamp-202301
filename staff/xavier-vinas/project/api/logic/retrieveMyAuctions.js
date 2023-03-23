@@ -1,13 +1,16 @@
 const { ExistenceError, validateUserId } = require('../../com')
 const { User, Bid, Auction } = require("../data/models")
+const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAuctions')
 
 function retrieveMyAuctions(userId) {
     validateUserId(userId)
 
+    const now = new Date()
+
     return Promise.all([
         User.findById(userId).lean(),
-        Auction.updateMany({ endDate: { $gt: new Date() }, status: 'open' }, { status: 'closed' }),
-        Auction.updateMany({ endDate: { $lt: new Date() }, status: 'open' }, { status: 'closed' })
+        Auction.updateMany({ startDate: { $lt: now }, endDate: { $gt: now }, status: 'created' }, { status: 'open' }),
+        Auction.updateMany({ endDate: { $lt: now }, status: 'open' }, { status: 'closed' })
     ])
         .then(([user]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
@@ -29,15 +32,7 @@ function retrieveMyAuctions(userId) {
             return Auction.find({ _id: { $in: auctionIds } }).lean()
         })
         .then(auctions => {
-            auctions.forEach(auction => {
-                auction.id = auction._id.toString()
-
-                delete auction._id
-  
-                delete auction.__v
-            })
-
-            return auctions
+            return aggregateUserStatusInAuctions(userId, auctions)
         })
 
 }

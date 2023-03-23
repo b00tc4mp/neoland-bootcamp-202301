@@ -1,5 +1,6 @@
 const { ExistenceError, validateUserId } = require('../../com')
 const { Auction, User } = require("../data/models")
+const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAuctions')
 
 function retrieveAuction(userId, auctionId) {
     validateUserId(userId)
@@ -21,14 +22,10 @@ function retrieveAuction(userId, auctionId) {
             return auction
         })
         .then(auction => {
-            auction = auction._doc
-
-            auction.id = auction._id.toString()
-            delete auction._id
-
-            delete auction.__v
-
-            return auction
+            return aggregateUserStatusInAuctions(userId, [auction._doc])
+        })
+        .then(auctions => {
+            return auctions[0]
         })
 
 }
