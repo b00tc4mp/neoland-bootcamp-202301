@@ -16,7 +16,8 @@ import Confirm from "./Confirm"
 import toggleAllItemsCheck from '../logic/toggle-all-items-check'
 import shareList from "../logic/share-list"
 import removeSharedFromList from "../logic/remove-shared-from-list"
-import Button from "../library/Button"
+import updateListSharedMode from "../logic/update-list-shared-mode"
+import extractUserId from "../utils/extractUserId"
 
 function ListDetail() {
     console.log('ListDetail -> render')
@@ -31,8 +32,12 @@ function ListDetail() {
 
     const [showShare, setShowShare] = useState(false)
 
-    const handleClick = () => {
-        setShowShare(!showShare)
+    const handleOpenShareds = () => {
+        setShowShare(true)
+    }
+
+    const handleCloseShareds = () => {
+        setShowShare(false)
     }
 
 
@@ -185,7 +190,7 @@ function ListDetail() {
         }
     }
 
-    const handleShareList = (event) => {
+    const handleShareList = event => {
         event.preventDefault()
         try {
             shareList(sessionStorage.token, listId, event.target.email.value, event.target.mode.value, error => {
@@ -194,6 +199,7 @@ function ListDetail() {
 
                     return
                 }
+
                 loadList()
             })
         } catch (error) {
@@ -209,6 +215,7 @@ function ListDetail() {
 
                     return
                 }
+
                 loadList()
             })
         } catch (error) {
@@ -216,30 +223,69 @@ function ListDetail() {
         }
     }
 
+    const handleUpdateListShareMode = (sharedId, mode) => {
+        try {
+            updateListSharedMode(sessionStorage.token, listId, sharedId, mode, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                loadList()
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    // TODO check if connected is in shared list and extract its mode. then enable/disable read & write operations (const isEditor = ...)
+
     if (list) {
+        // TODO const userId = extrac...
+        const userId = extractUserId(sessionStorage.token)
+        
+        let isOwner, isEditor, isViewer
+
+        if (list.user === userId) {
+            isOwner = true
+            isEditor = true
+        } else {
+            isOwner = false
+
+            isViewer = list.shareds.some(shared =>{
+                return shared.user.id === userId && shared.mode === 'viewer'
+            })
+
+            isEditor = list.shareds.some(shared =>{
+            return shared.user.id === userId && shared.mode === 'editor'
+        })
+        }
+
         const allChecked = list.items.length ? list.items.every(item => item.checked) : false
 
         return <Container className="pt-14">
 
             <div className="px-4 pt-4  border-2 rounded-lg border-solid sm: w-11/12">
-                <div className="text-right px-2" >
-                    <button className="w-7" onClick={handleClick}>
-                        {list.shared ? <UserPlusIcon /> : <UserPlusIconOutline />}
+                {isOwner && <div className="text-right px-2" >
+                    <button className="w-7" onClick={handleOpenShareds}>
+                        {list.shareds.length >= 1 && <UserPlusIcon />}
+                        {list.shareds.length <= 0 && <UserPlusIconOutline />}
                     </button>
-                </div>
+                </div>}
 
-                <p className="w-auto text-xl" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>
+                {isEditor && <p className="w-auto text-xl" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>}
 
                 <p className="text-lg font-light">{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
 
-                <div>
+                {isEditor && <div>
                     <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
                         <input className="px-1 border-2 rounded-md w-4/5 h-10 drop-shadow-sm focus:outline-teal-500" type="item" name="item" placeholder=" Add element" />
                         <button type="submit" className=" drop-shadow-sm text-4xl flex">+</button>
                     </form>
-                </div>
+                </div>}
 
-                {list.items.length > 1 && <div className="flex justify-between pt-10 ">
+                {isEditor && list.items.length > 1 && <div className="flex justify-between pt-10 ">
                     <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} checked={allChecked} />
                     <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
                 </div>}
@@ -247,19 +293,23 @@ function ListDetail() {
                 <Container TagName="ul" className="py-8 justify-items-start ">
                     {list.items.map(item =>
                         <li className="flex gap-2" key={item.id}>
-                            <input type="checkbox" checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
+                            <input type="checkbox" disabled={isViewer} checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
 
                             <label htmlFor="checked"></label><p className={`w-60 text-left focus:outline-teal-500 ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 
                             <button className="w-6 text-center text-black text-sm" onClick={() => handleDeleteItem(item.id)}>  X</button>
                         </li>)}
                 </Container>
+
             </div>
 
             {showShare &&
-                <Container>
-                    <div onClick={handleClick} className="px-4 pt-4 border-2 rounded-lg border-solid sm: w-11/12">
-                        <p className="text-center text-xl">Share</p>
+                <Container TagName="section" className="justify-center w-screen h-full fixed top-0 bg-black/[0.5]">
+                    <div className="justify-center px-4 pt-4 border-2 rounded-lg border-solid sm: w-11/12 bg-white">
+                        <div className="flex justify-between">
+                            <p className="text-center text-xl">Share</p>
+                            <button onClick={handleCloseShareds} className="border-2 rounded-md text-left px-2">X</button>
+                        </div>
                         <form onSubmit={handleShareList} className="flex flex-col justify-center pt-6 gap-4">
                             <div className="flex gap-2">
                                 <input className="px-1 border-2 rounded-md w-4/5 h-10 drop-shadow-sm focus:outline-teal-500" type="email" name="email" placeholder=" Add people" />
@@ -277,16 +327,17 @@ function ListDetail() {
                             </div>
                         </form>
 
-                        <Container TagName="ul" className="py-8 justify-items-start ">
+                        <Container TagName="ul" className="py-8 justify-between gap-2">
                             {list.shareds.map(shared =>
-                                <li className="flex gap-2" key={shared.id}>
-                                    <button className="w-6 text-center text-black text-sm" onClick={() => handleRemoveSharedFromList(shared.id)}>  X</button>
+                                <li className="flex gap-8" key={shared.id}>
+                                    <p className="w-20 text-center">{shared.user.name}</p>
+                                    <select name="mode" onChange={event => handleUpdateListShareMode(shared.id, event.target.value)} value={shared.mode}>
+                                        <option value="viewer">Viewer</option>
+                                        <option value="editor">Editor</option>
+                                    </select>
+                                    <button className="w-6 text-center text-black text-sm border rounded" onClick={() => handleRemoveSharedFromList(shared.id)}>  X</button>
                                 </li>)}
                         </Container>
-                        <div className="flex gap-2 justify-center">
-                            <Button className="w-20 text-md" onClick={() => handleDeleteItem()}>  Cancel</Button>
-                            <Button className="w-20 text-md" onClick={() => handleDeleteItem()}>  Save</Button>
-                        </div>
                     </div>
                 </Container>
             }
@@ -295,7 +346,6 @@ function ListDetail() {
         </Container>
     } else return null
 }
-
 
 export default ListDetail
 

@@ -4,7 +4,7 @@ const updateItemCheck = require('./updateItemCheck')
 connect('mongodb://127.0.0.1:27017/mylistsdb')
     .then(() => {
 
-        return updateItemCheck('640f075a659f1454f3310073', '640f075a659f1454f331007d', '640f075a659f1454f331007e', true )
+        return updateItemCheck('641991db1cb80afb831faf03', '641b2b6f654b5913afb4e162','641d687477a8348abd177646', false )
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

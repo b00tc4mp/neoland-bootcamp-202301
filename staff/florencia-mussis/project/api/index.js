@@ -33,6 +33,7 @@ const searchList = require('./logic/searchList')
 const shareList = require('./logic/shareList')
 const removeSharedFromList = require('./logic/removeSharedFromList')
 const updateListSharedMode = require('./logic/updateListSharedMode')
+const retrieveListsSharedWithMe = require('./logic/retrieveListsSharedWithMe')
 
 
 connect('mongodb://127.0.0.1:27017/mylistsdb')
@@ -663,6 +664,28 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                     })
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ValueError )
+                    res.status(400)
+                else
+                    res.status(500)
+                res.json({ error: error.message })
+            }
+        })
+
+        server.get('/lists/shared/me', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveListsSharedWithMe(userId)
+                    .then(lists => res.status(200).json(lists))
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
                     res.status(400)
                 else
                     res.status(500)

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import ListDetail from "../components/ListDetail"
 import Profile from "../components/Profile"
 import Archived from "../components/Archived"
+import  Shared  from "../components/Shared"
 import retrieveUser from "../logic/retrieve-user"
 import Context from '../Context'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
@@ -11,6 +12,8 @@ import { BookmarkIcon } from '@heroicons/react/24/solid'
 import Lists from "../components/Lists"
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import { UserPlusIcon } from '@heroicons/react/24/solid'
+import { UserPlusIcon as UserPlusIconOutline } from '@heroicons/react/24/outline'
 
 function Home() {
     console.log('Home -> render')
@@ -61,7 +64,7 @@ function Home() {
     return <div className="h-full">
 
 
-        <header className="fixed top-0 w-full justify-between flex p-2 shadow shadow-teal-500 bg-white py-5 z-50">
+        <header className="fixed top-0 w-full justify-between flex p-2 shadow shadow-teal-500 bg-white py-5">
             <a className="w-16" onClick={handleNavigateToHome}><img src={icono} /></a>
             <button onClick={handleClick} className='mx-3 text-center'>
                 {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8' />}
@@ -69,9 +72,11 @@ function Home() {
 
             {showNav &&
                 <div onClick={handleClick} className=" w-full h-full fixed">
-                    <ul className='flex flex-col   items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-4  w-52 gap-y-8 rounded right-0'>
+                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-4  w-52 gap-y-3 rounded right-0'>
 
-                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className="h-8 w-8" /></Link>
+                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className="h-10 w-10" /></Link>
+
+                        <Link to="/shared" className="m-3" href=""><UserPlusIcon className="h-10 w-10" /></Link>
 
                         <Link to="/profile" className="font-montserrat sm: w-24 text-center" href="">{user.name}</Link>
 
@@ -86,6 +91,8 @@ function Home() {
                 <Route path="/" element={<Lists refreshTime={refreshTime} />} />
 
                 <Route path="/archived" element={<Archived />} />
+                
+                <Route path="/shared" element={<Shared />} />
 
                 <Route path="/lists/:listId" element={<ListDetail />} />
 

@@ -7,16 +7,16 @@ const { User, List, Shared } = require('../data/models')
  * @param {string} userId The userId
  * @param {string} listId The listId the list belongs to
  */
-function shareList(userId, listId, email, mode ) {
+function shareList(userId, listId, email, mode) {
     validateUserId(userId)
     validateListId(listId)
     validateEmail(email)
     validateMode(mode)
-  
+
     return Promise.all([
         User.findById(userId),
         List.findById(listId),
-        User.findOne({email})
+        User.findOne({ email })
     ])
         .then(([user, list, userToShareListWith]) => {
             if (!user) throw new ExistenceError(`User with id ${userId} not found`)
@@ -25,7 +25,16 @@ function shareList(userId, listId, email, mode ) {
 
             if (!userToShareListWith) throw new ExistenceError(`User with email ${email} not found`)
 
-            const shared = new Shared({
+            if (list.user._id.toString() !== userId)
+                throw new CoherenceError(`The user with id ${userId} is not the owner of list with id ${listId}`)
+
+            let shared = list.shareds.find(shared => shared.user._id.toString() === userToShareListWith.id)
+
+            if (shared) throw new ExistenceError(`The list is already shared with the user with id ${userToShareListWith.id}`)
+
+            // TODO verify userToShareListWith.id is not in the list.shareds 
+
+            shared = new Shared({
                 user: userToShareListWith.id,
                 mode
             })

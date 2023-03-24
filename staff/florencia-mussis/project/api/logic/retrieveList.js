@@ -1,5 +1,5 @@
-const { validateUserId, validateListId, CoherenceError, ExistenceError} = require('com')
-const { User, List } = require('../data/models')
+const { validateUserId, validateListId, CoherenceError, ExistenceError } = require('com')
+const { User, List, Shared } = require('../data/models')
 
 /**
  * Retrieves the selected list
@@ -19,7 +19,15 @@ function retrieveList(userId, listId) {
                 .then(list => {
                     if (!list) throw new ExistenceError(`List with id ${listId} not found`)
 
-                    if (!list.shared && list.user._id.toString() !== userId ) throw new CoherenceError(`The list with id ${listId} does not belong to user  with id ${userId}`)
+                    if (list.user._id.toString() !== userId)
+                        if (!list.shareds.length)
+                            throw new CoherenceError(`The list with id ${listId} is not shared with user with id ${userId}`)
+                        else {
+                            const shared = list.shareds.find(shared => shared.user._id.toString() === userId)
+
+                            if (!shared)
+                                throw new CoherenceError(`The list with id ${listId} is not shared with user with id ${userId}`)
+                        }
 
                     if (list._id) {
                         list.id = list._id.toString()
@@ -31,25 +39,25 @@ function retrieveList(userId, listId) {
                     }
 
                     delete list.__v
-                
-    
+
+
                     list.items.forEach(items => {
                         items.id = items._id.toString()
                         delete items._id
                     })
 
 
-                    list.shareds.forEach(shared => {  
-                        if (shared.user._id){
-                        shared.user.id = shared.user._id.toString()
-                        delete shared.user._id
+                    list.shareds.forEach(shared => {
+                        if (shared.user._id) {
+                            shared.user.id = shared.user._id.toString()
+                            delete shared.user._id
                         }
                         shared.id = shared._id.toString()
                         delete shared._id
                     })
 
-                    list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked? 1 : 0), 0)
-                    
+                    list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked ? 1 : 0), 0)
+
                     list.itemsTotalCount = list.items.length
 
                     list.items.sort((itemA, itemB) => {
