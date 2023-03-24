@@ -10,15 +10,21 @@ const { User, Contract } = require('../data/models')
 function retrieveMyContracts(userId) {
     validateUserId(userId)
 
-    return Promise.all([
-        User.findById(userId).lean(),
-        Contract.find({ user: new ObjectId(userId) }).populate({ path: 'user', select: 'name' }).lean()
-    ])
-        .then(([user, contracts]) => {
+    return User.findById(userId).lean()
+        .then((user) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            contracts.forEach(contract => {
+            let filter = {}
 
+            if (user.role === 'particular')
+                filter.user = new ObjectId(userId)
+            else
+                filter.photographer = new ObjectId(userId)
+
+            return Contract.find(filter).populate({ path: 'user', select: 'name' }).lean()
+        })
+        .then(contracts => {
+            contracts.forEach(contract => {
                 contract.services.forEach(service => {
                     if (service._id) {
                         service.id = service._id.toString()

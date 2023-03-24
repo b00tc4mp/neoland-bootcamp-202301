@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Feedback from '../components/Feedback'
-import registerUser from '../logic/register-user'
+import registerParticularUser from '../logic/register-particular-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
 import Input from '../library/Input'
@@ -18,25 +18,25 @@ function Register() {
 
         const name = event.target.name.value
         const nationalId = event.target.nationalId.value
-        const role = event.target.role.value
         const address = event.target.address.value
         const zipCode = event.target.zipCode.value
         const city = event.target.city.value
         const province = event.target.province.value
         const phone = event.target.phone.value
+        const photographer = event.target.photographer.value
         const email = event.target.email.value
         const password = event.target.password.value
 
         try {
-            registerUser(
+            registerParticularUser(
                 name,
                 nationalId,
-                role,
                 address,
                 zipCode,
                 city,
                 province,
                 phone,
+                photographer,
                 email,
                 password,
                 error => {
@@ -71,12 +71,12 @@ function Register() {
                 <div className='flex flex-col items-center w-screen'>
                     <Input TagName='input' type='text' id='name' placeholder='Name & Surname' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='nationalId' placeholder='National Id' className={'w-2/3 max-w-4/5'} ></Input>
-                    <Input TagName='input' type='text' id='role' placeholder='client or admin' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='address' placeholder='Address' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='zipCode' placeholder='Zip Code' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='city' placeholder='City' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='province' placeholder='Province' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='phone' placeholder='Phone number' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='email' id='photographer' placeholder='Your photographer email' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='email' id='email' placeholder='Email' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='password' id='password' placeholder='Password' className={'w-2/3 max-w-4/5'} ></Input>
                 </div>

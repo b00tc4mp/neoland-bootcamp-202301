@@ -17,6 +17,7 @@ function updateUserData(
     validateZipCode(zipCode)
     validateCity(city)
     validateProvince(province)
+    validatePhone(phone)
 
 
     return User.findById(userId)

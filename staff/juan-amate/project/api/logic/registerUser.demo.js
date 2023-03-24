@@ -4,15 +4,14 @@ const registerUser = require('./registerUser')
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {
         return registerUser(
-            'Paco Mer',
+            'María Jiménez Jiménez',
             '12345678A',
-            'client',
             'Calle Salsipuedes, 1',
             '23003',
             'Ubeda',
             'Jaén',
             '666777888',
-            'paco@mer.com',
+            'jimenez@jimenez.com',
             '123123123',
         )
     })

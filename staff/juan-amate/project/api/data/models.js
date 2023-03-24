@@ -11,9 +11,8 @@ const user = new Schema({
     },
     role: {
         type: 'string',
-        enum: ['admin', 'client'],
-        required: true,
-        default: 'client'
+        enum: ['photographer', 'particular'],
+        required: true
     },
     address: {
         type: 'string',
@@ -34,6 +33,11 @@ const user = new Schema({
     phone: {
         type: 'string',
         required: true
+    },
+    photographer: {
+        type: ObjectId,
+        ref: 'User',
+        required: false
     },
     email: {
         type: 'string',
@@ -136,7 +140,12 @@ const contract = new Schema({
         required: true,
         default: false
     },
-    services: [service]
+    services: [service],
+    photographer: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
 })
 
 const User = model('User', user)

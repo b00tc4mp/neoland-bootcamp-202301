@@ -4,6 +4,7 @@ import Context from './Context'
 import Alert from './components/Alert'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import RegisterPhotographer from './pages/RegisterPhotographer'
 import Home from './pages/Home'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Route path='/*' element={sessionStorage.token ? <Home /> : <Navigate to='/login' />} />
       <Route path='/login' element={sessionStorage.token ? <Navigate to='/' /> : <Login />} />
       <Route path='/register' element={sessionStorage.token ? <Navigate to='/' /> : <Register />} />
+      <Route path='/register/admin' element={sessionStorage.token ? <Navigate to='/' /> : <RegisterPhotographer />} />
 
       <Route path='/hello/:to' element={<Hello />} />
     </Routes>

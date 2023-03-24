@@ -4,7 +4,7 @@ const { User } = require('../data/models')
 function retrieveAdminUser(userId) {
     validateUserId(userId)
 
-    return User.findOne({ role: 'admin' })
+    return User.findOne({ role: 'photographer' })
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 

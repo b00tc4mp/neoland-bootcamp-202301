@@ -7,7 +7,8 @@ const JWT_SECRET = 'juan tiene mucho pelo guapo'
 const { FormatError, ExistenceError, AuthError, ValueError, CoherenceError } = require('com')
 const verifyToken = require('./utils/verifyToken')
 const authenticateUser = require('./logic/authenticateUser')
-const registerUser = require('./logic/registerUser')
+const registerParticularUser = require('./logic/registerParticularUser')
+const registerPhotographer = require('./logic/registerPhotographer')
 const retrieveUser = require('./logic/retrieveUser')
 const retrieveAdminUser = require('./logic/retrieveAdminUser')
 const updateUserEmail = require('./logic/updateUserEmail')
@@ -32,7 +33,54 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                 const {
                     name,
                     nationalId,
-                    role,
+                    address,
+                    zipCode,
+                    city,
+                    province,
+                    phone,
+                    email,
+                    photographer,
+                    password
+                } = user
+
+                registerParticularUser(
+                    name,
+                    nationalId,
+                    address,
+                    zipCode,
+                    city,
+                    province,
+                    phone,
+                    photographer,
+                    email,
+                    password
+                )
+                    .then(token => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError)
+                            res.status(409)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof FormatError || error instanceof RangeError || error instanceof TypeError || error instanceof CoherenceError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+
+        server.post('/users/admin', jsonBodyParser, (req, res) => {
+            try {
+                const user = req.body
+
+                const {
+                    name,
+                    nationalId,
                     address,
                     zipCode,
                     city,
@@ -42,10 +90,9 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                     password
                 } = user
 
-                registerUser(
+                registerPhotographer(
                     name,
                     nationalId,
-                    role,
                     address,
                     zipCode,
                     city,

@@ -4,7 +4,7 @@ const createContract = require('./createContract')
 connect('mongodb://127.0.0.1:27017/projectdb')
   .then(() => {
     return createContract(
-      '641089dfdec56944ce04f875',
+      '641db7f2ad5cca058d1b0ee4',
       new Date(),
       new Date('2024-05-25T12:30:00.000Z'),
       'Catedral de Sevilla',
@@ -43,7 +43,8 @@ connect('mongodb://127.0.0.1:27017/projectdb')
       true,
       false,
       true,
-      false
+      false,
+      'juan@amate.com'
     )
   })
   .then(result => console.log(result))

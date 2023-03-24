@@ -213,7 +213,8 @@ function createContract(
         coupleId,
         couplePhone,
         coupleEmail,
-        couplePreparationPlace
+        couplePreparationPlace,
+        photographer: user.photographer
       })
 
       const coverageService = new Service({

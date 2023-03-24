@@ -8,6 +8,7 @@ const validateZipCode = require('./validators/validateZipCode')
 const validateCity = require('./validators/validateCity')
 const validateProvince = require('./validators/validateProvince')
 const validatePhone = require('./validators/validatePhone')
+const validatePhotographer = require('./validators/validatePhotographer')
 const validateEmail = require('./validators/validateEmail')
 const validatePassword = require('./validators/validatePassword')
 
@@ -90,6 +91,7 @@ module.exports = {
     validateCity,
     validateProvince,
     validatePhone,
+    validatePhotographer,
     validateEmail,
     validatePassword,
     validateUserId,

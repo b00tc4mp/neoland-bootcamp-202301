@@ -4,41 +4,44 @@ const { User, Contract, Place } = require('./models')
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {
         const user = new User({
-            name: 'Juan Amate',
+            name: 'Ursula Corberó',
             nationalId: '12345678A',
-            role: 'admin',
+            role: 'particular',
             address: 'Avenida 123',
             zipCode: 12345,
             city: 'Mostoles',
             province: 'Madrid',
             phone: '666777888',
-            email: 'juan@amate.com',
+            photographerEmail: 'juan@amate.com',
+            email: 'ursula2@corbero.com',
             password: '123123123',
         })
 
         const user1 = new User({
             name: 'María Jiménez Gómez',
             nationalId: '23456789A',
-            role: 'client',
+            role: 'particular',
             address: 'Avenida 123',
             zipCode: 12345,
             city: 'Marbella',
             province: 'Málaga',
             phone: '666777888',
-            email: 'maria@jimenez.com',
+            photographerCode: '641c85b8045fbee3bb4a6e39',
+            email: 'maria2@jimenez.com',
             password: '123123123',
         })
 
         const user2 = new User({
             name: 'Rocío García Montes',
             nationalId: '34567890A',
-            role: 'client',
+            role: 'particular',
             address: 'Avenida 123',
             zipCode: 12345,
             city: 'Granada',
             province: 'Granada',
             phone: '666777888',
-            email: 'rocio@garcia.com',
+            photographerCode: '641c85b8045fbee3bb4a6e39',
+            email: 'rocio2@garcia.com',
             password: '123123123',
         })
 
