@@ -18,6 +18,7 @@ function bidAuction(userId, auctionId, amount) {
             return Auction.updateMany({ endDate: { $lt: new Date() }, status: 'open' }, { status: 'closed' })
                 .then(() => {
                     if (auction.status === 'closed') throw new CoherenceError('auction is closed')
+                    if (auction.status === 'created') throw new CoherenceError('auction is not open')
 
                     const maxBidAmount = bids.reduce((max, bid) => {
                         return bid.amount > max ? bid.amount : max

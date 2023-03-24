@@ -82,10 +82,10 @@ function Register() {
 
                 <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="expiration">Fecha de vencimiento:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration" name="expiration" placeholder="MM/AA" required />
-
+            <Container >
+                <Button type="submit">Register</Button>
             </Container>
-            <Container className={" p-1"}>
-                <Button className={""} type="submit">Register</Button>
+
             </Container>
 
             {feedback && <Feedback message={feedback.message} level={feedback.level} />}

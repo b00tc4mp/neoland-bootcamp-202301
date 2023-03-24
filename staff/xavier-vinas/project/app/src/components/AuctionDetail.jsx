@@ -8,7 +8,7 @@ import BidList from "./BidList"
 
 
 
-function AuctionDetail({}) {
+function AuctionDetail({ }) {
 
     const { auctionId } = useParams()
 
@@ -37,10 +37,10 @@ function AuctionDetail({}) {
         loadAuction()
     }, [])
 
-    
 
 
-    return <Container className="font-['Montserrat'] sm: bg-gray-200 rounded-lg shadow-md p-6" TagName="ul">
+
+    return <Container className="font-['Montserrat'] sm: bg-gray-200 rounded-lg shadow-md p-6">
         <div className="sm: flex justify-between items-start mb-2">
             <h2 className="sm: text-xl font-medium mr-4">{auction.title}</h2>
         </div>
@@ -60,9 +60,8 @@ function AuctionDetail({}) {
                 <p className=" sm: text-gray-600">User status: <span className="font-medium">{auction.userStatus}</span></p>
             </div>
         </Container>
-        <Container className="sm:">
-            <BidList price={auction.price} bidRate={auction.bidRate} />
-        </Container>
+
+        <BidList price={auction.price} bidRate={auction.bidRate} status={auction.status} />
     </Container>
 
 
