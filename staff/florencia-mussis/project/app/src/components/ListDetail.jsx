@@ -274,20 +274,22 @@ function ListDetail() {
                     </button>
                 </div>}
 
-                {isEditor && <p className="w-auto text-xl" id={list.id} contentEditable={true} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true}>{list.title}</p>}
+                <p className="w-auto text-xl" id={list.id} contentEditable={isEditor} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true} >{list.title}</p>
 
                 <p className="text-lg font-light">{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
 
-                {isEditor && <div>
+                {isEditor && <div >
                     <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
-                        <input className="px-1 border-2 rounded-md w-4/5 h-10 drop-shadow-sm focus:outline-teal-500" type="item" name="item" placeholder=" Add element" />
-                        <button type="submit" className=" drop-shadow-sm text-4xl flex">+</button>
+                        <input className="px-1 border-2 rounded-md w-4/5 h-10focus:outline-teal-500" type="item" name="item" placeholder=" Add element"  disabled={isViewer} />
+                        <button type="submit" className="text-4xl flex">+</button>
                     </form>
                 </div>}
 
-                {isEditor && list.items.length > 1 && <div className="flex justify-between pt-10 ">
-                    <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} checked={allChecked} />
+                {isEditor && <div>    
+                {list.items.length > 1 && <div className="flex justify-between pt-10 ">
+                    <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} disabled={isViewer} checked={allChecked} />
                     <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
+                </div>}
                 </div>}
 
                 <Container TagName="ul" className="py-8 justify-items-start ">
@@ -295,9 +297,9 @@ function ListDetail() {
                         <li className="flex gap-2" key={item.id}>
                             <input type="checkbox" disabled={isViewer} checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
 
-                            <label htmlFor="checked"></label><p className={`w-60 text-left focus:outline-teal-500 ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={true} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
+                            <label htmlFor="checked"></label><p className={`w-60 text-left focus:outline-teal-500 ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={isEditor} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 
-                            <button className="w-6 text-center text-black text-sm" onClick={() => handleDeleteItem(item.id)}>  X</button>
+                            {isEditor && <button className="w-6 text-center text-black text-sm" onClick={() => handleDeleteItem(item.id)}>  X</button>}
                         </li>)}
                 </Container>
 

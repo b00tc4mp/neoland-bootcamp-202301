@@ -54,7 +54,7 @@ function UnregisterUser({ onUnregisterUser }) {
     return <Container>
         <Container TagName="form" onSubmit={handleUnregisterUser} className="justify-center gap-6">
             
-                <input ref={passwordRef} className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="password" name="password" placeholder="Password" />
+                <input ref={passwordRef} className="border-2 rounded-md w-56 focus:outline-teal-500" type="password" name="password" placeholder="Password" />
             
             <Button type="submit" className="w-40">Unregister</Button>
         </Container>

@@ -44,9 +44,9 @@ function UpdateUserEmail() {
     return <Container className="justify-center gap-8 font-['Montserrat']">
         <Container TagName="form" onSubmit={handleSubmit} className="justify-center gap-6">
             <Container className="gap-3">
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="email" name="newEmail" placeholder="New e-mail" />
+                <input className="border-2 rounded-md w-56  focus:outline-teal-500" type="email" name="newEmail" placeholder="New e-mail" />
 
-                <input className="border-2 rounded-md w-56 drop-shadow-sm focus:outline-teal-500" type="password" name="password" placeholder="Password"/>
+                <input className="border-2 rounded-md w-56  focus:outline-teal-500" type="password" name="password" placeholder="Password"/>
             </Container>
             <Button type="submit" className="w-40">Update email</Button>
         </Container>

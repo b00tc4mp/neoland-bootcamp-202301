@@ -14,6 +14,7 @@ import { Bars3Icon } from '@heroicons/react/24/solid'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
 import { UserPlusIcon as UserPlusIconOutline } from '@heroicons/react/24/outline'
+import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 
 function Home() {
     console.log('Home -> render')
@@ -72,15 +73,15 @@ function Home() {
 
             {showNav &&
                 <div onClick={handleClick} className=" w-full h-full fixed">
-                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-4  w-52 gap-y-3 rounded right-0'>
+                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-2  w-44 gap-y-2 rounded right-0 '>
 
-                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className="h-10 w-10" /></Link>
+                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className=" m-auto h-10 w-10" />Archived lists</Link>
 
-                        <Link to="/shared" className="m-3" href=""><UserPlusIcon className="h-10 w-10" /></Link>
+                        <Link to="/shared" className="m-3" href=""><UserPlusIcon className="m-auto h-10 w-10" />Shared lists</Link>
 
-                        <Link to="/profile" className="font-montserrat sm: w-24 text-center" href="">{user.name}</Link>
+                        <Link to="/profile" className="m-3" href=""><Cog6ToothIcon className="m-auto h-10 w-10"/>{user.name}</Link>
 
-                        <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md sm: w-20 ">LOGOUT</Button>
+                        <Button onClick={handleLogout} className="w-24 text-sm h-7 mt-2 rounded-md sm: w-20 ">LOGOUT</Button>
                     </ul>
                 </div>
             }
