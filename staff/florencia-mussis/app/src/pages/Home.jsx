@@ -18,6 +18,7 @@ function Home() {
     const location = useLocation()
 
     const [listUpdateStamp, setListUpdateStamp] = useState(Date.now())
+    
     const [user, setUser] = useState({})
 
     const handleAdd = () => {

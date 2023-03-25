@@ -37,7 +37,6 @@ function retrieveMyLists(userId) {
 
                 delete list.items
             }
-
         })
 
         return lists

@@ -26,7 +26,6 @@ function updateListSharedMode(userId, listId, sharedId, mode) {
 
             return list.save()
         })
-
 }
 
 module.exports = updateListSharedMode

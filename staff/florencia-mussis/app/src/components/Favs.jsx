@@ -29,8 +29,6 @@ function Favs({ listUpdateStamp }) {
 
     useEffect(() => {
         loadlist()
-       
-
     }, [listUpdateStamp])
 
     const handleChangeColor = (stickyId, color) => {

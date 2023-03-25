@@ -37,7 +37,6 @@ function retrieveListsSharedWithMe(userId) {
 
                 delete list.items
             }
-
         })
 
         return lists

@@ -28,7 +28,6 @@ const verifyToken = require('./utils/verifyToken')
 const updateItemCheck = require('./logic/updateItemCheck')
 const updateItemText = require('./logic/updateItemText')
 const deleteItem = require('./logic/deleteItem')
-const updateListShared = require('./logic/updateListShared')
 const searchList = require('./logic/searchList')
 const shareList = require('./logic/shareList')
 const removeSharedFromList = require('./logic/removeSharedFromList')
@@ -509,34 +508,6 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
                 res.json({ error: error.message })
             }
         })
-
-        // server.patch('/lists/:listId/shared', jsonBodyParser, (req, res) => {
-        //     try {
-        //         const userId = verifyToken(req)
-
-        //         const { listId } = req.params
-
-        //         const { shared } = req.body
-
-        //         updateListShared(userId, listId, shared)
-        //             .then(() => res.status(204).send())
-        //             .catch(error => {
-        //                 if (error instanceof ExistenceError)
-        //                     res.status(404)
-        //                 else if (error instanceof CoherenceError)
-        //                     res.status(409)
-        //                 else
-        //                     res.status(500)
-        //                 res.json({ error: error.message })
-        //             })
-        //     } catch (error) {
-        //         if (error instanceof TypeError)
-        //             res.status(400)
-        //         else
-        //             res.status(500)
-        //         res.json({ error: error.message })
-        //     }
-        // })
 
         server.delete('/lists/:listId/items/checked/all', (req, res) => {
             try {

@@ -27,8 +27,6 @@ function updateListArchived(userId, listId, archived) {
                         throw new CoherenceError(`The user with id ${userId} is not an editor`)
                 }
 
-            // if (list.user.toString() !== userId) throw new CoherenceError(`List with id ${listId} does not belong to user  with id ${userId}`)
-
             list.archived = archived
 
             return list.save()

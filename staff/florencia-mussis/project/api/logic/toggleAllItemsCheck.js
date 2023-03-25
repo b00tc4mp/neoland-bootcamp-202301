@@ -32,7 +32,6 @@ function toggleAllItemsCheck(userId, listId) {
                         throw new CoherenceError(`The user with id ${userId} is not an editor`)
                 }
 
-
             const checkedAll = list.items.every(item => item.checked)
 
             if (checkedAll)

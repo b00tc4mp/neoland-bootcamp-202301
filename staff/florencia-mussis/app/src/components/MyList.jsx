@@ -24,6 +24,7 @@ function MyList({ listUpdateStamp }) {
             alert(error.message)
         }
     }
+    
     useEffect(() => {
         loadList()
     }, [listUpdateStamp])

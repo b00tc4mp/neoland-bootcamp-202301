@@ -10,7 +10,6 @@ import createItem from "../logic/create-item"
 import updateItemCheck from "../logic/update-item-check"
 import updateItemText from "../logic/update-item-text"
 import deleteItem from "../logic/delete-item"
-import updateListShared from '../logic/update-list-shared'
 import removeCheckedItemsFromList from '../logic/remove-checked-items-from-list'
 import Confirm from "./Confirm"
 import toggleAllItemsCheck from '../logic/toggle-all-items-check'
@@ -135,22 +134,6 @@ function ListDetail() {
         }
     }
 
-    const handleUpdateShare = (listId, shared) => {
-        try {
-            updateListShared(sessionStorage.token, listId, !shared, error => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-                loadList()
-            })
-
-        } catch (error) {
-            alert(error.message)
-        }
-    }
-
     const handleRemoveCheckedItemsFromLists = () => {
         setremoveCheckedItemsFromListConfirmOn(true)
     }
@@ -239,10 +222,7 @@ function ListDetail() {
         }
     }
 
-    // TODO check if connected is in shared list and extract its mode. then enable/disable read & write operations (const isEditor = ...)
-
     if (list) {
-        // TODO const userId = extrac...
         const userId = extractUserId(sessionStorage.token)
         
         let isOwner, isEditor, isViewer

@@ -73,7 +73,7 @@ function Home() {
 
             {showNav &&
                 <div onClick={handleClick} className=" w-full h-full fixed">
-                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-2  w-44 gap-y-2 rounded right-0 '>
+                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-2  w-44 gap-y-2 rounded right-0'>
 
                         <Link to="/archived" className="m-3" href=""><BookmarkIcon className=" m-auto h-10 w-10" />Archived lists</Link>
 

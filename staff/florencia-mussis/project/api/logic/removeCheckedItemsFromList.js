@@ -32,7 +32,6 @@ function removeCheckedItemsFromList(userId, listId) {
                     throw new CoherenceError(`The user with id ${userId} is not an editor`)
             }
 
-
             const items = list.items.filter(item => !item.checked)
         
             list.items = items

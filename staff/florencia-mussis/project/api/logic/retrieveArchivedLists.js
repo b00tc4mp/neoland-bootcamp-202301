@@ -35,7 +35,6 @@ function retrieveArchivedLists(userId){
 
                 delete list.items
             }
-
         })
 
         return lists

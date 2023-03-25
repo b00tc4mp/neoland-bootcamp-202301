@@ -55,12 +55,19 @@ List
 - title (string, required)
 - items (array of Item)
 - archived (boolean, required)
+- shareds (array of Shared)
 
 Item
 
 - id
-- checked (boolean, required)
 - text (string, required)
+- checked (boolean, required)
+
+Shared
+
+- id
+- mode (string, enum ['viewer', 'editor'], required)
+
 
 
 

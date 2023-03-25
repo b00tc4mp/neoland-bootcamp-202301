@@ -32,8 +32,6 @@ function shareList(userId, listId, email, mode) {
 
             if (shared) throw new ExistenceError(`The list is already shared with the user with id ${userToShareListWith.id}`)
 
-            // TODO verify userToShareListWith.id is not in the list.shareds 
-
             shared = new Shared({
                 user: userToShareListWith.id,
                 mode

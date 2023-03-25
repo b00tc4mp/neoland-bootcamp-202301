@@ -7,7 +7,7 @@ module.exports = {
         'montserrat': ['"Montserrat"'],
         'caveat': ['"Caveat"'],
         'kalam': ['"Kalam"']
-      }
+      },
     },
   },
   plugins: [],

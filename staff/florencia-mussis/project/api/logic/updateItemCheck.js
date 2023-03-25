@@ -27,9 +27,7 @@ function updateItemCheck(userId, listId, itemId, checked) {
                 else if (shared.mode !== 'editor')
                     throw new CoherenceError(`The user with id ${userId} is not an editor`)
             }
-
-            // if (list.user.toString() !== userId) throw new CoherenceError(`List with id ${listId} does not belong to user  with id ${userId}`)
-          
+            
             const item = list.items.find(item => item._id.toString() === itemId)
             
             if (!item)throw new ExistenceError(`Item with id ${itemId} not found`)
