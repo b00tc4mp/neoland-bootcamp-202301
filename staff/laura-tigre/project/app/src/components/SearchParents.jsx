@@ -3,6 +3,10 @@ import Context from '../Context'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import searchParents from '../logic/search-parents'
+import { Link } from 'react-router-dom'
+import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
+
 
 
 function SearchParents({ listUpdateStamp }) {
@@ -10,7 +14,7 @@ function SearchParents({ listUpdateStamp }) {
 
     const [parents, setParents] = useState([])
     const { alert } = useContext(Context)
-  
+
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -55,17 +59,34 @@ function SearchParents({ listUpdateStamp }) {
     useEffect(() => {
 
     }, [listUpdateStamp])
+    const handleToggleFavParent = (parentId) => {
+        setParents(parents => {
+          const index = parents.findIndex(parent => parent.id === parentId)
+          const parent = parents[index]
+          const parentUpdated = { ...parent }
+    
+          parentUpdated.fav = !parentUpdated.fav
+    
+          const parentsUpdated = [...parents]
+    
+          parentsUpdated[index] = parentUpdated
+    
+          return parentsUpdated
+        })
+    
+    
+      }
 
 
 
 
 
-    return <Container className='w-full sm:w-1/3 h-full mb-20'>
+    return <Container className='w-full sm:h-full mb-20'>
 
 
-        <Container TagName='form' className='sm: w-1/3  p-5' onSubmit={handleSubmit}>
+        <Container TagName='form' className='sm:  p-5' onSubmit={handleSubmit}>
             <label className='p-5 mb-10' htmlFor="search">SEARCH PARENTS</label>
-            <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+            <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
                 <legend>Availability</legend>
                 <table className='table table-fixed m-5'>
                     <thead>
@@ -76,51 +97,51 @@ function SearchParents({ listUpdateStamp }) {
                             <th>Evening</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-orange-200">
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Monday</th>
+                            <th className='sm:px-2 py-1'>Monday</th>
                             <td><input type="checkbox" id='mondayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='mondayAfternoonSelected' name='mondayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='mondayEveningSelected' name='mondayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Tuesday</th>
+                            <th className='sm:px-2 py-1'>Tuesday</th>
                             <td><input type="checkbox" id='tuesdayMorningSelected' name='tuesdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='tuesdayAfternoonSelected' name='tuesdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='tuesdayEveningSelected' name='tuesdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Wendsday</th>
+                            <th className='sm:px-2 py-1'>Wendsday</th>
                             <td><input type="checkbox" id='wendsdayMorningSelected' name='wendsdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='wendsdayAfternoonSelected' name='wendsdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='wendsdayEveningSelected' name='wendsdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Thursday</th>
+                            <th className='sm:px-2 py-1'>Thursday</th>
                             <td><input type="checkbox" id='thursdayMorningSelected' name='thursdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='thursdayAfternoonSelected' name='thursdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='thursdayEveningSelected' name='thursdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Friday</th>
+                            <th className='sm:px-2 py-1'>Friday</th>
                             <td><input type="checkbox" id='fridayMorningSelected' name='fridayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='fridayAfternoonSelected' name='fridayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='fridayEveningSelected' name='fridayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Saturday</th>
+                            <th className='sm:px-2 py-1'>Saturday</th>
                             <td><input type="checkbox" id='saturdayMorningSelected' name='saturdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='saturdayAfternoonSelected' name='saturdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='saturdayEveningSelected' name='saturdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Sunday</th>
+                            <th className='sm:px-2 py-1'>Sunday</th>
                             <td><input type="checkbox" id='sundayMorningSelected' name='sundayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='sundayAfternoonSelected' name='sundayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='sundayEveningSelected' name='sundayEveningSelected' ></input></td>
@@ -132,28 +153,42 @@ function SearchParents({ listUpdateStamp }) {
 
             </fieldset>
 
-            <fieldset className='flex flex-row p-5 border-solid border-2 border-orange-500 rounded-md'>
+            <fieldset className='flex flex-row p-5 border-solid border-2 border-[#fb923c] rounded-md'>
                 <legend>Kids</legend>
-                <p>From: <input type="number" name="kidsFrom" className='bg-transparent' /> </p>
-                <p>To: <input type="number" name="kidsTo" className='bg-transparent'/> </p>
+                <p>From: <input type="number" name="kidsFrom" className='bg-transparent w-28 border-[#fb923c]' /> </p>
+                <p>To: <input type="number" name="kidsTo" className='bg-transparent w-28 border-[#fb923c]' /> </p>
 
             </fieldset>
-            
+
 
             <Container className=' m-3'>
 
-                <Button type='submit'>SEARCH</Button>
+                <Button className='text-[#d6d3d1]' type='submit'>SEARCH</Button>
             </Container>
         </Container>
 
         <Container className="gap-2">
 
 
-            {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] list-none" key={parent.id} id={parent.id}>
-                <strong className="w-[28ch] text-l text-left">{parent.user.name}</strong>
+            {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={parent.id} id={parent.id}>
+            <div className="flex flex-row justify-between">
+            <div className='w-20 h-20'>
+                <img className="sm:" src=
+                    {parent.photo} />
+            </div>
+            <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
+
+                parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                    :
+                    <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+            
+            </div>
+
+                <Link to={`/parents/${parent.id}`}><strong className="w-[28ch] text-left">{parent.user.name}</strong>
+                </Link>
                 <p>City: {parent.city}</p>
                 <p>Email: {parent.user.email}</p>
-                <ul>Kids : {parent.kids.map(kid => <li key={kid.id}> {kid.name}, {kid.dateOfBirth.slice(0,10)}</li>)}</ul>
+                <ul>Kids : {parent.kids.map(kid => <li key={kid.id}> {kid.name}, {kid.dateOfBirth.slice(0, 10)}</li>)}</ul>
                 <p>Description: {parent.description}</p>
                 <p>Extras: {parent.extras}</p>
                 <ul>Availability : {parent.availabilities.map(availabity => <li key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>

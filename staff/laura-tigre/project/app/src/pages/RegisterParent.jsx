@@ -36,7 +36,7 @@ function Parents(props) {
             <h2 className="text-center text-2xl font-bold text-[#fb923c]">FAMILIES KANGAROO</h2>
 
             <Container TagName="form" className="sm: 1/2 gap-4 bg-[#fed7aa] mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
-                <img className="h-20 w-20 " src="images/kangaroo.png" alt="kangaroo" />
+                <img className="h-10 w-10 mt-3 " src="images/kangaroo.png" alt="kangaroo" />
 
                 <Container className="justify-center gap-2">
                    
@@ -54,9 +54,9 @@ function Parents(props) {
 
             </Container>
             <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedback}</p>
-            <p className="flex items-center justify-center gap-4">
+            <p className="flex items-center justify-center gap-4 mt-3">
                 or
-                <Link to="/login" className="text-2xl" >Login</Link>
+                <Link to="/login" className="text-xl font-bold text-[#fb923c]" >Login</Link>
             </p>
         </main>
     </Container>

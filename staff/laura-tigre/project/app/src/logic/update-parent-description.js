@@ -38,7 +38,7 @@ function updateDescriptionParent(token,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/parent/updateDescription')
+    xhr.open('PATCH','http://localhost:8080/parents/description')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

@@ -26,8 +26,10 @@ function retrieveFavParents(userId) {
 
                 _parent.name = parent.user.name
 
+                _parent.photo= parent.photo
+                
                 _parent.availabilities = parent.availabilities
-
+        
                 _parent.availabilities.forEach(availability => {
                     availability.id = availability._id.toString()
                     delete availability._id
@@ -39,6 +41,7 @@ function retrieveFavParents(userId) {
                     kid.id = kid._id.toString()
                     delete kid._id
                 })
+                _parent.email= parent.user.email
 
                 return _parent
             })

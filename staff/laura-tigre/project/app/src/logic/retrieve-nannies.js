@@ -30,7 +30,7 @@ function retrieveNannies(token, callback){
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('GET', 'http://localhost:8080/users/nannies')
+    xhr.open('GET', 'http://localhost:8080/nannies/all')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }

@@ -41,7 +41,7 @@ function registerNanny(name,city,experience,email, password,callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/users/nanny')
+    xhr.open('POST', 'http://localhost:8080/nannies')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const user = { name,city,experience,email, password}

@@ -1,11 +1,10 @@
-import { useState} from "react"
-import UpdateUserPassword from "./UpdateUserPassword"
-import UpdateUserEmail from "./UpdateUserEmail"
+import { useState, useEffect} from "react"
 import updateNannyAvailabilities from "../logic/update-nanny-availabilities"
 import updateDescriptionNanny from "../logic/update-nanny-description"
 import updateExtrasNanny from "../logic/update-nanny-extras"
 import updateExperience from "../logic/update-nanny-experience"
 import unregisterNanny from "../logic/unregister-nanny"
+import retrieveNanny from "../logic/retrieve-nanny-profile"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
@@ -13,11 +12,30 @@ import Feedback from './Feedback'
 
 
 
-function ProfileUserNanny({onUnregisterNanny}) {
+function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
   console.log('Profile -> render')
   console.log('UpdateUserPassword -> render')
 
   const [feedback, setFeedback] = useState()
+  const [nanny, setNanny] = useState()
+
+  const loadList = () => {
+
+    try {
+
+      retrieveNanny(sessionStorage.token, (error, nanny) => {
+        if (error) {
+          alert(error)
+          return
+        }
+        setNanny(nanny)
+      })
+
+    } catch (error) {
+      alert(error.message)
+    }
+
+  }
 
   const handleSubmitAvailability = (event) => {
     event.preventDefault()
@@ -70,9 +88,11 @@ function ProfileUserNanny({onUnregisterNanny}) {
         })
       }
       
-        
-
   }
+  useEffect(() => {
+
+    loadList()
+  }, [listUpdateStamp])
   const handleSubmitExperience = (event) => {
     event.preventDefault()
     const newExperience =parseInt(event.target.newExperience.value)
@@ -87,6 +107,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
         }
        
         event.target.reset()
+        loadList()
         setFeedback({
           message: 'experience updated successfully',
           level: 'success'
@@ -113,7 +134,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
           return
         }
         event.target.reset()
-
+        loadList()
         setFeedback({
           message: 'description updated successfully',
           level: 'success'
@@ -140,7 +161,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
           return
         }
         event.target.reset()
-
+        loadList()
         setFeedback({
           message: 'new extras updated successfully',
           level: 'success'
@@ -183,63 +204,66 @@ function ProfileUserNanny({onUnregisterNanny}) {
  
 
   return <Container className=" sm:h-full w-full mb-20">
-    <Container TagName="form" className='sm: w-1/3 p-5' onSubmit={handleSubmitAvailability}>
+     <h1 className="text-[#fb923c]">{nanny?.user?.name}</h1>
+    <img src={nanny?.photo}/>
+  
+    <Container TagName="form" className='sm: w-1/3 items-center justify-center p-5' onSubmit={handleSubmitAvailability}>
     <fieldset className='sm: w-1/3 p-5 border-solid border-2 border-orange-500 rounded-md'>
       <legend>Availability</legend>
-      <table className='sm: table table-fixed m-5'>
-        <thead>
-          <tr className='sm:space-x-1'>
-            <th>Day</th>
-            <th>Morning</th>
-            <th>Afternoon</th>
-            <th>Evening</th>
+      <table className='sm: table table-fixed p-2 m-5'>
+        <thead >
+          <tr className='sm:text-center my-2'>
+            <th className='sm:py-1'>Day</th>
+            <th className='sm:py-1'>Morning</th>
+            <th className='sm:py-1'>Afternoon</th>
+            <th className='sm:py-1'>Evening</th>
           </tr>
         </thead>
-        <tbody>
-          <tr className='sm:text-center space-x-1'>
-            <th className='sm:space-x-2'>Monday</th>
+        <tbody className="divide-y divide-orange-200 text-center">
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Monday</th>
             <td><input type="checkbox" id='newMondayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newMondayAfternoonSelected' name='newMondayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newMondayEveningSelected' name='newMondayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='sm:space-x-2'>Tuesday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Tuesday</th>
             <td><input type="checkbox" id='newTuesdayMorningSelected' name='newTuesdayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newTuesdayAfternoonSelected' name='newTuesdayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newTuesdayEveningSelected' name='newTuesdayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='sm:space-x-2'>Wendsday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Wendsday</th>
             <td><input type="checkbox" id='newWendsdayMorningSelected' name='newWendsdayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newWendsdayAfternoonSelected' name='newWendsdayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newWendsdayEveningSelected' name='newWendsdayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='sm:space-x-2'>Thursday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Thursday</th>
             <td><input type="checkbox" id='newThursdayMorningSelected' name='newThursdayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newThursdayAfternoonSelected' name='newThursdayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newThursdayEveningSelected' name='newThursdayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='sm:space-x-2'>Friday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Friday</th>
             <td><input type="checkbox" id='newFridayMorningSelected' name='newFridayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newFridayAfternoonSelected' name='newFridayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newFridayEveningSelected' name='newFridayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='space-x-2'>Saturday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Saturday</th>
             <td><input type="checkbox" id= 'newSaturdayMorningSelected' name= 'newSaturdayMorningSelected' ></input></td>
             <td><input type="checkbox" id= 'newSaturdayAfternoonSelected' name= 'newSaturdayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id= 'newSaturdayEveningSelected' name= 'newSaturdayEveningSelected' ></input></td>
 
           </tr>
-          <tr className='sm:text-center space-x-1'>
-            <th className='space-x-2'>Sunday</th>
+          <tr className='sm:text-center my-2'>
+            <th className='sm:px-2 py-1'>Sunday</th>
             <td><input type="checkbox" id='newSundayMorningSelected' name='newSundayMorningSelected' ></input></td>
             <td><input type="checkbox" id='newSundayAfternoonSelected' name='newSundayAfternoonSelected' ></input></td>
             <td><input type="checkbox" id='newSundayEveningSelected' name='newSundayEveningSelected' ></input></td>
@@ -250,16 +274,14 @@ function ProfileUserNanny({onUnregisterNanny}) {
 
     <Button type="submit">New Availability</Button>
     </fieldset>
-    {feedback && <Feedback message={feedback.message} level={feedback.level} />}
   </Container>
-    <UpdateUserPassword/>
-    <UpdateUserEmail />
-
+   
     <Container TagName="form" onSubmit={handleSubmitExperience} className="sm: w-1/2 flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Experience</legend>
+        <p>{nanny?.experience} years </p>
         <input
-          className="sm:bg-transparent "
+          className="sm:bg-transparent pb-2 "
           type="number"
           name="newExperience"
           placeholder=" new experience" />
@@ -274,8 +296,9 @@ function ProfileUserNanny({onUnregisterNanny}) {
     flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Description</legend>
+        <p>{nanny?.description}</p>
         <input
-          className="sm: bg-transparent "
+          className="sm: bg-transparent pb-2"
           type="text"
           name="newDescription"
           placeholder=" new description" />
@@ -290,8 +313,9 @@ function ProfileUserNanny({onUnregisterNanny}) {
     flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Extras</legend>
+        <p>{nanny?.extras}</p>
         <input
-          className="sm: bg-transparent "
+          className="sm: bg-transparent pb-2 "
           type="text"
           name="newExtras"
           placeholder=" new extras" />
@@ -308,7 +332,7 @@ function ProfileUserNanny({onUnregisterNanny}) {
         <legend>Unregister User</legend>
        
         <input
-          className="sm: bg-transparent "
+          className="sm: bg-transparent pb-2 "
           type="password"
           name="password"
           placeholder=" your password" />
@@ -321,12 +345,6 @@ function ProfileUserNanny({onUnregisterNanny}) {
 
 
   </Container>
-
-
-
-
-
-
 
 }
 export default ProfileUserNanny

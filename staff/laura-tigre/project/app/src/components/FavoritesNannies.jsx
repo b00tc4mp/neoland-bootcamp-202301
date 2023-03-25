@@ -4,8 +4,8 @@ import Container from '../library/Container'
 import toggleFavNanny from '../logic/toogle-fav-nanny'
 import Context from '../Context'
 import { Link } from 'react-router-dom'
-import { HeartIcon, } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
 
 
@@ -41,38 +41,45 @@ function FavoritesNannies({ listUpdateStamp }) {
     const handleToggleFavNanny = event => {
         try {
             const nannyId = event.currentTarget.id
-            toggleFavNanny(sessionStorage.token,nannyId, error => {
+            toggleFavNanny(sessionStorage.token, nannyId, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-              
-               loadList()
 
-             
+                loadList()
+
+
             })
         } catch (error) {
             alert(error.message)
         }
     }
-    
 
-   
-    return <Container TagName="ul" className="gap-4 py-10 ">
-        {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={nanny.id} id={nanny.id} >
-            <button className="flex justify-center" id={nanny.id} onClick={handleToggleFavNanny} >{
-                nanny.fav ?
-                    <HeartIcon className="h-5 w-5 text-red-500" />
-                    :
-                    <HeartIconOutline className="h-5 w-5 text-red-500" />}</button>
+
+
+    return <Container TagName="ul" className="gap-4 py-10 mb-10">
+        {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={nanny.id} id={nanny.id} >
+        <div className="flex flex-row justify-between">
+                <div>
+                    <img className='w-20 h-20' src=
+                        {nanny.photo} />
+                </div>
+                <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
+
+                    nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                        :
+                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+            </div>
 
             <Link to={`/nannies/${nanny.id}`}>
                 <strong className="w-[28ch] text-sm text-left">{nanny.name}</strong>
             </Link>
-            <p>{nanny.city}</p>
-            <p>{nanny.description}</p>
-            <p>{nanny.extras}</p>
+            <ul className='pt-1 text-sm text-left'>Availability : {nanny.availabilities.map(availabity => <li key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
+
+            <p className='text-sm text-left'>Experience: {nanny.experience} years</p>
+            <p className='text-sm text-left'>Email: {nanny.email}</p>
         </li>
         )}
 

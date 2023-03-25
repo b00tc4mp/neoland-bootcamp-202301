@@ -20,7 +20,7 @@ function createKids(token,newName, newDateOfBirth,callback) {
     xhr.onload= () => {
         const { status, response } = xhr
 
-        if (status === 204) {
+        if (status === 201) {
             callback(null)
         } else {
             const body = JSON.parse(response)
@@ -40,7 +40,7 @@ function createKids(token,newName, newDateOfBirth,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('POST','http://localhost:8080/kids')
+    xhr.open('POST','http://localhost:8080/parents/kids')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

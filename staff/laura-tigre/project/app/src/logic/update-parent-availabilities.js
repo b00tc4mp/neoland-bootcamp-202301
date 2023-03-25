@@ -61,7 +61,7 @@ function updateParentAvailabilities(token,newMondayMorningSelected,
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', 'http://localhost:8080/parent/updateAvailabilities')
+    xhr.open('PATCH', 'http://localhost:8080/parents/availabilities')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

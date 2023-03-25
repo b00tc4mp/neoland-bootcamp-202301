@@ -28,10 +28,12 @@ const retrieveFavParents = require('./logic/retrieveFavParents')
 const updateNannyAvailabilities = require('./logic/updateNannyAvailabilities')
 const updateParentAvailabilities = require('./logic/updateParentAvailabilities')
 const createKids = require('./logic/createKids')
+const retrieveKids = require('./logic/retrieveKids')
 const updateExtrasNanny = require('./logic/updateExtrasNanny')
 const updateExtrasParent = require('./logic/updateExtrasParent')
-const retrieveKids= require('./logic/retrieveKids')
 const insertPhotoNanny = require('./logic/insertPhotoNanny')
+const insertPhotoParent = require('./logic/insertPhotoParent')
+const deleteKid = require('./logic/deleteKid')
 
 
 
@@ -49,7 +51,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
         server.use(cors())
         const jsonBodyParser = bodyParser.json()
 
-        server.post('/users/parent', jsonBodyParser, (req, res) => {
+        server.post('/parents', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
                 const { name, city, email, password} = user
@@ -71,7 +73,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.post('/users/nanny', jsonBodyParser, (req, res) => {
+        server.post('/nannies', jsonBodyParser, (req, res) => {
             try {
                 const user = req.body
                 const { name, city, experience, email, password} = user
@@ -93,8 +95,8 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.post('/users/auth', jsonBodyParser, (req, res) => {
 
+        server.post('/users/auth', jsonBodyParser, (req, res) => {
             try {
                 const credentials = req.body
                 const { email, password } = credentials
@@ -119,6 +121,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
 
         })
+
         server.get('/users', (req, res) => {
             try {
                 const userId = verifyToken(req)
@@ -142,53 +145,10 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.get('/parent/kids', (req, res) => {
-            try {
-                const userId = verifyToken(req)
+       
+       
 
-                retrieveKids(userId)
-
-                    .then(user => res.json(user))
-                    .catch(error => {
-                        if (error instanceof ExistenceError) res.status(404)
-                        else res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-
-            } catch (error) {
-                if (error instanceof TypeError) res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
-            }
-
-        })
-        server.post('nanny/photo', jsonBodyParser, (req, res) => {
-            try {
-                const userId = verifyToken(req)
-                const {photo} =req.body
-
-                insertPhotoNanny(userId,photo)
-                    .then(() => res.status(201).send())
-                    .catch(error => {
-                        if (error instanceof CoherenceError) res.status(409)
-
-                        else res.status(500)
-                        res.json({ error: error.message })
-                    })
-
-            } catch (error) {
-
-                if (error instanceof TypeError) res.status(400)
-                else res.status(500)
-                res.json({ error: error.message })
-            }
-
-        })
-
-        server.delete('/users/nanny', jsonBodyParser, (req, res) => {
+        server.delete('/nannies', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
                 const { password } = req.body
@@ -217,10 +177,11 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
-        server.delete('/users/parent', jsonBodyParser, (req, res) => {
+        server.delete('/parents', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
                 const { password } = req.body
+
 
                 unregisterParent(userId, password)
                     .then(() => res.status(204).send())
@@ -245,7 +206,8 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
 
         })
-        server.patch('/users/updatePassword', jsonBodyParser, (req, res) => {
+
+        server.patch('/users/password', jsonBodyParser, (req, res) => {
 
             try {
                 const userId = verifyToken(req)
@@ -275,7 +237,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
        
-        server.patch('/users/updateEmail', jsonBodyParser, (req, res) => {
+        server.patch('/users/email', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -306,8 +268,33 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
+        server.post('nannies/photo', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+              
+                const credentials = req.body
+                const { photo} = credentials
+                
+                insertPhotoNanny(userId,photo)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
 
-        server.patch('/nanny/updateExperience', jsonBodyParser, (req, res) => {
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+
+
+        server.patch('/nannies/experience', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -337,7 +324,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/nanny/updateDescription', jsonBodyParser, (req, res) => {
+        server.patch('/nannies/description', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -368,7 +355,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
-        server.patch('/parent/updateDescription', jsonBodyParser, (req, res) => {
+        server.patch('/parents/description', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -397,7 +384,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/nanny/updateExtras', jsonBodyParser, (req, res) => {
+        server.patch('/nannies/extras', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -425,7 +412,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/parent/updateExtras', jsonBodyParser, (req, res) => {
+        server.patch('/parents/extras', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -455,7 +442,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/nanny/updateAvailabilities', jsonBodyParser, (req, res) => {
+        server.patch('/nannies/availabilities', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -486,7 +473,33 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.patch('/parent/updateAvailabilities', jsonBodyParser, (req, res) => {
+        server.post('parents/photo', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+              
+                const credentials = req.body
+                const { photo} = credentials
+                
+                insertPhotoParent(userId,photo)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+
+
+        server.patch('/parents/availabilities', jsonBodyParser, (req, res) => {
             try {
 
                 const userId = verifyToken(req)
@@ -516,7 +529,34 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.post('/kids', jsonBodyParser, (req, res) => {
+
+        
+        server.get('/parents/kids/all', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+
+                retrieveKids(userId)
+
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
+        server.post('/parents/kids', jsonBodyParser, (req, res) => {
             try {
                
                 const { newName, newDateOfBirth} = req.body
@@ -540,32 +580,38 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.get('/users/parents', (req, res) => {
+
+        server.delete('/parents/kid/:kidId', (req, res) => {
             try {
                 const userId = verifyToken(req)
-
-
-                retrieveParents(userId)
-
-                    .then(user => res.json(user))
+                const {kidId} = req.params
+        
+                deleteKid(userId,kidId)
+                    .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
+
+                        else if (error instanceof AuthError) res.status(401)
+
                         else res.status(500)
 
                         res.json({ error: error.message })
                     })
-
             } catch (error) {
-                if (error instanceof TypeError) res.status(400)
+                if (error instanceof TypeError || error instanceof RangeError) res.status(400)
+
                 else
                     res.status(500)
 
                 res.json({ error: error.message })
+
             }
+
 
         })
 
-        server.get('/users/nannies', (req, res) => {
+
+        server.get('/nannies/all', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -589,59 +635,8 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.get('/nannies/:nannyId', (req, res) => {
-            try {
-                const userId = verifyToken(req)
-                const { nannyId } = req.params
 
-                retrieveNanny(userId, nannyId)
-
-                    .then(nanny => res.json(nanny))
-                    .catch(error => {
-                        if (error instanceof ExistenceError) res.status(404)
-                        else res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-
-            } catch (error) {
-                if (error instanceof TypeError) res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
-            }
-
-        })
-        server.get('/parents/:parentId', (req, res) => {
-            try {
-                const userId = verifyToken(req)
-
-                let parentId 
-
-                if(req.params.parentId !== 'profile') parentId = req.params.parentId
-
-                retrieveParent(userId, parentId)
-
-                    .then(parent => res.json(parent))
-                    .catch(error => {
-                        if (error instanceof ExistenceError) res.status(404)
-                        else res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-
-            } catch (error) {
-                if (error instanceof TypeError) res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
-            }
-
-        })
-
-        server.get('/users/nannies/search', (req, res) => {
+        server.get('/nannies/search', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -700,7 +695,192 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.get('/users/parents/search', (req, res) => {
+
+
+        server.get('/nannies/favs', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveFavNannies(userId)
+                    .then(nannies => res.status(200).json(nannies))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                    
+                    else res.status(500)
+
+                    res.json({ error: error.message })})
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+                
+            }
+        })
+
+        server.get('/nannies/:nannyId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { nannyId } = req.params
+
+                retrieveNanny(userId, nannyId)
+
+                    .then(nanny => res.json(nanny))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
+        server.patch('/nannies/:nannyId/favs', (req, res) => {
+
+            try {
+                const userId = verifyToken(req)
+
+                const { nannyId } = req.params
+
+                toggleFavNanny(userId, nannyId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof ExistenceError)
+                            res.status(404)
+                        else
+                            res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+            } catch (error) {
+                if (error instanceof TypeError)
+                    res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+
+
+
+        })
+       
+        server.get('/nannies', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { nannyId } = req.params
+
+                retrieveNanny(userId, nannyId)
+
+                    .then(nanny => res.json(nanny))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+
+        server.get('/parents/all', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveParents(userId)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
+        server.get('/parents/search', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                let { mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected,kidsFrom,kidsTo } = req.query
+
+                if (mondayMorningSelected) mondayMorningSelected = mondayMorningSelected === 'true'
+                if (mondayAfternoonSelected) mondayAfternoonSelected = mondayAfternoonSelected === 'true'
+                if (mondayEveningSelected) mondayEveningSelected = mondayEveningSelected === 'true'
+
+                if (tuesdayMorningSelected) tuesdayMorningSelected = tuesdayMorningSelected === 'true'
+                if (tuesdayAfternoonSelected) tuesdayAfternoonSelected = tuesdayAfternoonSelected === 'true'
+                if (tuesdayEveningSelected) tuesdayEveningSelected = tuesdayEveningSelected === 'true'
+
+                if (wendsdayMorningSelected) wendsdayMorningSelected = wendsdayMorningSelected === 'true'
+                if (wendsdayAfternoonSelected) wendsdayAfternoonSelected = wendsdayAfternoonSelected === 'true'
+                if (wendsdayEveningSelected) wendsdayEveningSelected = wendsdayEveningSelected === 'true'
+
+                if (thursdayMorningSelected) thursdayMorningSelected = thursdayMorningSelected === 'true'
+                if (thursdayAfternoonSelected) thursdayAfternoonSelected = thursdayAfternoonSelected === 'true'
+                if (thursdayEveningSelected) thursdayEveningSelected = thursdayEveningSelected === 'true'
+
+                if (fridayMorningSelected) fridayMorningSelected = fridayMorningSelected === 'true'
+                if (fridayAfternoonSelected) fridayAfternoonSelected = fridayAfternoonSelected === 'true'
+                if (fridayEveningSelected) fridayEveningSelected = fridayEveningSelected === 'true'
+
+                if (saturdayMorningSelected) saturdayMorningSelected = saturdayMorningSelected === 'true'
+                if (saturdayAfternoonSelected) saturdayAfternoonSelected = saturdayAfternoonSelected === 'true'
+                if (saturdayEveningSelected) saturdayEveningSelected = saturdayEveningSelected === 'true'
+
+                if (sundayMorningSelected) sundayMorningSelected = sundayMorningSelected === 'true'
+                if (sundayAfternoonSelected) sundayAfternoonSelected = sundayAfternoonSelected === 'true'
+                if (sundayEveningSelected) sundayEveningSelected = sundayEveningSelected === 'true'
+
+                if (kidsFrom) kidsFrom = parseInt(kidsFrom)
+                if (kidsTo) kidsTo = parseInt(kidsTo)
+
+    
+
+
+                searchParents(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, kidsFrom,kidsTo)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/parents/search', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
@@ -759,42 +939,12 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
-        server.patch('/nannies/:nannyId/favs', (req, res) => {
-
+        server.get('/parents/favs', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
-                const { nannyId } = req.params
-
-                toggleFavNanny(userId, nannyId)
-                    .then(() => res.status(204).send())
-                    .catch(error => {
-                        if (error instanceof ExistenceError)
-                            res.status(404)
-                        else
-                            res.status(500)
-
-                        res.json({ error: error.message })
-                    })
-            } catch (error) {
-                if (error instanceof TypeError)
-                    res.status(400)
-                else
-                    res.status(500)
-
-                res.json({ error: error.message })
-            }
-
-
-
-
-        })
-        server.get('/user/nannies/favs', (req, res) => {
-            try {
-                const userId = verifyToken(req)
-
-                retrieveFavNannies(userId)
-                    .then(nannies => res.status(200).json(nannies))
+                retrieveFavParents(userId)
+                    .then(parents => res.status(200).json(parents))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
                     
@@ -812,6 +962,29 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
         })
 
+        server.get('/parents/:parentId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                const parentId = req.params.parentId
+
+                retrieveParent(userId, parentId)
+                    .then(parent => res.json(parent))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+        })
         server.patch('/parents/:parentId/favs', (req, res) => {
 
             try {
@@ -842,18 +1015,19 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
 
         })
-        server.get('/user/parents/favs', (req, res) => {
+
+        server.get('/parents', (req, res) => {
             try {
                 const userId = verifyToken(req)
 
-                retrieveFavParents(userId)
-                    .then(parents => res.status(200).json(parents))
+                retrieveParent(userId)
+                    .then(parent => res.json(parent))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
-                    
-                    else res.status(500)
+                        else res.status(500)
 
-                    res.json({ error: error.message })})
+                        res.json({ error: error.message })
+                    })
 
             } catch (error) {
                 if (error instanceof TypeError) res.status(400)
@@ -861,14 +1035,12 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                     res.status(500)
 
                 res.json({ error: error.message })
-                
             }
+
         })
 
-
-
-
-
+       
+       
 
         server.listen(8080, () => console.log('server running on port ' + 8080))
     })

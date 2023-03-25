@@ -30,7 +30,7 @@ function retrieveKids(token, callback){
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('GET', 'http://localhost:8080/parent/kids')
+    xhr.open('GET', 'http://localhost:8080/parents/kids')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }

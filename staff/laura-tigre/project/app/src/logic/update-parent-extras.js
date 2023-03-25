@@ -38,7 +38,7 @@ function updateExtrasParent(token,newExtras, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/parent/updateExtras')
+    xhr.open('PATCH','http://localhost:8080/parents/extras')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

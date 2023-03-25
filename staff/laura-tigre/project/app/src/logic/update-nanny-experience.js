@@ -38,7 +38,7 @@ function updateExperience(token,newExperience,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/nanny/updateExperience')
+    xhr.open('PATCH','http://localhost:8080/nannies/experience')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

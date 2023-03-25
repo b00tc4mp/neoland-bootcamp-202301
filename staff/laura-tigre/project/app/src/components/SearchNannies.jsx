@@ -3,6 +3,9 @@ import Context from '../Context'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import searchNannies from '../logic/search-nannies'
+import { Link} from 'react-router-dom'
+import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
 
 function SearchNannies({ listUpdateStamp }) {
@@ -10,7 +13,7 @@ function SearchNannies({ listUpdateStamp }) {
 
     const [nannies, setNannies] = useState([])
     const { alert } = useContext(Context)
-  
+
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -58,16 +61,33 @@ function SearchNannies({ listUpdateStamp }) {
 
     }, [listUpdateStamp])
 
+    const handleToggleFavNanny = (nannyId) => {
+        setNannies(nannies => {
+            const index = nannies.findIndex(nanny => nanny.id === nannyId)
+            const nanny = nannies[index]
+            const nannyUpdated = { ...nanny }
+
+            nannyUpdated.fav = !nannyUpdated.fav
+
+            const nanniesUpdated = [...nannies]
+
+            nanniesUpdated[index] = nannyUpdated
+
+            return nanniesUpdated
+        })
+
+
+    }
 
 
 
 
-    return <Container className='w-full sm:w-1/3 h-full mb-20'>
+    return <Container className='sm:h-full mb-20 items-center,justify-center'>
 
 
-        <Container TagName="form" className='sm: w-1/3  p-5' onSubmit={handleSubmit}>
-            <label className='p-5 mb-10' htmlFor="search">SEARCH NANNIES</label>
-            <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+        <Container TagName="form" className='sm: p-5' onSubmit={handleSubmit}>
+            <label className='p-5' htmlFor="search">SEARCH NANNIES</label>
+            <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
                 <legend>Availability</legend>
                 <table className='table table-fixed m-5'>
                     <thead>
@@ -78,51 +98,51 @@ function SearchNannies({ listUpdateStamp }) {
                             <th>Evening</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-orange-200">
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Monday</th>
+                            <th className='sm:px-2 py-1'>Monday</th>
                             <td><input type="checkbox" id='mondayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='mondayAfternoonSelected' name='mondayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='mondayEveningSelected' name='mondayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Tuesday</th>
+                            <th className='sm:px-2 py-1'>Tuesday</th>
                             <td><input type="checkbox" id='tuesdayMorningSelected' name='tuesdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='tuesdayAfternoonSelected' name='tuesdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='tuesdayEveningSelected' name='tuesdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Wendsday</th>
+                            <th className='sm:px-2 py-1'>Wendsday</th>
                             <td><input type="checkbox" id='wendsdayMorningSelected' name='wendsdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='wendsdayAfternoonSelected' name='wendsdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='wendsdayEveningSelected' name='wendsdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Thursday</th>
+                            <th className='sm:px-2 py-1'>Thursday</th>
                             <td><input type="checkbox" id='thursdayMorningSelected' name='thursdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='thursdayAfternoonSelected' name='thursdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='thursdayEveningSelected' name='thursdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Friday</th>
+                            <th className='sm:px-2 py-1'>Friday</th>
                             <td><input type="checkbox" id='fridayMorningSelected' name='fridayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='fridayAfternoonSelected' name='fridayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='fridayEveningSelected' name='fridayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Saturday</th>
+                            <th className='sm:px-2 py-1'>Saturday</th>
                             <td><input type="checkbox" id='saturdayMorningSelected' name='saturdayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='saturdayAfternoonSelected' name='saturdayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='saturdayEveningSelected' name='saturdayEveningSelected' ></input></td>
 
                         </tr>
                         <tr className='text-center space-x-1'>
-                            <th className='space-x-2'>Sunday</th>
+                            <th className='sm:px-2 py-1'>Sunday</th>
                             <td><input type="checkbox" id='sundayMorningSelected' name='sundayMorningSelected' ></input></td>
                             <td><input type="checkbox" id='sundayAfternoonSelected' name='sundayAfternoonSelected' ></input></td>
                             <td><input type="checkbox" id='sundayEveningSelected' name='sundayEveningSelected' ></input></td>
@@ -134,36 +154,50 @@ function SearchNannies({ listUpdateStamp }) {
 
             </fieldset>
 
-            <fieldset className='flex flex-row p-5 border-solid border-2 border-orange-500 rounded-md'>
+            <fieldset className='sm: flex flex-row p-5 border-solid border-2 border-[#fb923c] rounded-md mt-4'>
                 <legend>Price</legend>
-                <p>From: <input type="number" name="priceFrom" className='bg-transparent' /> </p>
-                <p>To: <input type="number" name="priceTo" className='bg-transparent'/> </p>
+                <p>From: <input type="number" name="priceFrom" className='bg-transparent w-20' /> </p>
+                <p>To: <input type="number" name="priceTo" className='bg-transparent w-20' /> </p>
 
             </fieldset>
-            <fieldset className='flex flex-row p-5 border-solid border-2 border-orange-500 rounded-md'>
-                <legend>YearsOfExperience</legend>
-                <p>From: <input type="number" name="yearsOfExperienceFrom" className='bg-transparent' /> </p>
-                <p>To: <input type="number" name="yearsOfExperienceTo" className='bg-transparent' /> </p>
+            <fieldset className='sm: flex flex-row p-5 border-solid border-2 border-[#fb923c] rounded-md mt-4'>
+                <legend className='text-lg'>YearsOfExperience</legend>
+                <p>From: <input type="number" name="yearsOfExperienceFrom" className='bg-transparent w-20' /> </p>
+                <p>To: <input type="number" name="yearsOfExperienceTo" className='bg-transparent w-20' /> </p>
 
             </fieldset>
 
             <Container className=' m-3'>
 
-                <Button type='submit'>SEARCH</Button>
+                <Button type='submit' className="text-[#d6d3d1]">SEARCH</Button>
             </Container>
         </Container>
 
         <Container className="gap-2">
 
 
-            {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280] list-none" key={nanny.id} id={nanny.id}>
-                <strong className="w-[28ch] text-l text-left">{nanny.user.name}</strong>
-                <p>City: {nanny.city}</p>
-                <p>Email: {nanny.user.email}</p>
-                <p>Price: {nanny.price}€</p>
-                <p>Experience: {nanny.experience}years</p>
-                <p>Description: {nanny.description}</p>
-                <p>Extras: {nanny.extras}</p>
+            {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={nanny.id} id={nanny.id}>
+            <div className="flex flex-row justify-between">
+                <div>
+                    <img className='w-20 h-20' src=
+                        {nanny.photo} />
+                </div>
+                <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
+
+                    nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                        :
+                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+            </div>
+
+                <Link to={`/nannies/${nanny.id}`}>
+                    <strong className="w-[28ch] text-left">{nanny.user.name}</strong>
+                </Link>
+                <p className='pt-1'>City: {nanny.city}</p>
+                <p className='pt-1'>Email: {nanny.user.email}</p>
+                <p className='pt-1'>Price: {nanny.price}€</p>
+                <p className='pt-1'>Experience: {nanny.experience}years</p>
+                <p className='pt-1'>Description: {nanny.description}</p>
+                <p className='pt-1'>Extras: {nanny.extras}</p>
             </li>
             )}
 

@@ -34,16 +34,16 @@ function Login() {
     }
 
     return <div className="bg-[url('./images/familia.jpeg)]">
-        <Container className="justify-center font-['Poppins']]  h-screen bg-slate-100">
-            <main className='h-max'>
+        <Container className="sm: justify-center font-['Poppins']]  h-screen">
+            <main className='sm:h-max'>
                 <h2 className="text-center text-2xl font-bold text-[#fb923c] m-10">FAMILIES KANGAROO</h2>
 
 
-                <Container TagName='form' className=" gap-4 bg-[#fed7aa] mt-10 p-3 rounded-lg drop-shadow-md w-200 h-max" onSubmit={handleSubmit}>
-                    <img className='h-20 w-20' src='images/kangaroo.png' alt='kangaroo' />
+                <Container TagName='form' className="sm:gap-4 bg-[#fed7aa] mt-10 p-3 rounded-lg drop-shadow-md h-max" onSubmit={handleSubmit}>
+                    <img className='h-10 w-10' src='images/kangaroo.png' alt='kangaroo' />
                     <Container className='justify-center gap-2'>
 
-                        <input className="bg-[transparent] text-center focus:outline-none" type="email" id="email" placeholder="Your email" required />
+                        <input className="bg-[transparent] text-center focus:outline-none mt-3" type="email" id="email" placeholder="Your email" required />
 
 
                         <input className="bg-[transparent] text-center focus:outline-none "
@@ -60,11 +60,14 @@ function Login() {
                     </div>
                 </Container>
                 <p className="flex items-center justify-center gap-2 text-[#dc2626] text-2xl">{feedback}</p>
-                <p className="flex items-center justify-center gap-2" >
-                    or  <Link to="/parent" className="text-2xl" >Register parents</Link>
-
-                    or <Link to="/nanny" className="text-2xl" >Register nanny</Link>
+                <p className="flex items-center justify-center gap-2 mt-3" >
+                   You are not a member? Register now
                 </p>
+
+                    <p className="flex items-center justify-center gap-2 mt-4"> <Link to="/parent" className="text-xl font-bold text-[#fb923c]" >Register parents</Link></p>
+
+                    
+                   <p className="flex items-center justify-center gap-2 mt-4"> <Link to="/nanny" className="text-xl font-bold text-[#fb923c] text-center" >Register nanny</Link></p>
 
 
 

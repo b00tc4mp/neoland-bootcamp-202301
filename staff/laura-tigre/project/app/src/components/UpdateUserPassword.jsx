@@ -44,23 +44,23 @@ const [feedback, setFeedback] = useState()
   }
 
   return <Container>
-    <Container TagName="form" className="sm: w-1/2 gap-4mt-10 p-1 rounded-lg w-277 drop-shadow-md" onSubmit={handleSubmit}>
+    <Container TagName="form" className="sm: w-1/2 gap-4mt-10 p-1 rounded-lg w-277" onSubmit={handleSubmit}>
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend>Change Password</legend>
         <input
-          className="bg-transparent "
+          className="bg-transparent pb-2 "
           type="password"
           name="currentPassword"
           placeholder="current password"
         />
         <input
-          className="bg-transparent  "
+          className="bg-transparent pb-2 "
           type="password"
           name="newPassword"
           placeholder="new password"
         />
         <input
-          className="bg-transparent  "
+          className="bg-transparent pb-2 "
           type="password"
           name="newPasswordConfirm"
           placeholder="confirm new password"

@@ -30,7 +30,12 @@ function ParentProfile() {
     }, [])
 
     return <Container>
-           {parent &&  <div className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={parent.id} id={parent.id} >
+           {parent &&  <div className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] mb-10" key={parent.id} id={parent.id} >
+           <div>
+                <img className="sm:" src=
+                    {parent.photo} />
+            </div>
+
             <strong>{parent.user.name}</strong>
             <p>City: {parent.city}</p>
              <p>Description: {parent.description}</p>

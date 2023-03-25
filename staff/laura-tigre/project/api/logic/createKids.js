@@ -17,6 +17,8 @@ function createKids(userId,newName, newDateOfBirth) {
                     name : newName,
                     dateOfBirth :new Date(newDateOfBirth)
                 })
+
+                    
                 parent.kids.push(addKid)
             
                 return parent.save()

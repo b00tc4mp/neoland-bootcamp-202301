@@ -38,7 +38,7 @@ function updateExtrasNanny(token,newExtras, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/nanny/updateExtras')
+    xhr.open('PATCH','http://localhost:8080/nannies/extras')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

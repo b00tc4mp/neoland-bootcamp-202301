@@ -1,28 +1,28 @@
 const isEmail = require('./checkers/isEmail')
 const validateName = require('./validators/validateName')
 const validatedateOfBirth = require('./validators/validateDateOfBirth')
-const validateEmail= require('./validators/validateEmail')
-const validatePassword= require('./validators/validatePassword')
+const validateEmail = require('./validators/validateEmail')
+const validatePassword = require('./validators/validatePassword')
 const validateCallback = require('./validators/validateCallback')
-const validateUserId= require('./validators/validateUserId')
-const validateText= require('./validators/validateText')
-const validateVisibility= require('./validators/validateVisibility')
-const validateStickyId= require('./validators/validateStickyId')
+const validateUserId = require('./validators/validateUserId')
+const validateText = require('./validators/validateText')
+const validateVisibility = require('./validators/validateVisibility')
+const validateStickyId = require('./validators/validateStickyId')
 const validateNewEmail = require('./validators/validateNewEmail')
-const validateNewPassword= require('./validators/validateNewPassword')
-const validateNewPasswordConfirm= require('./validators/validateNewPasswordConfirm')
+const validateNewPassword = require('./validators/validateNewPassword')
+const validateNewPasswordConfirm = require('./validators/validateNewPasswordConfirm')
 const validateColor = require('./validators/validateColor')
-const validateToken= require('./validators/validateToken')
+const validateToken = require('./validators/validateToken')
 const validateUserNannyId = require('./validators/validateUserNannyId')
-const validateCity= require('./validators/validateCity')
+const validateCity = require('./validators/validateCity')
 const validatePresentation = require('./validators/validatePresentation')
 const validateExperience = require('./validators/validateExperience')
-const validateExtras= require('./validators/validateExtras')
+const validateExtras = require('./validators/validateExtras')
 const validatePrice = require('./validators/validatePrice')
 const validateAvailabilities = require('./validators/validateAvailabilities')
 const validateDescription = require('./validators/validateDescription')
-const validateKidsFrom= require('./validators/validateKidsFrom')
-const validateKidsTo= require('./validators/validateKidsTo')
+const validateKidsFrom = require('./validators/validateKidsFrom')
+const validateKidsTo = require('./validators/validateKidsTo')
 const validateRole = require('./validators/validateRole')
 const validateUserParentId = require('./validators/validateUserParentId')
 const validateMondayMorningSelected = require('./validators/validateMondayMorningSelected')
@@ -59,39 +59,40 @@ const validateNewTuesdayAfternoonSelected = require('./validators/validateNewTue
 const validateNewTuesdayEveningSelected = require('./validators/validateNewTuesdayEveningSelected')
 const validateNewWendsdayMorningSelected = require('./validators/validateNewWendsdayMorningSelected')
 const validateNewWendsdayAfternoonSelected = require('./validators/validateNewWendsdayAfternoonSelected')
-const validateNewWendsdayEveningSelected =require('./validators/validateNewWendsdayEveningSelected')
-const validateNewThursdayMorningSelected= require('./validators/validateNewThursdayMorningSelected')
+const validateNewWendsdayEveningSelected = require('./validators/validateNewWendsdayEveningSelected')
+const validateNewThursdayMorningSelected = require('./validators/validateNewThursdayMorningSelected')
 const validateNewThursdayAfternoonSelected = require('./validators/validateNewThursdayAfternoonSelected')
 const validateNewThursdayEveningSelected = require('./validators/validateNewThursdayEveningSelected')
-const validateNewFridayMorningSelected= require('./validators/validateNewFridayMorningSelected')
-const validateNewFridayAfternoonSelected= require('./validators/validateNewFridayAfternoonSelected')
-const validateNewFridayEveningSelected= require('./validators/validateNewFridayEveningSelected')
+const validateNewFridayMorningSelected = require('./validators/validateNewFridayMorningSelected')
+const validateNewFridayAfternoonSelected = require('./validators/validateNewFridayAfternoonSelected')
+const validateNewFridayEveningSelected = require('./validators/validateNewFridayEveningSelected')
 const validateNewSaturdayMorningSelected = require('./validators/validateNewSaturdayMorningSelected')
-const validateNewSaturdayAfternoonSelected= require('./validators/validateNewSaturdayAfternoonSelected')
+const validateNewSaturdayAfternoonSelected = require('./validators/validateNewSaturdayAfternoonSelected')
 const validateNewSaturdayEveningSelected = require('./validators/validateNewSaturdayEveningSelected')
 const validateNewSundayMorningSelected = require('./validators/validateNewSundayMorningSelected')
 const validateNewSundayAfternoonSelected = require('./validators/validateNewSundayAfternoonSelected')
 const validateNewSundayEveningSelected = require('./validators/validateNewSundayEveningSelected')
 const validateNewDescription = require('./validators/validateNewDescription')
-const validateNewExperience= require('./validators/validateNewExperience')
+const validateNewExperience = require('./validators/validateNewExperience')
 const validateParentId = require('./validators/validateParentId')
-const validateNewName= require('./validators/validateNewName')
+const validateNewName = require('./validators/validateNewName')
 const validateNewDateOfBirth = require('./validators/validateNewDateOfBirth')
 const validateNewExtras = require('./validators/validateNewExtras')
 const validatePhoto = require('./validators/validatePhoto')
+const validateKidId = require('./validators/validateKidId')
 
 
 
-const AuthError= require('./errors/AuthError') 
-const CoherenceError= require('./errors/CoherenceError') 
-const FormatError= require('./errors/FormatError') 
-const ExistenceError= require('./errors/ExistenceError') 
+const AuthError = require('./errors/AuthError')
+const CoherenceError = require('./errors/CoherenceError')
+const FormatError = require('./errors/FormatError')
+const ExistenceError = require('./errors/ExistenceError')
 const ValueError = require('./errors/ValueError')
 const ClientError = require('./errors/ClientError')
 const ServerError = require('./errors/ServerError')
 
 
-module.exports={
+module.exports = {
     isEmail,
 
 
@@ -175,9 +176,9 @@ module.exports={
     validateNewDateOfBirth,
     validateNewExtras,
     validatePhoto,
+    validateKidId,
 
 
-   
 
     AuthError,
     CoherenceError,

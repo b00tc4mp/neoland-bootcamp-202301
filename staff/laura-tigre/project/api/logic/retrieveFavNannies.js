@@ -10,7 +10,7 @@ function retrieveFavNannies(userId) {
         Parent.findOne({ user: userId }).populate({
             path: 'favs',
             populate: {
-                path: 'user',
+                path: 'user'
             }
         }).lean()
     ])
@@ -27,12 +27,14 @@ function retrieveFavNannies(userId) {
                 _nanny.fav = true
 
                 _nanny.name = nanny.user.name
+                _nanny.email = nanny.user.email
                 _nanny.availabilities= nanny.availabilities
 
                 nanny.availabilities.forEach(availability => {
                     availability.id = availability._id.toString()
                     delete availability._id
                 })
+                _nanny.photo= nanny.photo
 
                 _nanny.experience= nanny.experience
 

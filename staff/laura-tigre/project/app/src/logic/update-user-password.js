@@ -41,7 +41,7 @@ const { validateToken,validatePassword, validateNewPassword,validateNewPasswordC
       }
     }
     xhr.onerror = () => callback(new Error('network error'))
-    xhr.open('PATCH','http://localhost:8080/users/updatePassword')
+    xhr.open('PATCH','http://localhost:8080/users/password')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

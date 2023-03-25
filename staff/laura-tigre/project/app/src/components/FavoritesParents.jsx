@@ -4,8 +4,8 @@ import Container from '../library/Container'
 import toggleFavParent from '../logic/toogle-fav-parent'
 import Context from '../Context'
 import { Link } from 'react-router-dom'
-import { HeartIcon, } from '@heroicons/react/24/solid'
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline'
+import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
 
 
@@ -41,38 +41,46 @@ function FavoritesParents({ listUpdateStamp }) {
     const handleToggleFavParent = event => {
         try {
             const parentId = event.currentTarget.id
-            toggleFavParent(sessionStorage.token,parentId, error => {
+            toggleFavParent(sessionStorage.token, parentId, error => {
                 if (error) {
                     alert(error.message)
 
                     return
                 }
-              
-               loadList()
 
-             
+                loadList()
+
+
             })
         } catch (error) {
             alert(error.message)
         }
     }
-    
 
-   
-    return <Container TagName="ul" className="gap-4 py-10 ">
+
+
+    return <Container TagName="ul" className="gap-4 py-10 mb-10 ">
         {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={parent.id} id={parent.id} >
-            <button className="flex justify-center" id={parent.id} onClick={handleToggleFavParent} >{
-                parent.fav ?
-                    <HeartIcon className="h-5 w-5 text-red-500" />
-                    :
-                    <HeartIconOutline className="h-5 w-5 text-red-500" />}</button>
+        <div className="flex flex-row justify-between">
+            <div className='w-20 h-20'>
+                <img className="sm:" src=
+                    {parent.photo} />
+            </div>
+            <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
 
+                parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                    :
+                    <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+            
+            </div>
             <Link to={`/parents/${parent.id}`}>
                 <strong className="w-[28ch] text-sm text-left">{parent.name}</strong>
             </Link>
-            <p>{parent.city}</p>
-            <p>{parent.description}</p>
-            <p>{parent.extras}</p>
+            <ul className='pt-1 text-sm text-left'>Availability : {parent.availabilities.map(availabity => <li key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
+            <ul className='pt-1 text-sm text-left'>Kids : {parent.kids.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0,10)}</li>)}</ul>
+
+            <p className='text-sm text-left'>Email: {parent.email}</p>
+          
         </li>
         )}
 

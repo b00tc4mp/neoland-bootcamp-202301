@@ -61,7 +61,7 @@ function updateNannyAvailabilities(token,newMondayMorningSelected,
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', 'http://localhost:8080/nanny/updateAvailabilities')
+    xhr.open('PATCH', 'http://localhost:8080/nannies/availabilities')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
