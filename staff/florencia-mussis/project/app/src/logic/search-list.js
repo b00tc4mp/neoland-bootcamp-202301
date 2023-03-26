@@ -1,17 +1,17 @@
-import { validateToken, validateTitle, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError} from 'com'
+import { validateToken, validateTitle, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+
 /**
- * Retrieves the selected list
+ * Search a list
  * 
  * @param {string} token The session token
- * @param {string} title The list id
+ * @param {string} title The title by which to search a list
  * @param {function} callback The function to call back with the lists (or an error)
  */
-
 function searchList(token, title, callback) {
     validateToken(token)
     validateTitle(title)
     validateCallback(callback)
-    
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -29,13 +29,13 @@ function searchList(token, title, callback) {
             else if (status === 404)
                 callback(new ExistenceError(error))
             else if (status === 409)
-                callback(new CoherenceError(error))    
+                callback(new CoherenceError(error))
             else if (status === 500)
                 callback(new ServerError(error))
         }
     }
     xhr.onerror = () => callback(new Error('Network error'))
-    
+
     xhr.open('GET', `http://localhost:8080/lists/search?q=${title}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()

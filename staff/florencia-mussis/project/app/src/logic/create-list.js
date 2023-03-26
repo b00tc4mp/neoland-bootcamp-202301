@@ -1,18 +1,17 @@
 import { validateCallback, validateToken, ClientError, ServerError, ExistenceError } from 'com'
-/**
- * Creates a new sticky in the database
- * 
- * @param {string} token TThe session token
- * @param {string} title The title of the sticky
- *  * @param {function} callback The function  to call
- */
 
-function createList(token, callback) { 
+/**
+ * Creates a new list in the database
+ * 
+ * @param {string} token The session token
+ * @param {function} callback The function to call
+ */
+function createList(token, callback) {
     validateToken(token)
     validateCallback(callback)
-    
+
     const xhr = new XMLHttpRequest()
-    
+
     xhr.onload = () => {
         const { status, response } = xhr
 
@@ -33,7 +32,7 @@ function createList(token, callback) {
 
     }
     xhr.onerror = () => callback(new Error('Network error'))
-    
+
     xhr.open('POST', 'http://localhost:8080/lists')
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')

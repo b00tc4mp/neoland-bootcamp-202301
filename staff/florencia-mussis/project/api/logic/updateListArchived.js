@@ -1,6 +1,13 @@
 const { User, List } = require('../data/models')
 const { validateUserId, validateListId, validateArchived, ExistenceError, CoherenceError } = require('com')
 
+/**
+ * Updates the archive of the list
+ * 
+ * @param {string} userId The userId of the user 
+ * @param {string} listId The listId of the list
+ * @param {boolean} archive The archive to update
+ */
 function updateListArchived(userId, listId, archived) {
     validateUserId(userId)
     validateListId(listId)
@@ -26,12 +33,11 @@ function updateListArchived(userId, listId, archived) {
                     else if (shared.mode !== 'editor')
                         throw new CoherenceError(`The user with id ${userId} is not an editor`)
                 }
-
+                
             list.archived = archived
 
             return list.save()
         })
-
 }
 
 module.exports = updateListArchived

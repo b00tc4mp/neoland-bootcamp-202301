@@ -1,6 +1,7 @@
 const { validateUserId, validateListId, ExistenceError, CoherenceError } = require('com')
 const { User, List } = require('../data/models')
-const { Types: { ObjectId }} = require('mongoose')
+const { Types: { ObjectId } } = require('mongoose')
+
 /**
  * Deletes the specified list by id that belongs to the specified user (by userId)
  * 

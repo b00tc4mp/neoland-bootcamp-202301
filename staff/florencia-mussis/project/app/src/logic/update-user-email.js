@@ -1,4 +1,5 @@
 import { validatePassword, validateCallback, validateToken, validateNewEmail, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+
 /**
  * Updates the user password
  * 

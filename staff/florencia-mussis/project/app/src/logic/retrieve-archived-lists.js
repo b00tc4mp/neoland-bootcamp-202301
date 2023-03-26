@@ -1,8 +1,9 @@
 const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
+
 /**
- * Retrieves the favorite stickies from user
+ * Retrieves the user's archived lists
  * 
- * @param {string} token The token of the user to retrieve the lists from
+ * @param {string} token The token of the user to retrieve the lists archived
  * @param {function} callback The function to call back with the lists (or an error)
  */
 function retrieveArchivedLists(token, callback) {
@@ -30,7 +31,7 @@ function retrieveArchivedLists(token, callback) {
                 callback(new ServerError(error))
         }
     }
-    
+
     xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('GET', 'http://localhost:8080/lists/archived')

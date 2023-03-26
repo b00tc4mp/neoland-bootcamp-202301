@@ -4,7 +4,7 @@ const { User, List, Item } = require('../data/models')
 /**
  * Creates a new item in the list
  * 
- * @param {string} userId The userId
+ * @param {string} userId The userId the user belongs to
  * @param {string} listId The listId the list belongs to
  * @param {string} text The text of the item
  * @param {string} checked The checked of the item

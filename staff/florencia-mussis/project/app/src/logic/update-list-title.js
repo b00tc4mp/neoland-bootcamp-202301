@@ -1,14 +1,13 @@
-import {validateToken, validateListId, validateTitle,  validateCallback,  ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+import { validateToken, validateListId, validateTitle, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
 
 /**
  * Updates the list title
  * 
  * @param {string} token The session token
- * @param {string} listId The list's id to update
- * @param {string} title The list title
+ * @param {string} listId The list id of the list
+ * @param {string} title The title to update
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-
 function updateListTitle(token, listId, title, callback) {
   validateToken(token)
   validateListId(listId)
@@ -35,7 +34,7 @@ function updateListTitle(token, listId, title, callback) {
 
       else if (status === 409)
         callback(new CoherenceError(error))
-        
+
       else if (status === 500)
         callback(new ServerError(error))
     }

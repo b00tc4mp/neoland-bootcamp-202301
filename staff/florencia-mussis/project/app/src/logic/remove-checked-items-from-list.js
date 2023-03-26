@@ -1,12 +1,12 @@
 import { validateToken, validateListId, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+
 /**
- * Updates the list archived
+ * Remove checked items from a list
  * 
  * @param {string} token The session token
  * @param {string} listId The list's id to update
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-
 function removeCheckedItemsFromList(token, listId, callback) {
   validateToken(token)
   validateListId(listId)
@@ -32,7 +32,7 @@ function removeCheckedItemsFromList(token, listId, callback) {
 
       else if (status === 409)
         callback(new CoherenceError(error))
-        
+
       else if (status === 500)
         callback(new ServerError(error))
     }

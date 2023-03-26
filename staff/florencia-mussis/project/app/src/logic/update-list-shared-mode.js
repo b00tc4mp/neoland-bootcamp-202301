@@ -1,15 +1,15 @@
-import {validateToken, validateListId, validateSharedId, validateMode, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+import { validateToken, validateListId, validateSharedId, validateMode, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+
 
 /**
- * Updates the list title
+ * Updates the mode the list was shared
  * 
  * @param {string} token The session token
- * @param {string} listId The list's id to update
- * @param {string} title The list title
+ * @param {string} listId The list id of the list
+ * @param {string} sharedId The shared id of the shared
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-
-function updateListSharedMode(token, listId, sharedId, mode,callback) {
+function updateListSharedMode(token, listId, sharedId, mode, callback) {
   validateToken(token)
   validateListId(listId)
   validateSharedId(sharedId)
@@ -36,7 +36,7 @@ function updateListSharedMode(token, listId, sharedId, mode,callback) {
 
       else if (status === 409)
         callback(new CoherenceError(error))
-        
+
       else if (status === 500)
         callback(new ServerError(error))
     }

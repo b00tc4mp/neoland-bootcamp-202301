@@ -2,11 +2,13 @@ const { validateUserId, validateListId, validateEmail, validateMode, ExistenceEr
 const { User, List, Shared } = require('../data/models')
 
 /**
- * Creates a new item in the list
- * 
- * @param {string} userId The userId
- * @param {string} listId The listId the list belongs to
- */
+* Add a user to the shared list
+*
+* @param {string} userid The userid
+* @param {string} listId The listId to which the list belongs
+* * @param {string} email The email address of the user with whom the list will be shared
+* @param {string} mode The mode in which the list will be shared
+*/
 function shareList(userId, listId, email, mode) {
     validateUserId(userId)
     validateListId(listId)

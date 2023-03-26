@@ -1,5 +1,5 @@
 const { validateUserId, validateListId, CoherenceError, ExistenceError } = require('com')
-const { User, List, Shared } = require('../data/models')
+const { User, List } = require('../data/models')
 
 /**
  * Retrieves the selected list
@@ -40,12 +40,10 @@ function retrieveList(userId, listId) {
 
                     delete list.__v
 
-
                     list.items.forEach(items => {
                         items.id = items._id.toString()
                         delete items._id
                     })
-
 
                     list.shareds.forEach(shared => {
                         if (shared.user._id) {
@@ -65,10 +63,8 @@ function retrieveList(userId, listId) {
                         else if (itemB.checked && !itemA.checked) return -1
                         else return 0
                     })
-
                     return list
                 })
-
         })
 }
 

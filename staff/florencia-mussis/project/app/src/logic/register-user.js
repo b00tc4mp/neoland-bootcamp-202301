@@ -1,4 +1,5 @@
 import { validateName, validateAge, validateEmail, validatePassword, validateCallback, ClientError, ServerError, CoherenceError } from 'com'
+
 /**
  * Registers a user in the database
  * 

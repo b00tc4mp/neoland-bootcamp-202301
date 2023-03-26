@@ -1,8 +1,9 @@
 const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
+
 /**
- * Retrieves the favorite stickies from user
+ * Retrieves the lists shared with the user
  * 
- * @param {string} token The token of the user to retrieve the lists from
+ * @param {string} token The token of the user to retrieve the lists shared
  * @param {function} callback The function to call back with the lists (or an error)
  */
 function retrieveListsSharedWithMe(token, callback) {
@@ -30,7 +31,7 @@ function retrieveListsSharedWithMe(token, callback) {
                 callback(new ServerError(error))
         }
     }
-    
+
     xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('GET', 'http://localhost:8080/lists/shared/me')

@@ -1,6 +1,14 @@
 import { validateToken, validateListId, validateSharedId, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
 
-function removeSharedFromList(token, listId, sharedId, callback){
+/**
+ * Remove a shared from a list shared
+ * 
+ * @param {string} token The session token
+ * @param {string} listId The list's id to update
+ * @param {string} shareId The shareId of the shared
+ * @param {function} callback The function to call when the update is complete (or failed)
+ */
+function removeSharedFromList(token, listId, sharedId, callback) {
     validateToken(token)
     validateListId(listId)
     validateSharedId(sharedId)
@@ -9,7 +17,7 @@ function removeSharedFromList(token, listId, sharedId, callback){
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
-        const {status, response} = xhr
+        const { status, response } = xhr
 
         if (status === 204) {
             callback(null)
@@ -29,7 +37,7 @@ function removeSharedFromList(token, listId, sharedId, callback){
         }
     }
     xhr.onerror = () => callback(new Error('Network error'))
-    
+
     xhr.open('DELETE', `http://localhost:8080/lists/${listId}/shareds/${sharedId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()

@@ -1,4 +1,5 @@
 import { validatePassword, validateCallback, validateToken, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+
 /**
  * Unregisters a user
  * 

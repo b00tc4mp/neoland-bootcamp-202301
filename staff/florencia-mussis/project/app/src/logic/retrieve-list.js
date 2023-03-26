@@ -1,4 +1,5 @@
-import { validateToken, validateListId, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError} from 'com'
+import { validateToken, validateListId, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+
 /**
  * Retrieves the selected list
  * 
@@ -6,12 +7,11 @@ import { validateToken, validateListId, validateCallback, ClientError, ServerErr
  * @param {string} listId The list id
  * @param {function} callback The function to call back with the lists (or an error)
  */
-
 function retrieveList(token, listId, callback) {
     validateToken(token)
     validateListId(listId)
     validateCallback(callback)
-    
+
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -29,13 +29,13 @@ function retrieveList(token, listId, callback) {
             else if (status === 404)
                 callback(new ExistenceError(error))
             else if (status === 409)
-                callback(new CoherenceError(error))    
+                callback(new CoherenceError(error))
             else if (status === 500)
                 callback(new ServerError(error))
         }
     }
     xhr.onerror = () => callback(new Error('Network error'))
-    
+
     xhr.open('GET', `http://localhost:8080/lists/${listId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()

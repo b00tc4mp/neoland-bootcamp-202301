@@ -38,7 +38,7 @@ function updateUserPassword(token, password, newPassword, newPasswordConfirm, ca
                 callback(new ServerError(error))
         }
     }
-    
+
     xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('PATCH', 'http://localhost:8080/users/password') //patch actualizar

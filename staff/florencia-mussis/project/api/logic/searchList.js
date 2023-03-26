@@ -1,9 +1,15 @@
 const { validateUserId, validateTitle, ExistenceError } = require('com')
 const { User, List } = require('../data/models')
 
+/**
+ * Search a list
+ *
+ * @param {string} userId The id of the user
+ * @param {string} title The title by which to search a list
+ */
 function searchList(userId, title) {
-    validateUserId(userId),
-        validateTitle(title)
+    validateUserId(userId)
+    validateTitle(title)
 
     return User.findById(userId)
         .then(user => {
@@ -33,7 +39,7 @@ function searchList(userId, title) {
                         })
 
                         list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked ? 1 : 0), 0)
-                
+
                         list.itemsTotalCount = list.items.length
                     })
                     return lists

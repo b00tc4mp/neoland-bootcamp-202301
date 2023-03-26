@@ -2,7 +2,7 @@ const { validateUserId, validateListId, ExistenceError, CoherenceError } = requi
 const { User, List } = require('../data/models')
 
 /**
- * Deletes the specified list by id that belongs to the specified user (by userId)
+ * Selects all items from the list specified by ID belonging to the specified user (by user ID)
  * 
  * @param {string} userId The userId of the user 
  * @param {string} listId The listId of the list

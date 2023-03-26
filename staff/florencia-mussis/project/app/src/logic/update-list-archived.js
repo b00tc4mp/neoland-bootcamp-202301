@@ -1,13 +1,13 @@
 import { validateCallback, validateListId, validateArchived, validateToken, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+
 /**
- * Updates the list archived
+ * Updates the archive of the list
  * 
  * @param {string} token The session token
- * @param {string} listId The list's id to update
- * @param {string} archived The list archived
+ * @param {string} listId The listId of the list
+ * @param {boolean} archive The archive to update
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-
 function updateListArchived(token, listId, archived, callback) {
   validateToken(token)
   validateListId(listId)
@@ -34,7 +34,7 @@ function updateListArchived(token, listId, archived, callback) {
 
       else if (status === 409)
         callback(new CoherenceError(error))
-        
+
       else if (status === 500)
         callback(new ServerError(error))
     }

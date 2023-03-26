@@ -1,15 +1,15 @@
-import {validateToken, validateListId, validateItemId, validateChecked, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
+import { validateToken, validateListId, validateItemId, validateChecked, validateCallback, ClientError, ServerError, ExistenceError, CoherenceError } from 'com'
 
 /**
- * Updates the list title
+ * Updates the item check
  * 
- * @param {string} token The session token
- * @param {string} listId The list's id to update
- * @param {string} title The list title
+ * @param {string} token The session token 
+ * @param {string} listId The listId of the list
+ * @param {string} itemId The itemId of the item
+ * @param {boolean} checked The check to update
  * @param {function} callback The function to call when the update is complete (or failed)
  */
-
-function updateItemCheck(token, listId, itemId, checked,callback) {
+function updateItemCheck(token, listId, itemId, checked, callback) {
   validateToken(token)
   validateListId(listId)
   validateItemId(itemId)
@@ -36,7 +36,7 @@ function updateItemCheck(token, listId, itemId, checked,callback) {
 
       else if (status === 409)
         callback(new CoherenceError(error))
-        
+
       else if (status === 500)
         callback(new ServerError(error))
     }

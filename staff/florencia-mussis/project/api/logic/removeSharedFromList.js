@@ -2,7 +2,7 @@ const { validateUserId, validateListId, validateSharedId, ExistenceError, Cohere
 const { User, List } = require('../data/models')
 
 /**
- * Deletes the specified list by id that belongs to the specified user (by userId)
+ * Deletes the shared specified by id 
  * 
  * @param {string} userId The userId of the user 
  * @param {string} listId The listId of the list

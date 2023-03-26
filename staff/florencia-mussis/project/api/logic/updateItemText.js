@@ -1,6 +1,14 @@
 const { validateUserId, validateListId, validateItemId, validateText, ExistenceError, CoherenceError } = require('com')
 const { User, List } = require('../data/models')
 
+/**
+ * Updates the item text
+ * 
+ * @param {string} userId The userId of the user 
+ * @param {string} listId The listId of the list
+ * @param {string} itemId The itemId of the item
+ * @param {string} text The text to update
+ */
 function updateItemText(userId, listId, itemId, text) {
     validateUserId(userId)
     validateListId(listId)

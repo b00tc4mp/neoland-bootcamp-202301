@@ -1,4 +1,5 @@
 import { validateCallback, validateToken, ClientError, ServerError, ExistenceError } from 'com'
+
 /**
  * Retrieves the user public information
  * 
@@ -29,7 +30,7 @@ function retrieveUser(token, callback) {
                 callback(new ServerError(error))
         }
     }
-    
+
     xhr.onerror = () => callback(new Error('Network error'))
 
     xhr.open('GET', 'http://localhost:8080/users')

@@ -1,8 +1,9 @@
 const { Types: { ObjectId } } = require('mongoose')
 const { validateUserId, ExistenceError } = require('com')
 const { User, List } = require('../data/models')
+
 /**
- * Retrieves the lists that belong to the specified user (email)
+ * Retrieves the lists that belong to the specified user 
  * 
  * @param {string} userId The userId of the user to retrieve the lists 
  * 
@@ -12,35 +13,34 @@ function retrieveMyLists(userId) {
     validateUserId(userId)
 
     return Promise.all([
-        User.findById(userId).lean(), 
+        User.findById(userId).lean(),
         List.find({ user: new ObjectId(userId), archived: false }).populate({ path: 'user', select: 'name' }).lean()
-])
-    .then(([user, lists]) => {
-        if (!user) throw new ExistenceError(`User with id ${userId} not found`)
+    ])
+        .then(([user, lists]) => {
+            if (!user) throw new ExistenceError(`User with id ${userId} not found`)
 
-        lists.forEach(list => {
-            if (list._id) {
-                list.id = list._id.toString()
-                delete list._id
+            lists.forEach(list => {
+                if (list._id) {
+                    list.id = list._id.toString()
+                    delete list._id
 
-                delete list.__v
-                delete list.shared
+                    delete list.__v
+                    delete list.shared
 
-                if (list.user._id) {
-                    list.user.id = list.user._id.toString()
-                    delete list.user._id
+                    if (list.user._id) {
+                        list.user.id = list.user._id.toString()
+                        delete list.user._id
+                    }
+
+                    list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked ? 1 : 0), 0)
+
+                    list.itemsTotalCount = list.items.length
+
+                    delete list.items
                 }
-
-                list.itemsTotalChecked = list.items.reduce((accum, elem) => accum + (elem.checked ? 1 : 0), 0)
-                
-                list.itemsTotalCount = list.items.length
-
-                delete list.items
-            }
+            })
+            return lists
         })
-
-        return lists
-    })
 }
 
 module.exports = retrieveMyLists
