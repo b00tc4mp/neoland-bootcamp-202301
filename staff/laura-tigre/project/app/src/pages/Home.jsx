@@ -118,6 +118,7 @@ function Home() {
 
 
       </main>
+      
       <footer className="sm: w-full position fixed bottom-0 bg-[#fb923c] rounded-md">
         <nav className='flex justify-between'>
           <Link to="/" className="m-3" ><HomeIcon className="h-8 w-8 text-[#d6d3d1]" /></Link>

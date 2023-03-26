@@ -8,7 +8,7 @@ import retrieveNanny from "../logic/retrieve-nanny-profile"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
-
+import updatePhotoNanny from "../logic/update-photo-nanny"
 
 
 
@@ -33,6 +33,34 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
 
     } catch (error) {
       alert(error.message)
+    }
+
+  }
+  const handleSubmitPhoto = (event) => {
+    event.preventDefault()
+    const newPhoto = event.target.newPhoto.value
+      
+    try {
+      updatePhotoNanny(sessionStorage.token, newPhoto, error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+        event.target.reset()
+        loadList()
+        setFeedback({
+          message: 'photo updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
     }
 
   }
@@ -203,14 +231,25 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
 
  
 
-  return <Container className=" sm:h-full w-full mb-20">
-     <h1 className="text-[#fb923c]">{nanny?.user?.name}</h1>
-    <img src={nanny?.photo}/>
+  return <Container className="sm: items-center justify-center h-full w-full mb-20">
+    <Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-1/2 gap-4 p-3 rounded-lg">
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+        <legend>{nanny?.user?.name}</legend>
+        <img src={nanny?.photo} />
+        <input
+          className="sm: bg-transparent border-[#fb923c] mb-2"
+          type="text"
+          name="newPhoto"
+          placeholder="new photo"></input>
+
+        <Button type="submit">New photo</Button>
+      </fieldset>
+    </Container>
   
-    <Container TagName="form" className='sm: w-1/3 items-center justify-center p-5' onSubmit={handleSubmitAvailability}>
-    <fieldset className='sm: w-1/3 p-5 border-solid border-2 border-orange-500 rounded-md'>
+    <Container TagName="form" className='sm:items-center justify-center p-5' onSubmit={handleSubmitAvailability}>
+    <fieldset className='sm: flex flex-col items-center justify-center p-5 border-solid border-2 border-[#fb923c] rounded-md'>
       <legend>Availability</legend>
-      <table className='sm: table table-fixed p-2 m-5'>
+      <table className='sm:text-center table table-fixed p-2 m-5'>
         <thead >
           <tr className='sm:text-center my-2'>
             <th className='sm:py-1'>Day</th>
@@ -277,7 +316,7 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
   </Container>
    
     <Container TagName="form" onSubmit={handleSubmitExperience} className="sm: w-1/2 flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Experience</legend>
         <p>{nanny?.experience} years </p>
         <input
@@ -294,7 +333,7 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
 
     <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
     flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Description</legend>
         <p>{nanny?.description}</p>
         <input
@@ -311,7 +350,7 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
     </Container>
     <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2
     flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+      <fieldset className='sm: w-1/2  flex flex-col items-center justify-center p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend >Extras</legend>
         <p>{nanny?.extras}</p>
         <input
@@ -328,7 +367,7 @@ function ProfileUserNanny({onUnregisterNanny, listUpdateStamp}) {
     </Container>
 
     <Container TagName="form" onSubmit={handleSubmitUnregister} className="sm: w-1/2 flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend>Unregister User</legend>
        
         <input

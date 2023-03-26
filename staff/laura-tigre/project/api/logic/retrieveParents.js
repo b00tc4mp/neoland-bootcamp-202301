@@ -1,5 +1,5 @@
 const { validateUserId, ExistenceError } = require('com')
-const { User,Parent, Nanny } = require('../data/models')
+const { User, Parent, Nanny } = require('../data/models')
 /**
  * 
  * @param {string} userId 
@@ -9,20 +9,15 @@ const { User,Parent, Nanny } = require('../data/models')
 
 function retrieveParents(userId) {
     validateUserId(userId)
-   
+
     return User.findById(userId).lean()
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            
-
             return Nanny.findOne({ user: userId }).lean()
                 .then(nanny => {
                     return Parent.find({ city: nanny.city }).populate('user', '-password -__v').select('-__v').lean()
-
-
-                        .then(parents=> {
-
+                        .then(parents => {
                             const favParents = nanny.favs.map(fav => fav.toString())
 
                             parents.forEach(parent => {

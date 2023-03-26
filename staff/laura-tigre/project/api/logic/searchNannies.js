@@ -148,7 +148,9 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
 
             return Nanny.find(filter).populate('user', '-password -__v').select('-__v').lean()
         })
+
         .then(nannies => {
+            (fav => fav.toString())
             nannies.forEach(nanny => {
 
                 if (nanny._id) {
@@ -164,7 +166,6 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
                     availability.id = availability._id.toString()
                     delete availability._id
                 })
-
             })
 
 

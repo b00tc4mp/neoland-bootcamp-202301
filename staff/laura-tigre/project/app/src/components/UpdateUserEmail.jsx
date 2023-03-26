@@ -40,7 +40,7 @@ function UpdateUserEmail() {
 
 
     return <Container>
-       <Container TagName="form" className="sm: w-1/2 gap-4mt-10 p-1 rounded-lg w-277" onSubmit={handleSubmit}>
+       <Container TagName="form" className="sm: w-1/2 flex flex-col justify-center items-center gap-4 mt-10 p-1 rounded-lg w-277" onSubmit={handleSubmit}>
       <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-orange-500 rounded-md'>
         <legend>New Email</legend>
         <input

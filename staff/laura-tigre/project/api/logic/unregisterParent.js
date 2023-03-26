@@ -14,9 +14,6 @@ function unregisterParent(userId, password) {
         return Parent.deleteOne({'user': userId})
 
         .then(() => {return User.deleteOne({ _id: new ObjectId(userId) })})
-
-    
-
     
     })
 }

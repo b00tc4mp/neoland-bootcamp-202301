@@ -13,11 +13,7 @@ function unregisterNanny(userId, password) {
 
         return Nanny.deleteOne({'user': userId})
 
-        .then(() => {return User.deleteOne({ _id: new ObjectId(userId) })})
-
-    
-
-    
+        .then(() => {return User.deleteOne({ _id: new ObjectId(userId) })}) 
     })
 }
 

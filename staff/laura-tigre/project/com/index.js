@@ -80,6 +80,7 @@ const validateNewDateOfBirth = require('./validators/validateNewDateOfBirth')
 const validateNewExtras = require('./validators/validateNewExtras')
 const validatePhoto = require('./validators/validatePhoto')
 const validateKidId = require('./validators/validateKidId')
+const validateNewPhoto = require('./validators/validateNewPhoto')
 
 
 
@@ -177,6 +178,7 @@ module.exports = {
     validateNewExtras,
     validatePhoto,
     validateKidId,
+    validateNewPhoto,
 
 
 

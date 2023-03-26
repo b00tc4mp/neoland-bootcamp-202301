@@ -14,14 +14,11 @@ function retrieveNannies(userId) {
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            
-
             return Parent.findOne({ user: userId }).lean()
                 .then(parent => {
                     return Nanny.find({ city: parent.city }).populate('user', '-password -__v').select('-__v').lean()
 
-
-                        .then(nannies => {
+                    .then(nannies => {
 
                             const favNannies = parent.favs.map(fav => fav.toString())
 

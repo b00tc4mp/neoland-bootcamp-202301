@@ -11,6 +11,7 @@ import retrieveParent from '../logic/retrieve-parent-profile'
 import deleteKid from "../logic/delete-kid"
 import insertPhotoParent from '../logic/insert-photo-parent'
 import { ArchiveBoxXMarkIcon  } from '@heroicons/react/24/outline'
+import updatePhotoParent from "../logic/update-photo-parent"
 
 function ProfileParent({ listUpdateStamp }) {
   console.log('Profile -> render')
@@ -40,6 +41,34 @@ function ProfileParent({ listUpdateStamp }) {
   useEffect(() => {
   loadList()
   }, [listUpdateStamp])
+
+  const handleSubmitPhoto = (event) => {
+    event.preventDefault()
+    const newPhoto = event.target.newPhoto.value
+    try {
+      updatePhotoParent(sessionStorage.token, newPhoto, error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+        event.target.reset()
+        loadList()
+        setFeedback({
+          message: 'photo updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
+    }
+
+  }
   const handleSubmitAvailability = (event) => {
     event.preventDefault()
 
@@ -238,23 +267,35 @@ function ProfileParent({ listUpdateStamp }) {
 
 
 
-  return <Container className="mb-20">
-    <h1 className="text-[#fb923c]">{parent?.user?.name}</h1>
-    <img src={parent?.photo} />
+  return <Container className="sm: items-center justify-center h-full w-full mb-20">
+
+<Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-1/2 gap-4 p-3 rounded-lg">
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+        <legend>{parent?.user?.name}</legend>
+        <img src={parent?.photo} />
+        <input
+          className="sm: bg-transparent border-[#fb923c] mb-2"
+          type="text"
+          name="newPhoto"
+          placeholder="new photo"/>
+
+        <Button type="submit">New photo</Button>
+      </fieldset>
+    </Container>
   
-    <Container TagName="form" className='sm: w-1/3 p-5' onSubmit={handleSubmitAvailability}>
-      <fieldset className='sm: w-1/3 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+    <Container TagName="form" className='sm: p-5' onSubmit={handleSubmitAvailability}>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend>Availability</legend>
         <table className='sm: table table-fixed m-5'>
           <thead>
-            <tr className='sm:space-x-1'>
+            <tr className='sm: text-center space-x-1'>
               <th>Day</th>
               <th>Morning</th>
               <th>Afternoon</th>
               <th>Evening</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-orange-200" >
+          <tbody className="divide-y text-center divide-orange-200" >
             <tr className='sm:text-center space-x-1'>
               <th className='sm:px-2 py-1'>Monday</th>
               <td><input type="checkbox" id='newMondayMorningSelected' ></input></td>
@@ -311,7 +352,7 @@ function ProfileParent({ listUpdateStamp }) {
       </fieldset>
     </Container>
     <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2 gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Extras</legend>
         <p>{parent?.extras}</p>
         <input
@@ -325,7 +366,7 @@ function ProfileParent({ listUpdateStamp }) {
     </Container>
 
     <Container TagName="form" onSubmit={handleSubmitKidsCreate} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg w-full">
-      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Kids</legend>
         <ul>{parent?.kids?.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)} <button onClick={() => handleDeleteKid(kid.id)} ><ArchiveBoxXMarkIcon className="h-5 w-5 text-[#fb923c]"  /></button></li>)}</ul>
         <div className="flex flex-col mt-3">
@@ -348,7 +389,7 @@ function ProfileParent({ listUpdateStamp }) {
     </Container>
     <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
     flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Description</legend>
         <p>{parent?.description}</p>
         <input
@@ -362,7 +403,7 @@ function ProfileParent({ listUpdateStamp }) {
       </fieldset>
     </Container>
     <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend>Unregister User</legend>
 
         <input

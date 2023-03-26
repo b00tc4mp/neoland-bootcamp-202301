@@ -34,6 +34,8 @@ const updateExtrasParent = require('./logic/updateExtrasParent')
 const insertPhotoNanny = require('./logic/insertPhotoNanny')
 const insertPhotoParent = require('./logic/insertPhotoParent')
 const deleteKid = require('./logic/deleteKid')
+const updatePhotoNanny = require('./logic/updatePhotoNanny')
+const updatePhotoParent = require('./logic/updatePhotoParent')
 
 
 
@@ -268,7 +270,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
 
         })
 
-        server.post('nannies/photo', jsonBodyParser, (req, res) => {
+        server.post('/nannies/photo', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
               
@@ -276,6 +278,30 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const { photo} = credentials
                 
                 insertPhotoNanny(userId,photo)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/nannies/photo', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+              
+                const credentials = req.body
+                const { newPhoto} = credentials
+                
+                updatePhotoNanny(userId,newPhoto)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)
@@ -473,7 +499,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.post('parents/photo', jsonBodyParser, (req, res) => {
+        server.post('/parents/photo', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
               
@@ -481,6 +507,30 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const { photo} = credentials
                 
                 insertPhotoParent(userId,photo)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/parents/photo', jsonBodyParser, (req, res) => {
+            try {
+                const userId = verifyToken(req)
+              
+                const credentials = req.body
+                const { newPhoto} = credentials
+                
+                updatePhotoParent(userId,newPhoto)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)

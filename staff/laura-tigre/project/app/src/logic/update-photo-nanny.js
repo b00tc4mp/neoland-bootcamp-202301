@@ -1,4 +1,4 @@
-const { validateToken, validatePhoto,validateCallback, ClientError, ServerError, CoherenceError } = require('com')
+const { validateToken, validateNewPhoto,validateCallback, ClientError, ServerError, CoherenceError } = require('com')
 
 /**
  * Registers a user in the database
@@ -8,9 +8,9 @@ const { validateToken, validatePhoto,validateCallback, ClientError, ServerError,
  * @param {function} callback The callback
  */
 
-function insertPhotoNanny(token, photo,callback) {
+function updatePhotoNanny(token, newPhoto,callback) {
     validateToken(token)
-    validatePhoto(photo)
+    validateNewPhoto(newPhoto)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest
@@ -35,10 +35,11 @@ function insertPhotoNanny(token, photo,callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/nannies/photo')
+    xhr.open('PATCH','http://localhost:8080/nannies/photo')
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = {photo}
+    const user = {newPhoto}
     const json = JSON.stringify(user)
 
     xhr.send(json)
@@ -46,6 +47,6 @@ function insertPhotoNanny(token, photo,callback) {
 
 
 }
-export default insertPhotoNanny
+export default updatePhotoNanny
 
 
