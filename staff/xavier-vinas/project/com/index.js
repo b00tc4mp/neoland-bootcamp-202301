@@ -15,6 +15,8 @@ const validateNewPasswordConfirm = require('./validators/validateNewPasswordConf
 const validateColor = require('./validators/validateColor')
 const validateToken = require('./validators/validateToken')
 const validateUserProfileId = require('./validators/validateUserProfileId')
+const validateAuctionId = require('./validators/validateAuctionId')
+const validateAmount = require('./validators/validateAmount')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -42,6 +44,9 @@ module.exports = {
     validateColor,
     validateToken,
     validateUserProfileId,
+    validateAuctionId,
+    validateAmount,
+
 
     FormatError,
     ExistenceError,

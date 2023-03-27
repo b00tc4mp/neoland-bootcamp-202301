@@ -1,4 +1,4 @@
-const { ExistenceError, validateUserId } = require('../../com')
+const { ExistenceError, validateUserId , validateAuctionId } = require('../../com')
 const { Auction, User } = require("../data/models")
 const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAuctions')
 /**
@@ -10,6 +10,7 @@ const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAu
 
 function retrieveAuction(userId, auctionId) {
     validateUserId(userId)
+    validateAuctionId(auctionId)
 
     return Promise.all([
         User.findById(userId).lean(),

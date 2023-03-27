@@ -1,5 +1,6 @@
 const { User, Auction } = require('../data/models')
-const { validateUserId, ExistenceError } = require('../../com')
+const { validateBidRate, validatePrice, validatePhoto, validateUserId, ExistenceError, validateTitle, validateDescription } = require('../../com')
+
 
 /**
  * Creates a new auction 
@@ -15,11 +16,11 @@ const { validateUserId, ExistenceError } = require('../../com')
  */
 function createAuction(userId, title, description, price, photo, bidRate, startDate, endDate) {
     validateUserId(userId)
-    if (typeof title !== 'string') throw new TypeError('title is not a string')
-    if (typeof description !== 'string') throw new TypeError('description is not a string')
-    if (typeof price !== 'number') throw new TypeError('price is not a number')
-    if (typeof photo !== 'string') throw new TypeError('photo is not a string')
-    if (typeof bidRate !== 'number') throw new TypeError('bidRate is not a number')
+    validateTitle(title)
+    validateDescription(description)
+    validatePrice(price)
+    validatePhoto(photo)
+    validateBidRate(bidRate)
     if (!(startDate instanceof Date)) throw new TypeError('startDate is not a date')
     if (!(endDate instanceof Date)) throw new TypeError('endDate is not a date')
 
@@ -41,8 +42,8 @@ function createAuction(userId, title, description, price, photo, bidRate, startD
             return auction.save()
         })
         .then(auction => {
-        console.log(auction)
-    })
+            console.log(auction)
+        })
 }
 
 

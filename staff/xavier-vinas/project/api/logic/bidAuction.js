@@ -1,5 +1,5 @@
 const { User, Auction, Bid } = require('../data/models')
-const { validateUserId, ExistenceError, ValueError, CoherenceError } = require('../../../com')
+const { validateAmount ,validateAuctionId ,validateUserId, ExistenceError, ValueError, CoherenceError } = require('../../../com')
 /**
  * 
  * @param {string} userId The userId the user belongs
@@ -9,8 +9,8 @@ const { validateUserId, ExistenceError, ValueError, CoherenceError } = require('
  */
 function bidAuction(userId, auctionId, amount) {
     validateUserId(userId)
-    if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')
-    if (typeof amount !== 'number') throw new TypeError('amount is not a number')
+    validateAuctionId(auctionId)
+   validateAmount(amount)
 
     return Promise.all([
         User.findById(userId),

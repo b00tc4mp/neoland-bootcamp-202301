@@ -1,13 +1,13 @@
-const { ExistenceError, validateUserId } = require('../../com')
+const { ExistenceError, validateUserId, validateAuctionId } = require('../../com')
 const { Auction, User, Bid } = require("../data/models")
- /** 
- * @param {string} auctionId The userId the user belongs
- * @param {string}  userId the auctionId the user belongs
- * @returns 
- */
+/** 
+* @param {string} auctionId The userId the user belongs
+* @param {string}  userId the auctionId the user belongs
+* @returns 
+*/
 
 function retrieveAuctionBid(auctionId, userId) {
-    if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')
+    validateAuctionId(auctionId)
     validateUserId(userId)
 
     return Promise.all([
@@ -31,7 +31,7 @@ function retrieveAuctionBid(auctionId, userId) {
 
                 if (bid.user._id) {
                     bid.user.id = bid.user._id.toString()
-                    
+
                     delete bid.user._id
                 }
 
