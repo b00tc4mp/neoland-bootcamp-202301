@@ -1,6 +1,18 @@
 const { User, Auction } = require('../data/models')
 const { validateUserId, ExistenceError } = require('../../com')
 
+/**
+ * Creates a new auction 
+ * 
+ * @param {string} userId the password the user belongs
+ * @param {string} title The title of auction 
+ * @param {string} desciption The desciption of auction 
+ * @param {number} price The price of auction 
+ * @param {string} photo The photo of auction 
+ * @param {number} bidRate The bid rate of auction 
+ * @param {date} startDate The start date of the auction
+ * @param {date} endDate The end date of the auction
+ */
 function createAuction(userId, title, description, price, photo, bidRate, startDate, endDate) {
     validateUserId(userId)
     if (typeof title !== 'string') throw new TypeError('title is not a string')

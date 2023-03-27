@@ -1,12 +1,16 @@
 const { validateToken, ServerError, ExistenceError  } = require('com')
 
 /**
- * Creates a new sticky in the database
  * 
- * @param {string} token The session token
- * @param {string} text The text of the sticky
- * @param {string} visibility The visibility of the sticky
- * @param {function} callback The function to call when the sticky is created (or failed)
+ * @param {string} token  the token the user belongs
+ * @param {string} title the title of the auction
+ * @param {string} description the description of the auction
+ * @param {number} price tye the price of the auction
+ * @param {string} photo the photo of the auction
+ * @param {number} bidRate the bid rate of the auction-
+ * @param {date} startDate the start date of the auction
+ * @param {date} endDate the end date of the auction
+ * @param {function} callback  The function to call
  */
 function createAuction(token, title, description,price,photo,bidRate,startDate,endDate, callback) {
     validateToken(token)

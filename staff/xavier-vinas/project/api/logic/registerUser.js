@@ -1,5 +1,14 @@
 const { validateEmail, validatePassword, validateName, validateAge, CoherenceError } = require("../../com")
-const { User  } = require("../data/models")
+const { User } = require("../data/models")
+/**
+ * 
+ * @param {string} name the user´s name
+ * @param {number} age the user´s age
+ * @param {string} email the user´s email
+ * @param {number} password the user´s email password
+ * @param {*} creditCard  the user´s credit card
+ * @returns 
+ */
 
 function registerUser(name, age, email, password , creditCard) {
     validateName(name)

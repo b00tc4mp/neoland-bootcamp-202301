@@ -1,5 +1,10 @@
 const { validateUserId, ExistenceError } = require('../../com')
 const { User } = require("../data/models")
+/**
+ * 
+ * @param {string } userId The userId the user belongs
+ * @returns 
+ */
 
 
 

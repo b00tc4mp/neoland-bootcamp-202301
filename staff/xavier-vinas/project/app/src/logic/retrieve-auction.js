@@ -1,10 +1,10 @@
 const { validateToken, validateCallback, ExistenceError, ServerError, ClientError } = require('com')
 
 /**
- * Retrieves the user public information
  * 
- * @param {string} token The token of the user to retrieve
- * @param {function} callback The function to call back with the user (or an error)
+ * @param {string} token  the token users belongs 
+ * @param {string} auctionId the id of the auction
+ * @param {function} callback the funcion to call 
  */
 function retrieveAuction(token, auctionId, callback) {
     validateToken(token)

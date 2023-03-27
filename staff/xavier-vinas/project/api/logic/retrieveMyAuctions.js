@@ -1,6 +1,11 @@
 const { ExistenceError, validateUserId } = require('../../com')
 const { User, Bid, Auction } = require("../data/models")
 const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAuctions')
+/**
+ * 
+ * @param {string} userId The userId the user belongs
+ * @returns 
+ */
 
 function retrieveMyAuctions(userId) {
     validateUserId(userId)

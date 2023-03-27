@@ -1,5 +1,13 @@
 const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm, CoherenceError, AuthError, ExistenceError } = require('../../com')
 const { User } = require('../data/models')
+/**
+ * 
+ * @param {string} userId The userId the user belongs
+ * @param {number} password  the password the user belongs
+ * @param {number} newPassword the new password the user belongs
+ * @param {number } newPasswordConfirm the new password confirmation the user belongs
+ * @returns 
+ */
 
 function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
     validateUserId(userId)

@@ -1,10 +1,10 @@
 const { validateToken, validateCallback, ExistenceError, ServerError, ClientError } = require('com')
 
 /**
- * Retrieves the auctionBid public information
  * 
- * @param {string} token The token of the auctionBid to retrieve
- * @param {function} callback The function to call back with the auctionBid (or an error)
+ * @param {string} auctionId the id of the auction
+ * @param {string} token the token the user belongs
+ * @param {function} callback the funcion to call
  */
 function retrieveAuctionBid(auctionId ,token,  callback) {
     if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')

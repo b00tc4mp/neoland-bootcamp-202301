@@ -1,5 +1,11 @@
 const { validateEmail, validatePassword, AuthError, ExistenceError } = require('../../com');
 const { User } = require("../data/models")
+/**
+ * 
+ * @param {string} email The user's email address
+ * @param {number} password The user's email password
+ * @returns 
+ */
 
 function authenticateUser(email, password) {
     validateEmail(email);

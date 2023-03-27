@@ -1,5 +1,10 @@
 const { ExistenceError, validateUserId } = require('../../com')
 const { Auction, User, Bid } = require("../data/models")
+ /** 
+ * @param {string} auctionId The userId the user belongs
+ * @param {string}  userId the auctionId the user belongs
+ * @returns 
+ */
 
 function retrieveAuctionBid(auctionId, userId) {
     if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')

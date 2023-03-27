@@ -1,6 +1,12 @@
 const { Types: { ObjectId } } = require('mongoose')
 const { validateUserId, validatePassword, ExistenceError, AuthError } = require('../../com')
 const { User } = require('../data/models')
+/**
+ * 
+ * @param {string} userId The userId the user belongs
+ * @param {number} password  the password the user belongs
+ * @returns 
+ */
 
 
 function unregisterUser(userId, password) {

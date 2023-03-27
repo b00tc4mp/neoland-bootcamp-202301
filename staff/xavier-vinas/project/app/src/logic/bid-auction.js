@@ -1,4 +1,11 @@
 const { validateToken, ServerError, ExistenceError, validateCallback } = require('com')
+/**
+ * 
+ * @param {string} token the token the user belongs
+ * @param {string} auctionId the id of the auction
+ * @param {number} amount the amount of the user in auction
+ * @param {function} callback the function to call
+ */
 
 
 
