@@ -61,30 +61,33 @@ function Register() {
                 <label className="sm: gap-10 block text-gray-700 font-bold mb-2" htmlFor="name">Your username :</label>
                 <input className="sm: gap-10shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="text" placeholder="Enter username" id="name" />
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="age">age:</label>
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="age">Age:</label>
                 <input className="sm: hadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="number" placeholder="Enter age" id="age" />
 
                 <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="email">Email adress:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="email" placeholder="email" id="email" />
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="password">choose a pasword:<sup>*</sup></label>
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="password">Choose a pasword:<sup>*</sup></label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="password" placeholder="pasword" id="password" />
 
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="name1">Nombre de la tarjeta:</label>
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="name1">
+                    Credit card name:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="name1" required />
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="number">Número de tarjeta de crédito:</label>
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="number">
+                    Credit card number:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="number" name="number" required />
 
                 <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="cvv">CVV:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="cvv" name="cvv" required />
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="expiration">Fecha de vencimiento:</label>
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="expiration">
+                    Due date:</label>
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="expiration" name="expiration" placeholder="MM/AA" required />
-            <Container >
-                <Button type="submit">Register</Button>
-            </Container>
+                <Container >
+                    <Button type="submit">Register</Button>
+                </Container>
 
             </Container>
 

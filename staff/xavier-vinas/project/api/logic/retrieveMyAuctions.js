@@ -43,3 +43,4 @@ function retrieveMyAuctions(userId) {
 }
 
 module.exports = retrieveMyAuctions
+

@@ -60,8 +60,8 @@ function Home() {
 
     return <div className="sm: bg-gray-200  border-b font-['Montserrat']   " >
         <header className=" top-0 w-full justify-between flex p-2 shadow bg-gray-200 py-5 z-50">
-            <a className="w-16" onClick={handleNavigateToHome}><img className="border-double border-4 rounded  border-black" src="./logo.png" /></a>
-            <button onClick={handleClick} className='mx-3 text-center'>
+            <a className="w-16" onClick={handleNavigateToHome}><img className="border-double border-4 rounded-md shadow-inner  border-black" src="./logo.png" /></a>
+            <button onClick={handleClick} className='mx-3 text-center '>
                 {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8' />}
             </button>
 

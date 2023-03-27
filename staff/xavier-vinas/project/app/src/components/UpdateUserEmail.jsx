@@ -41,7 +41,7 @@ function UpdateUserEmail() {
             })
         }
     }
-    return <Container>
+    return <Container className='shadow-2xl'>
         <h2 className=' text-xl'>Change email</h2>
         <Container TagName='form' onSubmit={handleSubmit}>
             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="newEmail" placeholder="new email" />

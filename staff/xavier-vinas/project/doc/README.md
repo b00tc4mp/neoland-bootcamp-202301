@@ -20,7 +20,6 @@ Client
 Admin 
 
 - Add Auctions 
-- Update Auctions
 - Remove Auctions
 
 #### UI desing 
@@ -52,6 +51,7 @@ Auction
 - bidRate (number, required)
 - startDate (date, required)
 - endDate (date, required)
+- status (string ['created','open','closed'])
 
 Bid
 - id

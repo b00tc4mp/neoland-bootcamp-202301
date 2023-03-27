@@ -17,6 +17,11 @@ const validateToken = require('./validators/validateToken')
 const validateUserProfileId = require('./validators/validateUserProfileId')
 const validateAuctionId = require('./validators/validateAuctionId')
 const validateAmount = require('./validators/validateAmount')
+const validateTitle = require('./validators/validateTitle')
+const validateDescription = require('./validators/validateDescription')
+const validatePrice = require('./validators/validatePrice')
+const validatePhoto = require('./validators/validatePhoto')
+const validateBidRate = require('./validators/validateBidRate')
 
 const FormatError = require('./errors/FormatError')
 const ExistenceError = require('./errors/ExistenceError')
@@ -46,6 +51,14 @@ module.exports = {
     validateUserProfileId,
     validateAuctionId,
     validateAmount,
+    validateTitle,
+    validateDescription,
+    validatePrice,
+    validatePhoto,
+    validateBidRate,
+
+
+
 
 
     FormatError,

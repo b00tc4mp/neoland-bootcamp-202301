@@ -10,18 +10,27 @@ const { User } = require("../data/models")
  * @returns 
  */
 
-function registerUser(name, age, email, password , creditCard) {
+function registerUser(name, age, email, password, cardName, number, cvv, expiration) {
     validateName(name)
     validateAge(age)
     validateEmail(email)
     validatePassword(password)
 
+    // todo validate new credits card info 
+
     return User.findOne({ email })
         .then(user => {
             if (user) throw new CoherenceError('user already registered')
-            
 
-            user = new User({ name, age, email, password, creditCard ,role:'client' })
+            const creditCard = {
+                name: cardName,
+                number,
+                cvv,
+                expirationDate: expiration
+            }
+
+
+            user = new User({ name, age, email, password, creditCard, role: 'client' })
 
             return user.save()
 

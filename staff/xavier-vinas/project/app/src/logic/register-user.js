@@ -9,13 +9,13 @@ const { validateName, validateAge, validateEmail, validatePassword, validateCall
  * @param {string} password The user password
  * @param {function} callback The callback
  */
-function registerUser(name, age, email, password, name1, number, cvv, expiration, callback) {
+function registerUser(name, age, email, password, cardName, number, cvv, expiration, callback) {
     validateName(name)
     validateAge(age)
     validateEmail(email)
     validatePassword(password)
     validateCallback(callback)
-    if (typeof name1 !== 'string') throw new TypeError('name1 is not a string')
+    if (typeof cardName !== 'string') throw new TypeError('cardName is not a string')
     if (typeof number !== 'number') throw new TypeError('number is not a number')
     if (typeof cvv !== 'string') throw new TypeError('cvv is not a string')
     if (typeof expiration !== 'string') throw new TypeError('expiration is not a string')
@@ -46,7 +46,7 @@ function registerUser(name, age, email, password, name1, number, cvv, expiration
     xhr.open('POST', 'http://localhost:8080/users')
     xhr.setRequestHeader('Content-Type', 'application/json')
 
-    const user = { name, age, email, password, name1, number, cvv, expiration }
+    const user = { name, age, email, password, cardName, number, cvv, expiration }
     const json = JSON.stringify(user)
     xhr.send(json)
 }

@@ -37,9 +37,9 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             try {
                 const user = req.body
 
-                const { name, age, email, password, creditCard } = user
+                const { name, age, email, password, cardName, number, cvv, expiration } = user
 
-                registerUser(name, age, email, password, creditCard)
+                registerUser(name, age, email, password, cardName, number, cvv, expiration)
                     .then(() => res.status(201).send())
                     // asincrono
                     .catch(error => {

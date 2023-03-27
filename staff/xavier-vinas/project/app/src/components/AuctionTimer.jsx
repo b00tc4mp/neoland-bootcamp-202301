@@ -20,25 +20,24 @@ function AuctionTimer({ endDate }) {
     const hours = duration.hours()
     const minutes = duration.minutes()
     const seconds = duration.seconds()
-
+    
     let time = ''
 
     if (days !== 0) {
         time += `${days}d `
-
     }
+
     if (hours !== 0) {
-        time += `${hours}h `
+        time += `${hours.toString().padStart(2, '0')}h `
     }
 
     if (minutes !== 0) {
-        time += `${minutes}m `
+        time += `${minutes.toString().padStart(2, '0')}m `
     }
 
-    if (seconds !== 0) {
-        time += `${seconds}s `
+    if (seconds >= 0) {
+        time += `${seconds.toString().padStart(2, '0')}s `
     }
-
     return <div>
         {time}
     </div>

@@ -44,7 +44,7 @@ function AuctionDetail({ }) {
         <div className="sm: flex justify-between items-start mb-2">
             <h2 className="sm: text-xl font-medium mr-4">{auction.title}</h2>
         </div>
-        <img className="rounded sm: w-full h-64 object-cover mb-2 overflow-y-scroll shadow-2xl " src={auction.photo} alt={auction.title} />
+        <img className="rounded-md sm: w-full h-64 object-cover mb-2 overflow-y-scroll shadow-2xl " src={auction.photo} alt={auction.title} />
         <div>
             <p className="sm: text-lg text-gray-600 shadow-inner p-2 rounded">{auction.description}</p>
         </div>
@@ -59,7 +59,7 @@ function AuctionDetail({ }) {
                 <p className=" sm: text-black">Status: <span className="font-medium text-gray-600">{auction.status}</span></p>
                 {auction.userStatus === 'won' || auction.userStatus === 'winning' ? (
                     <p className="sm:text-black ">User status:
-                        <span className={`text-xl ${auction.userStatus === 'winning' ? 'text-green-600' : 'text-orange-600'}`}>
+                        <span className={`text-lg ${auction.userStatus === 'winning' ? 'text-green-600' : 'text-orange-600'}`}>
                             {auction.userStatus}
                         </span>
                     </p>

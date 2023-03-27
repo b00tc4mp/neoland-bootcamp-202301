@@ -5,6 +5,7 @@ import Context from '../Context'
 import Container from "../library/Container"
 import bidAuction from "../logic/bid-auction"
 import Button from "../library/Button"
+
 function BidList({ price, bidRate, status }) {
     const { auctionId } = useParams()
 
@@ -74,10 +75,12 @@ function BidList({ price, bidRate, status }) {
 
         return <Container className=" sm: bg-gray-200 p-6 rounded  max-h-96 overflow-y-scroll shadow-2xl my-0">
             <h2 className="font-bold">Live Auctions</h2>
-            {status === 'open' && <Container TagName="form" onSubmit={handleBid} className=" sm:">
-                <input defaultValue={nextBidAmount} min={nextBidAmount} step={bidRate} className="sm: px-4 py-2 rounded-full text-gray-900 bg-gray-300 focus:outline-none focus:shadow-outline" type="number" name="amount" />
-                <Button type="submit">Bid</Button>
-            </Container>}
+            {status === 'open' &&
+                <Container TagName="form" onSubmit={handleBid} className=" sm:">
+                    <input defaultValue={nextBidAmount} min={nextBidAmount} step={bidRate} className="sm: bg-gray-100  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="number" name="amount" />
+                    <Button type="submit">
+                        Bid up</Button>
+                </Container>}
             <Container TagName="ul" className="¨my-0">
                 {bids.map((bid) => (
                     <li key={bid.id} className="sm: border-b border-gray-400 py-4">
@@ -85,7 +88,7 @@ function BidList({ price, bidRate, status }) {
                             <div>
                                 <p className="sm: text-gray-500">Date: {new Date(bid.date).toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
                                 <p className="sm: text-gray-500">Name: {bid.user.name}</p>
-                                <p className="sm: text-gray-500">Amount: {bid.amount} $</p>
+                                <p className="sm: text-gray-500">Amount: <span className="font-bold">{bid.amount}</span> $</p>
                             </div>
 
                         </div>

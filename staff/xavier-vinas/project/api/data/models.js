@@ -16,7 +16,6 @@ const creditCard = new Schema({
         type: 'string',
         required: true,
         length: 3,
-        unique: true
 
     },
     expirationDate: {
