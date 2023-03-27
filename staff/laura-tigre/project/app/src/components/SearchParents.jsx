@@ -176,12 +176,12 @@ function SearchParents({ listUpdateStamp }) {
                 <img className="sm:" src=
                     {parent.photo} />
             </div>
-            <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
+            {/* <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
 
                 parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
                     :
                     <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
-            
+             */}
             </div>
 
                 <Link to={`/parents/${parent.id}`}><strong className="w-[28ch] text-left">{parent.user.name}</strong>

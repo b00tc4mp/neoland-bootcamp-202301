@@ -1,7 +1,13 @@
 const { User, Nanny } = require('../data/models')
 
 const { validateUserId, validatePhoto, ExistenceError } = require('com')
+/**
+ * insert photo in the database of nanny
+ * 
+ * @param {string} userId The user 
+ * @param {string} photo The link to the photo
 
+ */
 function insertPhotoNanny(userId, photo) {
     validateUserId(userId)
     validatePhoto(photo)

@@ -1,7 +1,12 @@
 const { User, Nanny } = require('../data/models')
 
 const { validateUserId, validateNewExperience, ExistenceError } = require('com')
-
+/**
+* Update experience that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {nummber} newExperience The experience that the user wants to be updated
+**/
 function updateExperience(userId, newExperience) {
     validateUserId(userId)
     validateNewExperience(newExperience)

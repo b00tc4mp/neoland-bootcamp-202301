@@ -1,12 +1,12 @@
 const { validateToken, validateNewPhoto,validateCallback, ClientError, ServerError, CoherenceError } = require('com')
 
 /**
- * Registers a user in the database
- * 
- * @param {string} token The user
- * @param {string} photo The photo
- * @param {function} callback The callback
- */
+* Update photo that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {string} newPhoto photo that the user wants to be updated
+* @param {function} callback The callback
+**/
 
 function updatePhotoNanny(token, newPhoto,callback) {
     validateToken(token)

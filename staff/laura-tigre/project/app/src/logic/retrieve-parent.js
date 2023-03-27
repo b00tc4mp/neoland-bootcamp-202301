@@ -3,6 +3,7 @@ const {validateToken,validateUserParentId ,validateCallback, ClientError,ServerE
  * Retrieves the user public information
  * 
  * @param {string} token The token of the user to retrieve
+ * @param {string} parentId The user parent identifier
  * @param {function} callback The function to call back with the user (or an error)
  */
 

@@ -2,6 +2,13 @@ const { User, Nanny } = require('../data/models')
 
 const { validateUserId, validateNewPhoto, ExistenceError } = require('com')
 
+/**
+* Update photo that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {string} newPhoto photo that the user wants to be updated
+**/
+
 function updatePhotoNanny(userId, newPhoto) {
     validateUserId(userId)
     validateNewPhoto(newPhoto)

@@ -1,7 +1,12 @@
 const { User, Parent } = require('../data/models')
 
 const { validateUserId, validateNewPhoto, ExistenceError } = require('com')
-
+/**
+* Update photo that parent wants to be updated
+* 
+* @param {string} userId The userId
+* @param {string} newPhoto photo that the user wants to be updated
+**/
 function updatePhotoParent(userId, newPhoto) {
     validateUserId(userId)
     validateNewPhoto(newPhoto)

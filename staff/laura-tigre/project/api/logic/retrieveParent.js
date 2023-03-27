@@ -1,6 +1,11 @@
 const { validateUserId, validateUserParentId, ExistenceError, CoherenceError } = require('com')
 const { User, Parent } = require('../data/models')
-
+/**
+ *retrieve parent user if the user is the parent or the user is a parent
+ * 
+ * @param {string} userId The user
+ * @param {string} userNannyId The parent user id
+ */
 function retrieveParent(userId, parentId) {
     validateUserId(userId)
    if(typeof parentId !== 'undefined') validateUserParentId(parentId)

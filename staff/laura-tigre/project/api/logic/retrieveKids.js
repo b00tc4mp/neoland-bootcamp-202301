@@ -1,7 +1,7 @@
 const { validateUserId, ExistenceError } = require('com')
 const { User, Parent} = require('../data/models')
 /**
- * 
+ * retrive the kids of the user
  * @param {string} userId 
  * @param {*}  
  * @returns 

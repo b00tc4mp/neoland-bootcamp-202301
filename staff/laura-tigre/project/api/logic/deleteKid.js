@@ -1,6 +1,12 @@
 const { validateUserId,validateKidId,ExistenceError} = require('com')
 const { User,Parent } = require('../data/models')
-
+/**
+ * Delete kid in the database
+ * 
+ * @param {string} userId The user 
+ * @param {string} kidId The kid that i want to quit
+ * @param {Date} 
+ */
 function deleteKid(userId,kidId) {
     validateUserId(userId)
     validateKidId(kidId)

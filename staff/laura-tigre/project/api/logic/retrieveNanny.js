@@ -1,6 +1,11 @@
 const { validateUserId, validateUserNannyId, ExistenceError, CoherenceError } = require('com')
 const { User, Nanny } = require('../data/models')
-
+/**
+ *retrieve nanny user if the user is the nanny or the user is a parent
+ * 
+ * @param {string} userId The user
+ * @param {string} userNannyId The nanny user id
+ */
 function retrieveNanny(userId, nannyId) {
     validateUserId(userId)
     if (typeof nannyId !== 'undefined') validateUserNannyId(nannyId)
@@ -23,6 +28,7 @@ function retrieveNanny(userId, nannyId) {
                     if (user.role === 'nanny' && nanny.user._id.toString() !== userId) throw new CoherenceError(`user id ${userId} with role nanny is not related to nanny with id ${nannyId}`)
 
                     // sanitize
+                    nanny.fav= true
                     nanny.id = nanny._id.toString()
                     nanny.user.id = nanny.user._id.toString()
                     nanny.availabilities.forEach(availability => {

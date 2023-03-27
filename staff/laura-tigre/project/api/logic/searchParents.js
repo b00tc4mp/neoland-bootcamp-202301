@@ -22,6 +22,16 @@ const { validateUserId, validateMondayMorningSelected,
     validateKidsFrom, validateKidsTo, ExistenceError, CoherenceError
 } = require('com')
 const { User, Parent } = require('../data/models')
+/**
+ *search parents with a specific dates
+ * 
+ * @param {string} userId The user
+ * @param {boolean} mondayMorningSelected.... the day and the time the user wants to search
+ * @param {number} kidsFrom the kids the user wants to select from
+ * @param {number} kidsTo the kids the user wants to select to
+ 
+ */
+
 
 function searchParents(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, kidsFrom, kidsTo) {
     validateUserId(userId)

@@ -22,6 +22,12 @@ const { validateUserId, validateNewMondayMorningSelected,
     validateNewSundayEveningSelected,
     ExistenceError
 } = require('com')
+/**
+* Update availability that parent wants to be updated
+* 
+* @param {string} userId The userId
+* @param {boolean} newMondayMorningSelected..... that the user wants to be updated
+**/
 
 function updateParentAvailabilities(userId,
     newMondayMorningSelected,

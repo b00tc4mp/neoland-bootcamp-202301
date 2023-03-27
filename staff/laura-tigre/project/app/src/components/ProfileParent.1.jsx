@@ -308,8 +308,8 @@ function ProfileParent({ listUpdateStamp }) {
         <Button type="submit">New Availability</Button>
       </fieldset>
     </Container>
-    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2 gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: gap-4 p-3 rounded-lg">
+      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Extras</legend>
         <input
           className="sm: bg-transparent border-[#fb923c] pb-2"
@@ -345,7 +345,7 @@ function ProfileParent({ listUpdateStamp }) {
     </Container>
     <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
     flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Description</legend>
         <input
           className="sm: bg-transparent pb-2 "

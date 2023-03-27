@@ -1,6 +1,6 @@
 import { validateEmail, validatePassword, validateCallback,  ClientError, ServerError, AuthError, ExistenceError } from 'com'
 /**
- * 
+ * function validate user
  * @param {string} email the user email that I registered
  * @param {string} password the user pasword that I registered
  * @param {function} callback the callback

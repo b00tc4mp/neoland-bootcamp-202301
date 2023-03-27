@@ -2,6 +2,12 @@ const { validateUserId, validatePassword,ExistenceError, AuthError } = require('
 const { User,Nanny } = require('../data/models')
 const {Types: {ObjectId}}= require('mongoose')
 
+/**
+* Delete an user and his role
+* 
+* @param {string} userId The userId
+* @param {string} password The password taht the user 
+**/
 function unregisterNanny(userId, password) {
     validateUserId(userId)
     validatePassword(password)

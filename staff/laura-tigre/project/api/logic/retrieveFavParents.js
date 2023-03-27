@@ -1,6 +1,10 @@
 const { User, Nanny } = require('../data/models')
 const { validateUserId, ExistenceError } = require('com')
-
+/**
+ *retrieve favorits parents
+ * 
+ * @param {string} userId The user who owns the favorites list
+ */
 function retrieveFavParents(userId) {
     validateUserId(userId)
 

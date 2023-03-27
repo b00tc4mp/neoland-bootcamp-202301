@@ -24,6 +24,15 @@ const { validateToken, validateMondayMorningSelected,
     validateCallback, ClientError, ServerError, ExistenceError
 } = require('com')
 
+/**
+ *search parent with a specific dates
+ * 
+ * @param {string} userId The user
+ * @param {boolean} mondayMorningSelected.... the day and the time the user wants to search
+ * @param {number} kidsFrom The number of kids to search from
+ * @param {number} kidsTo the number of kids to search from
+ */
+
 
 function searchParents(token, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, kidsFrom, kidsTo, callback) {
     validateToken(token)

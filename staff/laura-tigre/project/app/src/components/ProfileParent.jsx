@@ -269,7 +269,7 @@ function ProfileParent({ listUpdateStamp }) {
 
   return <Container className="sm: items-center justify-center h-full w-full mb-20">
 
-<Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-1/2 gap-4 p-3 rounded-lg">
+<Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-280 gap-4 p-3 rounded-lg">
       <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend>{parent?.user?.name}</legend>
         <img src={parent?.photo} />

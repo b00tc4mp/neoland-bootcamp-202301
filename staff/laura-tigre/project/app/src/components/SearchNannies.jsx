@@ -182,11 +182,11 @@ function SearchNannies({ listUpdateStamp }) {
                     <img className='w-20 h-20' src=
                         {nanny.photo} />
                 </div>
-                <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
+                {/* <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
 
                     nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
                         :
-                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button> */}
             </div>
 
                 <Link to={`/nannies/${nanny.id}`}>

@@ -6,7 +6,7 @@ const { User, Parent,Nanny } = require('../data/models')
 * Toggles favorite of a specific nanny
 * 
 * @param {string} userId The userId
-* @param {string} nannyId The nanny identifier
+* @param {string} nannyId The nanny identifier that the user want to save to favorites
 */
 
 function toggleFavNanny(userId, nannyId) {

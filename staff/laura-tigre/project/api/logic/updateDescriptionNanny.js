@@ -2,6 +2,13 @@ const { User, Nanny } = require('../data/models')
 
 const { validateUserId, validateNewDescription, ExistenceError, } = require('com')
 
+/**
+* Update description that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {string} newDescription The description that the user wants to be updated
+**/
+
 function updateDescriptionNanny(userId, newDescription) {
     validateUserId(userId)
     validateNewDescription(newDescription)

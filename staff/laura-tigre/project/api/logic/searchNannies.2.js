@@ -60,7 +60,7 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
 
             if (user.role !== 'parent') throw new CoherenceError('invalid user role')
 
-            // return Parent.findOne({ user: userId }).lean()
+
                 .then(user => {
 
                     const filter = {}
@@ -150,9 +150,12 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
                         filter.experience = { $gte: yearsOfExperienceFrom, $lte: yearsOfExperienceTo }
 
                     return Nanny.find(filter).populate('user', '-password -__v').select('-__v').lean()
-                })
 
+
+                })
+                
                 .then(nannies => {
+                    // return Parent.findOne({ user: userId }).lean()
                     const favNannies = parent.favs.map(fav => fav.toString())
                     nannies.forEach(nanny => {
 
@@ -177,7 +180,7 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
                 })
         })
 }
- 
+
 
 
 

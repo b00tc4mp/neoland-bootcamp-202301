@@ -1,6 +1,12 @@
 const { User, Nanny } = require('../data/models')
 
 const { validateUserId, validateNewExtras, ExistenceError, } = require('com')
+/**
+* Update extras that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {string} newExtras The extras that the user wants to be updated
+**/
 
 function updateExtrasNanny(userId, newExtras) {
     validateUserId(userId)

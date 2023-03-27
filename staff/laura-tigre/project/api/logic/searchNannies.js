@@ -26,6 +26,17 @@ const { validateUserId, validateMondayMorningSelected,
 } = require('com')
 const { User, Nanny } = require('../data/models')
 
+/**
+ *search nannies with a specific dates
+ * 
+ * @param {string} userId The user
+ * @param {boolean} mondayMorningSelected.... the day and the time the user wants to search
+ * @param {number} priceFrom the price from the user wants to select
+ * @param {number} priceTo the price to select the user wants to select
+ * @param {number} yearsOfExperienceFrom the year of experience the user wants to select from 
+ * @param {number} yearsOfExperienceTo the year of experience the user wants to select to
+ */
+
 function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, mondayEveningSelected, tuesdayMorningSelected, tuesdayAfternoonSelected, tuesdayEveningSelected, wendsdayMorningSelected, wendsdayAfternoonSelected, wendsdayEveningSelected, thursdayMorningSelected, thursdayAfternoonSelected, thursdayEveningSelected, fridayMorningSelected, fridayAfternoonSelected, fridayEveningSelected, saturdayMorningSelected, saturdayAfternoonSelected, saturdayEveningSelected, sundayMorningSelected, sundayAfternoonSelected, sundayEveningSelected, priceFrom, priceTo, yearsOfExperienceFrom, yearsOfExperienceTo) {
     validateUserId(userId)
     if (mondayMorningSelected !== undefined) validateMondayMorningSelected(mondayMorningSelected)

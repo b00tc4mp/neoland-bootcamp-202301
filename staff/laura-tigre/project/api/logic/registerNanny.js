@@ -1,5 +1,15 @@
 const { User, Nanny } = require('../data/models')
 const { validateName, validateCity, validateExperience, validateEmail, validatePassword, CoherenceError, } = require('com')
+/**
+ * register a new nanny user 
+ * 
+ * @param {string} name The name of the nanny user
+ * @param {string} city The city of the nanny user
+ * @param {number} experience The experience of the nanny user
+ * @param {string} email The email of the nanny user
+ * @param {number} password The password of the nanny user
+
+ */
 
 function registerNanny(name, city, experience, email, password) {
     validateName(name)

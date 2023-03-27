@@ -1,5 +1,5 @@
 const { User, Nanny,Availability } = require('../data/models')
-const { validateUserId, validateUserNannyId, validateNewMondayMorningSelected,
+const { validateUserId,validateNewMondayMorningSelected,
     validateNewMondayAfternoonSelected,
     validateNewMondayEveningSelected,
     validateNewTuesdayMorningSelected,
@@ -22,6 +22,13 @@ const { validateUserId, validateUserNannyId, validateNewMondayMorningSelected,
     validateNewSundayEveningSelected,
     ExistenceError
 } = require('com')
+
+/**
+* Update availability that nanny wants to be updated
+* 
+* @param {string} userId The userId
+* @param {boolean} newMondayMorningSelected..... that the user wants to be updated
+**/
 
 function updateNannyAvailabilities(userId,
     newMondayMorningSelected,

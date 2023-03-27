@@ -1,6 +1,13 @@
 const {User, Parent,Kid} = require('../data/models')
 
 const { validateUserId,validateNewName,validateNewDateOfBirth ,ExistenceError,} = require('com')
+/**
+ * Creates a new kid in the database
+ * 
+ * @param {string} userId The user 
+ * @param {string} newName The name of the new kid that i want to add
+ * @param {Date} newDateOfBirth The date of birth the new kid that i want to add
+ */
 
 function createKids(userId,newName, newDateOfBirth) {
     validateUserId(userId)

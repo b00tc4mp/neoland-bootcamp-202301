@@ -1,10 +1,10 @@
 const { validateToken, validateKidId, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
 
 /**
- * Unregisters a user
+ * delete kid
  * 
  * @param {string} token The session token
- * @param {string} password The user password
+ * @param {string} kidId The kid identifier 
  * @param {callback} callback The function to call when the user is unregistered (or failed)
  */
 

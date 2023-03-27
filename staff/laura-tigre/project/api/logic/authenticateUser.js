@@ -1,5 +1,12 @@
 const {validateEmail,validatePassword,ExistenceError,AuthError}=require('com')
 const {User}=require('../data/models')
+/**
+ * Authenticates a user in database
+ * 
+ * @param {string} email The user the mail belongs to
+ * @param {string} password The password for the user
+
+ */
 
 function authenticateUser(email,password){
     validateEmail(email)

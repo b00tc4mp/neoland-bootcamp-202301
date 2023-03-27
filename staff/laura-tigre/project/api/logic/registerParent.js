@@ -1,7 +1,15 @@
 const { User, Parent } = require('../data/models')
 const { validateName, validateCity, validateEmail, validatePassword, CoherenceError, } = require('com')
 
+/**
+ * register a new parent user 
+ * 
+ * @param {string} name The name of the parent user
+ * @param {string} city The city of the parent user
+ * @param {string} email The email of the parent user
+ * @param {number} password The password of the parent user
 
+ */
 
 function registerParent(name, city, email, password) {
 

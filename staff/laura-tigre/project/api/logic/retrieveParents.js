@@ -1,10 +1,9 @@
 const { validateUserId, ExistenceError } = require('com')
 const { User, Parent, Nanny } = require('../data/models')
 /**
+ *retrieve parents who matches the same city to the nanny
  * 
- * @param {string} userId 
- * @param {*}  
- * @returns 
+ * @param {string} userId The user
  */
 
 function retrieveParents(userId) {

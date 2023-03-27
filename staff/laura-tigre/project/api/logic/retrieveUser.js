@@ -1,5 +1,10 @@
 const { validateUserId, ExistenceError } = require('com')
 const { User, Parent, Nanny } = require('../data/models')
+/**
+ *retrieve user if the user 
+ * 
+ * @param {string} userId The user
+ */
 
 function retrieveUser(userId) {
     validateUserId(userId)
