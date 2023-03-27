@@ -41,19 +41,23 @@ function UpdateUserEmail() {
         }
     }
 
-    return <Container TagName="form" onSubmit={handleSubmit} className='m-56'>
-        <h2 className='m-1 text-xl font-roboto'>Update your email</h2>
+    return <Container TagName="form" onSubmit={handleSubmit}>
+        <section className='w-screen'>
+            <div>
+                <h2 className='m-1 text-xl font-roboto'>Update your email</h2>
 
-        <input type='email' id='email' placeholder='Actual email' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+                <input type='email' id='email' placeholder='Actual email' />
 
-        <input type='email' id='newEmail' placeholder='New email' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+                <input type='email' id='newEmail' placeholder='New email' />
 
-        <input type='password' id='password' placeholder='Actual password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
+                <input type='password' id='password' placeholder='Actual password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-        <Button type="submit">Update email</Button>
+                <Button type="submit">Update email</Button>
 
-        {feedback && <Feedback message={feedback.message} level={feedback.level} />}
-    </Container>
+                {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+            </div >
+        </section >
+    </Container >
 }
 
 export default UpdateUserEmail

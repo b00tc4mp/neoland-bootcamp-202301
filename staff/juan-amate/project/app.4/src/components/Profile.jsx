@@ -73,7 +73,7 @@ function Profile({ updateStamp }) {
     }
 
     return <Container>
-        <section className='w-screen mt-36 flex flex-col'>
+        <section className='w-screen mt-36 flex flex-col bg-pink-800'>
             <div className='w-4/5 mx-4 items-start'>
                 <h2 className='m-1 text-xl font-roboto'>Your data access</h2>
                 <div className='flex'>
@@ -105,7 +105,7 @@ function Profile({ updateStamp }) {
                     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
                 </Container>
             </div>
-        </section >
+        </section>
     </Container>
 }
 

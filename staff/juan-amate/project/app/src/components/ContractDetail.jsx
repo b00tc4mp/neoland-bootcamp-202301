@@ -2,8 +2,6 @@ import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Context from '../Context'
 import retrieveContract from '../logic/retrieve-contract'
-import retrieveUser from '../logic/retrieve-user'
-import retrieveAdminUser from '../logic/retrieve-admin-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
 
@@ -13,8 +11,6 @@ function ContractDetail() {
     const { alert } = useContext(Context)
 
     const [contract, setContract] = useState()
-    const [user, setUser] = useState()
-    const [admin, setAdmin] = useState()
 
     const params = useParams()
     const navigate = useNavigate()
@@ -37,49 +33,15 @@ function ContractDetail() {
         }
     }
 
-    const loadUser = () => {
-        try {
-            retrieveUser(sessionStorage.token, (error, user) => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-
-                setUser(user)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }
-
-    const loadAdmin = () => {
-        try {
-            retrieveAdminUser(sessionStorage.token, (error, admin) => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-
-                setAdmin(admin)
-            })
-        } catch (error) {
-            alert(error.message)
-        }
-    }
-
     useEffect(() => {
         loadContract()
-        loadUser()
-        loadAdmin()
     }, [])
 
     const handleContractView = () => {
         navigate('./pdf')
     }
 
-    if (contract && admin) {
+    if (contract) {
         const eventTime = new Date(contract.eventDate).toTimeString().slice(0, 5)
         const eventDate = new Date(contract.eventDate)
         const contractDate = new Date(contract.date).toLocaleDateString()
@@ -97,12 +59,12 @@ function ContractDetail() {
 
         return (
             <Container className='w-screen mt-28 mb-4 gap-4'>
-                <Button onClick={handleContractView} >View PDF</Button>
+                <Button onClick={handleContractView}>View PDF</Button>
                 <div className='w-4/5 p-4 border rounded-xl'>
                     <img src='../../images/cabecera.png' alt='cabecera' />
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>together</h3><br />
-                    <p className='text-justify'>On the one hand <strong>{admin.name}</strong> with national id: <strong>{admin.nationalId}</strong> and registered office at <strong>{admin.address}</strong> - <strong>{admin.zipCode}</strong> - <strong>{admin.city} ({admin.province})</strong>, and phone: <strong>{admin.phone}</strong>. Hereinafter referred to as <strong>THE PHOTOGRAPHER</strong>.</p><br />
-                    <p className='text-justify'>And on the other hand <strong>{user.name}</strong>, of legal age, with national id: <strong>{user.nationalId}</strong> with address at <strong>{user.address}</strong> - <strong>{user.nationalId}</strong> - <strong>{user.city} ({user.province})</strong>; phone: <strong>{user.phone}</strong> and email: <strong>{user.email}</strong>; and <strong>{contract.coupleName}</strong>, of legal age, with national id: <strong>{contract.coupleId}</strong>, phone: <strong>{contract.couplePhone}</strong> and email: <strong>{contract.coupleEmail}</strong>; hereinafter referred to as <strong>THE CLIENTS</strong>.</p><br />
+                    <p className='text-justify'>On the one hand <strong>{contract.photographer.name}</strong> with national id: <strong>{contract.photographer.nationalId}</strong> and registered office at <strong>{contract.photographer.address}</strong> - <strong>{contract.photographer.zipCode}</strong> - <strong>{contract.photographer.city} ({contract.photographer.province})</strong>, and phone: <strong>{contract.photographer.phone}</strong>. Hereinafter referred to as <strong>THE PHOTOGRAPHER</strong>.</p><br />
+                    <p className='text-justify'>And on the other hand <strong>{contract.user.name}</strong>, of legal age, with national id: <strong>{contract.user.nationalId}</strong> with address at <strong>{contract.user.address}</strong> - <strong>{contract.user.nationalId}</strong> - <strong>{contract.user.city} ({contract.user.province})</strong>; phone: <strong>{contract.user.phone}</strong> and email: <strong>{contract.user.email}</strong>; and <strong>{contract.coupleName}</strong>, of legal age, with national id: <strong>{contract.coupleId}</strong>, phone: <strong>{contract.couplePhone}</strong> and email: <strong>{contract.coupleEmail}</strong>; hereinafter referred to as <strong>THE CLIENTS</strong>.</p><br />
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>expose</h3><br />
                     <p>That THE CLIENTS are interested in contracting the professional services of THE PHOTOGRAPHER.</p>
                     <p>Said services consist of carrying out the Wedding report on the <strong>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}</strong>, whose ceremony will be at <strong>{eventTime} hours</strong> of the day mentioned above, in <strong>{contract.ceremonyPlace.description}</strong> and whose subsequent banquet will take place at <strong>{contract.celebrationPlace.description}</strong>.
@@ -114,7 +76,7 @@ function ContractDetail() {
                         <li>THE CLIENTS authorize THE PHOTOGRAPHER to use the works solely and exclusively for promotional purposes such as the website owned by THE PHOTOGRAPHER and/or social networks. The commercialization of such works without the express authorization of THE CLIENTS is expressly prohibited.</li><br />
                         <li>According to the intellectual property law, the use of the works by THE CLIENTS is private, and they cannot market, reproduce, transform, publish, transfer them to third parties, etc... without the express authorization of THE PHOTOGRAPHER.</li><br />
                         <li>When the development of the contracted activity in certain places requires obtaining permits or authorizations, it will be up to the client to manage their prior obtaining, as well as the payment of fees or royalties, if any.</li><br />
-                        <li>For any claim, the parties submit to the Courts and Tribunals of {admin.city}.</li><br />
+                        <li>For any claim, the parties submit to the Courts and Tribunals of {contract.photographer.city}.</li><br />
                     </ul>
                 </div><div className='w-4/5 p-4 border rounded-xl'>
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>obligations of the parties</h3><br />
@@ -215,26 +177,24 @@ function ContractDetail() {
                 </div><div className='w-4/5 p-4 border rounded-xl'>
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>data protection clause</h3><br />
                     <p className='text-justify'>In accordance with the provisions of the current regulations on Protection of Personal Data, the data provided will be incorporated into the treatment system owned by (YOUR NAME AND SURNAME), in order to attend to the necessary communication for the provision of services contracted, as well as the preparation of the corresponding invoice and compliance with fiscal and commercial obligations. Said data will be kept for the period strictly necessary to comply with the precepts mentioned above.</p><br />
-                    <p className='text-justify'>However, clients may exercise the rights of access, rectification, limitation of treatment, deletion, portability and opposition to the treatment of their personal data as well as the consent given for the treatment of the same, directing their request to the indicated postal address above or to the email {admin.email}, and may also contact the competent Control Authority to present the claim that it deems appropriate.</p><br />
+                    <p className='text-justify'>However, clients may exercise the rights of access, rectification, limitation of treatment, deletion, portability and opposition to the treatment of their personal data as well as the consent given for the treatment of the same, directing their request to the indicated postal address above or to the email {contract.photographer.email}, and may also contact the competent Control Authority to present the claim that it deems appropriate.</p><br />
 
                     <p className='text-justify'>THE CLIENTS authorize the transfer of their personal data to the environment of the collaborating team of THE PHOTOGRAPHER so that they can communicate with each other and prepare the event in accordance with the agreement.</p><br />
 
-                    <p className='text-center font-semibold'>In {admin.city}, on {contractDate}</p><br />
+                    <p className='text-center font-semibold'>In {contract.photographer.city}, on {contractDate}</p><br />
 
                     <p className='text-center'>FIRMS</p><br />
                     <div className='mb-2'>
                         <div>
                             <p className='text-center font-bold mx-5 mb-20'>The clients</p>
-                            <p className='text-center font-semibold text-xs underline mb-2'>{user.name} - {contract.coupleName}</p>
+                            <p className='text-center font-semibold text-xs underline mb-2'>{contract.user.name} - {contract.coupleName}</p>
                         </div>
                         <div>
                             <p className='text-center font-bold mx-5 mb-20'>The photographer</p>
-                            <p className='text-center font-semibold text-xs underline mb-2'>{admin.name}</p>
+                            <p className='text-center font-semibold text-xs underline mb-2'>{contract.photographer.name}</p>
                         </div>
                     </div>
                 </div>
-
-
             </Container >
         )
     } else return <></>

@@ -43,8 +43,8 @@ function UpdateUserPassword() {
         }
     }
 
-    return <Container TagName='form' onSubmit={handleSubmit} className='m-56'>
-        <h2 className='m-1 text-xl font-roboto'>Update your password</h2>
+    return <Container TagName='form' onSubmit={handleSubmit} className=''>
+        <h2 className=''>Update your password</h2>
 
         <input type='password' id='password' placeholder='Actual password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
         <input type='password' id='newPassword' placeholder='New password' className='w-full max-w-4/5 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
