@@ -5,7 +5,7 @@ function toggleFavSticky(token, stickyId, callback) {
     validateStickyId(stickyId)
     validateCallback(callback)
 
-    const xhr = new XMLHttpRequest()
+    const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
         const { status, response } = xhr
