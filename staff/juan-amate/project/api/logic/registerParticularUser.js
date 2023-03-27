@@ -1,4 +1,3 @@
-const { Types: { ObjectId } } = require('mongoose')
 const { User } = require('../data/models')
 const {
     validateName,
