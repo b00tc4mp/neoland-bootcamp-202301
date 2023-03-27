@@ -1,6 +1,19 @@
 const { User } = require('../data/models')
 const { validateUserId, validateName, validateNationalId, validateAddress, validateZipCode, validateCity, validateProvince, validatePhone, ExistenceError } = require('com')
 
+/**
+ * Update de data of the user
+ * 
+ * @param {string} userId The id of the user to update
+ * @param {string} name The name of the user to update
+ * @param {string} nationalId The national id of the user to update
+ * @param {string} address The address of the user to update
+ * @param {string} zipCode The zip code of the user to update
+ * @param {string} city The city of the user to update
+ * @param {string} province The province of the user to update
+ * @param {string} phone The phone of the user to update
+ * @returns 
+ */
 function updateUserData(
     userId,
     name,

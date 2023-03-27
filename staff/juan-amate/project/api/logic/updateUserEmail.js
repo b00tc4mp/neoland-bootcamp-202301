@@ -1,6 +1,14 @@
 const { User } = require('../data/models')
 const { validateUserId, validateNewEmail, validatePassword, ExistenceError, AuthError } = require('com')
 
+/**
+ * Update a user´s email
+ * 
+ * @param {string} userId The id of the user to update
+ * @param {string} newEmail The new email of the user
+ * @param {string} password The password of the user
+ * @returns 
+ */
 function updateUserEmail(userId, newEmail, password) {
     validateUserId(userId)
     validateNewEmail(newEmail)

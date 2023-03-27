@@ -1,6 +1,16 @@
 const { User } = require('../data/models')
 const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordRepeat, CoherenceError, ExistenceError, AuthError } = require('com')
 
+
+/**
+ * Update the password of a user
+ * 
+ * @param {string} userId The id of the user
+ * @param {string} password The actual password
+ * @param {string} newPassword The new password
+ * @param {string} newPasswordRepeat The repeat new password
+ * @returns 
+ */
 function updateUserPassword(userId, password, newPassword, newPasswordRepeat) {
     validateUserId(userId)
     validatePassword(password)

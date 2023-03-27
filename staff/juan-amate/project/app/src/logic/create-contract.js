@@ -44,7 +44,51 @@ import {
     ServerError,
     ExistenceError
 } from 'com'
-
+/**
+ * Creates a new contract in the database.
+ * 
+ * @param {string} token The user token that is logged in
+ * @param {date} date The date of creation of the contract
+ * @param {date} eventDate The date of event of the contract
+ * @param {string} ceremonyPlaceDescription The description of the ceremony place
+ * @param {string} ceremonyPlaceAddress The address of the ceremony place
+ * @param {string} ceremonyPlaceZipCode The zip code of the ceremony place
+ * @param {string} ceremonyPlaceCity The city of the ceremony place
+ * @param {string} ceremonyPlaceProvince The province of the ceremony place
+ * @param {string} sessionPlaceDescription The description of the session place
+ * @param {string} sessionPlaceAddress The address of the session place
+ * @param {string} sessionPlaceZipCode The zip code of the session place
+ * @param {string} sessionPlaceCity The city of the session place
+ * @param {string} sessionPlaceProvince The province of the session place
+ * @param {string} celebrationPlaceDescription The description of the celebration place
+ * @param {string} celebrationPlaceAddress The address of the celebration place
+ * @param {string} celebrationPlaceZipCode The zip code of the celebration place
+ * @param {string} celebrationPlaceCity The city of the celebration place
+ * @param {string} celebrationPlaceProvince The province of the celebration place
+ * @param {string} preparationPlaceDescription The description of the preparation place
+ * @param {string} preparationPlaceAddress The address of the preparation place
+ * @param {string} preparationPlaceZipCode The zip code of the preparation place
+ * @param {string} preparationPlaceCity The city of the preparation place
+ * @param {string} preparationPlaceProvince The province of the preparation place
+ * @param {string} coupleName The couple name of the user
+ * @param {string} coupleId The couple id of the user
+ * @param {string} couplePhone The couple phone of the user
+ * @param {string} coupleEmail The couple email of the user
+ * @param {string} couplePreparationPlaceDescription The description of the couple preparation place
+ * @param {string} couplePreparationPlaceAddress The address of the couple preparation place
+ * @param {string} couplePreparationPlaceZipCode The zip code of the couple preparation place
+ * @param {string} couplePreparationPlaceCity The city of the couple preparation place
+ * @param {string} couplePreparationPlaceProvince The province of the couple preparation place
+ * @param {string} preWeddingServiceSelected The selected pre wedding service
+ * @param {string} postWeddingServiceSelected The selected post wedding service
+ * @param {string} expressDeliveryServiceSelected The selected express delivery service
+ * @param {string} extraPhotographerServiceSelected The selected extra photographer service
+ * @param {string} bookServiceSelected The selected book service
+ * @param {string} albumServiceSelected The selected album service
+ * @param {string} miniAlbumsServiceSelected The selected mini albums service
+ * @param {string} woodBoxAlbumServiceSelected The selected wood box album service
+ * @param {function} callback The callback function
+ */
 function createContract(
     token,
     date,

@@ -72,6 +72,14 @@ const {
  * @param {string} couplePreparationPlaceZipCode The zip code of the couple preparation place
  * @param {string} couplePreparationPlaceCity The city of the couple preparation place
  * @param {string} couplePreparationPlaceProvince The province of the couple preparation place
+ * @param {string} preWeddingService The prewedding service of the contract
+ * @param {string} postWeddingService The postwedding service of the contract
+ * @param {string} expressDeliveryService The express delivery service of the contract
+ * @param {string} extraPhotographerService The extra photographer service of the contract
+ * @param {string} bookService The book service of the contract
+ * @param {string} albumService The album service of the contract
+ * @param {string} miniAlbumsService The mini albums service of the contract
+ * @param {string} woodBoxAlbumService The wood box album service of the contract
  * @returns 
  */
 function createContract(

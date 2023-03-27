@@ -1,6 +1,13 @@
 const { validateUserId, ExistenceError } = require('com')
 const { User } = require('../data/models')
 
+/**
+ * Retrieve a user by id
+ * 
+ * @param {string} userId The id of the user to retrieve
+ * @returns 
+ */
+
 function retrieveUser(userId) {
     validateUserId(userId)
 

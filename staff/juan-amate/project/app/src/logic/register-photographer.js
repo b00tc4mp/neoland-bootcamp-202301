@@ -15,18 +15,18 @@ import {
 } from 'com'
 
 /**
- * Registers a photographer(admin) in the database
+ * Registers a user in the database with the given data and photographer role
  * 
- * @param {string} name 
- * @param {string} nationalId 
- * @param {string} address 
- * @param {string} zipCode 
- * @param {stting} city 
- * @param {string} province 
- * @param {string} phone 
- * @param {string} email 
- * @param {string} password 
- * @param {string} callback 
+ * @param {string} name The name of the user
+ * @param {string} nationalId The national id of the user
+ * @param {string} address The address of the user
+ * @param {string} zipCode The zip code of the user
+ * @param {stting} city The city of the user
+ * @param {string} province The province of the user
+ * @param {string} phone The phone number of the user
+ * @param {string} email The email of the user
+ * @param {string} password The password of the user
+ * @param {string} callback The callback function
  */
 function registerPhotographer(
     name,

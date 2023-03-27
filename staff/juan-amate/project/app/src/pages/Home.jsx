@@ -72,7 +72,7 @@ function Home() {
 
                             <Link to='/' className='cursor-pointer'>Home</Link>
                             <Link to='/form-contract' className='cursor-pointer'>New contract</Link>
-                            <Link to='/contracts' className='cursor-pointer'>Contracts</Link>
+                            {/* <Link to='/contracts' className='cursor-pointer'>Contracts</Link> */}
                             <Link to='/profile' className='cursor-pointer'>Profile</Link>
 
                             <a onClick={handleLogout} className='cursor-pointer'>Logout</a>

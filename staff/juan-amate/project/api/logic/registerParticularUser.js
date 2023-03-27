@@ -15,7 +15,7 @@ const {
 } = require('com')
 
 /**
- * The function for register a new user
+ * The function for register a new user in the database with the particular role
  * 
  * @param {string} name The user complete name (name and surname)
  * @param {string} nationalId The national id of the user

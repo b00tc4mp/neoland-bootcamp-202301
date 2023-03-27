@@ -3,7 +3,7 @@ const { validateUserId, ExistenceError } = require('com')
 const { User, Contract } = require('../data/models')
 
 /**
- * Retrieves the contracts that belong to the specificed user (email)
+ * Retrieves all the contracts that belong to the specificed user (email)
  * 
  * @param {string} userId The userId of the user to retrieve the contracts
  */
