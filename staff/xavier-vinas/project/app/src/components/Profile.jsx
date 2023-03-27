@@ -15,7 +15,7 @@ function Profile({ onUnregisterUser, user }) {
         <UnregisterUser onUnregisterUser={onUnregisterUser} />
 
         {user.role === 'admin' && <Link to={"/new-auction"}>
-            <p className=' border-double border-4 rounded  border-gray-600' >Add auction</p>
+            <p className=' border-double border-4 rounded  border-gray-600  ' >Add auction</p>
 
         </Link>}
 

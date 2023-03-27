@@ -21,7 +21,23 @@ function AuctionTimer({ endDate }) {
     const minutes = duration.minutes()
     const seconds = duration.seconds()
 
-    const time = `${days}d ${hours}h ${minutes}m ${seconds}s`
+    let time = ''
+
+    if (days !== 0) {
+        time += `${days}d `
+
+    }
+    if (hours !== 0) {
+        time += `${hours}h `
+    }
+
+    if (minutes !== 0) {
+        time += `${minutes}m `
+    }
+
+    if (seconds !== 0) {
+        time += `${seconds}s `
+    }
 
     return <div>
         {time}

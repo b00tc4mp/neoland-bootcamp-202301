@@ -22,7 +22,7 @@ function List({ listUpdateStamp }) {
                     return
                 }
 
-                setAuctions(auctions)
+                setAuctions(auctions.reverse())
             })
         } catch (error) {
             alert(error.message)

@@ -72,11 +72,11 @@ function BidList({ price, bidRate, status }) {
 
         const nextBidAmount = maxBidAmount + bidRate
 
-        return <Container className=" sm:  bg-gray-200 p-6  border-double border-4 rounded border-gray-500 max-h-96 overflow-y-scroll shadow-2xl my-0">
-            <h2><i>Live Auctions</i></h2>
+        return <Container className=" sm: bg-gray-200 p-6 rounded  max-h-96 overflow-y-scroll shadow-2xl my-0">
+            <h2 className="font-bold">Live Auctions</h2>
             {status === 'open' && <Container TagName="form" onSubmit={handleBid} className=" sm:">
                 <input defaultValue={nextBidAmount} min={nextBidAmount} step={bidRate} className="sm: px-4 py-2 rounded-full text-gray-900 bg-gray-300 focus:outline-none focus:shadow-outline" type="number" name="amount" />
-                <Button type="submit" className="">Bid</Button>
+                <Button type="submit">Bid</Button>
             </Container>}
             <Container TagName="ul" className="¨my-0">
                 {bids.map((bid) => (

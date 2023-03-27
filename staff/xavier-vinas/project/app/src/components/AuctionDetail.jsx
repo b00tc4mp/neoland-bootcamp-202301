@@ -44,20 +44,26 @@ function AuctionDetail({ }) {
         <div className="sm: flex justify-between items-start mb-2">
             <h2 className="sm: text-xl font-medium mr-4">{auction.title}</h2>
         </div>
-        <img className="border-double border-4 rounded border-gray-500 sm: w-full h-64 object-cover mb-2 " src={auction.photo} alt={auction.title} />
+        <img className="rounded sm: w-full h-64 object-cover mb-2 overflow-y-scroll shadow-2xl " src={auction.photo} alt={auction.title} />
         <div>
-            <p className="sm: text-lg leading-7 text-gray-600">{auction.description}</p>
+            <p className="sm: text-lg text-gray-600 shadow-inner p-2 rounded">{auction.description}</p>
         </div>
-        <Container className="sm: mt-4">
-            <div className="sm: gap-20">
-                <p className="sm: text-black">Price: <span className="font-medium">{auction.price} $</span> </p>
-                <p className="sm: text-black">Bid Rate:<span className="font-medium"> {auction.bidRate} $</span></p>
+        <Container className="sm: ">
+            <div className="sm: mb-2  ">
+                <p className="sm: text-black">Price: <span className="font-medium text-gray-600">{auction.price} $</span> </p>
+                <p className="sm: text-black">Bid Rate:<span className="font-medium text-gray-600"> {auction.bidRate} $</span></p>
             </div>
-            <div className="sm: border-b border-gray-400 pb-2">
-                <p className="sm: text-gray-600">Start date: <span className="font-medium">{new Date(auction.startDate).toLocaleString()}</span></p>
-                <p className="sm: text-gray-600">End date: <span className="font-medium">{new Date(auction.endDate).toLocaleString()}</span></p>
-                <p className=" sm: text-gray-600">Status: <span className="font-medium">{auction.status}</span></p>
-                <p className=" sm: text-gray-600">User status: <span className="font-medium">{auction.userStatus}</span></p>
+            <div className="sm: border-b border-gray-400 pb-2 ">
+                <p className="sm: text-black">Start date: <span className="font-medium text-gray-600">{new Date(auction.startDate).toLocaleString()}</span></p>
+                <p className="sm: text-black">End date: <span className="font-medium text-gray-600">{new Date(auction.endDate).toLocaleString()}</span></p>
+                <p className=" sm: text-black">Status: <span className="font-medium text-gray-600">{auction.status}</span></p>
+                {auction.userStatus === 'won' || auction.userStatus === 'winning' ? (
+                    <p className="sm:text-black ">User status:
+                        <span className={`text-xl ${auction.userStatus === 'winning' ? 'text-green-600' : 'text-orange-600'}`}>
+                            {auction.userStatus}
+                        </span>
+                    </p>
+                ) : null}   
             </div>
         </Container>
 
@@ -68,4 +74,4 @@ function AuctionDetail({ }) {
 
 
 }
-export default AuctionDetail
+export default AuctionDetail 
