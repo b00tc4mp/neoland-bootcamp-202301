@@ -6,7 +6,6 @@ import searchList from "../logic/search-list"
 import Context from '../Context'
 import Container from "../library/Container"
 import { useLocation, useSearchParams } from 'react-router-dom'
-import Feedback from './Feedback'
 
 function Lists({refreshTime}) {
     console.log('Home -> render')
@@ -117,8 +116,7 @@ function Lists({refreshTime}) {
                     <button className="text-4xl flex m-auto lg:text-4xl" onClick={handleAdd}>+</button>
                 </div>}
 
-            {lists && (lists.length? <Container TagName="ul" className="mx-3 lg:mx-24">{lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list} />)}</Container>: <Feedback message="No results" level="error"  />)}
-            {feedback && <Feedback message={feedback.message} level={feedback.level} />}
+            {lists && (lists.length? <Container TagName="ul" className="mx-3 lg:mx-24">{lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list} />)}</Container>: <p className="text-black text-md text-center pt-8">No results</p>)}
         </main>
     </div>
 }
