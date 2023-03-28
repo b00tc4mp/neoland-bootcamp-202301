@@ -1,5 +1,5 @@
 const { User, Auction } = require('../data/models')
-const { validateBidRate, validatePrice, validatePhoto, validateUserId, ExistenceError, validateTitle, validateDescription } = require('../../com')
+const { validateBidRate, validatePrice, validatePhoto, validateUserId, ExistenceError, validateTitle, validateDescription } = require('com')
 
 
 /**

@@ -1,4 +1,4 @@
-const { validateEmail, validatePassword, validateName, validateAge, CoherenceError } = require("../../com")
+const { validateEmail, validatePassword, validateName, validateAge, CoherenceError } = require("com")
 const { User } = require("../data/models")
 /**
  * 

@@ -1,4 +1,4 @@
-const { ExistenceError, validateUserId, validateAuctionId } = require('../../com')
+const { ExistenceError, validateUserId, validateAuctionId } = require('com')
 const { Auction, User, Bid } = require("../data/models")
 /** 
 * @param {string} auctionId The userId the user belongs

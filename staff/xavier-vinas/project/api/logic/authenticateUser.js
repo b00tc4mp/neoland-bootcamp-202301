@@ -1,4 +1,4 @@
-const { validateEmail, validatePassword, AuthError, ExistenceError } = require('../../com');
+const { validateEmail, validatePassword, AuthError, ExistenceError } = require('com');
 const { User } = require("../data/models")
 /**
  * 

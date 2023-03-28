@@ -1,5 +1,5 @@
 
-const { validateUserId, validateNewEmail, validatePassword, MissingError, AuthError } = require('../../com')
+const { validateUserId, validateNewEmail, validatePassword, MissingError, AuthError } = require('com')
 const { User } = require('../data/models')
 /**
  * 

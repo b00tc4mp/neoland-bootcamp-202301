@@ -1,4 +1,4 @@
-const { ExistenceError, validateUserId } = require('../../com')
+const { ExistenceError, validateUserId } = require('com')
 const { User, Bid, Auction } = require("../data/models")
 const aggregateUserStatusInAuctions = require('./helpers/aggregateUserStatusInAuctions')
 /**

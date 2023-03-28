@@ -1,4 +1,4 @@
-const { validateUserId, ExistenceError } = require('../../com')
+const { validateUserId, ExistenceError } = require('com')
 const { User } = require("../data/models")
 /**
  * 

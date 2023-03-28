@@ -1,5 +1,5 @@
 const { User, Auction, Bid } = require('../data/models')
-const { validateAmount ,validateAuctionId ,validateUserId, ExistenceError, ValueError, CoherenceError } = require('../../../com')
+const { validateAmount ,validateAuctionId ,validateUserId, ExistenceError, ValueError, CoherenceError } = require('com')
 /**
  * 
  * @param {string} userId The userId the user belongs
