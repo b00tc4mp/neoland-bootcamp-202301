@@ -22,7 +22,6 @@ function retrieveListsSharedWithMe(userId) {
                     delete list._id
 
                     delete list.__v
-                    delete list.shared
 
                     if (list.user._id) {
                         list.user.id = list.user._id.toString()

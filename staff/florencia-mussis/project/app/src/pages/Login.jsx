@@ -44,19 +44,19 @@ function Login() {
 
     return <Container TagName="main" className="h-screen justify-center font-['Montserrat']">
 
-        <Container TagName="form" className="w-1/5 h-1/2 justify-center rounded border border-slate-300 gap-8 drop-shadow-md sm: w-3/4" onSubmit={handleSubmit}>
+        <Container TagName="form" className="h-1/2 justify-center rounded border border-slate-300 gap-8 drop-shadow-md lg:w-2/5 sm: w-3/4" onSubmit={handleSubmit}>
             <img src={logo} />
             <Container className="gap-4">
-                <input type="email" id="email" name="E-mail" placeholder="E-mail" className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+                <input type="email" id="email" name="E-mail" placeholder="E-mail" className="border-2 rounded  focus:outline-teal-500 lg:w-72 sm: w-60" required />
 
-                <input type="password" id="password" placeholder="Password"  className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+                <input type="password" id="password" placeholder="Password"  className="border-2 rounded  focus:outline-teal-500 lg:w-72 sm: w-60" required />
             </Container>
-            <Button className="w-24 text-sm h-7 rounded-md" type="submit">LOGIN</Button>
+            <Button className="w-24 text-sm h-7 rounded-md lg:w-32" type="submit">LOGIN</Button>
         </Container>
 
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
-            <p className="pt-4 text-sm">¿No tienes una cuenta?<Link to="/register" className=" text-teal-500"> Registrate</Link></p>
+            <p className="pt-4 text-md lg:text-lg">¿No tienes una cuenta?<Link to="/register" className=" text-teal-500"> Registrate</Link></p>
     
     </Container>
 }

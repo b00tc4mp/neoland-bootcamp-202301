@@ -13,7 +13,6 @@ import Lists from "../components/Lists"
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
-import { UserPlusIcon as UserPlusIconOutline } from '@heroicons/react/24/outline'
 import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 
 function Home() {
@@ -66,22 +65,22 @@ function Home() {
 
 
         <header className="fixed top-0 w-full justify-between flex p-2 shadow shadow-teal-500 bg-white py-5">
-            <a className="w-16" onClick={handleNavigateToHome}><img src={icono} /></a>
-            <button onClick={handleClick} className='mx-3 text-center'>
-                {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8' />}
+            <a className="w-16 lg:w-20" onClick={handleNavigateToHome}><img src={icono} /></a>
+            <button onClick={handleClick} className='mx-3 text-center lg: mx-9'>
+                {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8'/>}
             </button>
 
             {showNav &&
                 <div onClick={handleClick} className=" w-full h-full fixed">
-                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-2  w-44 gap-y-2 rounded right-0'>
+                    <ul className='flex flex-col items-center bg-teal-500 fixed top-24 text-white text-xl mt-2 py-2  w-44 gap-y-2 rounded right-0 lg:mt-5'>
 
-                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className=" m-auto h-10 w-10" />Archived lists</Link>
+                        <Link to="/archived" className="m-3" href=""><BookmarkIcon className=" m-auto h-10 w-10"/>Archived lists</Link>
 
-                        <Link to="/shared" className="m-3" href=""><UserPlusIcon className="m-auto h-10 w-10" />Shared lists</Link>
+                        <Link to="/shared" className="m-3" href=""><UserPlusIcon className="m-auto h-10 w-10"/>Shared lists</Link>
 
                         <Link to="/profile" className="m-3" href=""><Cog6ToothIcon className="m-auto h-10 w-10"/>{user.name}</Link>
 
-                        <Button onClick={handleLogout} className="w-24 text-sm h-7 mt-2 rounded-md sm: w-20 ">LOGOUT</Button>
+                        <Button onClick={handleLogout} className="w-24 text-sm h-7 mt-2 rounded-md sm: w-20">LOGOUT</Button>
                     </ul>
                 </div>
             }

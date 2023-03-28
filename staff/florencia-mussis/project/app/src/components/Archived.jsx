@@ -40,7 +40,7 @@ function Archived({ listUpdateStamp }) {
         })
     }
 
-    return <Container TagName="ul" className="py-8 gap-4 m-3 sm: w-11/12">
+    return <Container TagName="ul" className="gap-4 m-3 py-8 lg:mx-24">
         {lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list}/>)}
     </Container>
 }

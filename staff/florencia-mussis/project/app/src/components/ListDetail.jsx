@@ -23,7 +23,7 @@ function ListDetail() {
 
     const [list, setList] = useState()
 
-    const { listId, sharedId } = useParams()
+    const { listId } = useParams()
 
     const { alert } = useContext(Context)
 
@@ -38,7 +38,6 @@ function ListDetail() {
     const handleCloseShareds = () => {
         setShowShare(false)
     }
-
 
     const loadList = () => {
         try {
@@ -83,6 +82,7 @@ function ListDetail() {
                     return
                 }
                 loadList()
+                event.target.reset()
             })
         } catch (error) {
             alert(error.message)
@@ -224,7 +224,7 @@ function ListDetail() {
 
     if (list) {
         const userId = extractUserId(sessionStorage.token)
-        
+
         let isOwner, isEditor, isViewer
 
         if (list.user === userId) {
@@ -233,20 +233,20 @@ function ListDetail() {
         } else {
             isOwner = false
 
-            isViewer = list.shareds.some(shared =>{
+            isViewer = list.shareds.some(shared => {
                 return shared.user.id === userId && shared.mode === 'viewer'
             })
 
-            isEditor = list.shareds.some(shared =>{
-            return shared.user.id === userId && shared.mode === 'editor'
-        })
+            isEditor = list.shareds.some(shared => {
+                return shared.user.id === userId && shared.mode === 'editor'
+            })
         }
 
         const allChecked = list.items.length ? list.items.every(item => item.checked) : false
 
-        return <Container className="pt-14">
+        return <Container className="border-box pt-14 mx-4 lg:mx-9">
 
-            <div className="px-4 pt-4  border-2 rounded-lg border-solid sm: w-11/12">
+            <div className="border-box w-full px-4 pt-4  border-2 rounded-lg border-solid lg:w-6/12 ">
                 {isOwner && <div className="text-right px-2" >
                     <button className="w-7" onClick={handleOpenShareds}>
                         {list.shareds.length >= 1 && <UserPlusIcon />}
@@ -254,35 +254,34 @@ function ListDetail() {
                     </button>
                 </div>}
 
-                <p className="w-auto text-xl" id={list.id} contentEditable={isEditor} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true} >{list.title}</p>
+                <p className="w-auto text-xl lg:text-2xl" id={list.id} contentEditable={isEditor} onKeyUp={handleUpdateTitle} suppressContentEditableWarning={true} >{list.title}</p>
 
                 <p className="text-lg font-light">{list.itemsTotalChecked}/{list.itemsTotalCount}</p>
 
                 {isEditor && <div >
                     <form onSubmit={handleAddItem} className="flex justify-center gap-1 pt-6">
-                        <input className="px-1 border-2 rounded-md w-4/5 h-10focus:outline-teal-500" type="item" name="item" placeholder=" Add element"  disabled={isViewer} />
+                        <input className="px-1 border-2 rounded-md w-4/5 h-10 focus:outline-teal-500" type="item" name="item" placeholder=" Add element" autoFocus />
                         <button type="submit" className="text-4xl flex">+</button>
                     </form>
                 </div>}
 
-                {isEditor && <div>    
-                {list.items.length > 1 && <div className="flex justify-between pt-10 ">
-                    <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} disabled={isViewer} checked={allChecked} />
-                    <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
-                </div>}
+                {isEditor && <div>
+                    {list.items.length > 1 && <div className="flex justify-between pt-10 ">
+                        <input type="checkbox" className="w-8 pl-0" onChange={handleToggleAllItemsCheck} checked={allChecked} />
+                        <button onClick={handleRemoveCheckedItemsFromLists} className="border-2 rounded-md text-center px-2">X</button>
+                    </div>}
                 </div>}
 
-                <Container TagName="ul" className="py-8 justify-items-start ">
+                <Container TagName="ul" className="py-8 justify-items-start px-1">
                     {list.items.map(item =>
-                        <li className="flex gap-2" key={item.id}>
+                        <li className="w-full flex justify-between gap-2 lg:gap-7" key={item.id}>
                             <input type="checkbox" disabled={isViewer} checked={item.checked} className=" w-7" onChange={event => handleUpdateItemCheck(event, item.id)} />
 
-                            <label htmlFor="checked"></label><p className={`w-60 text-left focus:outline-teal-500 ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={isEditor} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
+                            <label htmlFor="checked"></label><p className={`w-full text-left focus:outline-teal-500 lg:text-lg ${item.checked ? 'line-through' : ''}`} id={item.id} contentEditable={isEditor} onKeyUp={event => handleUpdateItemText(event, item.id)} suppressContentEditableWarning={true}>{item.text}</p>
 
                             {isEditor && <button className="w-6 text-center text-black text-sm" onClick={() => handleDeleteItem(item.id)}>  X</button>}
                         </li>)}
                 </Container>
-
             </div>
 
             {showShare &&

@@ -664,5 +664,5 @@ connect('mongodb://127.0.0.1:27017/mylistsdb')
             }
         })
 
-        server.listen(8080, () => console.log('server running on port' + 8080))
+        server.listen(8080, () => console.log('server running on port ' + 8080))
     })    

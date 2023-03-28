@@ -44,19 +44,19 @@ function Register() {
   }
 
   return <Container TagName="main" className="h-screen font-['Montserrat'] justify-center">
-    <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded border border-slate-300 gap-8 drop-shadow-md sm: w-3/4" onSubmit={handleSubmit}>
+    <Container TagName="form" className="w-3/12 h-2/3 justify-center rounded border border-slate-300 gap-8 drop-shadow-md lg:w-2/5 sm: w-3/4" onSubmit={handleSubmit}>
 
       <img src={logo} />
 
       <div className="form-inner flex flex-col justify-center gap-4">
 
-        <input type="name" id="name" placeholder="Name" className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+        <input type="name" id="name" placeholder="Name" className="border-2 rounded w-60 focus:outline-teal-500 lg:w-72 sm: w-40" required />
 
-        <input type="number" id="age" placeholder="Age" className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+        <input type="number" id="age" placeholder="Age" className="border-2 rounded w-60 focus:outline-teal-500 lg:w-72 sm: w-40" required />
 
-        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+        <input type="email" id="email" placeholder="E-mail" className="border-2 rounded w-60 focus:outline-teal-500 lg:w-72 sm: w-40" required />
 
-        <input type="password" id="password" placeholder="Password" className="border-2 rounded w-60 focus:outline-teal-500 sm: w-40" required />
+        <input type="password" id="password" placeholder="Password" className="border-2 rounded w-60 focus:outline-teal-500 lg:w-72 sm: w-40" required />
       </div>
 
       <Button className="border-2 w-40 text-sm h-7 rounded-md" type="submit">CREATE ACCOUNT</Button>
@@ -64,7 +64,7 @@ function Register() {
 
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
-    <p className="pt-4 text-sm">¿Tienes una cuenta?<Link to="/login" className=" text-teal-500"> Login</Link></p>
+    <p className="pt-4 text-md lg:text-lg">¿Tienes una cuenta?<Link to="/login" className=" text-teal-500"> Login</Link></p>
   </Container>
 }
 

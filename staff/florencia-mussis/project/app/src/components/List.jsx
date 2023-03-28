@@ -54,16 +54,16 @@ function List({ element, onUpdateArchived, onDeleteList }) {
         }
     }
 
-    return <Container TagName="li" className="gap-4 m-3 w-full">
+    return <Container TagName="li" className="m-2 w-full">
 
         <div className="p-4 w-full border-2 rounded-lg border-solid" key={element.id}>
             <div className='text-right'>
                 <button className="border-2 px-2 py-1 text-black rounded text-md " onClick={handleDeleteList}>X</button>
             </div>
 
-            <div className='gap-2'>
+            <div className='gap-2 pt-3'>
                 <Link to={`/lists/${element.id}`}>
-                    <p className="text-xl">{element.title ? element.title : 'New list'}</p>
+                    <p className="text-xl lg:text-2xl">{element.title ? element.title : 'New list'}</p>
                 </Link>
 
                 <p className="text-lg font-light">{element.itemsTotalChecked}/{element.itemsTotalCount}</p>
