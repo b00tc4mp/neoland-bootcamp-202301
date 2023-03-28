@@ -10,7 +10,6 @@ describe('registerUser', () => {
     beforeEach(() => User.deleteMany())
 
     it('succeeds for an new user registered', () => {
-        debugger
         return registerUser('doña florinda', 48, 'dona@florinda.com', '123123123', 'doña florinda', 123412341234, 978, 1234)
             .then(result => {
                 expect(result._doc.email).to.equal('dona@florinda.com')
