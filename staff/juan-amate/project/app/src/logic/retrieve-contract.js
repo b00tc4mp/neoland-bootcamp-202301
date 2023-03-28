@@ -5,7 +5,7 @@ const { validateToken, validateContractId, validateCallback, ClientError, Server
  * 
  * @param {string} token The session token
  * @param {string} contractId The ID of the contract
- * @param {function} callback The function to call back with the contracts (or an error)
+ * @param {function} callback The function to callback with the contracts (or an error)
  */
 function retrieveContract(token, contractId, callback) {
     validateToken(token)

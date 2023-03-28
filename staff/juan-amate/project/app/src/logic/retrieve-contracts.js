@@ -1,12 +1,12 @@
 const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
 
 /**
- * Retrieves the contracts that belong to the specified user (email)
+ * Retrieves all the contracts that belong to the specified user (email)
  * 
  * @param {string} token The session token
  * @param {function} callback The function to call back with the contracts (or an error)
  */
-function retrieveMyContracts(token, callback) {
+function retrieveContracts(token, callback) {
     validateToken(token)
     validateCallback(callback)
 
@@ -18,7 +18,14 @@ function retrieveMyContracts(token, callback) {
         const body = JSON.parse(response)
 
         if (status === 200) {
-            callback(null, body.reverse())
+            const contracts = body.reverse()
+
+            contracts.forEach(contract => {
+                contract.date = new Date(contract.date)
+                contract.eventDate = new Date(contract.eventDate)
+            })
+
+            callback(null, contracts)
         } else {
             const { error } = body
 
@@ -38,4 +45,4 @@ function retrieveMyContracts(token, callback) {
     xhr.send()
 }
 
-export default retrieveMyContracts
+export default retrieveContracts

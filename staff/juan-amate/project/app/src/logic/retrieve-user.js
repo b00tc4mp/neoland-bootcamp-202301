@@ -1,5 +1,6 @@
 const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
 /**
+ * Retrieve a user by email and password
  * 
  * @param {string} email The user's email address
  * @param {string} password The user's password

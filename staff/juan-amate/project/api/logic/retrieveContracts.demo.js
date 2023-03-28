@@ -1,5 +1,5 @@
 const { connect, disconnect } = require('mongoose')
-const retrieveMyContracts = require('./retrieveMyContracts')
+const retrieveMyContracts = require('./retrieveContracts')
 
 connect('mongodb://127.0.0.1:27017/projectdb')
     .then(() => {

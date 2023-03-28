@@ -16,7 +16,7 @@ const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserData = require('./logic/updateUserData')
 const unregisterUser = require('./logic/unregisterUser')
 const createContract = require('./logic/createContract')
-const retrieveMyContracts = require('./logic/retrieveMyContracts')
+const retrieveContracts = require('./logic/retrieveContracts')
 const retrieveContract = require('./logic/retrieveContract')
 
 connect('mongodb://127.0.0.1:27017/projectdb')
@@ -419,7 +419,7 @@ connect('mongodb://127.0.0.1:27017/projectdb')
             try {
                 const userId = verifyToken(req)
 
-                retrieveMyContracts(userId)
+                retrieveContracts(userId)
                     .then(stickies => res.status(200).json(stickies))
                     .catch(error => {
                         if (error instanceof ExistenceError)

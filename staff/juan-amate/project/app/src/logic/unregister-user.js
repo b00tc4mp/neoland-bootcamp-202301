@@ -1,6 +1,6 @@
 import { validateToken, validatePassword, validateCallback, ClientError, ServerError, AuthError, ExistenceError } from 'com'
 /**
- * Unregister a user and the stickies in the databases
+ * Unregister a user in the databases
  * 
  * @param {string} userId The user id
  * @param {string} password The user password
