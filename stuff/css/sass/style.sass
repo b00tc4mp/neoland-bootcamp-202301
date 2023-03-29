@@ -1,0 +1,69 @@
+@mixin theme($theme: DarkGray)
+    background: $theme
+    box-shadow: 0 0 1px rgba($theme, .25)
+    color: #fff
+
+body
+    margin: 0
+
+.container
+    margin: 10px
+
+    &--horizontal
+        display: flex
+        justify-content: center
+
+    &--vertical
+        display: flex
+        flex-direction: column
+        align-items: center
+
+.panel
+    background-color: lightgray
+    border-radius: 10px
+    padding: 10px
+
+    &--bordered
+        border: 1px solid black
+
+.button
+    cursor: pointer
+    color: white
+    background-color: black
+
+    &:hover
+        border-width: 1px
+        border-style: solid
+
+    &--primary
+        background-color: dodgerblue
+
+    &--success
+        background-color: yellowgreen
+
+    &--warning
+        background-color: gold
+        color: black
+
+    &--danger
+        background-color: tomato
+
+    &--happy
+        background-color: fuchsia
+
+    &--cool
+        background-color: brown
+
+
+.feedback
+    @include theme
+
+    &--info
+        @include theme($theme: DodgerBlue)
+
+    &--alert
+        @include theme($theme: DarkRed)
+
+    &--success
+        @include theme($theme: DarkGreen)
+
