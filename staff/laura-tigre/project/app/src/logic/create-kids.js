@@ -6,7 +6,7 @@ import{validateToken,validateNewName,validateNewDateOfBirth ,validateCallback, C
  * 
  * @param {string} token The session token
  * @param {string} newName The parent new description
- * @param {} newDateOfBirth  kids age
+ * @param {date} newDateOfBirth  kids age
  * @param {function} callback The function to call when the update is complete (or fails)
  */
 

@@ -35,7 +35,7 @@ function toggleFavParent(token, parentId, callback){
  xhr.onerror = () => callback(new Error('network error'))
 
   xhr.open('PATCH', `http://localhost:8080/parents/${parentId}/favs`)
-  xhr.setRequestHeader('Authorization', 'Bearer ' + token)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
   xhr.send()
 
    

@@ -4,7 +4,7 @@ import Button from '../library/Button'
 import Container from '../library/Container'
 import searchParents from '../logic/search-parents'
 import { Link } from 'react-router-dom'
-import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
 
@@ -61,21 +61,21 @@ function SearchParents({ listUpdateStamp }) {
     }, [listUpdateStamp])
     const handleToggleFavParent = (parentId) => {
         setParents(parents => {
-          const index = parents.findIndex(parent => parent.id === parentId)
-          const parent = parents[index]
-          const parentUpdated = { ...parent }
-    
-          parentUpdated.fav = !parentUpdated.fav
-    
-          const parentsUpdated = [...parents]
-    
-          parentsUpdated[index] = parentUpdated
-    
-          return parentsUpdated
+            const index = parents.findIndex(parent => parent.id === parentId)
+            const parent = parents[index]
+            const parentUpdated = { ...parent }
+
+            parentUpdated.fav = !parentUpdated.fav
+
+            const parentsUpdated = [...parents]
+
+            parentsUpdated[index] = parentUpdated
+
+            return parentsUpdated
         })
-    
-    
-      }
+
+
+    }
 
 
 
@@ -171,27 +171,26 @@ function SearchParents({ listUpdateStamp }) {
 
 
             {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={parent.id} id={parent.id}>
-            <div className="flex flex-row justify-between">
-            <div className='w-20 h-20'>
-                <img className="sm:" src=
-                    {parent.photo} />
-            </div>
-            {/* <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
+                <div className="flex flex-row justify-end">
+                    <Link to={'/chat'}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1"/></Link>
 
-                parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
-                    :
-                    <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
-             */}
-            </div>
+                    <button className="flex flex-row justify-end" id={parent.id} onClick={() => handleToggleFavParent(parent.id)}>{
+                        parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                        :
+                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+
+                </div>
+                        <img className="sm:w-20 h-20" src=
+                            {parent.photo} />
 
                 <Link to={`/parents/${parent.id}`}><strong className="w-[28ch] text-left">{parent.user.name}</strong>
                 </Link>
-                <p>City: {parent.city}</p>
-                <p>Email: {parent.user.email}</p>
-                <ul>Kids : {parent.kids.map(kid => <li key={kid.id}> {kid.name}, {kid.dateOfBirth.slice(0, 10)}</li>)}</ul>
-                <p>Description: {parent.description}</p>
-                <p>Extras: {parent.extras}</p>
-                <ul>Availability : {parent.availabilities.map(availabity => <li key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
+                <p className='text-[#fb923c]'>City: <span className='text-black'>{parent.city}</span></p>
+                <ul className='text-[#fb923c]'>Kids : {parent.kids.map(kid => <li className='text-black list-disc ml-2' key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)}</li>)}</ul>
+
+                <p className='text-[#fb923c]'>Description:<span className='text-black '> {parent.description} </span></p>
+                <p className='text-[#fb923c]'>Extras: <span className='text-black'>{parent.extras}</span></p>
+                <ul className='text-[#fb923c]'>Availability : {parent.availabilities.map(availabity => <li className='text-black list-disc ml-2' key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
             </li>
             )}
 

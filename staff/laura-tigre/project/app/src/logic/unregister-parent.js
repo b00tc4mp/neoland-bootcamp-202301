@@ -39,8 +39,8 @@ function unregisterParent(token, password, callback) {
 
   xhr.onerror = () => callback(new Error('network error'))
  
-   xhr.open('DELETE', 'http://localhost:8080/users/parent')
-   xhr.setRequestHeader('Authorization', 'Bearer ' + token)
+   xhr.open('DELETE', 'http://localhost:8080/parents')
+   xhr.setRequestHeader('Authorization', `Bearer ${token}`)
    xhr.setRequestHeader('Content-Type', 'application/json')
   const payload= {password}
   const json = JSON.stringify(payload)

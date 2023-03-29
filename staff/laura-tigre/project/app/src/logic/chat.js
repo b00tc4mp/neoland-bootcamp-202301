@@ -1,25 +1,26 @@
-const { validateToken, validateKidId, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
+import{validateToken,validateUserIdTo,validateMessage,validateCallback, ClientError, ServerError, ExistenceError, AuthError } from 'com'
+
 
 /**
- * delete kid
+ * Send messages 
  * 
  * @param {string} token The session token
- * @param {string} kidId The kid identifier 
- * @param {callback} callback The function to call when the user is unregistered (or failed)
+ * @param {string} userIdTo The user that wants to send the message
+ * @param {string} message The message to send to the user
+ * @param {function} callback The function to call when the update is complete (or fails)
  */
 
-
-function deleteKid(token, kidId, callback) {
+function chat(token,userIdTo, message,callback) {
     validateToken(token)
-    validateKidId(kidId)
+    validateUserIdTo(userIdTo)
+    validateMessage(message)
     validateCallback(callback)
-
-    const xhr = new XMLHttpRequest()
-
-    xhr.onload = () => {
+    const xhr = new XMLHttpRequest
+     
+    xhr.onload= () => {
         const { status, response } = xhr
 
-        if (status === 204) {
+        if (status === 201) {
             callback(null)
         } else {
             const body = JSON.parse(response)
@@ -38,13 +39,15 @@ function deleteKid(token, kidId, callback) {
     }
 
     xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('DELETE', `http://localhost:8080/parents/kid/${kidId}`)
+   
+    xhr.open('POST',`http://localhost:8080/chats/${userIdTo}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.send()
-
-
-
-}
-export default deleteKid
+  
+    const payload = {message}
+    const json = JSON.stringify(payload)
+  
+    xhr.send(json)
+  
+  }
+  export default chat

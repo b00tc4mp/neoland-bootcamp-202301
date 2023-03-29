@@ -4,16 +4,16 @@ import toggleFavParent from '../logic/toogle-fav-parent'
 import { Link } from 'react-router-dom'
 import Container from '../library/Container'
 import Context from '../Context'
-import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon,ChatBubbleLeftRightIcon , ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
+import Message from './Message'
 
 
 
 function ParentsList({ listUpdateStamp }) {
 
     const [parents, setParents] = useState([])
-
-
+    const [messageUserIdTo, setMessageUserIdTo] = useState()
     const { alert } = useContext(Context)
 
     const loadList = () => {
@@ -53,23 +53,36 @@ function ParentsList({ listUpdateStamp }) {
             alert(error.message)
         }
     }
+    const handleMessage= parentUserId=> {
+    
+    setMessageUserIdTo(parentUserId)
+    }
+    const handleCloseMessage = () => {
+        setMessageUserIdTo()
+    }
+
+    const handleSendMessage = () => {
+        setMessageUserIdTo()
+        loadList()
+    }
 
 
 
     return <Container TagName="ul" className="gap-4 py-10 mb-10">
 
         {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={parent.id} id={parent.id}>
-            <div className="flex flex-row justify-between">
-            <div className='w-20 h-20'>
-                <img className="sm:" src=
-                    {parent.photo} />
-            </div>
+            <div className="flex flex-row justify-end">
+            {parent.chatId? <Link to={`/chat/${parent.chatId}`}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
             <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
 
                 parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
                     :
                     <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
             
+            </div>
+            <div className='w-20 h-20'>
+                <img className="sm:" src=
+                    {parent.photo} />
             </div>
             <div>
                 <Link to={`/parents/${parent.id}`}><strong className="w-[28ch] text-left">{parent.user.name}</strong>
@@ -81,7 +94,7 @@ function ParentsList({ listUpdateStamp }) {
           
         </li>
         )}
-
+   {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo}/>}
     </Container>
 }
 

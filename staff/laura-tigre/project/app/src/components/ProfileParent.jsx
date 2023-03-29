@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import unregisterParent from "../logic/unregister-parent"
 import Button from '../library/Button'
 import Container from '../library/Container'
@@ -9,8 +10,7 @@ import updateExtrasParent from "../logic/update-parent-extras"
 import createKids from "../logic/create-kids"
 import retrieveParent from '../logic/retrieve-parent-profile'
 import deleteKid from "../logic/delete-kid"
-import insertPhotoParent from '../logic/insert-photo-parent'
-import { ArchiveBoxXMarkIcon  } from '@heroicons/react/24/outline'
+import { ArchiveBoxXMarkIcon } from '@heroicons/react/24/outline'
 import updatePhotoParent from "../logic/update-photo-parent"
 
 function ProfileParent({ listUpdateStamp }) {
@@ -19,7 +19,8 @@ function ProfileParent({ listUpdateStamp }) {
 
   const [feedback, setFeedback] = useState()
   const [parent, setParent] = useState()
- 
+  const navigate = useNavigate()
+
 
   const loadList = () => {
 
@@ -39,7 +40,7 @@ function ProfileParent({ listUpdateStamp }) {
 
   }
   useEffect(() => {
-  loadList()
+    loadList()
   }, [listUpdateStamp])
 
   const handleSubmitPhoto = (event) => {
@@ -107,7 +108,7 @@ function ProfileParent({ listUpdateStamp }) {
             return
           }
 
-          event.target.reset()
+          // event.target.reset()
           setFeedback({
             message: 'availability updated successfully',
             level: 'success'
@@ -142,6 +143,7 @@ function ProfileParent({ listUpdateStamp }) {
           return
         }
         delete sessionStorage.token
+        navigate('/login')
 
       })
     } catch (error) {
@@ -268,23 +270,24 @@ function ProfileParent({ listUpdateStamp }) {
 
 
   return <Container className="sm: items-center justify-center h-full w-full mb-20">
+    <div className="border-t-2  border-[#fb923c] p-16">
+      <Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-280 gap-4 p-3 rounded-lg">
 
-<Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-280 gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend>{parent?.user?.name}</legend>
         <img src={parent?.photo} />
         <input
-          className="sm: bg-transparent border-[#fb923c] mb-2"
+          className="sm: bg-transparent border-[#fb923c] mb-2 text-center"
           type="text"
           name="newPhoto"
-          placeholder="new photo"/>
+          placeholder="new photo" />
 
         <Button type="submit">New photo</Button>
-      </fieldset>
-    </Container>
-  
-    <Container TagName="form" className='sm: p-5' onSubmit={handleSubmitAvailability}>
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      </Container>
+    </div>
+
+    <div className="border-t-2  border-[#fb923c] ">
+      <Container TagName="form" className='sm: ' onSubmit={handleSubmitAvailability}>
+
         <legend>Availability</legend>
         <table className='sm: table table-fixed m-5'>
           <thead>
@@ -349,73 +352,74 @@ function ProfileParent({ listUpdateStamp }) {
         </table>
 
         <Button type="submit">New Availability</Button>
-      </fieldset>
-    </Container>
-    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2 gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+
+      </Container>
+    </div>
+
+    <div className="border-t-2  border-[#fb923c] mt-4 p-20">
+      <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: gap-4 p-3 rounded-lg w-full">
+
         <legend >Extras</legend>
         <p>{parent?.extras}</p>
         <input
-          className="sm: bg-transparent border-[#fb923c] pb-2"
+          className="sm: bg-transparent border-[#fb923c] pb-2 text-center"
           type="text"
           name="newExtras"
           placeholder=" new extras" />
 
         <Button type="submit">New extras</Button>
-      </fieldset>
-    </Container>
 
-    <Container TagName="form" onSubmit={handleSubmitKidsCreate} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg w-full">
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
-        <legend >Kids</legend>
-        <ul>{parent?.kids?.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)} <button onClick={() => handleDeleteKid(kid.id)} ><ArchiveBoxXMarkIcon className="h-5 w-5 text-[#fb923c]"  /></button></li>)}</ul>
+      </Container>
+    </div>
+    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+      <legend >Kids</legend>
+      <ul>{parent?.kids?.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)} <button onClick={() => handleDeleteKid(kid.id)} ><ArchiveBoxXMarkIcon className="h-5 w-5 text-[#fb923c]" /></button></li>)}</ul>
+      <Container TagName="form" onSubmit={handleSubmitKidsCreate} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg w-full">
         <div className="flex flex-col mt-3">
-        <input
-          className="sm: bg-transparent pb-1"
-          type="text"
-          name="newName"
-          placeholder="name" />
-        <input
-          className="sm: bg-transparent pb-2"
-          type="date"
-          name="newDateOfBirth"
-        />
+          <input
+            className="sm: bg-transparent pb-1 text-center"
+            type="text"
+            name="newName"
+            placeholder="name" />
+          <input
+            className="sm: bg-transparent pb-2 text-center"
+            type="date"
+            name="newDateOfBirth"
+          />
         </div>
         <Button type="submit">Add</Button>
 
-      </fieldset>
+      </Container>
+    </div>
+    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center w-80">
+      <Container TagName="form" onSubmit={handleSubmitDescription} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg ">
 
-
-    </Container>
-    <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
-    flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Description</legend>
         <p>{parent?.description}</p>
         <input
-          className="sm: bg-transparent pb-2 "
+          className="sm: bg-transparent pb-2 text-center "
           type="text"
           name="newDescription"
           placeholder=" new description" />
 
         <Button type="submit">New description</Button>
 
-      </fieldset>
-    </Container>
-    <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      </Container>
+    </div>
+    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+      <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
+
         <legend>Unregister User</legend>
 
         <input
-          className="bg-transparent pb-2"
+          className="bg-transparent pb-2 text-center"
           type="password"
           name="unregister"
           placeholder=" your password" />
         <Button type="submit">Unregister user</Button>
 
-      </fieldset>
-
-    </Container>
+      </Container>
+    </div>
     {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
 

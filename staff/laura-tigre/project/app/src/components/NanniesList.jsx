@@ -4,16 +4,14 @@ import toggleFavNanny from '../logic/toogle-fav-nanny'
 import Container from '../library/Container'
 import Context from '../Context'
 import { Link } from 'react-router-dom'
-import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon,ChatBubbleLeftRightIcon, ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
-
-
-
-
+import Message from './Message'
 
 function NanniesList({ listUpdateStamp }) {
     console.log('NanniesList -> render')
     const [nannies, setNannies] = useState([])
+    const [messageUserIdTo, setMessageUserIdTo] = useState()
     const { alert } = useContext(Context)
 
 
@@ -56,20 +54,40 @@ function NanniesList({ listUpdateStamp }) {
             alert(error.message)
         }
     }
+    const handleMessage = nannyUserId => {
+        setMessageUserIdTo(nannyUserId)
+
+    }
+
+    const handleCloseMessage = () => {
+        setMessageUserIdTo()
+    }
+
+    const handleSendMessage = () => {
+        setMessageUserIdTo()
+
+        loadList()
+    }
 
     return <Container TagName="ul" className="sm: 1/2 gap-4 py-10 mb-10">
         {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={nanny.id} id={nanny.id}>
-            <div className="flex flex-row justify-between">
-                <div>
-                    <img className='w-20 h-20' src=
-                        {nanny.photo} />
-                </div>
+            <div className="flex flex-row justify-end">
+           {nanny.chatId ? <Link to={`chat/${nanny.chatId}`}>
+           <ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" />
+           </Link> :
+                <button onClick={()=>handleMessage(nanny.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
+
+                
                 <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
 
                     nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
                         :
                         <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
             </div>
+            <div>
+                    <img className='w-20 h-20' src=
+                        {nanny.photo} />
+                </div>
             <Link to={`/nannies/${nanny.id}`}>
                 <strong className="w-[28ch] text-left">{nanny.user.name}</strong>
             </Link>
@@ -78,6 +96,7 @@ function NanniesList({ listUpdateStamp }) {
             <p className='pt-1'>{nanny.extras}</p>
         </li>
         )}
+        {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo}/>}
     </Container>
 }
 

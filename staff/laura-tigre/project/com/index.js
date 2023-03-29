@@ -81,6 +81,11 @@ const validateNewExtras = require('./validators/validateNewExtras')
 const validatePhoto = require('./validators/validatePhoto')
 const validateKidId = require('./validators/validateKidId')
 const validateNewPhoto = require('./validators/validateNewPhoto')
+const validateMessage = require('./validators/validateMessage')
+const validateUserIdFrom = require('./validators/validateUserIdFrom')
+const validateUserIdTo = require('./validators/validateUserIdTo')
+const validateDate = require('./validators/validateDate')
+const validateChatId = require('./validators/validateChatId')
 
 
 
@@ -179,8 +184,11 @@ module.exports = {
     validatePhoto,
     validateKidId,
     validateNewPhoto,
-
-
+    validateMessage,
+    validateUserIdFrom,
+    validateUserIdTo,
+    validateDate,
+    validateChatId,
 
     AuthError,
     CoherenceError,

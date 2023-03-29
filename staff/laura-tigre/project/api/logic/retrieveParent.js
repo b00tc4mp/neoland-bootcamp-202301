@@ -1,29 +1,37 @@
 const { validateUserId, validateUserParentId, ExistenceError, CoherenceError } = require('com')
-const { User, Parent } = require('../data/models')
+const { User, Parent, Nanny } = require('../data/models')
 /**
  *retrieve parent user if the user is the parent or the user is a parent
  * 
  * @param {string} userId The user
- * @param {string} userNannyId The parent user id
+ * @param {string} parentId The parent user id
  */
 function retrieveParent(userId, parentId) {
     validateUserId(userId)
    if(typeof parentId !== 'undefined') validateUserParentId(parentId)
 
    return User.findById(userId).lean()
-   .then(user=>{
+   .then(user =>{
     if(!user) throw new ExistenceError(`user with id ${userId} not found`)
-
+    // if (!nanny) throw new ExistenceError(`nanny for user id ${userId} not found`)
+    
     let promise
-    if(parentId)
-    promise= Parent.findById(parentId).populate('user', 'name').select('-__v').lean()
+    if(parentId && user.role === 'nanny')
+    promise=Promise.all([Parent.findById(parentId).populate('user', '-__v').select('-__v').lean(),Nanny.findOne({user: userId}).lean()]) 
     else
-    promise = Parent.findOne({user: userId}).populate('user', 'name').select('-__v').lean()
+    promise = Parent.findOne({user: userId}).populate('user', '-__v').select('-__v').lean()
 
     return promise
-    .then(parent=> {
+    .then((returnedPromise)=> {
+        let parent, nanny
+        if(parentId && user.role === 'nanny'){
+            [parent,nanny] = returnedPromise
+        }else{
+            parent=returnedPromise
+        }
         if(!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
-        if(userId.role === 'parent' && parent.user._id.toString() !== userId)throw new CoherenceError(`user id ${userId} with role parent is not related to parent with id ${parentId}`)
+        
+        if(user.role === 'parent' && parent.user._id.toString() !== userId)throw new CoherenceError(`user id ${userId} with role parent is not related to parent with id ${parentId}`)
 
          // sanitize
          parent.id = parent._id.toString()
@@ -39,6 +47,8 @@ function retrieveParent(userId, parentId) {
          
          delete parent._id
          delete parent.user._id
+
+         if(user.role === 'nanny') parent.fav= nanny.favs.some(fav => fav.toString() === parent.id )
 
          return parent
     })

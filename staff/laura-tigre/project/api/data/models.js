@@ -2,13 +2,10 @@ const { Schema, model } = require('mongoose')
 const { Types: { ObjectId } } = require('mongoose')
 
 const user = new Schema({
-
     name: {
         type: String,
         required: true
     },
-   
-
     email: {
         type: String,
         required: true,
@@ -133,15 +130,17 @@ const nanny = new Schema({
 const message = new Schema({
     user: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     message: {
         type: String,
-        required: true
+        required:true
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     }
 })
 
@@ -149,6 +148,7 @@ const chat = new Schema({
     users: [{
         type: ObjectId,
         ref: 'User',
+        required: true
     }],
     messages: [message]
 })

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import unregisterParent from "../logic/unregister-parent"
 import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
-import UpdateUserPassword from "./UpdateUserPassword"
-import UpdateUserEmail from "./UpdateUserEmail"
 import updateParentAvailabilities from "../logic/update-parent-availabilities"
 import updateDescriptionParent from "../logic/update-parent-description"
 import updateExtrasParent from "../logic/update-parent-extras"
@@ -12,6 +11,7 @@ import createKids from "../logic/create-kids"
 import retrieveParent from '../logic/retrieve-parent-profile'
 import deleteKid from "../logic/delete-kid"
 import { ArchiveBoxXMarkIcon  } from '@heroicons/react/24/outline'
+import updatePhotoParent from "../logic/update-photo-parent"
 
 function ProfileParent({ listUpdateStamp }) {
   console.log('Profile -> render')
@@ -19,6 +19,8 @@ function ProfileParent({ listUpdateStamp }) {
 
   const [feedback, setFeedback] = useState()
   const [parent, setParent] = useState()
+  const navigate = useNavigate()
+ 
 
   const loadList = () => {
 
@@ -38,9 +40,36 @@ function ProfileParent({ listUpdateStamp }) {
 
   }
   useEffect(() => {
-
-    loadList()
+  loadList()
   }, [listUpdateStamp])
+
+  const handleSubmitPhoto = (event) => {
+    event.preventDefault()
+    const newPhoto = event.target.newPhoto.value
+    try {
+      updatePhotoParent(sessionStorage.token, newPhoto, error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+        event.target.reset()
+        loadList()
+        setFeedback({
+          message: 'photo updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
+    }
+
+  }
   const handleSubmitAvailability = (event) => {
     event.preventDefault()
 
@@ -79,7 +108,7 @@ function ProfileParent({ listUpdateStamp }) {
             return
           }
 
-          event.target.reset()
+          // event.target.reset()
           setFeedback({
             message: 'availability updated successfully',
             level: 'success'
@@ -114,6 +143,7 @@ function ProfileParent({ listUpdateStamp }) {
           return
         }
         delete sessionStorage.token
+        navigate('/login')
 
       })
     } catch (error) {
@@ -137,7 +167,7 @@ function ProfileParent({ listUpdateStamp }) {
           return
         }
         event.target.reset()
-
+        loadList()
         setFeedback({
           message: 'description updated successfully',
           level: 'success'
@@ -222,7 +252,7 @@ function ProfileParent({ listUpdateStamp }) {
           return
         }
         event.target.reset()
-
+        loadList()
         setFeedback({
           message: 'extras updated successfully',
           level: 'success'
@@ -239,64 +269,79 @@ function ProfileParent({ listUpdateStamp }) {
 
 
 
-  return <Container className="mb-20">
-    <Container TagName="form" className='sm: w-1/3 p-5' onSubmit={handleSubmitAvailability}>
-      <fieldset className='sm: w-1/3 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+  return <Container className="sm: items-center justify-center h-full w-full mb-20">
+
+<Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-280 gap-4 p-3 rounded-lg">
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+        <legend>{parent?.user?.name}</legend>
+        <img src={parent?.photo} />
+        <input
+          className="sm: bg-transparent border-[#fb923c] mb-2"
+          type="text"
+          name="newPhoto"
+          placeholder="new photo"/>
+
+        <Button type="submit">New photo</Button>
+      </fieldset>
+    </Container>
+  
+    <Container TagName="form" className='sm: p-5' onSubmit={handleSubmitAvailability}>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend>Availability</legend>
         <table className='sm: table table-fixed m-5'>
           <thead>
-            <tr className='sm:space-x-1'>
+            <tr className='sm: text-center space-x-1'>
               <th>Day</th>
               <th>Morning</th>
               <th>Afternoon</th>
               <th>Evening</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y text-center divide-orange-200" >
             <tr className='sm:text-center space-x-1'>
-              <th className='sm:space-x-2'>Monday</th>
+              <th className='sm:px-2 py-1'>Monday</th>
               <td><input type="checkbox" id='newMondayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newMondayAfternoonSelected' name='newMondayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newMondayEveningSelected' name='newMondayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='sm:space-x-2'>Tuesday</th>
+              <th className='sm:px-2 py-1'>Tuesday</th>
               <td><input type="checkbox" id='newTuesdayMorningSelected' name='newTuesdayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newTuesdayAfternoonSelected' name='newTuesdayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newTuesdayEveningSelected' name='newTuesdayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='sm:space-x-2'>Wendsday</th>
+              <th className='sm:px-2 py-1'>Wendsday</th>
               <td><input type="checkbox" id='newWendsdayMorningSelected' name='newWendsdayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newWendsdayAfternoonSelected' name='newWendsdayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newWendsdayEveningSelected' name='newWendsdayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='sm:space-x-2'>Thursday</th>
+              <th className='sm:px-2 py-1'>Thursday</th>
               <td><input type="checkbox" id='newThursdayMorningSelected' name='newThursdayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newThursdayAfternoonSelected' name='newThursdayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newThursdayEveningSelected' name='newThursdayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='sm:space-x-2'>Friday</th>
+              <th className='sm:px-2 py-1'>Friday</th>
               <td><input type="checkbox" id='newFridayMorningSelected' name='newFridayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newFridayAfternoonSelected' name='newFridayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newFridayEveningSelected' name='newFridayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='space-x-2'>Saturday</th>
+              <th className='sm:px-2 py-1'>Saturday</th>
               <td><input type="checkbox" id='newSaturdayMorningSelected' name='newSaturdayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newSaturdayAfternoonSelected' name='newSaturdayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newSaturdayEveningSelected' name='newSaturdayEveningSelected' ></input></td>
 
             </tr>
             <tr className='sm:text-center space-x-1'>
-              <th className='space-x-2'>Sunday</th>
+              <th className='sm:px-2 py-1'>Sunday</th>
               <td><input type="checkbox" id='newSundayMorningSelected' name='newSundayMorningSelected' ></input></td>
               <td><input type="checkbox" id='newSundayAfternoonSelected' name='newSundayAfternoonSelected' ></input></td>
               <td><input type="checkbox" id='newSundayEveningSelected' name='newSundayEveningSelected' ></input></td>
@@ -308,9 +353,10 @@ function ProfileParent({ listUpdateStamp }) {
         <Button type="submit">New Availability</Button>
       </fieldset>
     </Container>
-    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: gap-4 p-3 rounded-lg">
-      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+    <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: w-1/2 gap-4 p-3 rounded-lg">
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Extras</legend>
+        <p>{parent?.extras}</p>
         <input
           className="sm: bg-transparent border-[#fb923c] pb-2"
           type="text"
@@ -322,9 +368,9 @@ function ProfileParent({ listUpdateStamp }) {
     </Container>
 
     <Container TagName="form" onSubmit={handleSubmitKidsCreate} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg w-full">
-      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
-        <legend >Kids</legend>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <ul>{parent?.kids?.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)} <button onClick={() => handleDeleteKid(kid.id)} ><ArchiveBoxXMarkIcon className="h-5 w-5 text-[#fb923c]"  /></button></li>)}</ul>
+        <legend >Kids</legend>
         <div className="flex flex-col mt-3">
         <input
           className="sm: bg-transparent pb-1"
@@ -345,8 +391,9 @@ function ProfileParent({ listUpdateStamp }) {
     </Container>
     <Container TagName="form" onSubmit={handleSubmitDescription} className="sm: w-1/2
     flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
         <legend >Description</legend>
+        <p>{parent?.description}</p>
         <input
           className="sm: bg-transparent pb-2 "
           type="text"
@@ -356,18 +403,10 @@ function ProfileParent({ listUpdateStamp }) {
         <Button type="submit">New description</Button>
 
       </fieldset>
-
-
     </Container>
-
-
-
-    <UpdateUserPassword />
-    <UpdateUserEmail />
-
     <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
-      <fieldset className='sm: w-1/2 p-5 border-solid border-2 border-[#fb923c] rounded-md'>
-        <legend className="text-xl">Unregister User</legend>
+      <fieldset className='sm: w-1/2 flex flex-col items-center justify-center  p-5 border-solid border-2 border-[#fb923c] rounded-md'>
+        <legend>Unregister User</legend>
 
         <input
           className="bg-transparent pb-2"

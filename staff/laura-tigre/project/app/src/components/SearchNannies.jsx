@@ -4,7 +4,7 @@ import Button from '../library/Button'
 import Container from '../library/Container'
 import searchNannies from '../logic/search-nannies'
 import { Link} from 'react-router-dom'
-import { StarIcon, } from '@heroicons/react/24/solid'
+import { StarIcon,ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 
 
@@ -61,6 +61,7 @@ function SearchNannies({ listUpdateStamp }) {
 
     }, [listUpdateStamp])
 
+
     const handleToggleFavNanny = (nannyId) => {
         setNannies(nannies => {
             const index = nannies.findIndex(nanny => nanny.id === nannyId)
@@ -75,7 +76,6 @@ function SearchNannies({ listUpdateStamp }) {
 
             return nanniesUpdated
         })
-
 
     }
 
@@ -177,27 +177,28 @@ function SearchNannies({ listUpdateStamp }) {
 
 
             {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={nanny.id} id={nanny.id}>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-end">
+                <Link to={'/chat'}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></Link>
+                <button className="flex flex-row" id={nanny.id} onClick={() => handleToggleFavNanny(nanny.id)}>{
+
+                    nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
+                        :
+                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
+            </div>
                 <div>
                     <img className='w-20 h-20' src=
                         {nanny.photo} />
                 </div>
-                {/* <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
-
-                    nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
-                        :
-                        <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button> */}
-            </div>
 
                 <Link to={`/nannies/${nanny.id}`}>
-                    <strong className="w-[28ch] text-left">{nanny.user.name}</strong>
+                    <strong className="w-[28ch] text-left text-lg">{nanny.user.name}</strong>
                 </Link>
-                <p className='pt-1'>City: {nanny.city}</p>
-                <p className='pt-1'>Email: {nanny.user.email}</p>
-                <p className='pt-1'>Price: {nanny.price}€</p>
-                <p className='pt-1'>Experience: {nanny.experience}years</p>
-                <p className='pt-1'>Description: {nanny.description}</p>
-                <p className='pt-1'>Extras: {nanny.extras}</p>
+                <p className='pt-1 text-[#fb923c]'>City:<span className='text-black'> {nanny.city}</span> </p>
+                <p className='pt-1 text-[#fb923c]'>Email:<span className='text-black'>{nanny.user.email}</span></p>
+                <p className='pt-1 text-[#fb923c]'>Price:<span className='text-black '> {nanny.price}€</span></p>
+                <p className='pt-1 text-[#fb923c]'>Experience: <span className='text-black '>{nanny.experience}years</span></p>
+                <p className='pt-1 text-[#fb923c]'>Description: <span className='text-black'>{nanny.description}</span></p>
+                <p className='pt-1 text-[#fb923c]'> Extras: <span className='text-black'>{nanny.extras}</span></p>
             </li>
             )}
 

@@ -21,7 +21,7 @@ const { validateUserId, validateMondayMorningSelected,
     validateSundayEveningSelected,
     validateKidsFrom, validateKidsTo, ExistenceError, CoherenceError
 } = require('com')
-const { User, Parent } = require('../data/models')
+const { User, Parent, Nanny } = require('../data/models')
 /**
  *search parents with a specific dates
  * 
@@ -59,11 +59,12 @@ function searchParents(userId, mondayMorningSelected, mondayAfternoonSelected, m
     if (kidsFrom !== undefined) validateKidsFrom(kidsFrom)
     if (kidsTo !== undefined) validateKidsTo(kidsTo)
 
-    return User.findById(userId).lean()
-        .then(user => {
+    return Promise.all([User.findById(userId).lean(), Nanny.findOne({user: userId}).lean()]) 
+        .then(([user, nanny]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            if (user.role !== 'nanny') throw new CoherenceError('invalid user role')
+
+            if (user.role !== 'nanny') throw new CoherenceError(`user with id ${userId} is not a nanny`)
 
             const filter = {}
 
@@ -147,28 +148,31 @@ function searchParents(userId, mondayMorningSelected, mondayAfternoonSelected, m
 
 
             return Parent.find(filter).populate('user', '-password -__v').select('-__v').lean()
-        })
-        .then(parents => {
-            parents.forEach(parent => {
+            .then(parents => {
+                parents.forEach(parent => {
+                    
+                    if (parent._id) {
+                        parent.id = parent._id.toString()
+                        delete parent._id
+                        delete parent.__v
+                    }
+                    if (parent.user._id) {
+                        parent.user.id = parent.user._id.toString()
+                        delete parent.user._id
+                    }
+                    parent.availabilities.forEach(availability => {
+                        availability.id = availability._id.toString()
+                        delete availability._id
+                    })
+                    
+                    if(user.role === 'nanny') parent.fav= nanny.favs.some(fav => fav.toString() === parent.id )
 
-                if (parent._id) {
-                    parent.id = parent._id.toString()
-                    delete parent._id
-                    delete parent.__v
-                }
-                if (parent.user._id) {
-                    parent.user.id = parent.user._id.toString()
-                    delete parent.user._id
-                }
-                parent.availabilities.forEach(availability => {
-                    availability.id = availability._id.toString()
-                    delete availability._id
+                    
                 })
-
+                
+                
+                return parents
             })
-
-
-            return parents
         })
 }
 

@@ -36,6 +36,9 @@ const insertPhotoParent = require('./logic/insertPhotoParent')
 const deleteKid = require('./logic/deleteKid')
 const updatePhotoNanny = require('./logic/updatePhotoNanny')
 const updatePhotoParent = require('./logic/updatePhotoParent')
+const chat = require('./logic/chat')
+const retrieveChat = require('./logic/retrieveChat')
+const retrieveChats = require('./logic/retrieveChats')
 
 
 
@@ -1071,6 +1074,73 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const userId = verifyToken(req)
 
                 retrieveParent(userId)
+                    .then(parent => res.json(parent))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.post('/chats/:userIdTo', jsonBodyParser, (req, res) => {
+            try {
+                const userIdFrom = verifyToken(req)
+                const { userIdTo } = req.params
+                const { message} = req.body
+
+                chat(userIdFrom, userIdTo, message)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof CoherenceError) res.status(409)
+
+                        else res.status(500)
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError) res.status(400)
+                else res.status(500)
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/chats/:chatId', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+                const { chatId } = req.params
+                retrieveChat(userId,chatId)
+                    .then(parent => res.json(parent))
+                    .catch(error => {
+                        if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+            } catch (error) {
+                if (error instanceof TypeError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.get('/chats', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+
+                retrieveChats(userId)
                     .then(parent => res.json(parent))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)

@@ -1,5 +1,5 @@
 const { validateUserId, ExistenceError } = require('com')
-const { User, Parent, Nanny } = require('../data/models')
+const { User, Parent, Nanny, Chat } = require('../data/models')
 /**
  *retrieve parents who matches the same city to the nanny
  * 
@@ -17,29 +17,36 @@ function retrieveParents(userId) {
                 .then(nanny => {
                     return Parent.find({ city: nanny.city }).populate('user', '-password -__v').select('-__v').lean()
                         .then(parents => {
-                            const favParents = nanny.favs.map(fav => fav.toString())
+                            return Chat.find({ users: userId }).lean()
+                                .then(chats => {
 
-                            parents.forEach(parent => {
+                                    const favParents = nanny.favs.map(fav => fav.toString())
 
-                                if (parent._id) {
-                                    parent.id = parent._id.toString()
-                                    delete parent._id
-                                    delete parent.__v
-                                }
-                                if (parent.user._id) {
-                                    parent.user.id = parent.user._id.toString()
-                                    delete parent.user._id
-                                }
-                                parent.availabilities.forEach(availability => {
-                                    availability.id = availability._id.toString()
-                                    delete availability._id
+                                    parents.forEach(parent => {
+
+                                        if (parent._id) {
+                                            parent.id = parent._id.toString()
+                                            delete parent._id
+                                            delete parent.__v
+                                        }
+                                        if (parent.user._id) {
+                                            parent.user.id = parent.user._id.toString()
+                                            delete parent.user._id
+                                        }
+                                        const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(parent.user.id))
+                                        if(chat){
+                                           parent.chatId = chat._id.toString() 
+                                        }
+                                        parent.availabilities.forEach(availability => {
+                                            availability.id = availability._id.toString()
+                                            delete availability._id
+                                        })
+
+                                        if (favParents.includes(parent.id)) parent.fav = true
+
+                                    })
+                                    return parents
                                 })
-
-                                if (favParents.includes(parent.id)) parent.fav = true
-
-                            })
-                            return parents
-
                         })
                 })
 

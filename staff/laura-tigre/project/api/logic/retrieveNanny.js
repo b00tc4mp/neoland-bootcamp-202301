@@ -1,5 +1,5 @@
 const { validateUserId, validateUserNannyId, ExistenceError, CoherenceError } = require('com')
-const { User, Nanny } = require('../data/models')
+const { User, Nanny ,Parent} = require('../data/models')
 /**
  *retrieve nanny user if the user is the nanny or the user is a parent
  * 
@@ -10,34 +10,51 @@ function retrieveNanny(userId, nannyId) {
     validateUserId(userId)
     if (typeof nannyId !== 'undefined') validateUserNannyId(nannyId)
 
+    
     return User.findById(userId).lean()
+        
+
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
+            
+            // if (!parent) throw new ExistenceError(`parent for user id ${userId} not found`)
+
             let promise
 
-            if (nannyId)
-                promise = Nanny.findById(nannyId).populate('user', 'name').select('-__v').lean()
+            if (nannyId && user.role === 'parent')
+                promise = Promise.all([Nanny.findById(nannyId).populate('user', '-__v').select('-__v').lean(),Parent.findOne({ user: userId }).lean()])
             else
-                promise = Nanny.findOne({ user: userId }).populate('user', 'name').select('-__v').lean()
+                promise = Nanny.findOne({ user: userId }).populate('user', '-__v').select('-__v').lean()
 
             return promise
-                .then(nanny => {
+                .then((returnedPromise) => {
+                    let nanny, parent
+                    
+                    if (nannyId && user.role === 'parent'){
+                        [nanny, parent] = returnedPromise
+                    }
+                    else{
+                        nanny = returnedPromise
+                    }
                     if (!nanny) throw new ExistenceError(`nanny with id ${nannyId} not found`)
 
                     if (user.role === 'nanny' && nanny.user._id.toString() !== userId) throw new CoherenceError(`user id ${userId} with role nanny is not related to nanny with id ${nannyId}`)
 
                     // sanitize
-                    nanny.fav= true
+                    
                     nanny.id = nanny._id.toString()
                     nanny.user.id = nanny.user._id.toString()
                     nanny.availabilities.forEach(availability => {
                         availability.id = availability._id.toString()
                         delete availability._id
                     })
-                    
+
                     delete nanny._id
                     delete nanny.user._id
+
+                     if (user.role === 'parent')
+                        nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
 
                     return nanny
                 })
