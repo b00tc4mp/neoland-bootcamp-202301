@@ -66,8 +66,10 @@ function AuctionDetail({ }) {
                 ) : null}   
             </div>
         </Container>
-
-        <BidList price={auction.price} bidRate={auction.bidRate} status={auction.status} />
+        {auction.status === 'open' &&
+            <BidList price={auction.price} bidRate={auction.bidRate} status={auction.status} />
+    }
+        
     </Container>
 
 
