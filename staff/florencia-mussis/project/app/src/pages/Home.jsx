@@ -66,7 +66,7 @@ function Home() {
 
         <header className="fixed top-0 w-full justify-between flex p-2 shadow shadow-teal-500 bg-white py-5">
             <a className="w-16 lg:w-20" onClick={handleNavigateToHome}><img src={icono} /></a>
-            <button onClick={handleClick} className='mx-3 text-center lg: mx-9'>
+            <button onClick={handleClick} className='mx-3 text-center lg:mx-9'>
                 {showNav ? <XMarkIcon className='mt-8 h-8 w-8' /> : <Bars3Icon className='h-8 w-8'/>}
             </button>
 
@@ -80,7 +80,7 @@ function Home() {
 
                         <Link to="/profile" className="m-3" href=""><Cog6ToothIcon className="m-auto h-10 w-10"/>{user.name}</Link>
 
-                        <Button onClick={handleLogout} className="w-24 text-sm h-7 mt-2 rounded-md sm: w-20">LOGOUT</Button>
+                        <Button onClick={handleLogout} className="w-24 text-sm h-7 mt-2 mb-3 rounded-md sm:w-20">LOGOUT</Button>
                     </ul>
                 </div>
             }

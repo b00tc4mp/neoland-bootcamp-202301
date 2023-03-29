@@ -116,7 +116,7 @@ function Lists({refreshTime}) {
                     <button className="text-4xl flex m-auto lg:text-4xl" onClick={handleAdd}>+</button>
                 </div>}
 
-            {lists && (lists.length? <Container TagName="ul" className="mx-3 lg:mx-24">{lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list} />)}</Container>: <p className="text-black text-md text-center pt-8">No results</p>)}
+            {lists && (lists.length? <Container TagName="ul" className="mx-3 lg:mx-24">{lists.map(list => <List onDeleteList={handleDeleteList} onUpdateArchived={handleDeleteList} key={list.id} element={list} />)}</Container>: <p className="text-gray-400 text-xl text-center pt-8">No search results</p>)}
         </main>
     </div>
 }
