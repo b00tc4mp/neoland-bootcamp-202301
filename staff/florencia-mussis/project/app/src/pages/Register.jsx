@@ -22,24 +22,17 @@ function Register() {
     const password = event.target.password.value
 
     try {
-      registerUser(name, age, email, password, error => {
-        if (error) {
-          setFeedback({
-            message: error.message,
-            level: 'error'
-          })
-
-          return
-        }
-
-        navigate('/login')
-      })
+      registerUser(name, age, email, password)
+        .then(() => navigate('/login'))
+        .catch(error => setFeedback({
+          message: error.message,
+          level: 'error'
+        }))
     } catch (error) {
       setFeedback({
         message: error.message,
         level: 'error'
       })
-
     }
   }
 

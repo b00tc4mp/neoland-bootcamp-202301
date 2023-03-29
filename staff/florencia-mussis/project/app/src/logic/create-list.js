@@ -1,43 +1,48 @@
-import { validateCallback, validateToken, ClientError, ServerError, ExistenceError } from 'com'
+import { validateToken, ClientError, ServerError, ExistenceError } from 'com'
 
 /**
  * Creates a new list in the database
  * 
  * @param {string} token The session token
- * @param {function} callback The function to call
  */
-function createList(token, callback) {
+function createList(token) {
     validateToken(token)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest()
-
-    xhr.onload = () => {
-        const { status, response } = xhr
-
-        if (status === 201) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
+    return fetch(`${process.env.REACT_APP_API_URL}/lists`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
         }
+    })
+        .then(response => {
+            const { status } = response
 
-    }
-    xhr.onerror = () => callback(new Error('Network error'))
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.open('POST', 'http://localhost:8080/lists')
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
+                        throw new ClientError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.send()
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
+
+                        throw new ServerError(error)
+                    })
+            } else if (status === 201) {
+                return
+            }
+        })
 }
 
 export default createList

@@ -20,20 +20,16 @@ function Login() {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password, (error, token) => {
-                if (error) {
-                    setFeedback({
-                        message: error.message,
-                        level: 'error'
-                    })
+            authenticateUser(email, password)
+                .then(token => {
+                    sessionStorage.token = token
 
-                    return
-                }
-
-                sessionStorage.token = token
-
-                navigate('/')
-            })
+                    navigate('/')
+                })
+                .catch(error =>  setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,

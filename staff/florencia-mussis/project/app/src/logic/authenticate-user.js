@@ -1,81 +1,62 @@
-import { validateEmail, validatePassword, validateCallback, ClientError, ServerError, AuthError, ExistenceError } from 'com'
+import { validateEmail, validatePassword, ClientError, ServerError, AuthError, ExistenceError } from 'com'
 
 /**
  * Authenticates a user against database
  * 
  * @param {string} email The user's email address
  * @param {string} password The user's password
- * @param {function} callback The callback
  */
-function authenticateUser(email, password, callback) {
+function authenticateUser(email, password) {
     validateEmail(email)
     validatePassword(password)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    return fetch(`${process.env.REACT_APP_API_URL}/users/auth`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 400) {
-            const { response } = xhr
+                        throw new ClientError(error)
+                    })
+            } else if (status === 401) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const body = JSON.parse(response)
+                        throw new AuthError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            callback(new ClientError(error))
+                        throw new ServerError(error)
+                    })
+            } else if (status === 200) {
+                return response.json()
+                    .then(payload => {
+                        const { token } = payload
 
-            return
-        } else if (status === 401) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new AuthError(error))
-
-            return
-        } else if (status === 404) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new ExistenceError(error))
-
-            return
-        } else if (status === 500) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new ServerError(error))
-
-            return
-        }
-
-        const { response } = xhr
-
-        const body = JSON.parse(response)
-
-        const { token } = body
-
-        callback(null, token)
-    }
-
-    xhr.onerror = () => callback(new Error('Network error'))
-
-    xhr.open('POST', 'http://localhost:8080/users/auth')
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const credentials = { email, password }
-    const json = JSON.stringify(credentials)
-    xhr.send(json)
+                        return token
+                    })
+            }
+        })
 }
 
 export default authenticateUser

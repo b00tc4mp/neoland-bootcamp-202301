@@ -25,20 +25,16 @@ function UnregisterUser({ onUnregisterUser }) {
         const password = passwordRef.current.value
 
         try {
-            unregisterUser(sessionStorage.token, password, error => {
-                if (error) {
-                    setFeedback({
-                        message: error.message,
-                        level: 'error'
-                    })
-
-                    return
-                }
-
+            unregisterUser(sessionStorage.token, password)
+               .then(()=>{
                 delete sessionStorage.token
 
                 onUnregisterUser()
-            })
+               })
+               .catch(error =>  setFeedback({
+                        message: error.message,
+                        level: 'error'
+                    }))
         } catch (error) {
             setFeedback({
                 message: error.message,

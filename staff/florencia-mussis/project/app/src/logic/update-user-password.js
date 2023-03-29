@@ -1,4 +1,4 @@
-const { validateToken, validatePassword, validateNewPassword, validateNewPasswordConfirm, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
+const { validateToken, validatePassword, validateNewPassword, validateNewPasswordConfirm, ClientError, ServerError, ExistenceError, AuthError } = require('com')
 
 /**
  * Updates the user password
@@ -7,47 +7,57 @@ const { validateToken, validatePassword, validateNewPassword, validateNewPasswor
  * @param {string} password The user current password
  * @param {string} newPassword The user new password
  * @param {string} newPasswordConfirm The confirmation of the new password
- * @param {function} callback The callback
  */
-function updateUserPassword(token, password, newPassword, newPasswordConfirm, callback) {
+function updateUserPassword(token, password, newPassword, newPasswordConfirm) {
     validateToken(token)
     validatePassword(password)
     validateNewPassword(newPassword)
     validateNewPasswordConfirm(newPasswordConfirm)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    return fetch(`${process.env.REACT_APP_API_URL}/users/password`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password, newPassword, newPasswordConfirm })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 204) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 401) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new AuthError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 401)
-                callback(new AuthError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.onerror = () => callback(new Error('Network error'))
-
-    xhr.open('PATCH', 'http://localhost:8080/users/password') //patch actualizar
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const payload = { password, newPassword, newPasswordConfirm }
-    const json = JSON.stringify(payload)
-    xhr.send(json)
+                        throw new ServerError(error)
+                    })
+            } else if (status === 204) {
+                return 
+            }
+        })
 }
+
 
 export default updateUserPassword

@@ -68,14 +68,9 @@ function Lists({refreshTime}) {
 
     const handleAdd = () => {
         try {
-            createList(sessionStorage.token, error => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-                loadLists()
-            })
+            createList(sessionStorage.token)
+                .then(() =>  loadLists())
+                .catch(error => alert(error.message))
         } catch (error) {
             alert(error.message)
         }
