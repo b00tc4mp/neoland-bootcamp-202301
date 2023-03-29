@@ -18,7 +18,7 @@ const { FormatError, ExistenceError, AuthError, CoherenceError } = require('../.
 const createAuction = require('./logic/createAuction');
 const retrieveAuctions = require('./logic/retrieveAuctions');
 const retrieveAuction = require('./logic/retrieveAuction');
-const retrieveAuctionBid = require('./logic/retrieveAuctionBid');
+const retrieveAuctionBids = require('./logic/retrieveAuctionBids');
 const bidAuction = require('./logic/bidAuction')
 const retrieveMyAuctions = require('./logic/retrieveMyAuctions')
 
@@ -286,13 +286,13 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             }
         })
 
-        server.get('/auctionBid/:auctionId', jsonBodyParser, (req, res) => {
+        server.get('/auctions/:auctionId/bids', jsonBodyParser, (req, res) => {
             try {
                 const userId = verifyToken(req)
 
                 const { auctionId } = req.params
 
-                retrieveAuctionBid(auctionId, userId)
+                retrieveAuctionBids( userId,auctionId)
                     .then(user => res.json(user))
                     .catch(error => {
                         if (error instanceof ExistenceError)

@@ -1,4 +1,4 @@
-const { validateToken, validateCallback, ExistenceError, ServerError, ClientError } = require('com')
+const { validateToken, validateCallback, ExistenceError, ServerError, ClientError, validateAuctionId } = require('com')
 
 /**
  * 
@@ -8,7 +8,7 @@ const { validateToken, validateCallback, ExistenceError, ServerError, ClientErro
  */
 function retrieveAuction(token, auctionId, callback) {
     validateToken(token)
-    if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')
+    validateAuctionId(auctionId)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()

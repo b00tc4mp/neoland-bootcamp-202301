@@ -6,13 +6,13 @@ const { Auction, User, Bid } = require("../data/models")
 * @returns 
 */
 
-function retrieveAuctionBid(auctionId, userId) {
-    validateAuctionId(auctionId)
+function retrieveAuctionBids(userId, auctionId) {
     validateUserId(userId)
+    validateAuctionId(auctionId)
 
     return Promise.all([
-        Auction.findById(auctionId),
         User.findById(userId),
+        Auction.findById(auctionId),
         Bid.find({ auction: auctionId }).populate('user', 'name').lean()
     ])
         .then(([user, auction, bids]) => {
@@ -22,14 +22,18 @@ function retrieveAuctionBid(auctionId, userId) {
 
 
             bids.forEach(bid => {
-
                 bid.id = bid._id.toString()
 
                 delete bid._id
 
                 delete bid.__v
 
-                if (bid.user._id) {
+                if (!bid.user) {
+                    bid.user = {
+                        name: 'Deleted user',
+                        id: 'deleted-user-id'
+                    }
+                } else if (bid.user._id) {
                     bid.user.id = bid.user._id.toString()
 
                     delete bid.user._id
@@ -42,4 +46,4 @@ function retrieveAuctionBid(auctionId, userId) {
 
 }
 
-module.exports = retrieveAuctionBid
+module.exports = retrieveAuctionBids

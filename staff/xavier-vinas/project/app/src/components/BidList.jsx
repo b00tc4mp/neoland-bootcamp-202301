@@ -1,4 +1,4 @@
-import retrieveAuctionBid from "../logic/retrieve-auction-bid"
+import retrieveAuctionBids from "../logic/retrieve-auction-bids"
 import { useEffect, useState, useContext } from "react"
 import { useParams, } from "react-router-dom"
 import Context from '../Context'
@@ -16,7 +16,7 @@ function BidList({ price, bidRate, status }) {
     const loadAuctionBids = () => {
 
         try {
-            retrieveAuctionBid(auctionId, sessionStorage.token, (error, bids) => {
+            retrieveAuctionBids(auctionId, sessionStorage.token, (error, bids) => {
                 if (error) {
                     alert(error.message)
 

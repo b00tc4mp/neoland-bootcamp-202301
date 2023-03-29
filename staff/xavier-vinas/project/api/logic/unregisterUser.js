@@ -18,6 +18,8 @@ function unregisterUser(userId, password) {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
             if (user.password !== password) throw new AuthError('wrong credentials')
+          
+         
 
             return User.deleteOne({ _id: new ObjectId(userId) })
         })

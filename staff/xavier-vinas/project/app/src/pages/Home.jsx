@@ -80,9 +80,9 @@ function Home() {
             <Routes>
                 <Route path="/" element={<List listUpdateStamp={listUpdateStamp} />} />
 
-                <Route path="/profile" element={<Profile user={user} />} />
+                <Route path="/profile" element={<Profile user={user} onUnregisterUser={handleLogout}  />} />
 
-                <Route path="/my-auctions" element={<MyAuction listUpdateStamp={listUpdateStamp} />} />
+                <Route path="/my-auctions"  element={<MyAuction listUpdateStamp={listUpdateStamp} />} />
 
                 <Route path="/new-auction" element={<AuctionForm listUpdateStamp={listUpdateStamp} />} />
 

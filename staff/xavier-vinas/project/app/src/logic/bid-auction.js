@@ -1,4 +1,4 @@
-const { validateToken, ServerError, ExistenceError, validateCallback } = require('com')
+const { validateAuctionId, validateToken, ServerError, ExistenceError, validateCallback, validateAmount } = require('com')
 /**
  * 
  * @param {string} token the token the user belongs
@@ -11,8 +11,8 @@ const { validateToken, ServerError, ExistenceError, validateCallback } = require
 
 function bidAuction(token, auctionId, amount, callback) {
     validateToken(token)
-    if (typeof auctionId !== 'string') throw new TypeError('auctionId is not a string')
-    if (typeof amount !== 'number') throw new TypeError('amount is not a number')
+    validateAuctionId(auctionId)
+    validateAmount(amount)
     validateCallback(callback)
 
     const xhr = new XMLHttpRequest()
@@ -48,5 +48,5 @@ function bidAuction(token, auctionId, amount, callback) {
 
     xhr.send(json)
 }
-    
+
 export default bidAuction

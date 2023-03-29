@@ -15,7 +15,7 @@ function retrieveUser(userId) {
 
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-
+            user.id = user._id.toString()
             // sanitization
             delete user._id
             delete user.password
