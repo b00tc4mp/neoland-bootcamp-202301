@@ -18,19 +18,23 @@ function UpdateUserPassword() {
         const newPasswordRepeat = event.target.newPasswordRepeat.value
 
         try {
-            updateUserPassword(sessionStorage.token, password, newPassword, newPasswordRepeat)
-                .then(() => {
-                    event.target.reset()
-
+            updateUserPassword(sessionStorage.token, password, newPassword, newPasswordRepeat, error => {
+                if (error) {
                     setFeedback({
-                        message: 'password updated successfully',
-                        level: 'success'
+                        message: error.message,
+                        level: 'error'
                     })
+
+                    return
+                }
+
+                event.target.reset()
+
+                setFeedback({
+                    message: 'password updated successfully',
+                    level: 'success'
                 })
-                .catch(error => setFeedback({
-                    message: error.message,
-                    level: 'error'
-                }))
+            })
         } catch (error) {
             setFeedback({
                 message: error.message,

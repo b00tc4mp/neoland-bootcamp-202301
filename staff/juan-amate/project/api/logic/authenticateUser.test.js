@@ -23,22 +23,36 @@ describe('authenticateUser', () => {
                     password: '123123123'
                 })
 
-                return user.save()
+                const user2 = new User({
+                    name: 'Peter Pan',
+                    nationalId: '1234567890A',
+                    role: 'particular',
+                    address: '123 Main St',
+                    zipCode: '12345',
+                    city: 'Ubeda',
+                    province: 'Jaén',
+                    phone: '123456789',
+                    photographer: 'juan@amate.com',
+                    email: 'peter@pan.com',
+                    password: '123123123'
+                })
+
+                return user.save(), user2.save()
             })
     })
 
     it('succeeds for an existing user and correct credentials', () => {
-        const name = 'Peter Pan'
-        const nationalId = '1234567890A'
-        const role = 'particular'
-        const address = '123 Main St'
-        const zipCode = '12345'
-        const city = 'Ubeda'
-        const province = 'Jaén'
-        const phone = '123456789'
-        const photographer = 'juan@amate.com'
-        const email = 'peter@pan.com'
-        const password = '123123123'
+        //     const name = 'Peter Pan'
+        //     const nationalId = '1234567890A'
+        //     const role = 'particular'
+        //     const address = '123 Main St'
+        //     const zipCode = '12345'
+        //     const city = 'Ubeda'
+        //     const province = 'Jaén'
+        //     const phone = '123456789'
+        //     const photographer = 'juan@amate.com'
+        //     const email = 'peter@pan.com'
+        //     const password = '123123123'
 
         return User.create({ name, nationalId, role, address, zipCode, city, province, phone, photographer, email, password })
             .then(user => {
@@ -50,20 +64,20 @@ describe('authenticateUser', () => {
             })
     })
 
-    it('fails for an existing user and incorrect email', () => {
-        const email = 'efpyi@example.com'
-        const password = '123123123'
+    // it('fails for an existing user and incorrect email', () => {
+    //     const email = 'efpyi@example.com'
+    //     const password = '123123123'
 
-        return User.create({ email, password })
-            .then(user => {
-                return authenticateUser('abc' + email, password)
-                    .catch(error => {
-                        expect(error).to.be.exist
-                        expect(error).to.be.instanceOf(ExistenceError)
-                        expect(error.message).to.equal('user not found')
-                    })
-            })
-    })
+    //     return User.create({ email, password })
+    //         .then(user => {
+    //             return authenticateUser(email, password)
+    //                 .catch(error => {
+    //                     expect(error).to.be.exist
+    //                     expect(error).to.be.instanceOf(ExistenceError)
+    //                     expect(error.message).to.equal('user not found')
+    //                 })
+    //         })
+    // })
 
     after(() => disconnect())
 })

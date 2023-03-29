@@ -16,23 +16,19 @@ function UpdateUserEmail() {
         const password = event.target.password.value
 
         try {
-            updateUserEmail(sessionStorage.token, newEmail, password, error => {
-                if (error) {
+            updateUserEmail(sessionStorage.token, newEmail, password)
+                .then(() => {
+                    event.target.reset()
+
                     setFeedback({
-                        message: error.message,
-                        level: 'error'
+                        message: 'email updated successfully',
+                        level: 'success'
                     })
-
-                    return
-                }
-
-                event.target.reset()
-
-                setFeedback({
-                    message: 'email updated successfully',
-                    level: 'success'
                 })
-            })
+                .catch(error => setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,

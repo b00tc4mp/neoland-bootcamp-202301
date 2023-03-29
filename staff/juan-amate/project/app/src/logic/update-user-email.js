@@ -1,51 +1,62 @@
-import { validateToken, validateNewEmail, validatePassword, validateCallback, ClientError, ServerError, AuthError, ExistenceError } from 'com'
+import { validateToken, validateNewEmail, validatePassword, ClientError, ServerError, AuthError, ExistenceError } from 'com'
 /**
  * Updates the user email
  * 
  * @param {string} userId The user id
  * @param {string} newEmail The user new email
  * @param {string} password The user password
- * @param {function} callback The callback
  */
-function updateUserEmail(token, newEmail, password, callback) {
+function updateUserEmail(token, newEmail, password) {
     validateToken(token)
     validateNewEmail(newEmail)
     validatePassword(password)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    return fetch(`${process.env.REACT_APP_API_URL}/users/email`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ newEmail, password })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 204) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 401) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new AuthError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 401)
-                callback(new AuthError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.onerror = () => callback(new Error('network error'))
+                        throw new ServerError(error)
+                    })
+            } else if (status === 204) {
 
-    xhr.open('PATCH', 'http://localhost:8080/users/email')
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
+                return
+            }
 
-    const payload = { newEmail, password }
-    const json = JSON.stringify(payload)
-    xhr.send(json)
+
+        })
 }
-
 
 export default updateUserEmail

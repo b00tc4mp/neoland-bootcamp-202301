@@ -1,41 +1,52 @@
-const { validateToken, validateCallback, ClientError, ServerError, ExistenceError } = require('com')
+const { validateToken, ClientError, ServerError, ExistenceError } = require('com')
 /**
  * Retrieve a user by email and password
  * 
  * @param {string} email The user's email address
  * @param {string} password The user's password
- * @param {function} callback The callback function
  */
-function retrieveUser(token, callback) {
+function retrieveUser(token) {
     validateToken(token)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
-
-    xhr.onload = () => {
-        const { status, response } = xhr
-
-        const body = JSON.parse(response)
-
-        if (status === 200) {
-            callback(null, body)
-        } else {
-            const { error } = body
-
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
+    return fetch(`${process.env.REACT_APP_API_URL}/users`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
-    }
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onerror = () => callback(new Error('network error'))
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.open('GET', 'http://localhost:8080/users')
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.send()
+                        throw new ClientError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
+
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
+
+                        throw new ServerError(error)
+                    })
+            } else if (status === 200) {
+                return response.json()
+                    .then(payload => {
+                        const { token } = payload
+
+                        return token
+                    })
+            }
+        })
 }
 
 export default retrieveUser

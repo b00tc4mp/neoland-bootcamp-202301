@@ -40,15 +40,16 @@ function Home() {
 
     useEffect(() => {
         try {
-            retrieveUser(sessionStorage.token, (error, user) => {
-                if (error) {
+            retrieveUser(sessionStorage.token)
+                .then(() => {
+
+                    setUser(user)
+                })
+                .catch(error => {
                     alert(error.message)
 
                     return
-                }
-
-                setUser(user)
-            })
+                })
         } catch (error) {
             alert(error.message)
         }

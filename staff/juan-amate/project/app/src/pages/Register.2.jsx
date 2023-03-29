@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Feedback from '../components/Feedback'
+import registerParticularUser from '../logic/register-particular-user'
 import Container from '../library/Container'
 import Button from '../library/Button'
 import Input from '../library/Input'
-import registerPhotographer from '../logic/register-photographer'
 
-function RegisterPhotographer() {
+function Register() {
     console.log('Register -> render')
 
     const navigate = useNavigate()
@@ -23,16 +23,35 @@ function RegisterPhotographer() {
         const city = event.target.city.value
         const province = event.target.province.value
         const phone = event.target.phone.value
+        const photographer = event.target.photographer.value
         const email = event.target.email.value
         const password = event.target.password.value
 
         try {
-            registerPhotographer(name, nationalId, address, zipCode, city, province, phone, email, password)
-                .then(() => navigate('/login'))
-                .catch(error => setFeedback({
-                    message: error.message,
-                    level: 'error'
-                }))
+            registerParticularUser(
+                name,
+                nationalId,
+                address,
+                zipCode,
+                city,
+                province,
+                phone,
+                photographer,
+                email,
+                password,
+                error => {
+                    if (error) {
+                        setFeedback({
+                            message: error.message,
+                            level: 'error'
+                        })
+
+                        return
+                    }
+
+                    navigate('/login')
+                })
+
         } catch (error) {
             setFeedback({
                 message: error.message,
@@ -48,7 +67,7 @@ function RegisterPhotographer() {
             </Container>
 
             <Container TagName='form' onSubmit={handleSubmit} className='flex flex-col items-center'>
-                <h1>Photographer join WebbID today</h1>
+                <h1>REGISTER</h1>
                 <div className='flex flex-col items-center w-screen'>
                     <Input TagName='input' type='text' id='name' placeholder='Name & Surname' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='nationalId' placeholder='National Id' className={'w-2/3 max-w-4/5'} ></Input>
@@ -57,10 +76,11 @@ function RegisterPhotographer() {
                     <Input TagName='input' type='text' id='city' placeholder='City' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='province' placeholder='Province' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='text' id='phone' placeholder='Phone number' className={'w-2/3 max-w-4/5'} ></Input>
+                    <Input TagName='input' type='email' id='photographer' placeholder='Your photographer email' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='email' id='email' placeholder='Email' className={'w-2/3 max-w-4/5'} ></Input>
                     <Input TagName='input' type='password' id='password' placeholder='Password' className={'w-2/3 max-w-4/5'} ></Input>
                 </div>
-                <Button type='submit' className='px-10 py-21 gap-5'>Start now</Button>
+                <Button type='submit' className='px-10 py-21 gap-5'>Create new account</Button>
 
                 {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
@@ -70,4 +90,4 @@ function RegisterPhotographer() {
     </Container>
 }
 
-export default RegisterPhotographer
+export default Register

@@ -13,15 +13,14 @@ function authenticateUser(email, password) {
     validateEmail(email)
     validatePassword(password)
 
-    return (async () => {
-        const user = await User.findOne({ email }).lean()
+    return User.findOne({ email }).lean()
+        .then(user => {
+            if (!user) throw new ExistenceError('user not found')
 
-        if (!user) throw new ExistenceError('user not found')
+            if (user.password !== password) throw new AuthError('wrong credentials')
 
-        if (user.password !== password) throw new AuthError('wrong credentials')
-
-        return user._id.toString()
-    })()
+            return user._id.toString()
+        })
 }
 
 module.exports = authenticateUser

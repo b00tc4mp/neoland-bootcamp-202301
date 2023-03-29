@@ -18,21 +18,23 @@ function Login() {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password)
-                .then(token => {
-                    sessionStorage.token = token
+            authenticateUser(email, password, (error, token) => {
+                if (error) {
+                    setFeedback(error.message)
 
-                    navigate('/')
-                })
-                .catch(error => setFeedback({
-                    message: error.message,
-                    level: 'error'
-                }))
+                    return
+                }
+
+                sessionStorage.token = token
+                navigate('/')
+            })
+
         } catch (error) {
             setFeedback({
                 message: error.message,
                 level: 'error'
             })
+
         }
     }
 

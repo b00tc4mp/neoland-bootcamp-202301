@@ -27,12 +27,29 @@ function RegisterPhotographer() {
         const password = event.target.password.value
 
         try {
-            registerPhotographer(name, nationalId, address, zipCode, city, province, phone, email, password)
-                .then(() => navigate('/login'))
-                .catch(error => setFeedback({
-                    message: error.message,
-                    level: 'error'
-                }))
+            registerPhotographer(
+                name,
+                nationalId,
+                address,
+                zipCode,
+                city,
+                province,
+                phone,
+                email,
+                password,
+                error => {
+                    if (error) {
+                        setFeedback({
+                            message: error.message,
+                            level: 'error'
+                        })
+
+                        return
+                    }
+
+                    navigate('/login')
+                })
+
         } catch (error) {
             setFeedback({
                 message: error.message,

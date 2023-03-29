@@ -8,7 +8,6 @@ import {
     validatePhone,
     validateEmail,
     validatePassword,
-    validateCallback,
     CoherenceError,
     ClientError,
     ServerError
@@ -26,19 +25,14 @@ import {
  * @param {string} phone The phone number of the user
  * @param {string} email The email of the user
  * @param {string} password The password of the user
- * @param {string} callback The callback function
  */
-function registerPhotographer(
-    name,
-    nationalId,
-    address,
+function registerPhotographer(name, nationalId, address,
     zipCode,
     city,
     province,
     phone,
     email,
-    password,
-    callback
+    password
 ) {
     validateName(name)
     validateNationalId(nationalId)
@@ -49,47 +43,42 @@ function registerPhotographer(
     validatePhone(phone)
     validateEmail(email)
     validatePassword(password)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    return fetch(`${process.env.REACT_APP_API_URL}/users/admin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, nationalId, address, zipCode, city, province, phone, email, password })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 201) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 409) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new CoherenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 409)
-                callback(new CoherenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
-
-    xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('POST', 'http://localhost:8080/users/admin')
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const user = {
-        name,
-        nationalId,
-        address,
-        zipCode,
-        city,
-        province,
-        phone,
-        email,
-        password
-    }
-    const json = JSON.stringify(user)
-    xhr.send(json)
+                        throw new ServerError(error)
+                    })
+            } else if (status === 201) {
+                return
+            }
+        })
 }
 
 export default registerPhotographer

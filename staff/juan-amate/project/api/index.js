@@ -1,9 +1,10 @@
+require('dotenv').config()
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { connect, disconnect } = require('mongoose')
 const { sign } = require('jsonwebtoken')
-const JWT_SECRET = 'juan tiene mucho pelo guapo'
 const { FormatError, ExistenceError, AuthError, ValueError, CoherenceError } = require('com')
 const verifyToken = require('./utils/verifyToken')
 const authenticateUser = require('./logic/authenticateUser')
@@ -18,8 +19,9 @@ const unregisterUser = require('./logic/unregisterUser')
 const createContract = require('./logic/createContract')
 const retrieveContracts = require('./logic/retrieveContracts')
 const retrieveContract = require('./logic/retrieveContract')
+const { JWT_SECRET, MONGO_URL, PORT } = process.env
 
-connect('mongodb://127.0.0.1:27017/projectdb')
+connect(MONGO_URL)
     .then(() => {
         const server = express()
         const jsonBodyParser = bodyParser.json()
@@ -127,7 +129,7 @@ connect('mongodb://127.0.0.1:27017/projectdb')
                 const { email, password } = credentials
 
                 authenticateUser(email, password)
-                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
+                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '2h' }))
                     .then(token => res.status(200).json({ token }))
                     .catch(error => {
                         if (error instanceof ExistenceError)
@@ -464,6 +466,6 @@ connect('mongodb://127.0.0.1:27017/projectdb')
             }
         })
 
-        server.listen(8080, () => console.log(`server running on port ${8080}`))
+        server.listen(8080, () => console.log(`server running on port ${PORT}`))
     })
 
