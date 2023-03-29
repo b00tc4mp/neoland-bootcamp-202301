@@ -101,9 +101,19 @@ function Home() {
                 </Container>
             </main>
 
-            <footer className="bg-transparent flex justify-end items-center m-4 fixed h-14 bottom-0 right-0 w-full">
-                {(location.pathname === '/') && <Button onClick={handleAdd}>+</Button>}
+            <footer className="bg-transparent flex justify-end items-center m-1 fixed h-14 bottom-0 right-0 w-full">
 
+                {(location.pathname === '/') &&
+                    <div onClick={handleAdd}>
+                        <img className='w-12 h-12 cursor-pointer' src='../../images/create.png' alt='Create contract' />
+                    </div>
+                }
+
+                <div id='whatsapp'>
+                    <a href='https://api.whatsapp.com/send?phone=+34629572745&text=Hola!!!' target='_blank'>
+                        <img className='w-12 h-12 cursor-pointer' src='../../images/whatsapp.png' title='Write me' alt='WhatssApp me' />
+                    </a>
+                </div>
             </footer>
         </Container >
     </div>
