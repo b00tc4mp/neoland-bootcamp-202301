@@ -6,45 +6,48 @@ const { validateToken, validateText, validateVisibility, ClientError, ServerErro
  * @param {string} token The session token
  * @param {string} text The text of the sticky
  * @param {string} visibility The visibility of the sticky
- * @param {function} callback The function to call when the sticky is created (or failed)
  */
 function createSticky(token, text, visibility, callback) {
     validateToken(token)
     validateText(text)
     validateVisibility(visibility)
 
-    const xhr = new XMLHttpRequest()
+    return fetch(`${process.env.REACT_APP_API_URL}/stickies`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ text, visibility })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 201) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
-
-    xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('POST', 'http://localhost:8080/stickies')
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const payload = { text, visibility }
-
-    const json = JSON.stringify(payload)
-
-    xhr.send(json)
+                        throw new ServerError(error)
+                    })
+            } else if (status === 201) {
+                return
+            }
+        })
 }
 
 export default createSticky

@@ -22,15 +22,9 @@ function Home() {
 
     const handleAdd = () => {
         try {
-            createSticky(sessionStorage.token, '', 'public', error => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-
-                setListUpdateStamp(Date.now())
-            })
+            createSticky(sessionStorage.token, '', 'public')
+                .then(() => setListUpdateStamp(Date.now()))
+                .catch(error => alert(error.message))
         } catch (error) {
             alert(error.message)
         }

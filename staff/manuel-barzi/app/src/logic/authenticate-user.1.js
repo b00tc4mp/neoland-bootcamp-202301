@@ -15,62 +15,31 @@ function authenticateUser(email, password, callback) {
     const xhr = new XMLHttpRequest
 
     xhr.onload = () => {
-        const { status } = xhr
-
-        if (status === 400) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new ClientError(error))
-
-            return
-        } else if (status === 401) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new AuthError(error))
-
-            return
-        } else if (status === 404) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new ExistenceError(error))
-
-            return
-        } else if (status === 500) {
-            const { response } = xhr
-
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            callback(new ServerError(error))
-
-            return
-        }
-
-        const { response } = xhr
+        const { status, response } = xhr
 
         const body = JSON.parse(response)
 
-        const { token } = body
+        if (status === 200) {
+            const { token } = body
 
-        callback(null, token)
+            callback(null, token)
+        } else {
+            const { error } = body
+
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 401)
+                callback(new AuthError(error))
+            else if (status === 404)
+                callback(new ExistenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
     }
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/users/auth')
+    xhr.open('POST', `${process.env.REACT_APP_API_URL}/users/auth`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const credentials = { email, password }

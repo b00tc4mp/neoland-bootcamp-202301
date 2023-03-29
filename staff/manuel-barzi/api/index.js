@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const registerUser = require('./logic/registerUser')
@@ -19,11 +21,11 @@ const updateStickyColor = require('./logic/updateStickyColor')
 const toggleFavSticky = require('./logic/toggleFavSticky')
 const retrieveFavStickies = require('./logic/retrieveFavStickies')
 const { sign } = require('jsonwebtoken')
-const JWT_SECRET = 'juan tiene mucho pelo guapo'
 const { FormatError, ExistenceError, AuthError, ValueError, CoherenceError } = require('com')
 const verifyToken = require('./utils/verifyToken')
+const { JWT_SECRET, MONGO_URL, PORT } = process.env
 
-connect('mongodb://127.0.0.1:27017/mydb')
+connect(MONGO_URL)
     .then(() => {
         const server = express()
         const jsonBodyParser = bodyParser.json()
@@ -56,28 +58,24 @@ connect('mongodb://127.0.0.1:27017/mydb')
             }
         })
 
-        server.post('/users/auth', jsonBodyParser, (req, res) => {
+        server.post('/users/auth', jsonBodyParser, async (req, res) => {
             try {
                 const credentials = req.body
 
                 const { email, password } = credentials
 
-                authenticateUser(email, password)
-                    .then(userId => sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' }))
-                    .then(token => res.status(200).json({ token }))
-                    .catch(error => {
-                        if (error instanceof ExistenceError)
-                            res.status(404)
-                        else if (error instanceof AuthError)
-                            res.status(401)
-                        else
-                            res.status(500)
+                const userId = await authenticateUser(email, password)
 
-                        res.json({ error: error.message })
-                    })
+                const token = sign({ sub: userId }, JWT_SECRET, { expiresIn: '1h' })
+
+                res.status(200).json({ token })
             } catch (error) {
                 if (error instanceof TypeError || error instanceof RangeError || error instanceof FormatError)
                     res.status(400)
+                else if (error instanceof AuthError)
+                    res.status(401)
+                else if (error instanceof ExistenceError)
+                    res.status(404)
                 else
                     res.status(500)
 
@@ -486,5 +484,5 @@ connect('mongodb://127.0.0.1:27017/mydb')
             }
         })
 
-        server.listen(8080, () => console.log('server running on port ' + 8080))
+        server.listen(8080, () => console.log(`server running on port ${PORT}`))
     })

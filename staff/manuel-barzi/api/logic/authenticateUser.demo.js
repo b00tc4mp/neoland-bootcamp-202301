@@ -1,10 +1,18 @@
-const { connect, disconnect } = require('mongoose')
-const authenticateUser = require('./authenticateUser')
+require('dotenv').config()
 
-connect('mongodb://127.0.0.1:27017/mydb')
-    .then(() => {
-        return authenticateUser('hello@world.com', '234234234')
-    })
-    .then(result => console.log(result))
-    .catch(error => console.error(error))
-    .finally(() => disconnect())
+const { connect, disconnect } = require('mongoose')
+const authenticateUser = require('./authenticateUser');
+
+(async () => {
+    try {
+        await connect(process.env.MONGO_URL)
+
+        const token = await authenticateUser('hello@world.com', '123123123')
+
+        console.log(token)
+    } catch (error) {
+        console.error(error)
+    } finally {
+        await disconnect()
+    }
+})()

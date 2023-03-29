@@ -13,18 +13,19 @@ function createSticky(userId, text, visibility) {
     validateText(text)
     validateVisibility(visibility)
 
-    return User.findById(userId)
-        .then(user => {
-            if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+    return (async () => {
+        const user = await User.findById(userId)
 
-            const sticky = new Sticky({
-                user: userId,
-                text,
-                visibility
-            })
+        if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            return sticky.save()
+        const sticky = new Sticky({
+            user: userId,
+            text,
+            visibility
         })
+
+        return sticky.save()
+    })()
 }
 
 module.exports = createSticky
