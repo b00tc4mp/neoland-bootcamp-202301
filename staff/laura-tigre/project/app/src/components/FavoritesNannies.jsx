@@ -76,9 +76,10 @@ function FavoritesNannies({ listUpdateStamp }) {
 
 
     return <Container TagName="ul" className="gap-4 py-10 mb-10">
+        
         {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={nanny.id} id={nanny.id} >
         <div className="flex flex-row justify-end">
-        {nanny.chatId ? <Link to={`chat/${nanny.chatId}`}>
+           {nanny.chat ? <Link to={`/chat/${nanny.chat}`}>
            <ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" />
            </Link> :
                 <button onClick={()=>handleMessage(nanny.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
@@ -103,6 +104,7 @@ function FavoritesNannies({ listUpdateStamp }) {
             
         </li>
         )}
+
         {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo}/>}
     </Container>
 

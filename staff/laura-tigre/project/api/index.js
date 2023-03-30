@@ -1091,14 +1091,14 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
             }
 
         })
-        server.post('/chats/:userIdTo', jsonBodyParser, (req, res) => {
+        server.post('/chats/users/:userIdTo', jsonBodyParser, (req, res) => {
             try {
                 const userIdFrom = verifyToken(req)
                 const { userIdTo } = req.params
                 const { message} = req.body
 
                 chat(userIdFrom, userIdTo, message)
-                    .then(() => res.status(201).send())
+                    .then((chat) => res.status(201).send(chat))
                     .catch(error => {
                         if (error instanceof CoherenceError) res.status(409)
 
@@ -1119,7 +1119,7 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 const userId = verifyToken(req)
                 const { chatId } = req.params
                 retrieveChat(userId,chatId)
-                    .then(parent => res.json(parent))
+                    .then(chat => res.json(chat))
                     .catch(error => {
                         if (error instanceof ExistenceError) res.status(404)
                         else res.status(500)

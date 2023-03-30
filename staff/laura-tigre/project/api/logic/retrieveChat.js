@@ -7,11 +7,20 @@ const { User, Chat} = require('../data/models')
  * @param {string} chatId the chat identity
  */
 
-function RetrieveChat(userId, chatId) {
+function retrieveChat(userId, chatId) {
    validateUserId(userId)
    validateChatId(chatId)
 
-   return Promise.all([User.findById(userId).lean(), Chat.findById(chatId).lean()])
+   return Promise.all([User.findById(userId).lean(), Chat.findById(chatId).populate({
+      path: 'users',
+      select:'name'
+  }).populate({
+   path:'messages',
+   populate:{
+      path: 'user',
+      select:'name'
+   }
+  }).lean()])
       .then(([user, chat]) => {
          if (!user) throw new ExistenceError(`user with id ${userId} not found`)
          if (!chat) throw new ExistenceError(`chat with id ${chatId} not found`)
@@ -24,12 +33,23 @@ function RetrieveChat(userId, chatId) {
          }
          chat.messages.forEach((message) => {
             message.id = message._id.toString()
+            message.user = message.user._doc
+            if(message.user._id){
+               message.user.id= message.user._id.toString()
+
+               delete message.user._id
+            }
             delete message._id
          })
+         chat.users.forEach((user)=>{
+            user.id = user._id.toString()
+            delete user._id
+         })
+
 
          return chat
 
       })
 
 }
-module.exports = RetrieveChat
+module.exports = retrieveChat

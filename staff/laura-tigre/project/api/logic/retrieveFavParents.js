@@ -1,4 +1,4 @@
-const { User, Nanny } = require('../data/models')
+const { User, Nanny, Chat } = require('../data/models')
 const { validateUserId, ExistenceError } = require('com')
 /**
  *retrieve favorits parents
@@ -24,33 +24,49 @@ function retrieveFavParents(userId) {
 
             const parents = nanny.favs.map(parent => {
                 const _parent = {}
-
+                _parent.user={}
                 _parent.id = parent._id.toString()
                 _parent.fav = true
 
                 _parent.name = parent.user.name
+                _parent.user.id = parent.user._id.toString()
+                _parent.photo = parent.photo
 
-                _parent.photo= parent.photo
-                
                 _parent.availabilities = parent.availabilities
-        
-                _parent.availabilities.forEach(availability => {
+
+                parent.availabilities.forEach(availability => {
                     availability.id = availability._id.toString()
                     delete availability._id
                 })
 
                 _parent.kids = parent.kids
 
-                _parent.kids.forEach(kid => {
+                parent.kids.forEach(kid => {
                     kid.id = kid._id.toString()
                     delete kid._id
                 })
-                _parent.email= parent.user.email
+                _parent.email = parent.user.email
 
                 return _parent
             })
+            const nannyFavs = parents.map(parent => parent.user.id)
+             return Chat.find({
+                $and:[
+                    {users : userId},
+                    {users : {$in : nannyFavs}}
+                ]
+             }).lean()
 
-            return parents
+             .then(chats => {
+                parents.forEach(parent =>{
+                    const chat= chats.find(chat => chat.users.map(userId => userId.toString().includes(parent.user.id)))
+                    if(chat){
+                        parent.chatId = chat._id.toString()
+                    }
+
+                })
+                return parents
+            })
         })
 
 

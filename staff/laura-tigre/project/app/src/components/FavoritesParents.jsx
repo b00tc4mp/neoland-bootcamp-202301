@@ -4,15 +4,15 @@ import Container from '../library/Container'
 import toggleFavParent from '../logic/toogle-fav-parent'
 import Context from '../Context'
 import { Link } from 'react-router-dom'
-import { StarIcon, ChatBubbleLeftRightIcon} from '@heroicons/react/24/solid'
+import { StarIcon, ChatBubbleLeftRightIcon,ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
-
+import Message from './Message'
 
 
 function FavoritesParents({ listUpdateStamp }) {
 
     const { alert } = useContext(Context)
-
+    const [messageUserIdTo, setMessageUserIdTo] =useState()
     const [parents, setParents] = useState([])
 
     const loadList = () => {
@@ -56,13 +56,28 @@ function FavoritesParents({ listUpdateStamp }) {
             alert(error.message)
         }
     }
+    const handleMessage = parentUserId => {
+        setMessageUserIdTo(parentUserId)
+
+    }
+
+    const handleCloseMessage = () => {
+        setMessageUserIdTo()
+    }
+
+    const handleSendMessage = () => {
+        setMessageUserIdTo()
+
+        loadList()
+    }
 
 
 
     return <Container TagName="ul" className="gap-4 py-10 mb-10 ">
         {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#6b7280]" key={parent.id} id={parent.id} >
         <div className="flex flex-row justify-end">
-            <Link to={'/chat'}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></Link>
+        {parent.chatId? <Link to={`/chat/${parent.chatId}`}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
+            
             <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
 
                 parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
@@ -70,6 +85,8 @@ function FavoritesParents({ listUpdateStamp }) {
                     <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
             
             </div>
+
+
             <div className='w-20 h-20'>
                 <img className="sm:" src=
                     {parent.photo} />
@@ -81,6 +98,8 @@ function FavoritesParents({ listUpdateStamp }) {
             <ul className='text-[#fb923c]'>Kids : {parent.kids.map(kid => <li className='text-black list-disc ml-2' key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)}</li>)}</ul>
         </li>
         )}
+        
+         {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo}/>}
 
     </Container>
 

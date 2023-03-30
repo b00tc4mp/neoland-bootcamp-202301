@@ -17,7 +17,7 @@ import ProfileParent from '../components/ProfileParent'
 import UpdateUserEmail from '../components/UpdateUserEmail'
 import UpdateUserPassword from '../components/UpdateUserPassword'
 import Chats from '../components/Chats'
-// import Chat from '../components/Chat'
+import Chat from '../components/Chat'
 
 
 
@@ -113,7 +113,7 @@ function Home() {
           <Route path="/password" element={<UpdateUserPassword listUpdateStamp={listUpdateStamp} />} />
           <Route path="/search/parents" element={<SearchParents listUpdateStamp={listUpdateStamp} />} />
           <Route path="/chats" element={<Chats listUpdateStamp={listUpdateStamp}/>} />
-          {/* <Route path="/chat/" element={<Chat listUpdateStamp={listUpdateStamp}/>} /> */}
+          <Route path="/chat/:chatId" element={<Chat listUpdateStamp={listUpdateStamp}/>} />
         </Routes>
 
 
@@ -168,6 +168,7 @@ function Home() {
           <Route path="/email" element={<UpdateUserEmail listUpdateStamp={listUpdateStamp} />} />
           <Route path="/password" element={<UpdateUserPassword listUpdateStamp={listUpdateStamp} />} />
           <Route path="/chats" element={<Chats listUpdateStamp={listUpdateStamp}/>} />
+          <Route path="/chat/:chatId" element={<Chat listUpdateStamp={listUpdateStamp}/>} />
         </Routes>
 
       </main>
@@ -178,7 +179,7 @@ function Home() {
           <Link to="/search/nannies" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#d6d3d1]" /></Link>
 
           <Link to="/nannies/favs" className="m-3" ><StarIcon className="h-8 w-8 text-[#d6d3d1]" /></Link>
-          <Link to="/chat" className=" m-3"><ChatBubbleLeftRightIcon className='h-8 w-8 text-[#d6d3d1]' /></Link>
+          <Link to="/chats" className=" m-3"><ChatBubbleLeftRightIcon className='h-8 w-8 text-[#d6d3d1]' /></Link>
           <button onClick={handleClick} className='mx-3 text-center'>
             {showNav ? <UserCircleIcon className="h-8 w-8 text-[#d6d3d1]" /> : <Bars3Icon className='h-8 w-8 text-[#d6d3d1]' />}
           </button>

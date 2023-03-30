@@ -40,7 +40,7 @@ function chat(token,userIdTo, message,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('POST',`http://localhost:8080/chats/${userIdTo}`)
+    xhr.open('POST',`http://localhost:8080/chats/users/${userIdTo}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

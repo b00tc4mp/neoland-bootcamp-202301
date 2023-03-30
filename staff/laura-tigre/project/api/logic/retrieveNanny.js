@@ -1,5 +1,5 @@
 const { validateUserId, validateUserNannyId, ExistenceError, CoherenceError } = require('com')
-const { User, Nanny ,Parent} = require('../data/models')
+const { User, Nanny ,Parent,Chat} = require('../data/models')
 /**
  *retrieve nanny user if the user is the nanny or the user is a parent
  * 
@@ -23,16 +23,16 @@ function retrieveNanny(userId, nannyId) {
             let promise
 
             if (nannyId && user.role === 'parent')
-                promise = Promise.all([Nanny.findById(nannyId).populate('user', '-__v').select('-__v').lean(),Parent.findOne({ user: userId }).lean()])
+                promise = Promise.all([Nanny.findById(nannyId).populate('user', '-__v').select('-__v').lean(),Parent.findOne({ user: userId }).lean(), Chat.find({ users: userId }).lean()])
             else
                 promise = Nanny.findOne({ user: userId }).populate('user', '-__v').select('-__v').lean()
 
             return promise
                 .then((returnedPromise) => {
-                    let nanny, parent
+                    let nanny, parent, chats
                     
                     if (nannyId && user.role === 'parent'){
-                        [nanny, parent] = returnedPromise
+                        [nanny, parent, chats] = returnedPromise
                     }
                     else{
                         nanny = returnedPromise
@@ -42,7 +42,7 @@ function retrieveNanny(userId, nannyId) {
                     if (user.role === 'nanny' && nanny.user._id.toString() !== userId) throw new CoherenceError(`user id ${userId} with role nanny is not related to nanny with id ${nannyId}`)
 
                     // sanitize
-                    
+                 
                     nanny.id = nanny._id.toString()
                     nanny.user.id = nanny.user._id.toString()
                     nanny.availabilities.forEach(availability => {
@@ -52,10 +52,15 @@ function retrieveNanny(userId, nannyId) {
 
                     delete nanny._id
                     delete nanny.user._id
+                    
+                    // const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(nanny.user.id))
+                    // if(chat){
+                    //    nanny.chatId = chat._id.toString() 
+                    // }
 
-                     if (user.role === 'parent')
-                        nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
-
+                    //  if (user.role === 'parent')
+                    //     nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
+                    
                     return nanny
                 })
         })

@@ -22,6 +22,14 @@ function chat(userIdFrom, userIdTo, message) {
             const newMessage = new Message({ user: userIdFrom, message })
 
             chat.messages.push(newMessage)
+           
+            userFrom.id= userFrom._id.toString()
+            delete userFrom._id
+
+            userTo.id= userTo._id.toString()
+            delete userTo._id
+            
+            
 
             return chat.save()
         })
