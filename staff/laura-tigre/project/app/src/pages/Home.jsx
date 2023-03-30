@@ -100,13 +100,13 @@ function Home() {
         <img src="images/kangaroo.png" alt="kangaroo" className="w-14 h-14 bg-[#fb923c] rounded-full p-1 m-2" />
       </Link>
       <h1 className='flex flex-col justify-center text-[#fb923c]' >NANNY KANGAROO</h1>
-      <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3  text-white ">LOGOUT</button>
+      <button onClick={handleLogout} className="bg-[#fb923c] h-7 w-20 m-3  text-white rounded-md ">LOGOUT</button>
     </header>
       <main className='mt-20'>
         <Routes>
 
           <Route path="/" element={<ParentsList listUpdateStamp={listUpdateStamp} onToggleFavParent={handleToggleFavParent} />} />
-          <Route path="/parents/:parentId" element={< Parent />} />
+          <Route path="/parents/:parentId" element={<Parent />} />
           <Route path="/profile" element={<ProfileNanny />} />
           <Route path="/parents/favs" element={<FavoritesParents listUpdateStamp={listUpdateStamp} />} />
           <Route path="/email" element={<UpdateUserEmail listUpdateStamp={listUpdateStamp} />} />
@@ -127,10 +127,10 @@ function Home() {
           <Link to="/search/parents" className="m-3" ><MagnifyingGlassIcon className="h-8 w-8 text-[#d6d3d1]" /></Link>
 
           <Link to="/parents/favs" className=" m-3"><StarIcon className="h-8 w-8 text-[#d6d3d1]" /></Link>
+          <Link to="/chats" className=" m-3"><ChatBubbleLeftRightIcon className='h-8 w-8 text-[#d6d3d1]' /></Link>
           <button onClick={handleClick} className='mx-3 text-center'>
             {showNav ? <UserCircleIcon className="h-8 w-8 text-[#d6d3d1]" /> : <Bars3Icon className='h-8 w-8 text-[#d6d3d1]' />}
           </button>
-          <Link to="/chats" className=" m-3"><ChatBubbleLeftRightIcon className='h-8 w-8 text-[#d6d3d1]' /></Link>
           <>
             {showNav && <div onClick={handleClick} className="w-full h-full fixed">
               <ul className='flex flex-col   items-center bg-[#fb923c] fixed top-24 text-[#d6d3d1] text-xl mt-2 py-4  w-52 gap-y-8 rounded right-0'>

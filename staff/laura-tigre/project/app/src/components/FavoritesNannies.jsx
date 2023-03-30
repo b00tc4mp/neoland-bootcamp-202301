@@ -80,9 +80,9 @@ function FavoritesNannies({ listUpdateStamp }) {
         {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={nanny.id} id={nanny.id} >
         <div className="flex flex-row justify-end">
            {nanny.chat ? <Link to={`/chat/${nanny.chat}`}>
-           <ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" />
+           <ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" />
            </Link> :
-                <button onClick={()=>handleMessage(nanny.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
+                <button onClick={()=>handleMessage(nanny.user.id)}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
 
                 <button className="flex flex-row" id={nanny.id} onClick={handleToggleFavNanny}>{
 
@@ -91,7 +91,7 @@ function FavoritesNannies({ listUpdateStamp }) {
                         <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
             </div>
                 <div>
-                    <img className='w-20 h-20' src=
+                    <img className='w-20 h-20 rounded-lg' src=
                         {nanny.photo} />
                 </div>
 

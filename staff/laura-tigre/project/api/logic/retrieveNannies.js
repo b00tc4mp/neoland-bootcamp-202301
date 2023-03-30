@@ -35,7 +35,7 @@ function retrieveNannies(userId) {
                                         }
                                         const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(nanny.user.id))
                                         if(chat){
-                                           nanny.chatId = chat._id.toString() 
+                                           nanny.chat = chat._id.toString() 
                                         }
                                         nanny.availabilities.forEach(availability => {
                                             availability.id = availability._id.toString()

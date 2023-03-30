@@ -22,9 +22,9 @@ const { validateUserId, validateMondayMorningSelected,
     validatePriceFrom,
     validatePriceTo,
     validateYearsOfExperienceFrom,
-    validateYearsOfExperienceTo, CoherenceError,ExistenceError,
+    validateYearsOfExperienceTo, CoherenceError, ExistenceError,
 } = require('com')
-const { User, Nanny, Parent } = require('../data/models')
+const { User, Nanny, Parent, Chat } = require('../data/models')
 
 /**
  *search nannies with a specific dates
@@ -65,7 +65,7 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
     if (yearsOfExperienceFrom !== undefined) validateYearsOfExperienceFrom(yearsOfExperienceFrom)
     if (yearsOfExperienceTo !== undefined) validateYearsOfExperienceTo(yearsOfExperienceTo)
 
-    return Promise.all([User.findById(userId).lean(), Parent.findOne({user:userId}).lean()]) 
+    return Promise.all([User.findById(userId).lean(), Parent.findOne({ user: userId }).lean()])
         .then(([user, parent]) => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
@@ -161,31 +161,38 @@ function searchNannies(userId, mondayMorningSelected, mondayAfternoonSelected, m
                 filter.experience = { $gte: yearsOfExperienceFrom, $lte: yearsOfExperienceTo }
 
             return Nanny.find(filter).populate('user', '-password -__v').select('-__v').lean()
-            
-            .then(nannies => {
-                (fav => fav.toString())
-                nannies.forEach(nanny => {
-                    
-                    if (nanny._id) {
-                        nanny.id = nanny._id.toString()
-                        delete nanny._id
-                        delete nanny.__v
-                    }
-                    if (nanny.user._id) {
-                        nanny.user.id = nanny.user._id.toString()
-                        delete nanny.user._id
-                    }
-                    nanny.availabilities.forEach(availability => {
-                        availability.id = availability._id.toString()
-                        delete availability._id
-                    })
-                
-                    if (user.role === 'parent')
-                    nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
+
+                .then(nannies => {
+                    return Chat.find({ users: userId }).lean()
+                        .then(chats => {
+                            (fav => fav.toString())
+                            nannies.forEach(nanny => {
+
+                                if (nanny._id) {
+                                    nanny.id = nanny._id.toString()
+                                    delete nanny._id
+                                    delete nanny.__v
+                                }
+                                if (nanny.user._id) {
+                                    nanny.user.id = nanny.user._id.toString()
+                                    delete nanny.user._id
+                                }
+                                const chat = chats.find(chat => chat.users.map(userId => userId.toString()).includes(nanny.user.id))
+                                if (chat) {
+                                    nanny.chat = chat._id.toString()
+                                }
+                                nanny.availabilities.forEach(availability => {
+                                    availability.id = availability._id.toString()
+                                    delete availability._id
+                                })
+
+                                if (user.role === 'parent'){
+                                    nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
+                                }
+                            })
+                            return nannies
+                        })
                 })
-                    
-                return nannies
-            })
 
 
         })

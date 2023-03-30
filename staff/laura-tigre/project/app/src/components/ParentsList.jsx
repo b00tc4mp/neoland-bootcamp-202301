@@ -72,7 +72,7 @@ function ParentsList({ listUpdateStamp }) {
 
         {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1]" key={parent.id} id={parent.id}>
             <div className="flex flex-row justify-end">
-            {parent.chatId? <Link to={`/chat/${parent.chatId}`}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
+            {parent.chat? <Link to={`/chat/${parent.chat}`}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
             <button className="flex flex-row justify-end" id={parent.id} onClick={handleToggleFavParent}>{
 
                 parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
@@ -81,7 +81,7 @@ function ParentsList({ listUpdateStamp }) {
             
             </div>
             <div className='w-20 h-20'>
-                <img className="sm:" src=
+                <img className="sm: rounded-lg" src=
                     {parent.photo} />
             </div>
             <div>

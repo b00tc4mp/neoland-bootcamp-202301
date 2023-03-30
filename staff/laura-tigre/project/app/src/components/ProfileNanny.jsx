@@ -10,6 +10,7 @@ import Button from '../library/Button'
 import Container from '../library/Container'
 import Feedback from './Feedback'
 import updatePhotoNanny from "../logic/update-photo-nanny"
+import updatePrice from "../logic/update-nanny-price"
 
 
 
@@ -106,6 +107,7 @@ function ProfileUserNanny({  listUpdateStamp }) {
           }
 
           event.target.reset()
+          loadList()
           setFeedback({
             message: 'availability updated successfully',
             level: 'success'
@@ -140,6 +142,34 @@ function ProfileUserNanny({  listUpdateStamp }) {
         loadList()
         setFeedback({
           message: 'experience updated successfully',
+          level: 'success'
+        })
+      })
+    } catch (error) {
+      setFeedback({
+        message: error.message,
+        level: 'error'
+      })
+    }
+
+  }
+  const handleSubmitPrice = (event) => {
+    event.preventDefault()
+    const newPrice = parseInt(event.target.newPrice.value)
+    try {
+      updatePrice(sessionStorage.token, newPrice, error => {
+        if (error) {
+          setFeedback({
+            message: error.message,
+            level: 'error'
+          })
+          return
+        }
+
+        event.target.reset()
+        loadList()
+        setFeedback({
+          message: 'price updated successfully',
           level: 'success'
         })
       })
@@ -235,11 +265,11 @@ function ProfileUserNanny({  listUpdateStamp }) {
 
 
   return <Container className="sm: items-center justify-center h-full w-full mb-20">
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+    <div className="border-t-2  border-[#fb923c] text-center p-4 w-80">
       <Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: gap-4 p-3 rounded-lg">
 
         <legend>{nanny?.user?.name}</legend>
-        <img src={nanny?.photo} />
+        <img className="rounded-lg" src={nanny?.photo} />
         <input
           className="sm: bg-transparent border-[#fb923c] mb-2"
           type="text"
@@ -249,10 +279,11 @@ function ProfileUserNanny({  listUpdateStamp }) {
         <Button type="submit">New photo</Button>
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] ">
+    <div className="border-t-2  border-[#fb923c]  p-4 w-80">
       <Container TagName="form" className='sm:items-center justify-center p-5' onSubmit={handleSubmitAvailability}>
 
         <legend>Availability</legend>
+        <ul className='pt-1 text-[#fb923c]'>{nanny?.availabilities?.map(availabity => <li className='text-black list-disc ml-2' key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
         <table className='sm:text-center table table-fixed p-2 m-5'>
           <thead >
             <tr className='sm:text-center my-2'>
@@ -319,7 +350,7 @@ function ProfileUserNanny({  listUpdateStamp }) {
 
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 ">
+    <div className="border-t-2  border-[#fb923c] p-4 w-80 ">
       <Container TagName="form" onSubmit={handleSubmitExperience} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
 
         <legend >Experience</legend>
@@ -334,7 +365,22 @@ function ProfileUserNanny({  listUpdateStamp }) {
 
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center w-80">
+    <div className="border-t-2  border-[#fb923c] p-4 w-80">
+      <Container TagName="form" onSubmit={handleSubmitPrice} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
+
+        <legend >Price</legend>
+        <p>{nanny?.price} € </p>
+        <input
+          className="sm:bg-transparent pb-2 "
+          type="number"
+          name="newPrice"
+          placeholder=" new price" />
+
+        <Button type='submit'> New Price</Button>
+
+      </Container>
+    </div>
+    <div className="border-t-2  border-[#fb923c] p-4 text-center w-80">
       <Container TagName="form" onSubmit={handleSubmitDescription} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
         <legend >Description</legend>
         <p>{nanny?.description}</p>
@@ -347,7 +393,7 @@ function ProfileUserNanny({  listUpdateStamp }) {
         <Button type="submit">New description</Button>
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+    <div className="border-t-2  border-[#fb923c] p-4 w-80 text-center">
       <Container TagName="form" onSubmit={handleSubmitExtras} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
         <legend >Extras</legend>
         <p>{nanny?.extras}</p>
@@ -360,7 +406,7 @@ function ProfileUserNanny({  listUpdateStamp }) {
         <Button type="submit">New extras</Button>
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+    <div className="border-t-2  border-[#fb923c] p-4 w-80 text-center">
       <Container TagName="form" onSubmit={handleSubmitUnregister} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
         <legend>Unregister User</legend>
 

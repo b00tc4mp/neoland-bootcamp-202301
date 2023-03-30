@@ -49,22 +49,22 @@ function retrieveFavParents(userId) {
 
                 return _parent
             })
-            const nannyFavs = parents.map(parent => parent.user.id)
+            const parentIds = parents.map(parent => parent.user.id)
              return Chat.find({
                 $and:[
                     {users : userId},
-                    {users : {$in : nannyFavs}}
+                    {users : {$in : parentIds}}
                 ]
              }).lean()
 
              .then(chats => {
-                parents.forEach(parent =>{
-                    const chat= chats.find(chat => chat.users.map(userId => userId.toString().includes(parent.user.id)))
-                    if(chat){
-                        parent.chatId = chat._id.toString()
-                    }
+               chats.forEach(chat => {
+                const parentUserId = chat.users.find(_userId => _userId.toString() !== userId)
 
-                })
+                const parent = parents.find(parent => parent.user.id === parentUserId.toString())
+
+                parent.chat = chat._id.toString()
+               })
                 return parents
             })
         })

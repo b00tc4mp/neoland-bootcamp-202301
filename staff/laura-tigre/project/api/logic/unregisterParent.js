@@ -1,5 +1,5 @@
 const { validateUserId, validatePassword,ExistenceError, AuthError } = require('com')
-const { User,Parent } = require('../data/models')
+const { User,Parent, Chat } = require('../data/models')
 const {Types: {ObjectId}}= require('mongoose')
 /**
 * Delete an user and his role
@@ -18,6 +18,9 @@ function unregisterParent(userId, password) {
         if (user.password!== password) throw new AuthError('wrong credentials')
 
         return Parent.deleteOne({'user': userId})
+        .then(()=>{
+            return Chat.deleteMany({users:userId})
+        })
 
         .then(() => {return User.deleteOne({ _id: new ObjectId(userId) })})
     

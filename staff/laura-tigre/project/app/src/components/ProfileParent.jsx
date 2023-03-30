@@ -107,8 +107,8 @@ function ProfileParent({ listUpdateStamp }) {
             })
             return
           }
-
-          // event.target.reset()
+          loadList()
+          event.target.reset()
           setFeedback({
             message: 'availability updated successfully',
             level: 'success'
@@ -270,11 +270,11 @@ function ProfileParent({ listUpdateStamp }) {
 
 
   return <Container className="sm: items-center justify-center h-full w-full mb-20">
-    <div className="border-t-2  border-[#fb923c] p-16">
+    <div className="border-t-2  border-[#fb923c] p-4  w-80">
       <Container TagName="form" onSubmit={handleSubmitPhoto} className="sm: w-280 gap-4 p-3 rounded-lg">
 
         <legend>{parent?.user?.name}</legend>
-        <img src={parent?.photo} />
+        <img src={parent?.photo} className="rounded-lg" />
         <input
           className="sm: bg-transparent border-[#fb923c] mb-2 text-center"
           type="text"
@@ -285,10 +285,11 @@ function ProfileParent({ listUpdateStamp }) {
       </Container>
     </div>
 
-    <div className="border-t-2  border-[#fb923c] ">
+    <div className="border-t-2  border-[#fb923c] p-4 w-80">
       <Container TagName="form" className='sm: ' onSubmit={handleSubmitAvailability}>
 
         <legend>Availability</legend>
+        <ul className='text-[#fb923c]'> {parent?.availabilities?.map(availabity => <li className='text-black list-disc ml-2' key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
         <table className='sm: table table-fixed m-5'>
           <thead>
             <tr className='sm: text-center space-x-1'>
@@ -356,8 +357,8 @@ function ProfileParent({ listUpdateStamp }) {
       </Container>
     </div>
 
-    <div className="border-t-2  border-[#fb923c] mt-4 p-20">
-      <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: gap-4 p-3 rounded-lg w-full">
+    <div className="border-t-2  border-[#fb923c] mt-4 p-4 w-80">
+      <Container TagName="form" onSubmit={handleSubmitExtras} className="sm: gap-4 p-3 rounded-lg">
 
         <legend >Extras</legend>
         <p>{parent?.extras}</p>
@@ -371,7 +372,7 @@ function ProfileParent({ listUpdateStamp }) {
 
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+    <div className="border-t-2  border-[#fb923c] p-4 pt-4 text-center  w-80">
       <legend >Kids</legend>
       <ul>{parent?.kids?.map(kid => <li key={kid.id}>{kid.name}, {kid.dateOfBirth.slice(0, 10)} <button onClick={() => handleDeleteKid(kid.id)} ><ArchiveBoxXMarkIcon className="h-5 w-5 text-[#fb923c]" /></button></li>)}</ul>
       <Container TagName="form" onSubmit={handleSubmitKidsCreate} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg w-full">
@@ -391,8 +392,8 @@ function ProfileParent({ listUpdateStamp }) {
 
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center w-80">
-      <Container TagName="form" onSubmit={handleSubmitDescription} className="sm:flex-col items-center justify-center gap-4 p-3 rounded-lg ">
+    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center  w-80">
+      <Container TagName="form" onSubmit={handleSubmitDescription} className="sm:flex-col items-center justify-center gap-4 rounded-lg ">
 
         <legend >Description</legend>
         <p>{parent?.description}</p>
@@ -406,7 +407,7 @@ function ProfileParent({ listUpdateStamp }) {
 
       </Container>
     </div>
-    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center">
+    <div className="border-t-2  border-[#fb923c] p-20 pt-4 text-center  w-80">
       <Container TagName="form" onSubmit={handleSubmitUnregister} className="flex flex-col items-center justify-center gap-4 p-3 rounded-lg">
 
         <legend>Unregister User</legend>
@@ -414,7 +415,7 @@ function ProfileParent({ listUpdateStamp }) {
         <input
           className="bg-transparent pb-2 text-center"
           type="password"
-          name="unregister"
+          name="password"
           placeholder=" your password" />
         <Button type="submit">Unregister user</Button>
 

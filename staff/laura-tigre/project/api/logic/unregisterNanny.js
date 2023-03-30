@@ -1,5 +1,5 @@
 const { validateUserId, validatePassword,ExistenceError, AuthError } = require('com')
-const { User,Nanny } = require('../data/models')
+const { User,Nanny,Chat } = require('../data/models')
 const {Types: {ObjectId}}= require('mongoose')
 
 /**
@@ -19,7 +19,11 @@ function unregisterNanny(userId, password) {
 
         return Nanny.deleteOne({'user': userId})
 
+        .then(()=>{
+            return Chat.deleteMany({users:userId})
+        })
         .then(() => {return User.deleteOne({ _id: new ObjectId(userId) })}) 
+       
     })
 }
 

@@ -4,7 +4,7 @@ import Container from '../library/Container'
 import retrieveChats from '../logic/retrieve-chats'
 import extractUserId from "../utils/extractUserId"
 import { Link } from 'react-router-dom'
-import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
+import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 
 function Chats() {
 
@@ -40,7 +40,7 @@ function Chats() {
                 <p>{currentChat.users.find(user => user.id !== userId).name}</p>
 
                 <Link to={`/chat/${currentChat.id}`}>
-                    <ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" />
+                    <ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" />
                 </Link>
             </li>)}
         </Container>

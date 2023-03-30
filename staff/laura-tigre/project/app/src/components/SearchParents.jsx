@@ -3,10 +3,11 @@ import Context from '../Context'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import searchParents from '../logic/search-parents'
+import toggleFavParent from '../logic/toogle-fav-parent'
 import { Link } from 'react-router-dom'
-import { StarIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
+import { StarIcon, ChatBubbleLeftRightIcon,ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
-
+import Message from './Message'
 
 
 function SearchParents({ listUpdateStamp }) {
@@ -14,6 +15,7 @@ function SearchParents({ listUpdateStamp }) {
 
     const [parents, setParents] = useState([])
     const { alert } = useContext(Context)
+    const [messageUserIdTo, setMessageUserIdTo] = useState()
 
 
     const handleSubmit = (event) => {
@@ -59,24 +61,52 @@ function SearchParents({ listUpdateStamp }) {
     useEffect(() => {
 
     }, [listUpdateStamp])
+
+
     const handleToggleFavParent = (parentId) => {
-        setParents(parents => {
-            const index = parents.findIndex(parent => parent.id === parentId)
-            const parent = parents[index]
-            const parentUpdated = { ...parent }
+        try {
+            toggleFavParent(sessionStorage.token, parentId, error => {
+                if (error) {
+                    alert(error.message)
 
-            parentUpdated.fav = !parentUpdated.fav
+                    return
+                }
 
-            const parentsUpdated = [...parents]
+                
+                setParents(parents => {
+                    const index = parents.findIndex(parent => parent.id === parentId)
+                    const parent = parents[index]
+                    const parentUpdated = { ...parent }
+        
+                    parentUpdated.fav = !parentUpdated.fav
+        
+                    const parentsUpdated = [...parents]
+        
+                    parentsUpdated[index] = parentUpdated
+        
+                    return parentsUpdated
+                })
 
-            parentsUpdated[index] = parentUpdated
 
-            return parentsUpdated
-        })
+            })
+        } catch (error) {
+            alert(error.message)
+        }
 
 
     }
-
+    const handleMessage= parentUserId=> {
+    
+        setMessageUserIdTo(parentUserId)
+        }
+        const handleCloseMessage = () => {
+            setMessageUserIdTo()
+        }
+    
+        const handleSendMessage = () => {
+            setMessageUserIdTo()
+           
+        }
 
 
 
@@ -172,15 +202,14 @@ function SearchParents({ listUpdateStamp }) {
 
             {parents.map(parent => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={parent.id} id={parent.id}>
                 <div className="flex flex-row justify-end">
-                    <Link to={'/chat'}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1"/></Link>
-
+                {parent.chat? <Link to={`/chat/${parent.chat}`}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
                     <button className="flex flex-row justify-end" id={parent.id} onClick={() => handleToggleFavParent(parent.id)}>{
                         parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
                         :
                         <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
 
                 </div>
-                        <img className="sm:w-20 h-20" src=
+                        <img className="sm:w-20 h-20 rounded-lg" src=
                             {parent.photo} />
 
                 <Link to={`/parents/${parent.id}`}><strong className="w-[28ch] text-left">{parent.user.name}</strong>
@@ -193,6 +222,7 @@ function SearchParents({ listUpdateStamp }) {
                 <ul className='text-[#fb923c]'>Availability : {parent.availabilities.map(availabity => <li className='text-black list-disc ml-2' key={availabity.id}>{availabity.day}, {availabity.times}</li>)}</ul>
             </li>
             )}
+            {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo}/>}
 
         </Container>
 

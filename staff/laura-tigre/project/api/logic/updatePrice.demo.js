@@ -1,10 +1,13 @@
 const { connect, disconnect } = require('mongoose')
-const retrieveNanny = require('./retrieveNanny')
+const updatePrice = require('./updatePrice')
+
 
 
 connect('mongodb://127.0.0.1:27017/kangaroo')
     .then(() => {
-        return retrieveNanny('641ae08f39ec536dfed3549a')
+        
+
+        return updatePrice('6425b3f3ebf9861379006371',15)
     })
     .then(result => console.log(result))
     .catch(error => console.error(error))

@@ -86,6 +86,7 @@ const validateUserIdFrom = require('./validators/validateUserIdFrom')
 const validateUserIdTo = require('./validators/validateUserIdTo')
 const validateDate = require('./validators/validateDate')
 const validateChatId = require('./validators/validateChatId')
+const validateNewPrice = require('./validators/validateNewPrice')
 
 
 
@@ -189,6 +190,7 @@ module.exports = {
     validateUserIdTo,
     validateDate,
     validateChatId,
+    validateNewPrice,
 
     AuthError,
     CoherenceError,

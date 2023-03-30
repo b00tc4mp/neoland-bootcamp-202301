@@ -4,8 +4,9 @@ import retrieveParent from '../logic/retrieve-parent'
 import toggleFavParent from '../logic/toogle-fav-parent'
 import Container from '../library/Container'
 import { Link } from 'react-router-dom'
-import { StarIcon,ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
+import { StarIcon,ChatBubbleLeftRightIcon,ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
+import Message from './Message'
 
 
 function ParentProfile() {
@@ -13,7 +14,7 @@ function ParentProfile() {
 
     const [parent, setParent] = useState()
     const { parentId } = useParams()
-
+    const [messageUserIdTo, setMessageUserIdTo] = useState()
     const loadList = () => {
 
         try {
@@ -53,12 +54,24 @@ function ParentProfile() {
             alert(error.message)
         }
     }
+    const handleMessage= parentUserId=> {
+    
+        setMessageUserIdTo(parentUserId)
+        }
+        const handleCloseMessage = () => {
+            setMessageUserIdTo()
+        }
+    
+        const handleSendMessage = () => {
+            setMessageUserIdTo()
+            loadList()
+        }
 
 
     return <Container>
         {parent && <div className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] mb-20" key={parent.id} id={parent.id} >
             <div className="flex flex-row justify-end">
-            <Link to={'/chat'}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></Link>
+            {parent.chat? <Link to={`/chat/${parent.chat}`}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /> </Link> : <button onClick={()=>handleMessage(parent.user.id)}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
                 <button id={parent.id} onClick={handleToggleFavParent}>{
 
                     parent.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
@@ -67,7 +80,7 @@ function ParentProfile() {
 
             </div>
             <div>
-                <img className="sm:" src=
+                <img className="sm: rounded-lg" src=
                     {parent.photo} />
             </div>
 
@@ -79,7 +92,7 @@ function ParentProfile() {
             <p className='text-[#fb923c]'>Extras: <span className='text-black'>{parent.extras}</span></p>
     
         </div>}
-
+        {messageUserIdTo && <Message onSendMessage={handleSendMessage} onCloseMessage={handleCloseMessage} userIdTo={messageUserIdTo} />}
 
     </Container>
 }

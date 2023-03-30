@@ -1,5 +1,5 @@
 const { validateUserId, validateUserParentId, ExistenceError, CoherenceError } = require('com')
-const { User, Parent, Nanny } = require('../data/models')
+const { User, Parent, Nanny, Chat } = require('../data/models')
 /**
  *retrieve parent user if the user is the parent or the user is a parent
  * 
@@ -17,17 +17,21 @@ function retrieveParent(userId, parentId) {
     
     let promise
     if(parentId && user.role === 'nanny')
-    promise=Promise.all([Parent.findById(parentId).populate('user', '-__v').select('-__v').lean(),Nanny.findOne({user: userId}).lean()]) 
+    promise=Promise.all([Parent.findById(parentId).populate('user', '-__v').select('-__v').lean(),Nanny.findOne({user: userId}).lean(),Chat.find({ users: userId }).lean()]) 
     else
     promise = Parent.findOne({user: userId}).populate('user', '-__v').select('-__v').lean()
 
     return promise
-    .then((returnedPromise)=> {
-        let parent, nanny
+    .then((results)=> {
+        let parent, nanny, chats
         if(parentId && user.role === 'nanny'){
-            [parent,nanny] = returnedPromise
+            [parent,nanny, chats] = results
+            const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(parent.user._id.toString()))
+            if(chat){
+               parent.chat = chat._id.toString() 
+            }
         }else{
-            parent=returnedPromise
+            parent=results
         }
         if(!parent) throw new ExistenceError(`parent with id ${parentId} not found`)
         

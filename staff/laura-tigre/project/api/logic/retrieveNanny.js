@@ -17,9 +17,6 @@ function retrieveNanny(userId, nannyId) {
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            
-            // if (!parent) throw new ExistenceError(`parent for user id ${userId} not found`)
-
             let promise
 
             if (nannyId && user.role === 'parent')
@@ -28,14 +25,18 @@ function retrieveNanny(userId, nannyId) {
                 promise = Nanny.findOne({ user: userId }).populate('user', '-__v').select('-__v').lean()
 
             return promise
-                .then((returnedPromise) => {
+                .then((results) => {
                     let nanny, parent, chats
                     
                     if (nannyId && user.role === 'parent'){
-                        [nanny, parent, chats] = returnedPromise
+                        [nanny, parent, chats] = results
+                        const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(nanny.user._id.toString()))
+                        if(chat){
+                           nanny.chat = chat._id.toString() 
+                        }
                     }
                     else{
-                        nanny = returnedPromise
+                        nanny = results
                     }
                     if (!nanny) throw new ExistenceError(`nanny with id ${nannyId} not found`)
 
@@ -53,13 +54,9 @@ function retrieveNanny(userId, nannyId) {
                     delete nanny._id
                     delete nanny.user._id
                     
-                    // const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(nanny.user.id))
-                    // if(chat){
-                    //    nanny.chatId = chat._id.toString() 
-                    // }
 
-                    //  if (user.role === 'parent')
-                    //     nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
+                     if (user.role === 'parent')
+                        nanny.fav = parent.favs.some(fav => fav.toString() === nanny.id)
                     
                     return nanny
                 })

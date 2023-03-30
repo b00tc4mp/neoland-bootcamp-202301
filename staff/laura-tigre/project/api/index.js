@@ -39,6 +39,7 @@ const updatePhotoParent = require('./logic/updatePhotoParent')
 const chat = require('./logic/chat')
 const retrieveChat = require('./logic/retrieveChat')
 const retrieveChats = require('./logic/retrieveChats')
+const updatePrice = require('./logic/updatePrice')
 
 
 
@@ -334,6 +335,36 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
                 newExperience= Number(newExperience)
  
                 updateExperience(userId,newExperience)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        if (error instanceof AuthError) res.status(401)
+                        else if (error instanceof ExistenceError) res.status(404)
+                        else res.status(500)
+
+                        res.json({ error: error.message })
+                    })
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof RangeError || error instanceof CoherenceError || error instanceof FormatError) res.status(400)
+                else
+                    res.status(500)
+
+                res.json({ error: error.message })
+            }
+
+        })
+        server.patch('/nannies/price', jsonBodyParser, (req, res) => {
+            try {
+
+                const userId = verifyToken(req)
+
+                const credentials = req.body
+
+                let { newPrice } = credentials
+                newPrice= Number(newPrice)
+ 
+                updatePrice(userId,newPrice)
                     .then(() => res.status(204).send())
                     .catch(error => {
                         if (error instanceof AuthError) res.status(401)

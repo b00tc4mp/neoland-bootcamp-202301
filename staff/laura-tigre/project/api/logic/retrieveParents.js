@@ -35,7 +35,7 @@ function retrieveParents(userId) {
                                         }
                                         const chat = chats.find(chat => chat.users.map(userId=> userId.toString()).includes(parent.user.id))
                                         if(chat){
-                                           parent.chatId = chat._id.toString() 
+                                           parent.chat = chat._id.toString() 
                                         }
                                         parent.availabilities.forEach(availability => {
                                             availability.id = availability._id.toString()

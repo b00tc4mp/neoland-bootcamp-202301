@@ -3,6 +3,7 @@ import Context from '../Context'
 import Button from '../library/Button'
 import Container from '../library/Container'
 import searchNannies from '../logic/search-nannies'
+import toggleFavNanny from '../logic/toogle-fav-nanny'
 import { Link } from 'react-router-dom'
 import { StarIcon, ChatBubbleLeftRightIcon,ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
@@ -11,9 +12,9 @@ import Message from './Message'
 
 function SearchNannies({ listUpdateStamp }) {
 
-    const [messageUserIdTo, setMessageUserIdTo] = useState()
     const [nannies, setNannies] = useState([])
     const { alert } = useContext(Context)
+    const [messageUserIdTo, setMessageUserIdTo] = useState()
 
 
     const handleSubmit = (event) => {
@@ -64,19 +65,35 @@ function SearchNannies({ listUpdateStamp }) {
 
 
     const handleToggleFavNanny = (nannyId) => {
-        setNannies(nannies => {
-            const index = nannies.findIndex(nanny => nanny.id === nannyId)
-            const nanny = nannies[index]
-            const nannyUpdated = { ...nanny }
+        try {
+           
+            toggleFavNanny(sessionStorage.token, nannyId, error => {
+                if (error) {
+                    alert(error.message)
 
-            nannyUpdated.fav = !nannyUpdated.fav
+                    return
+                }
 
-            const nanniesUpdated = [...nannies]
+               
 
-            nanniesUpdated[index] = nannyUpdated
 
-            return nanniesUpdated
-        })
+                setNannies(nannies => {
+                    const index = nannies.findIndex(nanny => nanny.id === nannyId)
+                    const nanny = nannies[index]
+                    const nannyUpdated = { ...nanny }
+        
+                    nannyUpdated.fav = !nannyUpdated.fav
+        
+                    const nanniesUpdated = [...nannies]
+        
+                    nanniesUpdated[index] = nannyUpdated
+        
+                    return nanniesUpdated
+                })
+            })
+        } catch (error) {
+            alert(error.message)
+        }
 
     }
 
@@ -192,10 +209,10 @@ function SearchNannies({ listUpdateStamp }) {
 
             {nannies.map(nanny => <li className="w-[30ch] p-3 rounded-lg border-solid border-2 border-[#d6d3d1] list-none" key={nanny.id} id={nanny.id}>
                 <div className="flex flex-row justify-end">
-                    {nanny.chatId ? <Link to={`/chat/${nanny.chatId}`}>
-                        <ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" />
+                    {nanny.chat ? <Link to={`/chat/${nanny.chat}`}>
+                        <ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" />
                     </Link> :
-                        <button onClick={() => handleMessage(nanny.user.id)}><ChatBubbleLeftRightIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
+                        <button onClick={() => handleMessage(nanny.user.id)}><ChatBubbleBottomCenterTextIcon className="h-5 w-5 text-[#fb923c] mr-1" /></button>}
                     <button className="flex flex-row" id={nanny.id} onClick={() => handleToggleFavNanny(nanny.id)}>{
 
                         nanny.fav ? <StarIcon className="h-5 w-5 text-[#fb923c]" />
@@ -203,7 +220,7 @@ function SearchNannies({ listUpdateStamp }) {
                             <StarIconOutline className="h-5 w-5 text-[#fb923c]" />}</button>
                 </div>
                 <div>
-                    <img className='w-20 h-20' src=
+                    <img className='w-20 h-20 rounded-lg' src=
                         {nanny.photo} />
                 </div>
 
