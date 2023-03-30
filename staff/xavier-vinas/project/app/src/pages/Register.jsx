@@ -19,26 +19,20 @@ function Register() {
         const age = parseInt(event.target.age.value)
         const email = event.target.email.value
         const password = event.target.password.value
-        const name1 = event.target.name1.value
+        const cardName = event.target.cardName.value
         const number = parseInt(event.target.number.value)
         const cvv = event.target.cvv.value
         const expiration = event.target.expiration.value
 
 
+
         try {
-            registerUser(name, age, email, password, name1, number, cvv, expiration, error => {
-                if (error) {
-                    setFeedback({
-                        message: error.message,
-                        level: 'error'
-                    })
-
-                    return
-
-                }
-                navigate("/login")
-            })
-
+            registerUser(name, age, email, password, cardName, number, cvv, expiration) 
+                .then(() => navigate("/login"))
+                .catch(error => setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,
@@ -46,8 +40,27 @@ function Register() {
             })
         }
     }
+    //     try {
+    //         registerUser(name, age, email, password, name1, number, cvv, expiration, error => {
+    //             if (error) {
+    //                 setFeedback({
+    //                     message: error.message,
+    //                     level: 'error'
+    //                 })
 
+    //                 return
 
+    //             }
+    //             navigate("/login")
+    //         })
+
+    //     } catch (error) {
+    //         setFeedback({
+    //             message: error.message,
+    //             level: 'error'
+    //         })
+    //     }
+    // }
     return <Container TagName="main" className="sm: font-['Montserrat'] bg-slate-100 h-full mt-0">
         <Container className={"sm: "}>
 
@@ -71,9 +84,9 @@ function Register() {
                 <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " type="password" placeholder="pasword" id="password" />
 
 
-                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="name1">
+                <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="cardName">
                     Credit card name:</label>
-                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="name1" required />
+                <input className="sm: shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name1" name="cardName" required />
 
                 <label className="sm: block text-gray-700 font-bold mb-2" htmlFor="number">
                     Credit card number:</label>

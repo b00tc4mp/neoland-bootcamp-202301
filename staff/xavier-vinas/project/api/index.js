@@ -1,9 +1,10 @@
+require('dotenv').config()
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { connect, disconnect } = require('mongoose')
 const { sign } = require('jsonwebtoken');
-const JWT_SECRET = 'kepim kepam'
 const verifyToken = require('./utils/verifyToken')
 
 const registerUser = require('./logic/registerUser')
@@ -13,7 +14,7 @@ const unregisterUser = require('./logic/unregisterUser')
 const updateUserPassword = require('./logic/updateUserPassword')
 const updateUserEmail = require('./logic/updateUserEmail')
 
-const { FormatError, ExistenceError, AuthError, CoherenceError } = require('../../com');
+const { FormatError, ExistenceError, AuthError, CoherenceError } = require('com');
 
 const createAuction = require('./logic/createAuction');
 const retrieveAuctions = require('./logic/retrieveAuctions');
@@ -21,12 +22,13 @@ const retrieveAuction = require('./logic/retrieveAuction');
 const retrieveAuctionBids = require('./logic/retrieveAuctionBids');
 const bidAuction = require('./logic/bidAuction')
 const retrieveMyAuctions = require('./logic/retrieveMyAuctions')
+const { JWT_SECRET, MONGO_URL, PORT } = process.env
 
 
 
 
 
-connect('mongodb://127.0.0.1:27017/subastadb')
+connect(MONGO_URL) 
     .then(() => {
         const server = express()
         const jsonBodyParser = bodyParser.json()
@@ -365,8 +367,5 @@ connect('mongodb://127.0.0.1:27017/subastadb')
             }
         })
 
-
-
-
-        server.listen(8080, () => console.log('server running on port ' + 8080))
+        server.listen(8080, () => console.log(`server running on port ${PORT}`))
     })

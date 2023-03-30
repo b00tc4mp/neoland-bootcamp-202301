@@ -40,23 +40,36 @@ function Home() {
 
     useEffect(() => {
         try {
-            retrieveUser(sessionStorage.token, (error, user) => {
-                if (error) {
+            retrieveUser(sessionStorage.token)
+                .then(() => {
+                    setUser(user)
+
+                })
+                .catch(error => {
                     alert(error.message)
-
-                    return
-                }
-
-                setUser(user)
-            })
+                })
         } catch (error) {
             alert(error.message)
+
+
         }
+
+        // try {
+        //     retrieveUser(sessionStorage.token, (error, user) => {
+        //         if (error) {
+        //             alert(error.message)
+
+        //             return
+        //         }
+
+        //         setUser(user)
+        //     })
+        // } catch (error) {
+        //     alert(error.message)
+        // }
     }, [])
 
-    useEffect(() => {
-
-    })
+  
 
     return <div className="sm: bg-gray-200   font-['Montserrat']   " >
         <header className=" top-0 w-full justify-between flex p-2 shadow bg-gray-200 ">
@@ -69,7 +82,7 @@ function Home() {
                 <div onClick={handleClick} className="  w-full h-full fixed">
                     <ul className='flex flex-col   items-center bg-gray-400 fixed top-24 text-white text-xl mt-2 py-4  w-52 gap-y-8 rounded right-0'>
                         <Link to="/my-auctions" className="border-double border-4  border-blac inline-block rounded   px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-700 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-400 dark:hover:bg-opacity-10">my auctions</Link>
-                        <Link to="/profile" className="border-double border-4  border-blac inline-block rounded   px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-700 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-400 dark:hover:bg-opacity-10">{user.name}</Link>
+                        <Link to="/profile" className="border-double border-4  border-blac inline-block rounded   px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-700 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-400 dark:hover:bg-opacity-10">{ user.name }</Link>
                         <Button onClick={handleLogout} className="w-24 text-sm h-7 rounded-md sm: ">LOGOUT</Button>
                     </ul>
                 </div>
@@ -80,9 +93,9 @@ function Home() {
             <Routes>
                 <Route path="/" element={<List listUpdateStamp={listUpdateStamp} />} />
 
-                <Route path="/profile" element={<Profile user={user} onUnregisterUser={handleLogout}  />} />
+                <Route path="/profile" element={<Profile user={user} onUnregisterUser={handleLogout} />} />
 
-                <Route path="/my-auctions"  element={<MyAuction listUpdateStamp={listUpdateStamp} />} />
+                <Route path="/my-auctions" element={<MyAuction listUpdateStamp={listUpdateStamp} />} />
 
                 <Route path="/new-auction" element={<AuctionForm listUpdateStamp={listUpdateStamp} />} />
 

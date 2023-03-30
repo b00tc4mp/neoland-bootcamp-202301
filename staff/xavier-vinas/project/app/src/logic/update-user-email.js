@@ -1,4 +1,4 @@
-const { validateToken, validateNewEmail, validatePassword, validateCallback, ClientError, ServerError, ExistenceError, AuthError } = require('com')
+const { validateToken, validateNewEmail, validatePassword, ClientError, ServerError, ExistenceError, AuthError } = require('com')
 
 /**
  * Updates the user password
@@ -6,46 +6,104 @@ const { validateToken, validateNewEmail, validatePassword, validateCallback, Cli
  * @param {string} token The session token
  * @param {string} newEmail The user new email
  * @param {string} password The user password
- * @param {function} callback The function to call when the update is complete (or fails)
+ (or fails)
  */
-function updateUserEmail(token, newEmail, password, callback) {
+function updateUserEmail(token, newEmail, password) {
     validateToken(token)
     validateNewEmail(newEmail)
     validatePassword(password)
-    validateCallback(callback)
+    
+    return fetch(`${process.env.REACT_APP_API_URL}/users/email`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
 
-    const xhr = new XMLHttpRequest
+        body: JSON.stringify({ newEmail, password})
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 204) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 401) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new AuthError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 401)
-                callback(new AuthError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-    xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('PATCH', 'http://localhost:8080/users/email',)
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const payload = { newEmail, password }
-    const json = JSON.stringify(payload)
-    xhr.send(json)
+                        throw new ServerError(error)
+                    })
+            } else if (status === 200) {
+                return
+            }
+        })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const xhr = new XMLHttpRequest
+
+    // xhr.onload = () => {
+    //     const { status, response } = xhr
+
+    //     if (status === 204) {
+    //         callback(null)
+    //     } else {
+    //         const body = JSON.parse(response)
+
+    //         const { error } = body
+
+    //         if (status === 400)
+    //             callback(new ClientError(error))
+    //         else if (status === 404)
+    //             callback(new ExistenceError(error))
+    //         else if (status === 401)
+    //             callback(new AuthError(error))
+    //         else if (status === 500)
+    //             callback(new ServerError(error))
+    //     }
+    // }
+
+    // xhr.onerror = () => callback(new Error('network error'))
+
+    // xhr.open('PATCH', 'http://localhost:8080/users/email',)
+    // xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+    // xhr.setRequestHeader('Content-Type', 'application/json')
+
+    // const payload = { newEmail, password }
+    // const json = JSON.stringify(payload)
+    // xhr.send(json)
 
 export default updateUserEmail

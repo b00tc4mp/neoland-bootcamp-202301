@@ -17,30 +17,55 @@ function UpdateUserEmail() {
         const password = event.target.password.value
 
         try {
-            updateUserEmail(sessionStorage.token, newEmail, password, error => {
-                if (error) {
+
+            updateUserEmail(sessionStorage.token, newEmail, password)
+                .then(() => {
+                    
+                    event.target.reset()
                     setFeedback({
-                        message: error.message,
-                        level: 'error'
+                        message: 'email updated successfully',
+                        level: 'success'
                     })
-
-                    return
-                }
-
-                event.target.reset()
-
-                setFeedback({
-                    message: 'email updated successfully',
-                    level: 'success'
                 })
-            })
+                .catch(error => setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,
                 level: 'error'
             })
         }
+
+
+
     }
+    // try {
+    //     updateUserEmail(sessionStorage.token, newEmail, password, error => {
+    //         if (error) {
+    //             setFeedback({
+    //                 message: error.message,
+    //                 level: 'error'
+    //             })
+
+    //             return
+    //         }
+
+    //         event.target.reset()
+
+    //         setFeedback({
+    //             message: 'email updated successfully',
+    //             level: 'success'
+    //         })
+    //     })
+    // } catch (error) {
+    //     setFeedback({
+    //         message: error.message,
+    //         level: 'error'
+    //     })
+    // }
+
     return <Container className='shadow-2xl'>
         <h2 className=' text-xl'>Change email</h2>
         <Container TagName='form' onSubmit={handleSubmit}>

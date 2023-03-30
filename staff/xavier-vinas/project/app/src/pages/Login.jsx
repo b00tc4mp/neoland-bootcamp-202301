@@ -17,30 +17,50 @@ function Login() {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        try {
+            try {
 
-            authenticateUser(email, password, (error, token) => {
-                if (error) {
-                    setFeedback({
+                authenticateUser(email, password)
+                    .then(token => {
+                        sessionStorage.token = token
+
+                        navigate('/')
+                    })
+                    .catch(error => setFeedback({
                         message: error.message,
                         level: 'error'
-                    })
-
-                    return
-                }
-                sessionStorage.token = token
-
-                navigate("/")
-            })
-
-        } catch (error) {
-
-            setFeedback({
-                message: error.message,
-                level: 'error'
-            })
+                    }))
+            } catch (error) {
+                setFeedback({
+                    message: error.message,
+                    level: 'error'
+                })
+            }
         }
-    }
+    
+    //     try {
+
+    //         authenticateUser(email, password, (error, token) => {
+    //             if (error) {
+    //                 setFeedback({
+    //                     message: error.message,
+    //                     level: 'error'
+    //                 })
+
+    //                 return
+    //             }
+    //             sessionStorage.token = token
+
+    //             navigate("/")
+    //         })
+
+    //     } catch (error) {
+
+    //         setFeedback({
+    //             message: error.message,
+    //             level: 'error'
+    //         })
+    //     }
+    // }
 
 
 

@@ -1,4 +1,4 @@
-const JWT_SECRET = 'kepim kepam'
+const { JWT_SECRET } = process.env
 const { verify } = require('jsonwebtoken')
 
 function verifyToken(req) {
