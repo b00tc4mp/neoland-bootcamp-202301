@@ -45,8 +45,8 @@ function Login() {
             <Container TagName='form' onSubmit={handleSubmit} className='flex flex-col items-center w-screen'>
 
                 <div className='flex flex-col items-center'>
-                    <input type='email' id='email' placeholder='Email' className='w-4/5 max-w-4/5 px-4 py-2 mt-32 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
-                    <input type='password' id='password' placeholder='Password' className='w-4/5 max-w-4/5 px-4 py-2 m-12 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-robot ' />
+                    <input type='email' id='email' placeholder='Email' className='shadow-xl w-4/5 max-w-4/5 px-4 py-2 mt-32 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 focus:shadow-xl sm:text-base font-roboto' />
+                    <input type='password' id='password' placeholder='Password' className='shadow-xl w-4/5 max-w-4/5 px-4 py-2 m-12 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 focus:shadow-xl sm:text-base font-robot' />
                 </div>
                 <Button type='submit' className='px-10 py-21'>Access</Button>
 

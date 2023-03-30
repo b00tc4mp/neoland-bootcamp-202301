@@ -54,8 +54,6 @@ function updateUserEmail(token, newEmail, password) {
 
                 return
             }
-
-
         })
 }
 

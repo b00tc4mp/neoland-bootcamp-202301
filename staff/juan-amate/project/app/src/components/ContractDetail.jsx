@@ -60,7 +60,7 @@ function ContractDetail() {
         return (
             <Container className='w-screen mt-28 mb-4 gap-4'>
                 <Button onClick={handleContractView}>View PDF</Button>
-                <div className='w-4/5 p-4 border rounded-xl'>
+                <div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <img src='../../images/cabecera.png' alt='cabecera' />
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>together</h3><br />
                     <p className='text-justify'>On the one hand <strong>{contract.photographer.name}</strong> with national id: <strong>{contract.photographer.nationalId}</strong> and registered office at <strong>{contract.photographer.address}</strong> - <strong>{contract.photographer.zipCode}</strong> - <strong>{contract.photographer.city} ({contract.photographer.province})</strong>, and phone: <strong>{contract.photographer.phone}</strong>. Hereinafter referred to as <strong>THE PHOTOGRAPHER</strong>.</p><br />
@@ -69,7 +69,7 @@ function ContractDetail() {
                     <p>That THE CLIENTS are interested in contracting the professional services of THE PHOTOGRAPHER.</p>
                     <p>Said services consist of carrying out the Wedding report on the <strong>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}</strong>, whose ceremony will be at <strong>{eventTime} hours</strong> of the day mentioned above, in <strong>{contract.ceremonyPlace.description}</strong> and whose subsequent banquet will take place at <strong>{contract.celebrationPlace.description}</strong>.
                     </p>
-                </div><div className='w-4/5 p-4 border rounded-xl'>
+                </div><div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>clauses</h3><br />
                     <ul className='mx-4 text-justify list-decimal'>
                         <li>THE CLIENTS authorize THE PHOTOGRAPHER to take images by any technical means for the realization of their Wedding Report.</li><br />
@@ -78,7 +78,7 @@ function ContractDetail() {
                         <li>When the development of the contracted activity in certain places requires obtaining permits or authorizations, it will be up to the client to manage their prior obtaining, as well as the payment of fees or royalties, if any.</li><br />
                         <li>For any claim, the parties submit to the Courts and Tribunals of {contract.photographer.city}.</li><br />
                     </ul>
-                </div><div className='w-4/5 p-4 border rounded-xl'>
+                </div><div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>obligations of the parties</h3><br />
                     <h4 className='capitalize font-semibold'>the clients</h4><br />
                     <ul className='mx-4 text-justify list-decimal'>
@@ -110,7 +110,7 @@ function ContractDetail() {
                         <li>CLIENTS have FIVE days from the delivery of the work to, where appropriate, express their disagreement in writing with respect to the work delivered, after which it will be understood as accepted.</li><br />
                         <li>THE CLIENTS agree to provide the photographer/s that cover the event with lunch or dinner, not having to consist of a menu, or service equal to that of the guests. If the food is not provided, THE PHOTOGRAPHER will have to leave the premises to eat and will be absent for 1 hour from the event, without this circumstance implying a discount on the agreed price.</li><br />
                     </ul>
-                </div><div className='w-4/5 p-4 border rounded-xl'>
+                </div><div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <h4 className='capitalize font-bold'>the photographer</h4><br />
                     <ul className='mx-4 text-justify list-decimal'>
                         <li><strong>Photographic style.</strong> CUSTOMERS accept the photography style
@@ -137,7 +137,7 @@ function ContractDetail() {
                         <li>THE PHOTOGRAPHER undertakes, by signing this contract, to respect each and every one of the items contracted by THE CLIENTS in the budget.</li><br />
                         <li>In case of rejection, by THE CLIENTS, of any of the budget services, they will not receive from THE PHOTOGRAPHER, economic consideration or discount.</li><br />
                     </ul>
-                </div><div className='w-4/5 p-4 border rounded-xl'>
+                </div><div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <h3 className='mt-10 m-5 text-center font-bold uppercase'>budget of the contracted services</h3><br />
                     <p className='font-bold'>Services:</p><br />
                     <ul className='ml-8 list-disc'>
@@ -174,7 +174,7 @@ function ContractDetail() {
                         <li className='ml-10'>21% VAT:    {vatPrice} euros</li><br />
                         <li className='ml-10 font-bold'>TOTAL:  {totalPrice} euros</li><br />
                     </ul>
-                </div><div className='w-4/5 p-4 border rounded-xl'>
+                </div><div className='w-4/5 p-4 border rounded-xl shadow-lg'>
                     <h3 className='mt-10 mb-5 text-center font-bold uppercase'>data protection clause</h3><br />
                     <p className='text-justify'>In accordance with the provisions of the current regulations on Protection of Personal Data, the data provided will be incorporated into the treatment system owned by (YOUR NAME AND SURNAME), in order to attend to the necessary communication for the provision of services contracted, as well as the preparation of the corresponding invoice and compliance with fiscal and commercial obligations. Said data will be kept for the period strictly necessary to comply with the precepts mentioned above.</p><br />
                     <p className='text-justify'>However, clients may exercise the rights of access, rectification, limitation of treatment, deletion, portability and opposition to the treatment of their personal data as well as the consent given for the treatment of the same, directing their request to the indicated postal address above or to the email {contract.photographer.email}, and may also contact the competent Control Authority to present the claim that it deems appropriate.</p><br />

@@ -9,6 +9,7 @@ import {
     validatePhotographer,
     validateEmail,
     validatePassword,
+    validateCallback,
     CoherenceError,
     ClientError,
     ServerError
@@ -27,6 +28,7 @@ import {
  * @param {string} photographer The photographer email of the user.
  * @param {string} email The email of the user.
  * @param {string} password The password of the user.
+ * @param {string} callback The callback function of the user.
  */
 function registerParticularUser(
     name,
@@ -38,7 +40,8 @@ function registerParticularUser(
     phone,
     photographer,
     email,
-    password
+    password,
+    callback
 ) {
     validateName(name)
     validateNationalId(nationalId)
@@ -50,43 +53,48 @@ function registerParticularUser(
     validatePhotographer(photographer)
     validateEmail(email)
     validatePassword(password)
+    validateCallback(callback)
 
-    return fetch(`${process.env.REACT_APP_API_URL}/users`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, nationalId, address, zipCode, city, province, phone, photographer, email, password })
-    })
+    const xhr = new XMLHttpRequest
 
-        .then(response => {
-            const { status } = response
+    xhr.onload = () => {
+        const { status, response } = xhr
 
-            if (status === 400) {
-                return response.json()
-                    .then(payload => {
-                        const { error } = payload
+        if (status === 201) {
+            callback(null)
+        } else {
+            const body = JSON.parse(response)
 
-                        throw new ClientError(error)
-                    })
-            } else if (status === 409) {
-                return response.json()
-                    .then(payload => {
-                        const { error } = payload
+            const { error } = body
 
-                        throw new CoherenceError(error)
-                    })
-            } else if (status === 500) {
-                return response.json()
-                    .then(payload => {
-                        const { error } = payload
+            if (status === 400)
+                callback(new ClientError(error))
+            else if (status === 409)
+                callback(new CoherenceError(error))
+            else if (status === 500)
+                callback(new ServerError(error))
+        }
+    }
 
-                        throw new ServerError(error)
-                    })
-            } else if (status === 201) {
-                return
-            }
-        })
+    xhr.onerror = () => callback(new Error('network error'))
+
+    xhr.open('POST', 'http://localhost:8080/users')
+    xhr.setRequestHeader('Content-Type', 'application/json')
+
+    const user = {
+        name,
+        nationalId,
+        address,
+        zipCode,
+        city,
+        province,
+        phone,
+        photographer,
+        email,
+        password
+    }
+    const json = JSON.stringify(user)
+    xhr.send(json)
 }
 
 export default registerParticularUser

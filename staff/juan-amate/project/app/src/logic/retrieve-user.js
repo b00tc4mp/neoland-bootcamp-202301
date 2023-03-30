@@ -40,11 +40,7 @@ function retrieveUser(token) {
                     })
             } else if (status === 200) {
                 return response.json()
-                    .then(payload => {
-                        const { token } = payload
-
-                        return token
-                    })
+                    .then(payload => payload)
             }
         })
 }

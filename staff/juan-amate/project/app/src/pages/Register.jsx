@@ -28,30 +28,12 @@ function Register() {
         const password = event.target.password.value
 
         try {
-            registerParticularUser(
-                name,
-                nationalId,
-                address,
-                zipCode,
-                city,
-                province,
-                phone,
-                photographer,
-                email,
-                password,
-                error => {
-                    if (error) {
-                        setFeedback({
-                            message: error.message,
-                            level: 'error'
-                        })
-
-                        return
-                    }
-
-                    navigate('/login')
-                })
-
+            registerParticularUser(name, nationalId, address, zipCode, city, province, phone, photographer, email, password)
+                .then(() => navigate('/login'))
+                .catch(error => setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,
