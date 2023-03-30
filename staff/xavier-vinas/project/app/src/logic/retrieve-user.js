@@ -44,7 +44,9 @@ function retrieveUser(token) {
                         throw new ServerError(error)
                     })
             } else if (status === 200) {
-                return
+                return response.json()
+                .then (payload => payload)
+                
             }
         })
 }
