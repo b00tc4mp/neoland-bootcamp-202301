@@ -7,7 +7,7 @@ import Item from "./Item"
 
 function MyAuctions({ listUpdateStamp }) {
 
-    
+
     const { alert } = useContext(Context)
 
     const [myAuctions, setmyAuctions] = useState([])
@@ -15,19 +15,36 @@ function MyAuctions({ listUpdateStamp }) {
 
     const loadAuction = () => {
         try {
-            retrieveMyAuctions(sessionStorage.token, (error, myAuctions) => {
-                if (error) {
+            retrieveMyAuctions(sessionStorage.token)
+                .then(myAuctions => {
+                    setmyAuctions(myAuctions)
+
+                })
+                .catch(error => {
                     alert(error.message)
-
-                    return
-                }
-
-                setmyAuctions(myAuctions)
-            })
+                })
         } catch (error) {
             alert(error.message)
+
+
         }
+
+
     }
+    //     try {
+    //         retrieveMyAuctions(sessionStorage.token, (error, myAuctions) => {
+    //             if (error) {
+    //                 alert(error.message)
+
+    //                 return
+    //             }
+
+    //             setmyAuctions(myAuctions)
+    //         })
+    //     } catch (error) {
+    //         alert(error.message)
+    //     }
+    // }
 
     useEffect(() => {
         loadAuction()
@@ -39,6 +56,6 @@ function MyAuctions({ listUpdateStamp }) {
         {myAuctions.map(auction => <Item key={auction.id} element={auction} />)}
     </Container>
 }
-    
+
 
 export default MyAuctions

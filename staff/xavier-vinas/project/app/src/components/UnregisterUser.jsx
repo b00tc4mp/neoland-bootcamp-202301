@@ -16,22 +16,16 @@ function UnregisterUser({ onUnregisterUser }) {
         const password = event.target.password.value
 
         try {
-            unregisterUser(sessionStorage.token, password, error => {
-                if (error) {
-                    setFeedback({
-                        message: error.message,
-                        level: 'error'
-                    })
+            unregisterUser(sessionStorage.token, password)
+                .then(() => {
+                    delete sessionStorage.token
 
-                    return
-                }
-
-                event.target.reset()
-
-                delete sessionStorage.token
-
-                onUnregisterUser()
-            })
+                    onUnregisterUser()
+                })
+                .catch(error => setFeedback({
+                    message: error.message,
+                    level: 'error'
+                }))
         } catch (error) {
             setFeedback({
                 message: error.message,

@@ -14,20 +14,37 @@ function List({ listUpdateStamp }) {
 
 
     const loadList = () => {
+
         try {
-            retrieveAuctions(sessionStorage.token,  (error, auctions) => {
-                if (error) {
+            retrieveAuctions(sessionStorage.token)
+                .then(auctions => {
+                    setAuctions(auctions.reverse())
+
+                })
+                .catch(error => {
                     alert(error.message)
-
-                    return
-                }
-
-                setAuctions(auctions.reverse())
-            })
+                })
         } catch (error) {
             alert(error.message)
+
+
         }
     }
+
+    //     try {
+    //         retrieveAuctions(sessionStorage.token,  (error, auctions) => {
+    //             if (error) {
+    //                 alert(error.message)
+
+    //                 return
+    //             }
+
+    //             setAuctions(auctions.reverse())
+    //         })
+    //     } catch (error) {
+    //         alert(error.message)
+    //     }
+    // }
 
     useEffect(() => {
         loadList()
