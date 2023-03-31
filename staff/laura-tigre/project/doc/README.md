@@ -92,7 +92,7 @@ Message
 ### Sequences
 
 ![](./images/Nanny-authentication.png)
-
+![](./images/Family-authentication.png)
 
 
 
