@@ -369,7 +369,7 @@ function ProfileUserNanny({  listUpdateStamp }) {
       <Container TagName="form" onSubmit={handleSubmitPrice} className="sm:flex flex-col items-center justify-center gap-4 mt-10 p-3 rounded-lg">
 
         <legend >Price</legend>
-        <p>{nanny?.price} € </p>
+        <p>{nanny?.price} €/h </p>
         <input
           className="sm:bg-transparent pb-2 "
           type="number"
