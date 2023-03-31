@@ -2,7 +2,7 @@
 
 ## Intro
 
-This project seeks to connect families and nannies. It looks for family and nannies in the same town and connects them together.
+This project seeks to connect families and nannies. It looks for family and nannies in the same town and connects them together. Family and nannies are connected together with the chat in real time. And could do a more specific search for family and nannies.
 
 ![](https://media.giphy.com/media/XGDmbqHz6wrWMQB42P/giphy.gif)
 
@@ -27,6 +27,10 @@ Nannies
 - Search by price
 - Search by availability
 - Send message
+
+Chat 
+-Send message to family
+- Send message to nanny
 
 ### UI design
 
