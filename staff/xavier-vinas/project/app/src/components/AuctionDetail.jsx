@@ -18,20 +18,46 @@ function AuctionDetail({ }) {
 
 
     const loadAuction = () => {
+
+
         try {
-            retrieveAuction(sessionStorage.token, auctionId, (error, auction) => {
-                if (error) {
+            retrieveAuction(sessionStorage.token , auctionId)
+                .then(auction => {
+                    setAuction(auction)
+
+                })
+                .catch(error => {
                     alert(error.message)
-
-                    return
-                }
-
-                setAuction(auction)
-            })
+                })
         } catch (error) {
             alert(error.message)
+
+
         }
+
+
     }
+
+
+
+
+
+
+
+    //     try {
+    //         retrieveAuction(sessionStorage.token, auctionId, (error, auction) => {
+    //             if (error) {
+    //                 alert(error.message)
+
+    //                 return
+    //             }
+
+    //             setAuction(auction)
+    //         })
+    //     } catch (error) {
+    //         alert(error.message)
+    //     }
+    // }
 
     useEffect(() => {
         loadAuction()

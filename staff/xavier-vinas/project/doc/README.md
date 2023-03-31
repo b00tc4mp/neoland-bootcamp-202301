@@ -2,7 +2,8 @@
 
 ## Intro 
 
-BidWise is an online platform designed to allow users to purchase products through a real-time auction system.
+BidWise is an online platform designed to allow users to purchase products through a real-time auction system,
+place your bid, check your auctions and bids and have fun!
 
 ![](https://media.giphy.com/media/l41YAbDsTJXKANjmE/giphy.gif)
 
@@ -12,10 +13,10 @@ BidWise is an online platform designed to allow users to purchase products throu
 
 Client 
 
-- Real-time bid
 - Search auctions 
-- Secure payments
 - Auctions tracking
+- Real-time bid
+- Secure payments
 
 Admin 
 
@@ -26,7 +27,7 @@ Admin
 
 Mobile 
 
-![](./Captura%20de%20pantalla%202023-03-13%20092920.png)
+![](./figmaFinal.png)
 
 
 ## Technical

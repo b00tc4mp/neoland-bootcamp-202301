@@ -1,16 +1,15 @@
-const { validateToken, validateCallback, validateAuctionId, ExistenceError, ServerError, ClientError } = require('com')
+const { validateToken, validateAuctionId, ExistenceError, ServerError, ClientError } = require('com')
 
 /**
  * 
  * @param {string} auctionId the id of the auction
  * @param {string} token the token the user belongs
- * @param {function} callback the funcion to call
+
  */
-function retrieveAuctionBids(auctionId, token, callback) {
+function retrieveAuctionBids(auctionId, token , callback ) {
     validateAuctionId(auctionId)
     validateToken(token)
-    validateCallback(callback)
-
+   
     const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
@@ -40,3 +39,43 @@ function retrieveAuctionBids(auctionId, token, callback) {
 }
 
 export default retrieveAuctionBids
+
+    // return fetch(`${process.env.REACT_APP_API_URL}/auctions/${auctionId}/bids`, {
+    //     method: 'GET',
+    //     headers: {
+
+    //         'Authorization': `Bearer ${token}`,
+           
+    //     },
+
+    // })
+    //     .then(response => {
+    //         const { status } = response
+
+    //         if (status === 400) {
+    //             return response.json()
+    //                 .then(payload => {
+    //                     const { error } = payload
+
+    //                     throw new ClientError(error)
+    //                 })
+    //         } else if (status === 404) {
+    //             return response.json()
+    //                 .then(payload => {
+    //                     const { error } = payload
+
+    //                     throw new ExistenceError(error)
+    //                 })
+    //         } else if (status === 500) {
+    //             return response.json()
+    //                 .then(payload => {
+    //                     const { error } = payload
+
+    //                     throw new ServerError(error)
+    //                 })
+    //         } else if (status === 200) {
+    //             return response.json()
+    //                 .then(payload => payload)
+
+    //         }
+    //     })

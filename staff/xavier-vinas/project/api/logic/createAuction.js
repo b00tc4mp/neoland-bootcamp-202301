@@ -1,5 +1,5 @@
 const { User, Auction } = require('../data/models')
-const { validateBidRate, validatePrice, validatePhoto, validateUserId, ExistenceError, validateTitle, validateDescription } = require('com')
+const { validateBidRate, validatePrice, validatePhoto, validateUserId, ExistenceError, validateTitle, validateDescription, ValueError } = require('com')
 
 
 /**
@@ -23,6 +23,8 @@ function createAuction(userId, title, description, price, photo, bidRate, startD
     validateBidRate(bidRate)
     if (!(startDate instanceof Date)) throw new TypeError('startDate is not a date')
     if (!(endDate instanceof Date)) throw new TypeError('endDate is not a date')
+    if (endDate < startDate || endDate < new Date()) throw new ValueError('endDate must be higher than startDate and actual date')
+    if(startDate < new Date()) throw new ValueError('statDate must be higher than actual date')
 
     return User.findById(userId)
         .then(user => {

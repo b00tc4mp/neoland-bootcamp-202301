@@ -14,8 +14,7 @@ function BidList({ price, bidRate, status }) {
     const [bids, setBids] = useState()
 
     const loadAuctionBids = () => {
-
-        try {
+             try {
             retrieveAuctionBids(auctionId, sessionStorage.token, (error, bids) => {
                 if (error) {
                     alert(error.message)
@@ -30,6 +29,22 @@ function BidList({ price, bidRate, status }) {
         }
     }
 
+    //     try {
+    //         retrieveAuctionBids(sessionStorage.token, auctionId)
+    //             .then(bids => {
+    //                 setBids(bids.reverse())
+
+    //             })
+    //             .catch(error => {
+    //                 alert(error.message)
+    //             })
+    //     } catch (error) {
+    //         alert(error.message)
+
+
+    //     }
+    // }
+   
 
 
     useEffect(() => {
