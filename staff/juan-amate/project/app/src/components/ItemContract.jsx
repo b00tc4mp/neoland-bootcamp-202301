@@ -8,7 +8,7 @@ function ItemContract({ element }) {
 
     return <Container>
         {element &&
-            <Link to={`/contract/${element.id}`} className={'flex flex-col w-80 justify-start gap-1 m-2 p-5 border border-neutral-500 rounded-3xl cursor-pointer shadow-xl'}>
+            <Link to={`/contract/${element.id}`} className={'flex flex-col w-80 justify-start gap-1 m-2 p-5 border border-neutral-500 rounded-3xl cursor-pointer shadow-lg'}>
                 <p className="uppercase font-bold">Event date:</p>
                 <p className='ml-3'>{eventDate}</p>
                 <br></br>

@@ -16,26 +16,30 @@ The app will work for you, since it collects all the data and incorporates them 
 
 ### Use cases
 
-Admin
+Photographer
 
 - Add client
 - View clients
 - Search client
 - Update client
 - Add contract
-- View contract
-- Search contract
-- Update contract
-- Remove contract
+- View contracts
+- View details of contract
+- Create pdf contract
+- Download pdf contract
+- Print pdf contract
 
-Client
+Particular user
 
 - Save personal data
 - View personal data
 - Modify personal data
-- Recieve contract
+- Create contract
 - View constracts
+- View details of contract
 - Create pdf contract
+- Download pdf contract
+- Print pdf contract
 
 #### UI design
 
@@ -67,15 +71,11 @@ Contract
 - id
 - user (user.id)
 - date (Date, required)
-- description (string, required)
-- price (number, required)
-
 - eventDate (date, required)
 - ceremonyPlace (Place, required)
 - sessionPlace (Place)
 - celebrationPlace (Place)
 - preparationPlace (Place)
-
 - coupleName (string, required)
 - coupleId (string, required)
 - couplePhone (string)

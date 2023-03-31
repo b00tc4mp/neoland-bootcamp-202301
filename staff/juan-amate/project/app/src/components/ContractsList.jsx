@@ -14,15 +14,16 @@ function Contract() {
 
     const loadDetailContract = () => {
         try {
-            retrieveContracts(sessionStorage.token, (error, contracts) => {
-                if (error) {
+            retrieveContracts(sessionStorage.token)
+                .then(contracts => {
+
+                    setContracts(contracts)
+                })
+                .catch(error => {
                     alert(error.message)
 
                     return
-                }
-
-                setContracts(contracts)
-            })
+                })
         } catch (error) {
             alert(error.message)
         }
@@ -50,9 +51,7 @@ function Contract() {
 
     expiredContracts.sort((a, b) => b.eventDate.getTime() - a.eventDate.getTime())
 
-    // const orderedContracts = contracts.concat(expiredContracts)
-
-    return <>
+    return (actualContracts && expiredContracts) ? <>
         {!!actualContracts.length && <>
             <h2 className='font-medium text-2xl py-10'>Actual contracts</h2>
             <Container TagName='ul'>
@@ -66,7 +65,7 @@ function Contract() {
                 {expiredContracts.map(expiredContract => <ItemContract key={expiredContract.id} element={expiredContract} />)}
             </Container>
         </>}
-    </>
+    </> : null
 }
 
 export default Contract

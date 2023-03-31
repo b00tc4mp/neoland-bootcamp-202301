@@ -39,7 +39,6 @@ import {
     validateAlbumServiceSelected,
     validateMiniAlbumsServiceSelected,
     validateWoodBoxAlbumServiceSelected,
-    validateCallback,
     ClientError,
     ServerError,
     ExistenceError
@@ -87,7 +86,6 @@ import {
  * @param {string} albumServiceSelected The selected album service
  * @param {string} miniAlbumsServiceSelected The selected mini albums service
  * @param {string} woodBoxAlbumServiceSelected The selected wood box album service
- * @param {function} callback The callback function
  */
 function createContract(
     token,
@@ -129,8 +127,7 @@ function createContract(
     bookServiceSelected,
     albumServiceSelected,
     miniAlbumsServiceSelected,
-    woodBoxAlbumServiceSelected,
-    callback
+    woodBoxAlbumServiceSelected
 ) {
     validateToken(token)
     validateDate(date)
@@ -172,80 +169,83 @@ function createContract(
     validateAlbumServiceSelected(albumServiceSelected)
     validateMiniAlbumsServiceSelected(miniAlbumsServiceSelected)
     validateWoodBoxAlbumServiceSelected(woodBoxAlbumServiceSelected)
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    return fetch(`${process.env.REACT_APP_API_URL}/contracts`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            date,
+            eventDate,
+            ceremonyPlaceDescription,
+            ceremonyPlaceAddress,
+            ceremonyPlaceZipCode,
+            ceremonyPlaceCity,
+            ceremonyPlaceProvince,
+            sessionPlaceDescription,
+            sessionPlaceAddress,
+            sessionPlaceZipCode,
+            sessionPlaceCity,
+            sessionPlaceProvince,
+            celebrationPlaceDescription,
+            celebrationPlaceAddress,
+            celebrationPlaceZipCode,
+            celebrationPlaceCity,
+            celebrationPlaceProvince,
+            preparationPlaceDescription,
+            preparationPlaceAddress,
+            preparationPlaceZipCode,
+            preparationPlaceCity,
+            preparationPlaceProvince,
+            coupleName,
+            coupleId,
+            couplePhone,
+            coupleEmail,
+            couplePreparationPlaceDescription,
+            couplePreparationPlaceAddress,
+            couplePreparationPlaceZipCode,
+            couplePreparationPlaceCity,
+            couplePreparationPlaceProvince,
+            preWeddingServiceSelected,
+            postWeddingServiceSelected,
+            expressDeliveryServiceSelected,
+            extraPhotographerServiceSelected,
+            bookServiceSelected,
+            albumServiceSelected,
+            miniAlbumsServiceSelected,
+            woodBoxAlbumServiceSelected
+        })
+    })
+        .then(response => {
+            const { status } = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
+            if (status === 400) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-        if (status === 201) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
+                        throw new ClientError(error)
+                    })
+            } else if (status === 404) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            const { error } = body
+                        throw new ExistenceError(error)
+                    })
+            } else if (status === 500) {
+                return response.json()
+                    .then(payload => {
+                        const { error } = payload
 
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 404)
-                callback(new ExistenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
-        }
-    }
-
-    xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('POST', 'http://localhost:8080/contracts')
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const payload = {
-        date,
-        eventDate,
-        ceremonyPlaceDescription,
-        ceremonyPlaceAddress,
-        ceremonyPlaceZipCode,
-        ceremonyPlaceCity,
-        ceremonyPlaceProvince,
-        sessionPlaceDescription,
-        sessionPlaceAddress,
-        sessionPlaceZipCode,
-        sessionPlaceCity,
-        sessionPlaceProvince,
-        celebrationPlaceDescription,
-        celebrationPlaceAddress,
-        celebrationPlaceZipCode,
-        celebrationPlaceCity,
-        celebrationPlaceProvince,
-        preparationPlaceDescription,
-        preparationPlaceAddress,
-        preparationPlaceZipCode,
-        preparationPlaceCity,
-        preparationPlaceProvince,
-        coupleName,
-        coupleId,
-        couplePhone,
-        coupleEmail,
-        couplePreparationPlaceDescription,
-        couplePreparationPlaceAddress,
-        couplePreparationPlaceZipCode,
-        couplePreparationPlaceCity,
-        couplePreparationPlaceProvince,
-        preWeddingServiceSelected,
-        postWeddingServiceSelected,
-        expressDeliveryServiceSelected,
-        extraPhotographerServiceSelected,
-        bookServiceSelected,
-        albumServiceSelected,
-        miniAlbumsServiceSelected,
-        woodBoxAlbumServiceSelected
-
-    }
-    const json = JSON.stringify(payload)
-
-    xhr.send(json)
+                        throw new ServerError(error)
+                    })
+            } else if (status === 201) {
+                return
+            }
+        })
 }
 
 export default createContract

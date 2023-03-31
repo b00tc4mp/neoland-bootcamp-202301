@@ -98,21 +98,19 @@ function ContractForm() {
                 bookServiceSelected,
                 albumServiceSelected,
                 miniAlbumsServiceSelected,
-                woodBoxAlbumServiceSelected,
-                error => {
-                    if (error) {
-                        setFeedback({
-                            message: error.message,
-                            level: 'error'
-                        })
-
-                        return
-                    }
-
+                woodBoxAlbumServiceSelected)
+                .then(() => {
                     setFeedback({
                         message: 'Contract created successfully',
                         level: 'success'
                     })
+                })
+                .catch(error => {
+                    setFeedback({
+                        message: error.message,
+                        level: 'error'
+                    })
+                    return
                 })
         } catch (error) {
             setFeedback({
@@ -128,85 +126,85 @@ function ContractForm() {
         <section className='w-screen my-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">your preparations</h2>
 
-            <Input type='text' id='preparationPlaceDescription' placeholder='Preparation place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl shadow-xl' />
+            <Input type='text' id='preparationPlaceDescription' placeholder='Preparation place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='preparationPlaceAddress' placeholder='Preparation place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='preparationPlaceAddress' placeholder='Preparation place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='preparationPlaceZipCode' placeholder='Preparation place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='preparationPlaceZipCode' placeholder='Preparation place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='preparationPlaceCity' placeholder='Preparation place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='preparationPlaceCity' placeholder='Preparation place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='preparationPlaceProvince' placeholder='Preparation place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='preparationPlaceProvince' placeholder='Preparation place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
             <br></br>
         </section>
 
         <section className='w-screen my-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">your couple</h2>
 
-            <Input type='text' id='coupleName' placeholder='Your couple name' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='coupleName' placeholder='Your couple name' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='coupleId' placeholder='Your couple national id' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='coupleId' placeholder='Your couple national id' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePhone' placeholder='Your couple phone number' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePhone' placeholder='Your couple phone number' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='email' id='coupleEmail' placeholder='Your couple email address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='email' id='coupleEmail' placeholder='Your couple email address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePreparationPlaceDescription' placeholder='Preparation place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePreparationPlaceDescription' placeholder='Preparation place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePreparationPlaceAddress' placeholder='Preparation place description address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePreparationPlaceAddress' placeholder='Preparation place description address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePreparationPlaceZipCode' placeholder='Preparation place description zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePreparationPlaceZipCode' placeholder='Preparation place description zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePreparationPlaceCity' placeholder='Preparation place description city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePreparationPlaceCity' placeholder='Preparation place description city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='couplePreparationPlaceProvince' placeholder='Preparation place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='couplePreparationPlaceProvince' placeholder='Preparation place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
             <br></br>
         </section>
 
         <section className='w-screen mt-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">ceremony</h2>
 
-            <Input type='text' id='ceremonyPlaceDescription' placeholder='Ceremony place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='ceremonyPlaceDescription' placeholder='Ceremony place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='datetime-local' id='eventDate' placeholder='Event date & time' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='datetime-local' id='eventDate' placeholder='Event date & time' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='ceremonyPlaceAddress' placeholder='Ceremony place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='ceremonyPlaceAddress' placeholder='Ceremony place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='ceremonyPlaceZipCode' placeholder='Ceremony place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='ceremonyPlaceZipCode' placeholder='Ceremony place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='ceremonyPlaceCity' placeholder='Ceremony place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='ceremonyPlaceCity' placeholder='Ceremony place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='ceremonyPlaceProvince' placeholder='Ceremony place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='ceremonyPlaceProvince' placeholder='Ceremony place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
             <br></br>
         </section>
 
         <section className='w-screen mt-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">session couple place</h2>
 
-            <Input type='text' id='sessionPlaceDescription' placeholder='Session place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='sessionPlaceDescription' placeholder='Session place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='sessionPlaceAddress' placeholder='Session place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='sessionPlaceAddress' placeholder='Session place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='sessionPlaceZipCode' placeholder='Session place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='sessionPlaceZipCode' placeholder='Session place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='sessionPlaceCity' placeholder='Session place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='sessionPlaceCity' placeholder='Session place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='sessionPlaceProvince' placeholder='Session place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='sessionPlaceProvince' placeholder='Session place description province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
             <br></br>
         </section>
 
         <section className='w-screen mt-6 flex flex-col'>
             <h2 className="text-center font-bold uppercase">celebration place</h2>
 
-            <Input type='text' id='celebrationPlaceDescription' placeholder='Celebration place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='celebrationPlaceDescription' placeholder='Celebration place description' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='celebrationPlaceAddress' placeholder='Celebration place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='celebrationPlaceAddress' placeholder='Celebration place address' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='celebrationPlaceZipCode' placeholder='Celebration place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='celebrationPlaceZipCode' placeholder='Celebration place zip code' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='celebrationPlaceCity' placeholder='Celebration place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='celebrationPlaceCity' placeholder='Celebration place city' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
 
-            <Input type='text' id='celebrationPlaceProvince' placeholder='Celebration place province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto shadow-xl' />
+            <Input type='text' id='celebrationPlaceProvince' placeholder='Celebration place province' className='w-11/12 px-4 py-2 m-2 border border-neutral-500 rounded-3xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 focus:border-neutral-500 sm:text-base font-roboto' />
             <br></br>
         </section>
 
@@ -246,7 +244,7 @@ function ContractForm() {
         </section>
         {feedback && <Feedback message={feedback.message} level={feedback.level} />}
 
-        <button type='submit' className='m-10 py-1 px-6 bg-yellow-600 text-white rounded-xl shadow-gray-500 shadow-xl cursor-pointer'>Save</button>
+        <button type='submit' className='m-10 py-1 px-6 bg-yellow-600 text-white rounded-xl shadow-gray-500 cursor-pointer'>Save</button>
     </Container >
 }
 
