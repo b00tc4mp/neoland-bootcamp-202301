@@ -1,5 +1,6 @@
 const { User, Nanny } = require('../data/models')
 const { validateName, validateCity, validateExperience, validateEmail, validatePassword, CoherenceError, } = require('com')
+const bcrypt = require('bcryptjs')
 /**
  * register a new nanny user 
  * 
@@ -21,25 +22,28 @@ function registerNanny(name, city, experience, email, password) {
     return User.findOne({ email })
         .then(user => {
             if (user) throw new CoherenceError('user already exists')
-
+            return bcrypt.hash(password, 10)
+        })
+        .then(hash => {
             user = new User({
                 name,
                 email,
-                password,
+                password: hash,
                 role: 'nanny'
             })
-
             return user.save()
-                .then(user => {
-                    const nanny = new Nanny({
-                        city,
-                        experience,
-                    })
 
-                    nanny.user = user._id
-
-                    return nanny.save()
-                })
         })
+        .then(user => {
+            const nanny = new Nanny({
+                city,
+                experience,
+            })
+
+            nanny.user = user._id
+
+            return nanny.save()
+        })
+
 }
 module.exports = registerNanny

@@ -13,7 +13,7 @@ function updateDescriptionParent(token,newDescription, callback) {
     validateToken(token)
     validateNewDescription(newDescription)
     validateCallback(callback)
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
      
     xhr.onload= () => {
         const { status, response } = xhr
@@ -38,7 +38,7 @@ function updateDescriptionParent(token,newDescription, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/parents/description')
+    xhr.open('PATCH',`${process.env.REACT_APP_API_URL}/parents/description`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

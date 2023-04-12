@@ -39,7 +39,7 @@ function deleteKid(token, kidId, callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('DELETE', `http://localhost:8080/parents/kid/${kidId}`)
+    xhr.open('DELETE', `${process.env.REACT_APP_API_URL}/parents/kid/${kidId}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send()

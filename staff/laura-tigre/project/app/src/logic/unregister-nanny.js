@@ -39,7 +39,7 @@ function unregisterNanny(token, password, callback) {
 
   xhr.onerror = () => callback(new Error('network error'))
  
-   xhr.open('DELETE', 'http://localhost:8080/nannies')
+   xhr.open('DELETE', `${process.env.REACT_APP_API_URL}/nannies`)
    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
    xhr.setRequestHeader('Content-Type', 'application/json')
   const payload= {password}

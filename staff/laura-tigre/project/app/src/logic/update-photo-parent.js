@@ -13,7 +13,7 @@ function updatePhotoParent(token, newPhoto,callback) {
     validateNewPhoto(newPhoto)
     validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
         const { status, response } = xhr
@@ -35,7 +35,7 @@ function updatePhotoParent(token, newPhoto,callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH','http://localhost:8080/parents/photo')
+    xhr.open('PATCH',`${process.env.REACT_APP_API_URL}/parents/photo`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

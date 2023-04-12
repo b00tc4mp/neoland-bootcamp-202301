@@ -15,7 +15,8 @@ function chat(token,userIdTo, message,callback) {
     validateUserIdTo(userIdTo)
     validateMessage(message)
     validateCallback(callback)
-    const xhr = new XMLHttpRequest
+    
+    const xhr = new XMLHttpRequest()
      
     xhr.onload= () => {
         const { status, response } = xhr
@@ -40,7 +41,7 @@ function chat(token,userIdTo, message,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('POST',`http://localhost:8080/chats/users/${userIdTo}`)
+    xhr.open('POST',`${process.env.REACT_APP_API_URL}/chats/users/${userIdTo}`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

@@ -31,7 +31,7 @@ function retrieveParent(token,callback) {
 
     xhr.onerror =() => callback(new Error('network error'))
     
-    xhr.open('GET', `http://localhost:8080/parents`)
+    xhr.open('GET', `${process.env.REACT_APP_API_URL}/parents`)
 
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     

@@ -32,7 +32,7 @@ function retrieveNanny(token,nannyId,callback) {
 
     xhr.onerror =() => callback(new Error('network error'))
     
-    xhr.open('GET', `http://localhost:8080/nannies/${nannyId}`)
+    xhr.open('GET', `${process.env.REACT_APP_API_URL}/nannies/${nannyId}`)
 
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     

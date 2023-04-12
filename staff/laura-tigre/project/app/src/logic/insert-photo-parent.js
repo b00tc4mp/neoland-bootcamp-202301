@@ -36,7 +36,7 @@ function insertPhotoParent(token, photo,callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/parents/photo')
+    xhr.open('POST', `${process.env.REACT_APP_API_URL}/parents/photo`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const user = {photo}

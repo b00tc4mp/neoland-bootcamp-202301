@@ -36,7 +36,7 @@ function updateParentAvailabilities(token,newMondayMorningSelected,
     validateNewSundayAfternoonSelected(newSundayAfternoonSelected)
     validateNewSundayEveningSelected(newSundayEveningSelected)
     validateCallback(callback)
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
 
     xhr.onload = () => {
         const { status, response } = xhr
@@ -61,7 +61,7 @@ function updateParentAvailabilities(token,newMondayMorningSelected,
 
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('PATCH', 'http://localhost:8080/parents/availabilities')
+    xhr.open('PATCH', `${process.env.REACT_APP_API_URL}/parents/availabilities`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 

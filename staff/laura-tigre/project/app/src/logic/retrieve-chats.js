@@ -30,7 +30,7 @@ function retrieveChats(token, callback){
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('GET', 'http://localhost:8080/chats')
+    xhr.open('GET', `${process.env.REACT_APP_API_URL}/chats`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }

@@ -1,5 +1,6 @@
 const { User, Parent } = require('../data/models')
 const { validateName, validateCity, validateEmail, validatePassword, CoherenceError, } = require('com')
+const bcrypt = require('bcryptjs')
 
 /**
  * register a new parent user 
@@ -22,26 +23,30 @@ function registerParent(name, city, email, password) {
 
         .then(user => {
             if (user) throw new CoherenceError('user already exists')
+            return bcrypt.hash(password, 10)
+        })
+        .then(hash => {
 
             user = new User({
                 name,
                 email,
-                password,
+                password: hash,
                 role: 'parent'
             })
 
             return user.save()
-                .then(user => {
-
-
-                    const parent = new Parent({
-
-                        city,
-
-                    })
-                    parent.user = user._id
-                    return parent.save()
-                })
         })
+        .then(user => {
+
+
+            const parent = new Parent({
+
+                city,
+
+            })
+            parent.user = user._id
+            return parent.save()
+        })
+
 }
 module.exports = registerParent

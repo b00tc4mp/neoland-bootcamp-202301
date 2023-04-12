@@ -1,5 +1,6 @@
-const {validateEmail,validatePassword,ExistenceError,AuthError}=require('com')
-const {User}=require('../data/models')
+const { validateEmail, validatePassword, ExistenceError, AuthError } = require('com')
+const { User } = require('../data/models')
+const bcrypt = require('bcryptjs')
 /**
  * Authenticates a user in database
  * 
@@ -8,19 +9,20 @@ const {User}=require('../data/models')
 
  */
 
-function authenticateUser(email,password){
+function authenticateUser(email, password) {
     validateEmail(email)
     validatePassword(password)
 
+    return (async () => {
+        const user = await User.findOne({ email }).lean()
+        if (!user) throw new ExistenceError('user not found')
 
-    return User.findOne({email}).lean()
-    .then(user=>{
-        if(!user) throw new ExistenceError('user not found')
-        
-        if(user.password!==password) throw new AuthError('wrong credentials')
+        const match = await bcrypt.compare(password, user.password)
 
-        return user._id
-    })
+        if (!match) throw new AuthError('wrong credentials')
+        return user._id.toString()
+    })()
+    
 }
 
-module.exports=authenticateUser
+module.exports = authenticateUser

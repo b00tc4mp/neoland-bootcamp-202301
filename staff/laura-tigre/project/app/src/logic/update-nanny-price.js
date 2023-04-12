@@ -13,7 +13,7 @@ function updatePrice(token,newPrice,callback) {
     validateToken(token)
     validateNewPrice(newPrice)
     validateCallback(callback)
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
      
     xhr.onload= () => {
         const { status, response } = xhr
@@ -38,7 +38,7 @@ function updatePrice(token,newPrice,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('PATCH','http://localhost:8080/nannies/price')
+    xhr.open('PATCH',`${process.env.REACT_APP_API_URL}/nannies/price`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

@@ -15,7 +15,7 @@ function createKids(token,newName, newDateOfBirth,callback) {
     validateNewName(newName)
     validateNewDateOfBirth(newDateOfBirth)
     validateCallback(callback)
-    const xhr = new XMLHttpRequest
+    const xhr = new XMLHttpRequest()
      
     xhr.onload= () => {
         const { status, response } = xhr
@@ -40,7 +40,7 @@ function createKids(token,newName, newDateOfBirth,callback) {
 
     xhr.onerror = () => callback(new Error('network error'))
    
-    xhr.open('POST','http://localhost:8080/parents/kids')
+    xhr.open('POST',`${process.env.REACT_APP_API_URL}/parents/kids`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.setRequestHeader('Content-Type', 'application/json')
   

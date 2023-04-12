@@ -35,7 +35,7 @@ function insertPhotoNanny(token, photo,callback) {
     }
     xhr.onerror = () => callback(new Error('network error'))
 
-    xhr.open('POST', 'http://localhost:8080/nannies/photo')
+    xhr.open('POST', `${process.env.REACT_APP_API_URL}/nannies/photo`)
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     const user = {photo}

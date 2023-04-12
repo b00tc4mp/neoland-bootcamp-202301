@@ -34,7 +34,7 @@ function toggleFavNanny(token, nannyId, callback){
 
  xhr.onerror = () => callback(new Error('network error'))
 
-  xhr.open('PATCH', `http://localhost:8080/nannies/${nannyId}/favs`)
+  xhr.open('PATCH', `${process.env.REACT_APP_API_URL}/nannies/${nannyId}/favs`)
   xhr.setRequestHeader('Authorization', `Bearer ${token}`)
   
   xhr.send()

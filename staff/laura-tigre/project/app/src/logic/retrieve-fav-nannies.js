@@ -32,7 +32,7 @@ function retrievefavNannies(token, callback) {
     }
 
     xhr.onerror = () => callback(new Error('network error'))
-    xhr.open('GET', 'http://localhost:8080/nannies/favs')
+    xhr.open('GET', `${process.env.REACT_APP_API_URL}/nannies/favs`)
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
     xhr.send()
 }
