@@ -1,3 +1,5 @@
+require('dotenv').config()
+const {JWT_SECRET, MONGO_URL, PORT} = process.env
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -43,14 +45,11 @@ const updatePrice = require('./logic/updatePrice')
 
 
 
-const JWT_SECRET = 'lalaland'
-
-
 const { FormatError, ExistenceError, AuthError, CoherenceError } = require('com')
 
 
 
-connect('mongodb://127.0.0.1:27017/kangaroo')
+connect(MONGO_URL)
 
     .then(() => {
         const server = express()
@@ -1193,5 +1192,5 @@ connect('mongodb://127.0.0.1:27017/kangaroo')
        
        
 
-        server.listen(8080, () => console.log('server running on port ' + 8080))
+        server.listen(8080, () => console.log(`server running on port  ${PORT}`))
     })

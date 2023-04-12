@@ -19,15 +19,13 @@ function RegisterNanny(props) {
         const password = event.target.password.value
 
         try {
-            registerNanny(name, city,experience,email, password, error => {
-                if (error) {
-                    setFeedback(error.message)
-                    return
-                }
-
-                navigate('/login')
-
-            })
+            registerNanny(name, city,experience,email, password)
+            .then(()=> navigate('/login'))
+            .catch(error => setFeedback({
+                message: error.message,
+                level: 'error'
+            })) 
+                
         } catch (error) {
             setFeedback(error.message)
         }

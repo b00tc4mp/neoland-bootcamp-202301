@@ -1,5 +1,6 @@
 const {verify} = require('jsonwebtoken')
-const JWT_SECRET = 'lalaland'
+const {JWT_SECRET} = process.env
+
 
 function verifyToken(req) {
     const token = req.headers.authorization.slice(7)

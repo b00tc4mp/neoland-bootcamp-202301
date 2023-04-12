@@ -1,4 +1,4 @@
-const { validateName, validateCity,validateExperience,validateEmail, validatePassword,validateCallback, ClientError, ServerError, CoherenceError } = require('com')
+const { validateName, validateCity,validateExperience,validateEmail, validatePassword, ClientError, ServerError, CoherenceError } = require('com')
 
 /**
  * Registers a user in the database
@@ -6,50 +6,47 @@ const { validateName, validateCity,validateExperience,validateEmail, validatePas
  * @param {string} name The user full name
  * @param {string} email The user email
  * @param {string} password The user password
- * @param {function} callback The callback
  */
 
-function registerNanny(name,city,experience,email, password,callback) {
+function registerNanny(name,city,experience,email, password) {
 
     validateName(name)
     validateCity(city)
     validateExperience(experience)
     validateEmail(email)
     validatePassword(password)
-  
-    validateCallback(callback)
 
-    const xhr = new XMLHttpRequest
+   return fetch (`${process.env.REACT_APP_API_URL}/nannies`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({ name,city,experience,email, password})
+   })
+  .then (response => {
+    const {status} = response
 
-    xhr.onload = () => {
-        const { status, response } = xhr
-
-        if (status === 201) {
-            callback(null)
-        } else {
-            const body = JSON.parse(response)
-
-            const { error } = body
-
-            if (status === 400)
-                callback(new ClientError(error))
-            else if (status === 409)
-                callback(new CoherenceError(error))
-            else if (status === 500)
-                callback(new ServerError(error))
+    if (status === 400){
+        return response.json()
+                    .then(payload => {
+                        const { error } = payload
+                        throw new ClientError(error)
+                    })
+    }else if (status === 409){
+        return response.json()
+                    .then(payload => {
+                        const { error } = payload
+                        throw new CoherenceError(error)
+                    })
+     } else if (status === 500) {
+        return response.json()
+            .then(payload => {
+                const { error } = payload
+                throw new ServerError(error)
+            })
+        }else if (status === 201) {
+            return
         }
-    }
-    xhr.onerror = () => callback(new Error('network error'))
-
-    xhr.open('POST', 'http://localhost:8080/nannies')
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    const user = { name,city,experience,email, password}
-    const json = JSON.stringify(user)
-
-    xhr.send(json)
-
-
+       
+  })
 
 }
 export default registerNanny

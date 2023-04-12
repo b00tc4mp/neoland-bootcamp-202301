@@ -18,15 +18,14 @@ function Parents(props) {
         const password = event.target.password.value
 
         try {
-            registerParent(name, city,email, password, error => {
-                if (error) {
-                    setFeedback(error.message)
-                    return
-                }
+            registerParent(name, city,email, password)
+            .then(()=> navigate('/login'))
+            .catch(error => setFeedback({
+                message: error.message,
+                level: 'error'
+            })) 
 
-                navigate('/login')
-
-            })
+            
         } catch (error) {
             setFeedback(error.message)
         }

@@ -17,15 +17,19 @@ function Login() {
         const password = event.target.password.value
 
         try {
-            authenticateUser(email, password, (error, token) => {
-                if (error) {
-                    setFeedback(error.message)
-                    return
-                }
+            authenticateUser(email, password)
+            .then (token => {
 
                 sessionStorage.token = token
                 navigate('/')
+
             })
+            .catch (error => setFeedback({
+                  message: error.message,
+                  level: 'error'
+                }))
+
+        
 
         } catch (error) {
             setFeedback(error.message)
