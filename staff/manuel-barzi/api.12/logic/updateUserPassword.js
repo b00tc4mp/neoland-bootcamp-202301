@@ -1,6 +1,5 @@
 const { validateUserId, validatePassword, validateNewPassword, validateNewPasswordConfirm, CoherenceError, ExistenceError, AuthError } = require('com')
 const { User } = require('../data/models')
-const bcrypt = require('bcryptjs')
 
 function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
     validateUserId(userId)
@@ -16,17 +15,11 @@ function updateUserPassword(userId, password, newPassword, newPasswordConfirm) {
         .then(user => {
             if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            return bcrypt.compare(password, user.password)
-                .then(match => {
-                    if (!match) throw new AuthError('wrong credentials')
+            if (user.password !== password) throw new AuthError('wrong credentials')
 
-                    return bcrypt.hash(newPassword, 10)
-                })
-                .then(hash => {
-                    user.password = hash
+            user.password = newPassword
 
-                    return user.save()
-                })
+            return user.save()
         })
 }
 

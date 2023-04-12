@@ -1,6 +1,5 @@
 const { validateEmail, validatePassword, validateName, validateAge, CoherenceError } = require('com')
 const { User } = require('../data/models')
-const bcrypt = require('bcryptjs')
 
 function registerUser(name, age, email, password) {
     validateName(name)
@@ -12,10 +11,7 @@ function registerUser(name, age, email, password) {
         .then(user => {
             if (user) throw new CoherenceError('user already registered')
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(hash => {
-            user = new User({ name, age, email, password: hash })
+            user = new User({ name, age, email, password })
 
             return user.save()
         })
