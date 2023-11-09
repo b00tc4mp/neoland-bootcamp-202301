@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="register">
+        <h1>Register</h1>
+        <form>
+            <label for="name">Name</label>
+            <input type="name" id="name" placeholder="input your name">
+
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="input your age">
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="input your e-mail">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="input your password">
+
+            <button type="submit">Register</button>
+        </form>
+        <p class="feedback">error...</p>
+        <p>or <a href="">Login</a></p>
+    </main>
+
+    <main class="login">
+        <h1>Login</h1>
+        <form>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="input your e-mail">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="input your password">
+
+            <button type="submit">Login</button>
+        </form>
+        <p class="feedback">error...</p>
+        <p>or <a href="">Register</a></p>
+    </main>
+
+    <div class="home">
+        <header>
+            <a href=""><img class="logo" src="images/logo.png" alt="Chachi Games"></a>
+
+            <nav>
+                <a href="">News</a>
+                <a href="">Top Ten</a>
+                <a href="">Featured</a>
+                <a href="">Blog</a>
+            </nav>
+        </header>
+        <main class="home-main">
+            <ul>
+                <li>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, fuga voluptas illo iusto repudiandae
+                    fugiat! Saepe, quis. Nisi ea vitae cum sunt et, quae soluta tenetur doloremque, eius neque
+                    consectetur!</li>
+                <li>Temporibus soluta qui, praesentium vel, nesciunt officia, adipisci minus quos sequi atque rem. Ad
+                    temporibus libero obcaecati in, odit vitae enim aperiam. Perferendis voluptates architecto labore?
+                    Culpa fuga illum numquam.</li>
+                <li>Atque, natus? Voluptatum veniam, soluta, at, explicabo voluptate quidem saepe veritatis nemo culpa
+                    earum ipsam fugit? Culpa officia molestiae nostrum cumque pariatur quia provident ipsam perferendis,
+                    quod sint libero dignissimos.</li>
+                <li>Praesentium atque laudantium, quod laborum eligendi, natus animi tempora numquam aut doloremque
+                    labore id ipsa asperiores perferendis ad cumque obcaecati. Laboriosam eius quidem odio sunt
+                    blanditiis, vel quasi tempora molestiae?</li>
+                <li>Omnis quidem nesciunt, minima totam soluta sapiente sunt architecto aspernatur excepturi error,
+                    facilis porro recusandae. Doloribus ut distinctio temporibus error vero? Totam omnis quo vero, odio
+                    voluptatibus perferendis iste consequatur.</li>
+                <li>Sit similique eaque ab delectus! Ex aperiam reiciendis sequi perferendis, expedita aliquam libero
+                    odit modi quidem quod inventore quisquam, amet ad molestiae! Tempore quo saepe sed, eius praesentium
+                    odit! Alias?</li>
+                <li>Eveniet numquam nam dolores veniam molestias error incidunt ducimus, voluptatum aperiam dolorem
+                    nobis tempora ipsum blanditiis laboriosam porro distinctio ipsam explicabo doloribus praesentium
+                    corrupti. Commodi alias iste ipsam architecto velit.</li>
+                <li>Consequatur blanditiis laborum beatae! Vero similique et sunt hic architecto? Excepturi neque, quo
+                    quisquam vitae voluptatem quod inventore maiores ullam pariatur sit, qui quam, necessitatibus
+                    quaerat error doloremque amet distinctio.</li>
+                <li>Quam ut voluptas inventore quos iure dolore ducimus deleniti reiciendis expedita excepturi dolorum
+                    deserunt ipsa iste, fugiat quas doloremque itaque incidunt assumenda ipsum saepe vero? Illo ab ad
+                    placeat totam.</li>
+                <li>Unde ipsum, consequatur aliquid porro expedita impedit tenetur voluptate obcaecati laudantium
+                    dolores, soluta distinctio repellendus praesentium suscipit id odio, cupiditate nulla! Minus
+                    nesciunt assumenda quaerat, quos modi ut quisquam culpa?</li>
+            </ul>
+        </main>
+        <footer>
+            <button>+</button>
+        </footer>
+    </div>
+
+    <!-- Data Layer -->
+
+    <script src="data/users.js"></script>
+    <script src="data/stickies.js"></script>
+
+    <!-- optionl -->
+    <script src="data/users.populate.js"></script>
+    <script src="data/stickies.populate.js"></script>
+
+    <!-- Business (Logic) Layer -->
+
+    <script src="logic/register-user.js"></script>
+    <script src="logic/authenticate-user.js"></script>
+    <script src="logic/retrieve-public-stickies.js"></script>
+    <script src="logic/create-sticky.js"></script>
+
+    <!-- optional -->
+    <script src="logic/register-user.test.js"></script>
+    <script src="logic/authenticate-user.test.js"></script>
+    <script src="logic/retrieve-public-stickies.test.js"></script>
+    <script src="logic/create-sticky.test.js"></script>
+
+    <!-- Presentation Layer -->
+
+    <script src="components/register.js"></script>
+    <script src="components/login.js"></script>
+    <script src="components/home.js"></script>
+</body>
+
+</html>

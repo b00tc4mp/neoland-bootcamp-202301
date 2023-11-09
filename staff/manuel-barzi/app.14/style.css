@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Press+Start+2P&display=swap');
+
+:root {
+    /* --primary-color: greenyellow; */
+    --primary-color: gold;
+    --primary-bg-color: black;
+    --primary-font: 'Press Start 2P';
+    --primary-padding: .5rem;
+    /* --secondary-color: green; */
+    --secondary-color: khaki;
+    --secondary-font: 'Odibee Sans';
+    --secondary-font-size: 1.5rem;
+    --error-color: red;
+    --success-color: yellowgreen;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--primary-bg-color);
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+input {
+    border-width: 0 0 thin 0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+    padding: var(--primary-padding);
+    outline-color: var(--primary-color);
+}
+
+input::placeholder {
+    color: var(--secondary-color);
+}
+
+button {
+    color: var(--primary-color);
+    border-width: thin;
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    border-style: solid;
+    font-family: var(--primary-font);
+    padding: var(--primary-padding);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+a {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    position: fixed;
+    box-sizing: border-box;
+    width: 100%;
+    top: 0;
+    background-color: var(--primary-bg-color);
+}
+
+ul {
+    list-style-type: none;
+    padding: 10px;
+}
+
+li {
+    background-color: var(--primary-color);
+    width: 40ch;
+    margin: 1em 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+li > p {
+    color: var(--primary-bg-color);
+    width: 100%;
+}
+
+strong {
+    font-family: var(--secondary-font);
+}
+
+.home-main {
+    margin-top: 100px;
+}
+
+.logo {
+    width: 3em;
+    transition: transform 1s;
+}
+
+.logo:hover {
+    transform: scale(1.5);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-bg-color);
+    padding: .25em 0;
+}
+
+p {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+}
+
+.feedback {
+    color: var(--primary-color);
+}
+
+.feedback-success {
+    color: var(--success-color);
+    transform: rotate(-5deg);
+}
+
+.feedback-error {
+    color: var(--error-color);
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+
+.off {
+    display: none;
+}

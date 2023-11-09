@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Press+Start+2P&display=swap');
+
+:root {
+    /* --primary-color: greenyellow; */
+    --primary-color: magenta;
+    --primary-bg-color: black;
+    --primary-font: 'Press Start 2P';
+    --primary-padding: .5rem;
+    /* --secondary-color: green; */
+    --secondary-color: deeppink;
+    --secondary-font: 'Odibee Sans';
+    --secondary-font-size: 1.5rem;
+    --error-color: red;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--primary-bg-color);
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+input {
+    border-width: 0 0 thin 0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+    padding: var(--primary-padding);
+    outline-color: var(--primary-color);
+}
+
+input::placeholder {
+    color: var(--secondary-color);
+}
+
+button {
+    color: var(--primary-color);
+    border-width: thin;
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+    border-style: solid;
+    font-family: var(--primary-font);
+    padding: var(--primary-padding);
+}
+
+a {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1em;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--primary-bg-color);
+}
+
+ul {
+    list-style-type: none;
+    padding: 10px;
+}
+
+li {
+    background-color: var(--primary-color);
+    width: 40ch;
+    margin: 1em 0;
+}
+
+.home-main {
+    margin-top: 100px;
+}
+
+.logo {
+    width: 3em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-bg-color);
+    padding: .25em 0;
+}
+
+p {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: var(--secondary-font-size);
+}
+
+.feedback {
+    color: var(--error-color)
+}
+
+.off {
+    display: none;
+}
